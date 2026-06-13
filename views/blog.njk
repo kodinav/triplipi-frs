@@ -1,0 +1,100 @@
+{% import "_pagination.njk" as pg %}{% import "_sponsor.njk" as sp %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Blog — Triplipi</title>
+  <meta name="description" content="Long-form travel essays, photo essays, and field notes. Stories from people who actually went there.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <meta name="theme-color" content="#D05527">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Blog</span></nav>
+        <h1>{{ page.titleHtml | safe }}</h1>
+        <p class="lead">{{ page.lead | safe }}</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="container-wide">
+
+        <!-- Featured story + side strip -->
+        <div class="blog-landing-head" data-reveal>
+          <a class="blog-feature-main" href="/blog-post">
+            <img src="{{ blog.feature.image }}" alt="">
+            <div class="content">
+              <div class="category">{{ blog.feature.category }}</div>
+              <h2>{{ blog.feature.title | safe }}</h2>
+              <div class="byline">{{ blog.feature.byline }}</div>
+            </div>
+          </a>
+
+          <div class="blog-feature-side">
+{% for s in blog.side %}
+            <a href="/blog-post" class="blog-feature-item">
+              <div class="thumb"><img src="{{ s.image }}" alt=""></div>
+              <div>
+                <div class="category">{{ s.category }}</div>
+                <h4>{{ s.title | safe }}</h4>
+                <div class="meta">{{ s.meta }}</div>
+              </div>
+            </a>
+{% endfor %}
+          </div>
+        </div>
+
+        <!-- Filter pills -->
+        <div class="category-pills" style="border-block: 1px solid var(--c-border); margin-block: var(--s-7);" data-reveal>
+          <button class="category-pill is-active">All Stories</button>
+          <button class="category-pill">Essays</button>
+          <button class="category-pill">Photo Essays</button>
+          <button class="category-pill">Field Notes</button>
+          <button class="category-pill">Guides</button>
+          <button class="category-pill">Reportage</button>
+        </div>
+
+        <!-- Grid -->
+        <div class="blog-list-grid" data-stagger>
+{% for p in blog.posts %}
+          {% if sponsorSlots[loop.index0] %}{{ sp.banner(sponsorSlots[loop.index0], 'sp-span-grid') }}{% endif %}
+          <a class="blog-card" href="/blog-post">
+            <div class="thumb"><img src="{{ p.image }}" alt=""></div>
+            <div class="category">{{ p.category }}</div>
+            <h3>{{ p.title | safe }}</h3>
+            <p class="excerpt">{{ p.excerpt | safe }}</p>
+            <div class="byline">{% for b in p.bylineSpans %}{% if not loop.first %}<span class="sep"></span>{% endif %}<span>{{ b }}</span>{% endfor %}</div>
+          </a>
+{% endfor %}
+        </div>
+
+        {{ pg.nav(pagination, baseUrl) }}
+
+
+      </div>
+    </section>
+  </main>
+
+
+  <script src="assets/js/partials.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Gallery — Triplipi</title>
+  <meta name="description" content="A visual archive of our travels — fifty videos, fifty images. Hover to preview. Click for full-screen.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <meta name="theme-color" content="#D05527">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <div data-partial="loader"></div>
+  <div data-partial="header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <nav class="crumbs"><a href="index.html">Home</a><span>/</span><span>Gallery</span></nav>
+        <h1>A visual <em>archive</em>.</h1>
+        <p class="lead">Photographs and footage from the road — fifty videos and fifty images, taken by our editors and trusted contributors. Hover to preview. Click for the full-screen view.</p>
+      </div>
+    </section>
+
+    <!-- Filter -->
+    <section class="section-sm" style="padding-top: var(--s-6); padding-bottom: var(--s-4); border-bottom: 1px solid var(--c-border);">
+      <div class="container-wide">
+        <div class="gallery-filter" data-reveal>
+          <span style="font-size: var(--fs-micro); letter-spacing: var(--ls-wider); text-transform: uppercase; color: var(--c-text-muted); margin-right: var(--s-2);">Filter</span>
+          <button class="filter-chip is-active" data-filter="all">All</button>
+          <button class="filter-chip" data-filter="image">Photographs</button>
+          <button class="filter-chip" data-filter="video">Films</button>
+          <button class="filter-chip" data-filter="mountains">Mountains</button>
+          <button class="filter-chip" data-filter="beach">Beaches</button>
+          <button class="filter-chip" data-filter="heritage">Heritage</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Masonry grid -->
+    <section class="section" style="padding-top: var(--s-7);">
+      <div class="container-wide">
+        <div class="masonry" data-stagger>
+          <!-- Tile patterns: images + video tiles. data-cat for filtering. -->
+          <a data-lightbox data-src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=2000&q=85" data-cat="mountains" class="gallery-tile">
+            <img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=900&q=80" alt="Ladakh">
+            <div class="overlay"><span class="tag tag-plain">Ladakh</span></div>
+          </a>
+          <a data-lightbox data-src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=2000&q=85" data-cat="beach" class="gallery-tile">
+            <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=900&q=80" alt="">
+            <div class="overlay"><span class="tag tag-plain">Andaman</span></div>
+          </a>
+          <a data-lightbox data-type="video" data-src="https://www.w3schools.com/html/mov_bbb.mp4" data-cat="mountains" class="gallery-tile is-video">
+            <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=900&q=80" alt="">
+            <div class="play-icon">▶</div>
+            <div class="overlay"><span class="tag tag-plain">Film · Spiti</span></div>
+          </a>
+          <a data-lightbox data-src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=2000&q=85" data-cat="beach" class="gallery-tile">
+            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80" alt="">
+            <div class="overlay"><span class="tag tag-plain">Kerala</span></div>
+          </a>
+          <a data-lightbox data-src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=2000&q=85" data-cat="mountains" class="gallery-tile">
+            <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=900&q=80" alt="">
+            <div class="overlay"><span class="tag tag-plain">Meghalaya</span></div>
+          </a>
+          <a data-lightbox data-src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=2000&q=85" data-cat="mountains" class="gallery-tile">
+            <img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=900&q=80" alt="">
+            <div class="overlay"><span class="tag tag-plain">Manali</span></div>
+          </a>
+          <a data-lightbox data-src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=2000&q=85" data-cat="heritage" class="gallery-tile">
+            <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=900&q=80" alt="">
+            <div class="overlay"><span class="tag tag-plain">Jaisalmer</span></div>
+          </a>
+          <a data-lightbox data-type="video" data-src="https://www.w3schools.com/html/mov_bbb.mp4" data-cat="heritage" class="gallery-tile is-video">
+            <img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=900&q=80" alt="">
+            <div class="play-icon">▶</div>
+            <div class="overlay"><span class="tag tag-plain">Film · Goa</span></div>
+          </a>
+          <a data-lightbox data-src="https://images.unsplash.com/photo-1599661046289-e31897846e41?w=2000&q=85" data-cat="mountains" class="gallery-tile">
+            <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?w=900&q=80" alt="">
+            <div class="overlay"><span class="tag tag-plain">Coorg</span></div>
+          </a>
+          <a data-lightbox data-src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=2000&q=85" data-cat="mountains" class="gallery-tile">
+            <img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=900&q=80" alt="">
+            <div class="overlay"><span class="tag tag-plain">Sikkim</span></div>
+          </a>
+          <a data-lightbox data-src="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=2000&q=85" data-cat="mountains" class="gallery-tile">
+            <img src="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=900&q=80" alt="">
+            <div class="overlay"><span class="tag tag-plain">Munnar</span></div>
+          </a>
+          <a data-lightbox data-src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=2000&q=85" data-cat="beach" class="gallery-tile">
+            <img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=900&q=80" alt="">
+            <div class="overlay"><span class="tag tag-plain">Lakshadweep</span></div>
+          </a>
+          <a data-lightbox data-type="video" data-src="https://www.w3schools.com/html/mov_bbb.mp4" data-cat="beach" class="gallery-tile is-video">
+            <img src="https://images.unsplash.com/photo-1502786129293-79981df4e689?w=900&q=80" alt="">
+            <div class="play-icon">▶</div>
+            <div class="overlay"><span class="tag tag-plain">Film · Andaman</span></div>
+          </a>
+          <a data-lightbox data-src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=2000&q=85" data-cat="mountains" class="gallery-tile">
+            <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=900&q=80" alt="">
+            <div class="overlay"><span class="tag tag-plain">Bhutan</span></div>
+          </a>
+          <a data-lightbox data-src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=2000&q=85" data-cat="beach" class="gallery-tile">
+            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80" alt="">
+            <div class="overlay"><span class="tag tag-plain">Kerala</span></div>
+          </a>
+          <a data-lightbox data-src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=2000&q=85" data-cat="mountains" class="gallery-tile">
+            <img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=900&q=80" alt="">
+            <div class="overlay"><span class="tag tag-plain">High desert</span></div>
+          </a>
+          <a data-lightbox data-src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=2000&q=85" data-cat="mountains" class="gallery-tile">
+            <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=900&q=80" alt="">
+            <div class="overlay"><span class="tag tag-plain">Spiti Valley</span></div>
+          </a>
+          <a data-lightbox data-type="video" data-src="https://www.w3schools.com/html/mov_bbb.mp4" data-cat="mountains" class="gallery-tile is-video">
+            <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=900&q=80" alt="">
+            <div class="play-icon">▶</div>
+            <div class="overlay"><span class="tag tag-plain">Film · Meghalaya</span></div>
+          </a>
+          <a data-lightbox data-src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=2000&q=85" data-cat="beach" class="gallery-tile">
+            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80" alt="">
+            <div class="overlay"><span class="tag tag-plain">Backwaters</span></div>
+          </a>
+          <a data-lightbox data-src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=2000&q=85" data-cat="heritage" class="gallery-tile">
+            <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=900&q=80" alt="">
+            <div class="overlay"><span class="tag tag-plain">Rajasthan</span></div>
+          </a>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--s-10);" data-reveal>
+          <button class="btn btn-ghost">Load more · 80 remaining <span class="arrow">↓</span></button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div data-partial="footer"></div>
+  <div data-partial="search"></div>
+  <div data-partial="consent"></div>
+  <div data-partial="lightbox"></div>
+
+  <script src="assets/js/partials.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

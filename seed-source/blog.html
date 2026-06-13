@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Blog — Triplipi</title>
+  <meta name="description" content="Long-form travel essays, photo essays, and field notes. Stories from people who actually went there.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <meta name="theme-color" content="#D05527">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <div data-partial="loader"></div>
+  <div data-partial="header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <nav class="crumbs"><a href="index.html">Home</a><span>/</span><span>Blog</span></nav>
+        <h1>The <em>blog</em>.</h1>
+        <p class="lead">Long-form essays, photo essays, and field notes. Stories from people who actually went there. Four layout templates, one editorial standard.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="container-wide">
+
+        <!-- Featured story + side strip -->
+        <div class="blog-landing-head" data-reveal>
+          <a class="blog-feature-main" href="blog-post.html">
+            <img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=1400&q=85" alt="">
+            <div class="content">
+              <div class="category">Essay · Ladakh</div>
+              <h2>What I learned about silence in the high passes</h2>
+              <div class="byline">By Editor · 14 min read · 8 May 2026</div>
+            </div>
+          </a>
+
+          <div class="blog-feature-side">
+            <a href="blog-post.html" class="blog-feature-item">
+              <div class="thumb"><img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=400&q=80" alt=""></div>
+              <div>
+                <div class="category">Photo Essay · Kerala</div>
+                <h4>Forty-eight hours on a houseboat, in pictures</h4>
+                <div class="meta">22 images · 5 days ago</div>
+              </div>
+            </a>
+            <a href="blog-post.html" class="blog-feature-item">
+              <div class="thumb"><img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=400&q=80" alt=""></div>
+              <div>
+                <div class="category">Field Notes · Meghalaya</div>
+                <h4>The living root bridges of Mawlynnong</h4>
+                <div class="meta">9 min read · 6 days ago</div>
+              </div>
+            </a>
+            <a href="blog-post.html" class="blog-feature-item">
+              <div class="thumb"><img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=400&q=80" alt=""></div>
+              <div>
+                <div class="category">Guide · Spiti</div>
+                <h4>Three days in Kaza: a quiet itinerary</h4>
+                <div class="meta">7 min read · 1 week ago</div>
+              </div>
+            </a>
+            <a href="blog-post.html" class="blog-feature-item">
+              <div class="thumb"><img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&q=80" alt=""></div>
+              <div>
+                <div class="category">Reportage · Rajasthan</div>
+                <h4>How Jaisalmer's stone-cutters work</h4>
+                <div class="meta">11 min read · 2 weeks ago</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Filter pills -->
+        <div class="category-pills" style="border-block: 1px solid var(--c-border); margin-block: var(--s-7);" data-reveal>
+          <button class="category-pill is-active">All Stories</button>
+          <button class="category-pill">Essays</button>
+          <button class="category-pill">Photo Essays</button>
+          <button class="category-pill">Field Notes</button>
+          <button class="category-pill">Guides</button>
+          <button class="category-pill">Reportage</button>
+        </div>
+
+        <!-- Grid -->
+        <div class="blog-list-grid" data-stagger>
+          <a class="blog-card" href="blog-post.html">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&q=80" alt=""></div>
+            <div class="category">Essay · Ladakh</div>
+            <h3>The light in Ladakh, and why it does this to you</h3>
+            <p class="excerpt">Three weeks at altitude. An essay on attention, light, and what high desert does to the way you see.</p>
+            <div class="byline"><span>14 min read</span><span class="sep"></span><span>By Editor</span></div>
+          </a>
+
+          <a class="blog-card" href="blog-post.html">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1502786129293-79981df4e689?w=800&q=80" alt=""></div>
+            <div class="category">Field Notes · Andaman</div>
+            <h3>Notes from Havelock — diving with manta rays</h3>
+            <p class="excerpt">The slow pleasure of a slow island. Boat schedules, mosquito coils, and an underwater encounter at Manta Point.</p>
+            <div class="byline"><span>8 min read</span><span class="sep"></span><span>By Editor</span></div>
+          </a>
+
+          <a class="blog-card" href="blog-post.html">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800&q=80" alt=""></div>
+            <div class="category">Guide · Coorg</div>
+            <h3>The Coorg I keep going back to</h3>
+            <p class="excerpt">Past the coffee tourism, into the actual coffee. A guide to the estates that still let you walk in.</p>
+            <div class="byline"><span>10 min read</span><span class="sep"></span><span>By Editor</span></div>
+          </a>
+
+          <a class="blog-card" href="blog-post.html">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=800&q=80" alt=""></div>
+            <div class="category">Photo Essay · Munnar</div>
+            <h3>Munnar at first light — twenty-six frames</h3>
+            <p class="excerpt">A photo essay on tea-country mornings: the mist patterns, the workers, the slow arrival of the sun over the estates.</p>
+            <div class="byline"><span>Photo essay</span><span class="sep"></span><span>26 images</span></div>
+          </a>
+
+          <a class="blog-card" href="blog-post.html">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=800&q=80" alt=""></div>
+            <div class="category">Field Notes · Sikkim</div>
+            <h3>North Sikkim is rearranging itself, faster than we are</h3>
+            <p class="excerpt">A reportage on roads, rivers, and the shifting realities of high-altitude tourism after the floods.</p>
+            <div class="byline"><span>16 min read</span><span class="sep"></span><span>By Editor</span></div>
+          </a>
+
+          <a class="blog-card" href="blog-post.html">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=800&q=80" alt=""></div>
+            <div class="category">Essay · Goa</div>
+            <h3>South Goa, slowly</h3>
+            <p class="excerpt">Patnem to Palolem, on foot. An essay on what's left when the season's over.</p>
+            <div class="byline"><span>11 min read</span><span class="sep"></span><span>By Editor</span></div>
+          </a>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--s-10);" data-reveal>
+          <button class="btn btn-ghost">Load more stories <span class="arrow">↓</span></button>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <div data-partial="footer"></div>
+  <div data-partial="search"></div>
+  <div data-partial="consent"></div>
+  <div data-partial="lightbox"></div>
+
+  <script src="assets/js/partials.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Announcements — Triplipi</title>
+  <meta name="description" content="Latest announcements from Triplipi — new destinations, package launches, editorial updates, partner promotions, gallery additions, and more.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <meta name="theme-color" content="#D05527">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <div data-partial="loader"></div>
+  <div data-partial="header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <nav class="crumbs"><a href="index.html">Home</a><span>/</span><span>Announcements</span></nav>
+        <h1>All <em>announcements</em>, all in one place.</h1>
+        <p class="lead">Every notice we've ever published — package launches, destination additions, editorial features, partner promotions, gallery updates, and shop releases. Sorted by date, filterable by type.</p>
+      </div>
+    </section>
+
+    <!-- Filter -->
+    <section class="section-sm" style="padding-top: var(--s-6); padding-bottom: var(--s-4); border-bottom: 1px solid var(--c-border);">
+      <div class="container-wide">
+        <div class="gallery-filter" data-reveal>
+          <span style="font-size: var(--fs-micro); letter-spacing: var(--ls-wider); text-transform: uppercase; color: var(--c-text-muted); margin-right: var(--s-2);">Filter by</span>
+          <button class="filter-chip is-active" data-filter="all">All</button>
+          <button class="filter-chip" data-filter="destination">Destinations</button>
+          <button class="filter-chip" data-filter="trip">Trips</button>
+          <button class="filter-chip" data-filter="package">Packages</button>
+          <button class="filter-chip" data-filter="picks">Picks</button>
+          <button class="filter-chip" data-filter="shop">Shop</button>
+          <button class="filter-chip" data-filter="gallery">Gallery</button>
+          <button class="filter-chip" data-filter="blog">Blog</button>
+          <button class="filter-chip" data-filter="affiliate">Affiliate</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grid -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="announce-grid" data-stagger>
+
+          <!-- 1: Package -->
+          <a href="package-detail.html" class="ann-card" data-cat="package">
+            <div class="ann-head">
+              <span class="tag tag-gold">New Package</span>
+              <span class="ann-date">12 May 2026</span>
+            </div>
+            <h4>Spiti Valley premium circuit launches with our trusted partners</h4>
+            <p class="ann-excerpt">Seven days of monasteries, motorcycle passes, and Himalayan nights — bookings open until 30 June with early-bird pricing.</p>
+            <span class="ann-link">Read more <span class="arrow">→</span></span>
+          </a>
+
+          <!-- 2: Package -->
+          <a href="packages.html" class="ann-card" data-cat="package">
+            <div class="ann-head">
+              <span class="tag tag-blush">Limited Time</span>
+              <span class="ann-date">10 May 2026</span>
+            </div>
+            <h4>Monsoon Sale — up to 35% off Kerala packages</h4>
+            <p class="ann-excerpt">Three verified houseboat operators in Alleppey running early-bird discounts through July. Conditions apply.</p>
+            <span class="ann-link">View packages <span class="arrow">→</span></span>
+          </a>
+
+          <!-- 3: Blog -->
+          <a href="blog-post.html" class="ann-card" data-cat="blog">
+            <div class="ann-head">
+              <span class="tag">Editorial</span>
+              <span class="ann-date">8 May 2026</span>
+            </div>
+            <h4>New blog post: What I learned in Ladakh's high passes</h4>
+            <p class="ann-excerpt">A 14-minute essay on solitude, altitude, and the unexpected geography of attention.</p>
+            <span class="ann-link">Read the essay <span class="arrow">→</span></span>
+          </a>
+
+          <!-- 4: Shop -->
+          <a href="shop.html" class="ann-card" data-cat="shop">
+            <div class="ann-head">
+              <span class="tag tag-outline">Shop Update</span>
+              <span class="ann-date">5 May 2026</span>
+            </div>
+            <h4>22 new photographs available for licensing</h4>
+            <p class="ann-excerpt">Fresh from the Spiti Valley shoot — high-resolution stills available for editorial and commercial use, with full release.</p>
+            <span class="ann-link">Browse Shop <span class="arrow">→</span></span>
+          </a>
+
+          <!-- 5: Destination -->
+          <a href="destination-detail.html" class="ann-card" data-cat="destination">
+            <div class="ann-head">
+              <span class="tag">New Destination</span>
+              <span class="ann-date">2 May 2026</span>
+            </div>
+            <h4>Lakshadweep added to our destination index</h4>
+            <p class="ann-excerpt">Eleven inhabited atolls, coral reefs, and the most restrictive permit system in India. We've broken it down.</p>
+            <span class="ann-link">Explore Lakshadweep <span class="arrow">→</span></span>
+          </a>
+
+          <!-- 6: Gallery -->
+          <a href="gallery.html" class="ann-card" data-cat="gallery">
+            <div class="ann-head">
+              <span class="tag tag-dark">Gallery Update</span>
+              <span class="ann-date">28 Apr 2026</span>
+            </div>
+            <h4>Twelve new films added to the gallery</h4>
+            <p class="ann-excerpt">Drone footage from Spiti, Sikkim, and the Andaman reef — now viewable in 4K.</p>
+            <span class="ann-link">View gallery <span class="arrow">→</span></span>
+          </a>
+
+          <!-- 7: Picks -->
+          <a href="picks.html" class="ann-card" data-cat="picks">
+            <div class="ann-head">
+              <span class="tag tag-gold">Updated List</span>
+              <span class="ann-date">22 Apr 2026</span>
+            </div>
+            <h4>Top 20 Waterfalls list refreshed for monsoon season</h4>
+            <p class="ann-excerpt">Three new entries from Meghalaya, plus updated visiting windows and access notes for the existing list.</p>
+            <span class="ann-link">See the list <span class="arrow">→</span></span>
+          </a>
+
+          <!-- 8: Trip -->
+          <a href="trip.html" class="ann-card" data-cat="trip">
+            <div class="ann-head">
+              <span class="tag tag-outline">Feature</span>
+              <span class="ann-date">18 Apr 2026</span>
+            </div>
+            <h4>Plan-a-Trip flow now lets you save drafts</h4>
+            <p class="ann-excerpt">Build a trip across multiple sessions. Your selections persist locally — no account needed.</p>
+            <span class="ann-link">Try it now <span class="arrow">→</span></span>
+          </a>
+
+          <!-- 9: Affiliate (external, consent-gated) -->
+          <a href="#" class="ann-card" data-cat="affiliate" data-external data-provider="HimalayanRail" data-url="https://himalayanrail.example.com">
+            <div class="ann-head">
+              <span class="tag tag-affiliate">Affiliate</span>
+              <span class="ann-date">15 Apr 2026</span>
+            </div>
+            <h4>Toy Train tickets to Shimla — our affiliate launches summer fares</h4>
+            <p class="ann-excerpt">HimalayanRail's heritage carriages from Kalka to Shimla, with early-bird discounts on the Kalka–Shimla narrow gauge.</p>
+            <span class="ann-link">Visit partner <span class="arrow">→</span></span>
+          </a>
+
+          <!-- 10: Package -->
+          <a href="package-detail.html" class="ann-card" data-cat="package">
+            <div class="ann-head">
+              <span class="tag tag-gold">New Package</span>
+              <span class="ann-date">10 Apr 2026</span>
+            </div>
+            <h4>Ladakh Cultural Expedition — 9 days, with our anchor partner</h4>
+            <p class="ann-excerpt">Pangong, Nubra, Tso Moriri. Female-led trip leaders, monastery access, premium camps.</p>
+            <span class="ann-link">View details <span class="arrow">→</span></span>
+          </a>
+
+          <!-- 11: Blog -->
+          <a href="blog-post.html" class="ann-card" data-cat="blog">
+            <div class="ann-head">
+              <span class="tag">Editorial</span>
+              <span class="ann-date">6 Apr 2026</span>
+            </div>
+            <h4>Photo essay: 48 hours on a Kerala houseboat, in 22 frames</h4>
+            <p class="ann-excerpt">Coffee on deck, herons at dawn, the slow rituals of the Vembanad.</p>
+            <span class="ann-link">View essay <span class="arrow">→</span></span>
+          </a>
+
+          <!-- 12: Destination -->
+          <a href="destination-detail.html" class="ann-card" data-cat="destination">
+            <div class="ann-head">
+              <span class="tag">New Destination</span>
+              <span class="ann-date">1 Apr 2026</span>
+            </div>
+            <h4>Mawlynnong &amp; the living root bridges now in our index</h4>
+            <p class="ann-excerpt">Asia's cleanest village, plus the double-decker bridges of Nongriat. Trek brief and ethical-visit notes included.</p>
+            <span class="ann-link">Visit destination <span class="arrow">→</span></span>
+          </a>
+
+        </div>
+
+        <div style="text-align: center; margin-top: var(--s-10);" data-reveal>
+          <button class="btn btn-ghost">Load older announcements <span class="arrow">↓</span></button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  
+
+  <div data-partial="footer"></div>
+  <div data-partial="search"></div>
+  <div data-partial="consent"></div>
+  <div data-partial="lightbox"></div>
+
+  <script src="assets/js/partials.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

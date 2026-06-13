@@ -1,0 +1,94 @@
+{% import "_pagination.njk" as pg %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Announcements — Triplipi</title>
+  <meta name="description" content="Latest announcements from Triplipi — new destinations, package launches, editorial updates, partner promotions, gallery additions, and more.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <meta name="theme-color" content="#D05527">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <div data-partial="loader"></div>
+  <div data-partial="header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Announcements</span></nav>
+        <h1>{{ page.titleHtml | safe }}</h1>
+        <p class="lead">{{ page.lead | safe }}</p>
+      </div>
+    </section>
+
+    <!-- Filter -->
+    <section class="section-sm" style="padding-top: var(--s-6); padding-bottom: var(--s-4); border-bottom: 1px solid var(--c-border);">
+      <div class="container-wide">
+        <div class="gallery-filter" data-reveal>
+          <span style="font-size: var(--fs-micro); letter-spacing: var(--ls-wider); text-transform: uppercase; color: var(--c-text-muted); margin-right: var(--s-2);">Filter by</span>
+          <button class="filter-chip is-active" data-filter="all">All</button>
+          <button class="filter-chip" data-filter="destination">Destinations</button>
+          <button class="filter-chip" data-filter="trip">Trips</button>
+          <button class="filter-chip" data-filter="package">Packages</button>
+          <button class="filter-chip" data-filter="picks">Picks</button>
+          <button class="filter-chip" data-filter="shop">Shop</button>
+          <button class="filter-chip" data-filter="gallery">Gallery</button>
+          <button class="filter-chip" data-filter="blog">Blog</button>
+          <button class="filter-chip" data-filter="affiliate">Affiliate</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grid -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="announce-grid" data-stagger>
+{% for a in announcements %}
+          <a href="{{ a.href }}" class="ann-card" data-cat="{{ a.category }}"{% if a.external %} data-external data-provider="{{ a.extProvider }}" data-url="{{ a.extUrl }}"{% endif %}>
+            <div class="ann-head">
+              <span class="tag{% if a.tagClass %} {{ a.tagClass }}{% endif %}">{{ a.tagLabel }}</span>
+              <span class="ann-date">{{ a.date }}</span>
+            </div>
+            <h4>{{ a.title | safe }}</h4>
+            <p class="ann-excerpt">{{ a.excerpt | safe }}</p>
+            <span class="ann-link">{{ a.linkLabel }} <span class="arrow">→</span></span>
+          </a>
+{% endfor %}
+        </div>
+
+        {{ pg.nav(pagination, baseUrl) }}
+
+        <div style="text-align: center; margin-top: var(--s-10);" data-reveal>
+          <button class="btn btn-ghost">Load older announcements <span class="arrow">↓</span></button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  
+
+  <div data-partial="footer"></div>
+  <div data-partial="search"></div>
+  <div data-partial="consent"></div>
+  <div data-partial="lightbox"></div>
+
+  <script src="assets/js/partials.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

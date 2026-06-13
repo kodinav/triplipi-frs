@@ -1,0 +1,16 @@
+# dependencies
+node_modules/
+
+# OS / editor noise
+.DS_Store
+*.log
+.claude/settings.local.json
+
+# ---- LIVE DATA: never commit, never overwrite on deploy ----
+# live content (auto-seeded from content.default.json on first run)
+server/data/content.json
+# admin credentials (created on first run)
+server/data/admin.json
+# admin-uploaded images/videos (keep the folder, ignore its contents)
+assets/uploads/*
+!assets/uploads/.gitkeep

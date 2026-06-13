@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Contact — Triplipi</title>
+  <meta name="description" content="Get in touch with the Triplipi editorial team. Plan a trip, license photography, partner with us, or just say hello.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <meta name="theme-color" content="#D05527">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <div data-partial="loader"></div>
+  <div data-partial="header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Contact</span></nav>
+        <h1>{{ page.titleHtml | safe }}</h1>
+        <p class="lead">{{ page.lead | safe }}</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container-wide">
+        <div class="contact-layout" data-reveal>
+
+          <!-- Channels sidebar -->
+          <aside>
+            <div class="channel">
+              <div class="lbl">Email</div>
+              <a class="val" href="mailto:hello@Triplipi.example">hello@Triplipi.example</a>
+              <div class="hint">For general inquiries, trip planning, and editorial queries.</div>
+            </div>
+            <div class="channel">
+              <div class="lbl">Phone</div>
+              <a class="val" href="tel:+919876543210">+91 98765 43210</a>
+              <div class="hint">Mon to Fri · 10am – 6pm IST</div>
+            </div>
+            <div class="channel">
+              <div class="lbl">Partnerships</div>
+              <a class="val" href="mailto:partners@Triplipi.example">partners@Triplipi.example</a>
+              <div class="hint" id="partner">For verified provider applications, affiliate enquiries, and licensing.</div>
+            </div>
+            <div class="channel">
+              <div class="lbl">Editorial &amp; Press</div>
+              <a class="val" href="mailto:press@Triplipi.example">press@Triplipi.example</a>
+              <div class="hint">Story pitches, interview requests, and review copies.</div>
+            </div>
+            <div class="channel">
+              <div class="lbl">Studio Address</div>
+              <div class="val" style="font-size: 1.1rem; line-height: 1.4;">Civil Lines<br>Bareilly, Uttar Pradesh<br>India · 243001</div>
+              <div class="hint">By appointment only.</div>
+            </div>
+          </aside>
+
+          <!-- Form -->
+          <form class="contact-form" data-form data-success-message="Letter received. We'll write back within one working day.">
+            <div class="form-grid">
+              <div class="field">
+                <label>Your name <span class="req">*</span></label>
+                <input type="text" name="name" required placeholder="What should we call you?">
+              </div>
+              <div class="field">
+                <label>Email <span class="req">*</span></label>
+                <input type="email" name="email" required placeholder="hello@example.com">
+              </div>
+              <div class="field">
+                <label>Phone <span class="req">*</span></label>
+                <input type="tel" name="phone" required placeholder="+91 ..." pattern="[0-9+\-\s]+">
+              </div>
+              <div class="field">
+                <label>I'm writing about</label>
+                <select name="subject">
+                  <option>Planning a trip</option>
+                  <option>Package enquiry</option>
+                  <option>Photography licensing</option>
+                  <option>Partner application</option>
+                  <option>Editorial / press</option>
+                  <option>Something else</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label>Your message</label>
+              <textarea name="message" rows="6" placeholder="Tell us what you're thinking about — even a half-formed idea is enough to start a conversation."></textarea>
+            </div>
+            <div class="field" style="font-size: var(--fs-small); color: var(--c-text-muted); display: flex; gap: var(--s-3); align-items: flex-start;">
+              <label class="check" style="display: flex; gap: var(--s-2); cursor: pointer;">
+                <input type="checkbox" style="margin-top: 4px;">
+                <span>I agree to Triplipi's <a href="/legal?p=privacy" style="color: var(--c-gold-deep); text-decoration: underline;">privacy policy</a> and consent to my submission being stored for the purpose of responding.</span>
+              </label>
+            </div>
+            <div style="display: flex; gap: var(--s-3); align-items: center;">
+              <button type="submit" class="btn btn-brand">Send the letter <span class="arrow">→</span></button>
+              <span style="font-size: var(--fs-small); color: var(--c-text-muted); font-family: var(--ff-display); font-style: italic;">— or just call us.</span>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-partial="footer"></div>
+  <div data-partial="search"></div>
+  <div data-partial="consent"></div>
+  <div data-partial="lightbox"></div>
+
+  <script src="assets/js/partials.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

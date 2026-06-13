@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Packages — Triplipi</title>
+  <meta name="description" content="All available travel packages — sponsored, affiliate, and quote-on-request. Verified providers only, with consent-gated redirects.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <meta name="theme-color" content="#D05527">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <div data-partial="loader"></div>
+  <div data-partial="header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <nav class="crumbs"><a href="index.html">Home</a><span>/</span><span>Packages</span></nav>
+        <h1>Every package, <em>every verified partner</em>.</h1>
+        <p class="lead">Sponsored placements are flagged. Affiliate links are flagged. Quote-on-request packages are clearly marked. You'll always know which is which.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container-wide">
+        <!-- Filters -->
+        <div class="pkg-filters" data-reveal>
+          <span class="label">Filter:</span>
+          <button class="filter-chip is-active" data-filter="all">All Packages</button>
+          <button class="filter-chip">Sponsored</button>
+          <button class="filter-chip">Affiliate</button>
+          <button class="filter-chip">Quote Only</button>
+          <button class="filter-chip">Mountains</button>
+          <button class="filter-chip">Beach</button>
+          <button class="filter-chip">Luxury</button>
+          <button class="filter-chip">Budget</button>
+        </div>
+
+        <div class="pkg-grid cols-2" data-stagger>
+          <article class="pkg-card">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=900&q=80" alt="">
+              <span class="tag tag-gold badge-pos">Sponsored</span>
+            </div>
+            <div class="body">
+              <div class="pkg-region">Himachal · 7 days</div>
+              <h3>Spiti Valley Premium Circuit</h3>
+              <p style="font-size: 0.9rem;">Kaza, Key Monastery, Chandratal lakes, Langza fossils. All meals included.</p>
+              <div class="pkg-meta">
+                <span>🏔 Premium</span><span>⭐ 4.9</span><span>🛏 6 nights</span>
+              </div>
+              <div class="pkg-foot">
+                <div class="pkg-price">₹42,500<small>/ person</small></div>
+                <a href="package-detail.html" class="btn btn-sm">Details <span class="arrow">→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="pkg-card">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80" alt="">
+              <span class="tag tag-affiliate badge-pos">Affiliate</span>
+            </div>
+            <div class="body">
+              <div class="pkg-region">Kerala · 5 days</div>
+              <h3>Backwater Houseboat Retreat</h3>
+              <p style="font-size: 0.9rem;">Alleppey to Kumarakom on private houseboats with all-inclusive luxury meals.</p>
+              <div class="pkg-meta">
+                <span>🚤 Luxury</span><span>⭐ 4.8</span><span>🛏 4 nights</span>
+              </div>
+              <div class="pkg-foot">
+                <div class="pkg-price">₹28,000<small>/ person</small></div>
+                <a href="#" class="btn btn-sm" data-external data-provider="KeralaLuxe" data-url="https://keralaluxe.example.com">Book <span class="arrow">→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="pkg-card">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=900&q=80" alt="">
+              <span class="tag tag-gold badge-pos">Sponsored</span>
+            </div>
+            <div class="body">
+              <div class="pkg-region">Ladakh · 9 days</div>
+              <h3>Ladakh Cultural Expedition</h3>
+              <p style="font-size: 0.9rem;">Leh, Nubra, Pangong, Tso Moriri with local guides, premium camps, and monastery visits.</p>
+              <div class="pkg-meta">
+                <span>🏔 Premium</span><span>⭐ 4.9</span><span>🛏 8 nights</span>
+              </div>
+              <div class="pkg-foot">
+                <div class="pkg-price">₹58,000<small>/ person</small></div>
+                <a href="package-detail.html" class="btn btn-sm">Details <span class="arrow">→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="pkg-card">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=900&q=80" alt="">
+              <span class="tag tag-affiliate badge-pos">Affiliate</span>
+            </div>
+            <div class="body">
+              <div class="pkg-region">Andaman · 6 days</div>
+              <h3>Havelock Island Scuba Package</h3>
+              <p style="font-size: 0.9rem;">PADI-certified diving with two-night beach resort and full island transfers.</p>
+              <div class="pkg-meta">
+                <span>🤿 Adventure</span><span>⭐ 4.7</span><span>🛏 5 nights</span>
+              </div>
+              <div class="pkg-foot">
+                <div class="pkg-price">₹35,500<small>/ person</small></div>
+                <a href="#" class="btn btn-sm" data-external data-provider="AndamanDive" data-url="https://andamandive.example.com">Book <span class="arrow">→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="pkg-card">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=900&q=80" alt="">
+              <span class="tag badge-pos">Quote Only</span>
+            </div>
+            <div class="body">
+              <div class="pkg-region">Rajasthan · 8 days</div>
+              <h3>Royal Rajasthan Heritage Tour</h3>
+              <p style="font-size: 0.9rem;">Jaisalmer, Jodhpur, Udaipur. Heritage hotels, private guides. Itinerary by request.</p>
+              <div class="pkg-meta">
+                <span>👑 Heritage</span><span>⭐ New</span><span>🛏 7 nights</span>
+              </div>
+              <div class="pkg-foot">
+                <div class="pkg-price" style="font-size: 1.1rem; font-family: var(--ff-text); font-style: italic;">On request</div>
+                <a href="contact.html" class="btn btn-sm">Request quote <span class="arrow">→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="pkg-card">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=900&q=80" alt="">
+              <span class="tag tag-affiliate badge-pos">Affiliate</span>
+            </div>
+            <div class="body">
+              <div class="pkg-region">Meghalaya · 6 days</div>
+              <h3>Cherrapunji &amp; Living Roots</h3>
+              <p style="font-size: 0.9rem;">Shillong, Mawlynnong, Nongriat double-decker bridge trek with eco-stays.</p>
+              <div class="pkg-meta">
+                <span>🌿 Eco</span><span>⭐ 4.8</span><span>🛏 5 nights</span>
+              </div>
+              <div class="pkg-foot">
+                <div class="pkg-price">₹32,000<small>/ person</small></div>
+                <a href="#" class="btn btn-sm" data-external data-provider="NorthEastEco" data-url="https://nee.example.com">Book <span class="arrow">→</span></a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--s-10);" data-reveal>
+          <button class="btn btn-ghost">Load more packages <span class="arrow">↓</span></button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-partial="footer"></div>
+  <div data-partial="search"></div>
+  <div data-partial="consent"></div>
+  <div data-partial="lightbox"></div>
+
+  <script src="assets/js/partials.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Plan a Trip — Triplipi</title>
+  <meta name="description" content="Plan your trip in seven careful steps. Browse categories, pick a destination, view verified packages, and book through trusted partners.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <meta name="theme-color" content="#D05527">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <div data-partial="loader"></div>
+  <div data-partial="header"></div>
+
+  <main>
+    <!-- Page hero -->
+    <section class="page-hero">
+      <div class="page-hero-inner" style="text-align: center;">
+        <nav class="crumbs" style="justify-content: center;">
+          <a href="/">Home</a><span>/</span><span>Go For A Trip</span>
+        </nav>
+        <h1>Plan your next escape in <em>seven careful steps</em>.</h1>
+        <p class="lead" style="margin-inline: auto;">Pick a category. Pick a destination. See verified packages. Continue, with full disclosure, to a trusted partner. We make the path short, but never sloppy.</p>
+      </div>
+    </section>
+
+    <!-- Stepper -->
+    <section class="section-sm" style="padding-top: var(--s-7); padding-bottom: var(--s-5);">
+      <div class="container-wide">
+        <div class="trip-stepper" data-reveal>
+          <span class="step is-active"><span class="num">1</span> Category</span>
+          <span class="step-sep"></span>
+          <span class="step"><span class="num">2</span> Destination</span>
+          <span class="step-sep"></span>
+          <span class="step"><span class="num">3</span> Detail</span>
+          <span class="step-sep"></span>
+          <span class="step"><span class="num">4</span> Packages</span>
+          <span class="step-sep"></span>
+          <span class="step"><span class="num">5</span> Highlights</span>
+          <span class="step-sep"></span>
+          <span class="step"><span class="num">6</span> Consent</span>
+          <span class="step-sep"></span>
+          <span class="step"><span class="num">7</span> Book</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 1: Categories -->
+    <section class="section" style="padding-top: var(--s-5);">
+      <div class="container-wide">
+        <div class="section-head-center" data-reveal>
+          <p class="overline center">Step 1</p>
+          <h2>What kind of trip <em>are you after</em>?</h2>
+          <p>Each category opens to a curated list of destinations with the seven sub-categories we believe matter — season, how to reach, where to stay, how to get around, what to do, what to see, and the small details only locals know.</p>
+        </div>
+
+        <div class="exp-grid" data-stagger>
+          <a href="/destinations?cat=popular" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">48 destinations</div>
+              <h3 class="name">Popular</h3>
+              <div class="meta"><span>Crowd-favourites</span></div>
+            </div>
+          </a>
+          <a href="/destinations?cat=beach" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">62 destinations</div>
+              <h3 class="name">Beach</h3>
+              <div class="meta"><span>Sand &amp; sea</span></div>
+            </div>
+          </a>
+          <a href="/destinations?cat=mountains" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">94 destinations</div>
+              <h3 class="name">Mountains &amp; Hills</h3>
+              <div class="meta"><span>Highlands</span></div>
+            </div>
+          </a>
+          <a href="/destinations?cat=islands" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">18 destinations</div>
+              <h3 class="name">Islands</h3>
+              <div class="meta"><span>Island time</span></div>
+            </div>
+          </a>
+          <a href="/destinations?cat=watersports" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1502786129293-79981df4e689?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">31 destinations</div>
+              <h3 class="name">Water Sports</h3>
+              <div class="meta"><span>Active</span></div>
+            </div>
+          </a>
+          <a href="/destinations?cat=trek" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">76 destinations</div>
+              <h3 class="name">Trek</h3>
+              <div class="meta"><span>On foot</span></div>
+            </div>
+          </a>
+          <a href="/destinations?cat=waterfalls" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">52 destinations</div>
+              <h3 class="name">Waterfalls</h3>
+              <div class="meta"><span>Monsoon magic</span></div>
+            </div>
+          </a>
+          <a href="/destinations?cat=hidden" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">28 destinations</div>
+              <h3 class="name">Hidden Gems</h3>
+              <div class="meta"><span>Off the map</span></div>
+            </div>
+          </a>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--s-9);" data-reveal>
+          <p style="margin: 0 auto var(--s-4); font-family: var(--ff-display); font-style: italic; color: var(--c-text-muted);">Not sure what you want? Start with our hand-picked lists.</p>
+          <a href="/picks" class="btn btn-ghost">Browse Our Picks <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- How it works -->
+    <section class="section" style="background: var(--c-ink); color: var(--c-bone);">
+      <div class="container-wide">
+        <div class="section-head-center" data-reveal>
+          <p class="overline center">How it works</p>
+          <h2 style="color: var(--c-bone);">The seven steps, <em>in detail</em>.</h2>
+        </div>
+
+        <div class="exp-grid" data-stagger>
+          <div style="padding: var(--s-7); background: rgba(245,239,230,0.03); border: 1px solid rgba(245,239,230,0.1); border-radius: var(--r-lg);">
+            <div style="font-family: var(--ff-display); font-style: italic; font-size: 3rem; color: var(--c-gold); line-height: 1; margin-bottom: var(--s-4);">01</div>
+            <h4 style="color: var(--c-bone); margin-bottom: var(--s-3);">Pick a category</h4>
+            <p style="font-size: 0.9rem;">Mountains, beach, hidden gems — or browse our pre-curated picks.</p>
+          </div>
+          <div style="padding: var(--s-7); background: rgba(245,239,230,0.03); border: 1px solid rgba(245,239,230,0.1); border-radius: var(--r-lg);">
+            <div style="font-family: var(--ff-display); font-style: italic; font-size: 3rem; color: var(--c-gold); line-height: 1; margin-bottom: var(--s-4);">02</div>
+            <h4 style="color: var(--c-bone); margin-bottom: var(--s-3);">Pick a destination</h4>
+            <p style="font-size: 0.9rem;">From the curated list, read the seven sub-categories — season, reach, stay, travel, activities, landmarks, and editor's notes.</p>
+          </div>
+          <div style="padding: var(--s-7); background: rgba(245,239,230,0.03); border: 1px solid rgba(245,239,230,0.1); border-radius: var(--r-lg);">
+            <div style="font-family: var(--ff-display); font-style: italic; font-size: 3rem; color: var(--c-gold); line-height: 1; margin-bottom: var(--s-4);">03</div>
+            <h4 style="color: var(--c-bone); margin-bottom: var(--s-3);">Read the detail</h4>
+            <p style="font-size: 0.9rem;">A long-form page on the destination, with original photography and tested local knowledge.</p>
+          </div>
+          <div style="padding: var(--s-7); background: rgba(245,239,230,0.03); border: 1px solid rgba(245,239,230,0.1); border-radius: var(--r-lg);">
+            <div style="font-family: var(--ff-display); font-style: italic; font-size: 3rem; color: var(--c-gold); line-height: 1; margin-bottom: var(--s-4);">04</div>
+            <h4 style="color: var(--c-bone); margin-bottom: var(--s-3);">See packages</h4>
+            <p style="font-size: 0.9rem;">Filtered to that destination — verified partner offerings only. No spam.</p>
+          </div>
+          <div style="padding: var(--s-7); background: rgba(245,239,230,0.03); border: 1px solid rgba(245,239,230,0.1); border-radius: var(--r-lg);">
+            <div style="font-family: var(--ff-display); font-style: italic; font-size: 3rem; color: var(--c-gold); line-height: 1; margin-bottom: var(--s-4);">05</div>
+            <h4 style="color: var(--c-bone); margin-bottom: var(--s-3);">Highlights</h4>
+            <p style="font-size: 0.9rem;">A digest of what's included, who runs it, and where it sits among partners.</p>
+          </div>
+          <div style="padding: var(--s-7); background: rgba(245,239,230,0.03); border: 1px solid rgba(245,239,230,0.1); border-radius: var(--r-lg);">
+            <div style="font-family: var(--ff-display); font-style: italic; font-size: 3rem; color: var(--c-gold); line-height: 1; margin-bottom: var(--s-4);">06</div>
+            <h4 style="color: var(--c-bone); margin-bottom: var(--s-3);">Consent</h4>
+            <p style="font-size: 0.9rem;">Full disclosure before any redirect — what's shared, what's not, what our affiliate position is.</p>
+          </div>
+          <div style="padding: var(--s-7); background: rgba(245,239,230,0.03); border: 1px solid rgba(245,239,230,0.1); border-radius: var(--r-lg);">
+            <div style="font-family: var(--ff-display); font-style: italic; font-size: 3rem; color: var(--c-gold); line-height: 1; margin-bottom: var(--s-4);">07</div>
+            <h4 style="color: var(--c-bone); margin-bottom: var(--s-3);">Book or stay</h4>
+            <p style="font-size: 0.9rem;">Continue to the partner's site, or decline and stay with us. Either way, no pressure.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-partial="footer"></div>
+  <div data-partial="search"></div>
+  <div data-partial="consent"></div>
+  <div data-partial="lightbox"></div>
+
+  <script src="assets/js/partials.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

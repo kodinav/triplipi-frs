@@ -1,0 +1,121 @@
+{% import "_pagination.njk" as pg %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Our Picks — Triplipi</title>
+  <meta name="description" content="Four hand-curated lists, twenty destinations each. The places we'd send our closest friends — ranked, reasoned, ready.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <meta name="theme-color" content="#D05527">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <div data-partial="loader"></div>
+  <div data-partial="header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Our Picks</span></nav>
+        <h1>{{ page.titleHtml | safe }}</h1>
+        <p class="lead">{{ page.lead | safe }}</p>
+      </div>
+    </section>
+
+    <!-- List selector -->
+    <section class="section-sm" style="padding-top: var(--s-6); padding-bottom: var(--s-4);">
+      <div class="container-wide">
+        <div class="picks-tabs" data-reveal>
+          <button class="picks-tab is-active" data-list="mustsee">
+            <span class="num">01</span>
+            <span class="name">Top Must-See</span>
+            <span class="meta">20 places</span>
+          </button>
+          <button class="picks-tab" data-list="beach">
+            <span class="num">02</span>
+            <span class="name">Best Beach Selection</span>
+            <span class="meta">20 beaches</span>
+          </button>
+          <button class="picks-tab" data-list="hill">
+            <span class="num">03</span>
+            <span class="name">Top Hill Destinations</span>
+            <span class="meta">20 hills</span>
+          </button>
+          <button class="picks-tab" data-list="waterfall">
+            <span class="num">04</span>
+            <span class="name">Top Waterfall Destinations</span>
+            <span class="meta">20 falls</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: var(--s-5);">
+      <div class="container-wide">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="overline">List 01 — Top Must-See Places</p>
+            <h2>Twenty places that <em>belong on every list</em>.</h2>
+          </div>
+          <div>
+            <p style="margin-bottom: var(--s-4); max-width: 480px;">Curated for first-time travellers to India and seasoned explorers alike. Updated 12 May 2026.</p>
+            <a href="/trip" class="btn-text">Plan a trip from this list <span class="arrow">→</span></a>
+          </div>
+        </div>
+
+        <div class="picks-list" data-stagger>
+{% for p in picks %}
+          <a href="{{ p.href }}" class="picks-row">
+            <div class="rank">{% set rank = pagination.offset + loop.index %}{% if rank < 10 %}0{% endif %}{{ rank }}</div>
+            <div class="thumb"><img src="{{ p.image }}" alt=""></div>
+            <div class="info"><div class="region">{{ p.region }}</div><h3 class="name">{{ p.name | safe }}</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="/trip">Trip</a><a class="btn btn-sm" href="/packages">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+{% endfor %}
+        </div>
+
+        {{ pg.nav(pagination, baseUrl) }}
+
+        <!-- Sponsored placement -->
+        <div class="sponsored-block" data-reveal style="margin-top: var(--s-9);">
+          <span class="tag tag-sponsored badge-pos">Sponsored Placement</span>
+          <h4 style="font-family: var(--ff-display); font-style: italic; font-weight: var(--fw-light); font-size: 1.5rem; margin-bottom: var(--s-3);">Discover with India Trails</h4>
+          <p style="margin-bottom: var(--s-4);">Custom itineraries across all twenty must-see destinations, with curated drivers and verified accommodation across India.</p>
+          <a href="#" class="btn-text" data-external data-provider="India Trails" data-url="https://indiatrails.example.com">Visit operator <span class="arrow">→</span></a>
+        </div>
+
+        <!-- Bottom CTA -->
+        <div style="text-align: center; margin-top: var(--s-10); padding-top: var(--s-10); border-top: 1px solid var(--c-border);" data-reveal>
+          <p class="overline center">Methodology</p>
+          <h3 style="font-family: var(--ff-display); font-weight: var(--fw-light); font-size: 1.8rem; margin-bottom: var(--s-4);">How we <em>rank</em> these.</h3>
+          <p style="max-width: 540px; margin: 0 auto var(--s-5);">Each list is curated by our editors — visited personally or independently verified within the last 18 months. Rankings consider season-window, accessibility, cultural depth, and how well a place rewards slow travel.</p>
+          <a href="/about#methodology" class="btn btn-ghost">Read our editorial standards <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-partial="footer"></div>
+  <div data-partial="search"></div>
+  <div data-partial="consent"></div>
+  <div data-partial="lightbox"></div>
+
+  <script src="assets/js/partials.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

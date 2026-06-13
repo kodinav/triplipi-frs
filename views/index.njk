@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Triplipi — A Travel Discovery Platform</title>
+  <meta name="description" content="A premium discovery platform for the discerning traveller. Curated destinations across India and beyond, verified packages, original photography, and a blog of slow travel.">
+  <meta name="theme-color" content="#D05527">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Triplipi — A Travel Discovery Platform">
+  <meta property="og:description" content="450 destinations, curated by editors. The next chapter of your story is already being written.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=1200&q=80">
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": "Triplipi",
+    "url": "https://Triplipi.example.com",
+    "areaServed": "Worldwide",
+    "description": "A curated travel discovery platform with verified destinations and packages."
+  }
+  </script>
+
+  <!-- Fonts: Playfair Display (headlines) + Manrope (UI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+
+  <div data-partial="loader"></div>
+  <div data-partial="header"></div>
+
+  <main>
+
+    <!-- ============================================================
+         HERO — cinematic full-screen
+         ============================================================ -->
+    <section class="hero" aria-label="Hero">
+      <div class="hero-bg" data-parallax="-0.08">
+        <img src="{{ home.hero.bgImage }}" alt="" loading="eager" fetchpriority="high">
+      </div>
+
+      <div class="hero-inner hero-centered">
+        <div class="hero-content">
+          <h1>{{ home.hero.titleHtml | safe }}</h1>
+          <p class="lead">{{ home.hero.lead | safe }}</p>
+          <div class="hero-cta">
+            <a href="{{ home.hero.ctaPrimaryHref }}" class="btn btn-brand">{{ home.hero.ctaPrimaryLabel }} <span class="arrow">→</span></a>
+            <a href="{{ home.hero.ctaSecondaryHref }}" class="btn btn-outline-light">{{ home.hero.ctaSecondaryLabel }}</a>
+          </div>
+        </div>
+
+        <!-- Search bar — centered inside hero -->
+        <form class="hero-search hero-search-centered" data-form data-success-message="Searching destinations…" onsubmit="event.preventDefault();">
+          <div class="seg">
+            <div class="seg-label">Destination</div>
+            <input class="seg-val" type="text" placeholder="Where to?" name="destination">
+          </div>
+          <div class="seg">
+            <div class="seg-label">When</div>
+            <input class="seg-val" type="text" placeholder="Anytime" name="when">
+          </div>
+          <button class="btn btn-brand" type="submit" aria-label="Search">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          </button>
+        </form>
+      </div>
+
+      <div class="scroll-indicator" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="scroll-indicator-line"></div>
+      </div>
+    </section>
+
+
+
+
+    <!-- ============================================================
+         FEATURED LOCATIONS (FR-HOME-005..007)
+         ============================================================ -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="overline">{{ home.featuredHead.overline }}</p>
+            <h2>{{ home.featuredHead.titleHtml | safe }}</h2>
+          </div>
+          <div>
+            <p>{{ home.featuredHead.blurb | safe }}</p>
+            <a href="/destinations" class="btn-text">View all destinations <span class="arrow">→</span></a>
+          </div>
+        </div>
+
+        <div class="featured-grid" data-stagger>
+{% for d in destinations %}
+          <article class="feat-card">
+            <a class="feat-media" href="/destination-detail?d={{ d.slug }}" aria-label="{{ d.name | striptags }} — view details">
+              <img src="{{ d.image }}" alt="{{ d.name | striptags }}">
+            </a>
+            <div class="feat-info">
+              <div class="region">{{ d.region }}</div>
+              <h3 class="name">{{ d.name | safe }}</h3>
+              <div class="meta">
+                <span>{{ d.season }}</span><span class="dot"></span><span>{{ d.tagline }}</span>
+              </div>
+              <div class="feat-actions">
+                <a class="act-details" href="/destination-detail?d={{ d.slug }}">View Details <span>→</span></a>
+                <a class="act-pkg" href="/packages?d={{ d.slug }}">See Packages <span>→</span></a>
+              </div>
+            </div>
+          </article>
+{% endfor %}
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         TRAVEL HIGHLIGHTS / EXPERIENCES (FR-HOME-008..009)
+         ============================================================ -->
+    <section class="section-sm">
+      <div class="container-wide">
+        <div class="section-head" style="margin-bottom: var(--s-5);" data-reveal>
+          <div>
+            <p class="overline">{{ home.highlightsHead.overline }}</p>
+            <h2>{{ home.highlightsHead.titleHtml | safe }}</h2>
+          </div>
+          <a href="/destinations" class="btn-text">All experiences <span class="arrow">→</span></a>
+        </div>
+
+        <div class="float-grid" data-reveal>
+{% for h in highlights %}
+          <a href="/destination-detail" class="float-card">
+            <img src="{{ h.image }}" alt="{{ h.title }}, {{ h.place }}">
+            <div class="float-card-label">
+              <span class="day">{{ h.kicker }}</span>
+              <h3>{{ h.title }}</h3>
+              <span class="place">{{ h.place }}</span>
+            </div>
+          </a>
+{% endfor %}
+        </div>
+      </div>
+    </section>
+
+
+
+
+    <!-- ============================================================
+         ANNOUNCEMENTS (FR-HOME-012..013D)
+         ============================================================ -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="overline">{{ home.announceHead.overline }}</p>
+            <h2>{{ home.announceHead.titleHtml | safe }}</h2>
+          </div>
+          <a href="/announcements" class="btn-text">All announcements <span class="arrow">→</span></a>
+        </div>
+
+        <div class="announce-grid" data-stagger>
+{% for a in announcements %}
+          <article class="ann-card">
+            <div class="ann-head">
+              <span class="tag{% if a.tagClass %} {{ a.tagClass }}{% endif %}">{{ a.tagLabel }}</span>
+              <span class="ann-date">{{ a.date }}</span>
+            </div>
+            <h4>{{ a.title | safe }}</h4>
+            <p class="ann-excerpt">{{ a.excerpt | safe }}</p>
+            <a class="ann-link" href="{{ a.href }}">{{ a.linkLabel }} <span class="arrow">→</span></a>
+          </article>
+{% endfor %}
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         JOURNAL STRIP — Blog (FR-DEST-013..018)
+         ============================================================ -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="overline">{{ home.blogHead.overline }}</p>
+            <h2>{{ home.blogHead.titleHtml | safe }}</h2>
+          </div>
+          <a href="/blog" class="btn-text">Read the blog <span class="arrow">→</span></a>
+        </div>
+
+        <div class="blog-strip" data-stagger>
+{% for p in blogPosts %}
+          <a class="blog-card" href="/blog-post">
+            <div class="thumb"><img src="{{ p.image }}" alt=""></div>
+            <div class="category">{{ p.category }}</div>
+            <h3>{{ p.title | safe }}</h3>
+            <p class="excerpt">{{ p.excerpt | safe }}</p>
+            <div class="byline">{% for b in p.bylineSpans %}{% if not loop.first %}<span class="sep"></span>{% endif %}<span>{{ b }}</span>{% endfor %}</div>
+          </a>
+{% endfor %}
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SPONSORED PACKAGES SECTION (FR-HOME-014..017)
+         ============================================================ -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="overline">{{ home.packagesHead.overline }}</p>
+            <h2>{{ home.packagesHead.titleHtml | safe }}</h2>
+          </div>
+          <a href="/packages" class="btn-text">All packages <span class="arrow">→</span></a>
+        </div>
+
+        <div class="pkg-grid cols-2" data-stagger>
+{% for k in packages %}
+          <article class="pkg-card">
+            <div class="thumb">
+              <img src="{{ k.image }}" alt="">
+              {% if k.badgeLabel %}<span class="tag{% if k.badgeClass %} {{ k.badgeClass }}{% endif %} badge-pos">{{ k.badgeLabel }}</span>{% endif %}
+            </div>
+            <div class="body">
+              <div class="pkg-region">{{ k.region }}</div>
+              <h3>{{ k.title | safe }}</h3>
+              <p style="font-size: 0.9rem;">{{ k.description | safe }}</p>
+              <div class="pkg-meta">
+                {% for s in k.metaSpans %}<span>{{ s }}</span>{% endfor %}
+              </div>
+              <div class="pkg-foot">
+                {% if k.onRequest %}<div class="pkg-price" style="font-size: 1.1rem; font-family: var(--ff-text); font-style: italic;">{{ k.price }}</div>{% else %}<div class="pkg-price">{{ k.price }}<small>{{ k.priceUnit }}</small></div>{% endif %}
+                {% if k.ctaExternal %}<a href="{{ k.ctaHref }}" class="btn btn-sm" data-external data-provider="{{ k.ctaProvider }}" data-url="{{ k.ctaUrl }}">{{ k.ctaLabel }} <span class="arrow">→</span></a>{% else %}<a href="{{ k.ctaHref }}" class="btn btn-sm">{{ k.ctaLabel }} <span class="arrow">→</span></a>{% endif %}
+              </div>
+            </div>
+          </article>
+{% endfor %}
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         ASK FOR GUIDANCE (FR-HOME-010..011)
+         ============================================================ -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="ask-section" data-reveal>
+          <div>
+            <p class="overline">{{ home.ask.overline }}</p>
+            <h2>{{ home.ask.titleHtml | safe }}</h2>
+            <p>{{ home.ask.body | safe }}</p>
+            <div class="actions">
+              <a href="mailto:{{ home.ask.email }}" class="btn btn-ghost">{{ home.ask.email }}</a>
+            </div>
+          </div>
+          <form class="ask-form" data-form data-success-message="Thank you. We'll be in touch within one working day.">
+            <div class="form-row">
+              <input type="text" name="name" placeholder="Your name" required>
+              <input type="email" name="email" placeholder="Email address" required>
+            </div>
+            <input type="text" name="subject" placeholder="Where are you dreaming about?">
+            <textarea name="message" rows="4" placeholder="Tell us a little — destination, dates if you have them, the kind of pace you're after…" required></textarea>
+            <button type="submit" class="btn btn-brand">Send the message <span class="arrow">→</span></button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-partial="footer"></div>
+  <div data-partial="search"></div>
+  <div data-partial="consent"></div>
+  <div data-partial="lightbox"></div>
+
+  <script src="assets/js/partials.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

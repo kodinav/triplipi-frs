@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log in — Triplipi CMS</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/admin.css">
+</head>
+<body class="admin login-page">
+  <form class="login-card" method="post" action="/admin/login">
+    <div class="adm-brand" style="justify-content:center; margin-bottom: 18px;">
+      <span class="mark">T</span>
+      <span>Triplipi <small>CMS</small></span>
+    </div>
+    <h1>Sign in to manage the site</h1>
+    {% if error %}<div class="login-error">{{ error }}</div>{% endif %}
+    <label>Username
+      <input type="text" name="user" autocomplete="username" placeholder="Your username" required autofocus>
+    </label>
+    <label>Password
+      <input type="password" name="pass" autocomplete="current-password" placeholder="Your password" required>
+    </label>
+    <button type="submit" class="adm-btn primary" style="width:100%;">Sign in →</button>
+  </form>
+</body>
+</html>

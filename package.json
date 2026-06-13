@@ -1,0 +1,20 @@
+{
+  "name": "triplipi",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Triplipi \u2014 travel discovery platform with CMS backend",
+  "main": "server/app.js",
+  "scripts": {
+    "start": "NODE_ENV=production node server/app.js",
+    "dev": "node --watch server/app.js",
+    "seed": "node server/seed.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "multer": "^2.1.1",
+    "nunjucks": "^3.2.4"
+  }
+}

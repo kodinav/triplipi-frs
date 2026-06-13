@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Triplipi — A Travel Discovery Platform</title>
+  <meta name="description" content="A premium discovery platform for the discerning traveller. Curated destinations across India and beyond, verified packages, original photography, and a blog of slow travel.">
+  <meta name="theme-color" content="#D05527">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Triplipi — A Travel Discovery Platform">
+  <meta property="og:description" content="450 destinations, curated by editors. The next chapter of your story is already being written.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=1200&q=80">
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": "Triplipi",
+    "url": "https://Triplipi.example.com",
+    "areaServed": "Worldwide",
+    "description": "A curated travel discovery platform with verified destinations and packages."
+  }
+  </script>
+
+  <!-- Fonts: Playfair Display (headlines) + Manrope (UI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+
+  <div data-partial="loader"></div>
+  <div data-partial="header"></div>
+
+  <main>
+
+    <!-- ============================================================
+         HERO — cinematic full-screen
+         ============================================================ -->
+    <section class="hero" aria-label="Hero">
+      <div class="hero-bg" data-parallax="-0.08">
+        <img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=2400&q=85" alt="" loading="eager" fetchpriority="high">
+      </div>
+
+      <div class="hero-inner hero-centered">
+        <div class="hero-content">
+          <h1>
+            <span class="word"><span>The</span></span>
+            <span class="word"><span>world,</span></span>
+            <span class="word"><span><em>slowly</em>.</span></span>
+          </h1>
+          <p class="lead">A discovery platform for travellers who measure journeys in moments, not miles. Four hundred and fifty curated destinations.</p>
+          <div class="hero-cta">
+            <a href="destinations.html" class="btn btn-brand">Browse destinations <span class="arrow">→</span></a>
+            <a href="trip.html" class="btn btn-outline-light">Plan a trip</a>
+          </div>
+        </div>
+
+        <!-- Search bar — centered inside hero -->
+        <form class="hero-search hero-search-centered" data-form data-success-message="Searching destinations…" onsubmit="event.preventDefault();">
+          <div class="seg">
+            <div class="seg-label">Destination</div>
+            <input class="seg-val" type="text" placeholder="Where to?" name="destination">
+          </div>
+          <div class="seg">
+            <div class="seg-label">When</div>
+            <input class="seg-val" type="text" placeholder="Anytime" name="when">
+          </div>
+          <button class="btn btn-brand" type="submit" aria-label="Search">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          </button>
+        </form>
+      </div>
+
+      <div class="scroll-indicator" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="scroll-indicator-line"></div>
+      </div>
+    </section>
+
+
+
+
+    <!-- ============================================================
+         FEATURED LOCATIONS (FR-HOME-005..007)
+         ============================================================ -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="overline">Featured Destinations</p>
+            <h2>Twelve places that <em>belong on a list</em>.</h2>
+          </div>
+          <div>
+            <p>Editor's choice for this season — selected for their character, their crowds (or lack thereof), and how they reward attention.</p>
+            <a href="destinations.html" class="btn-text">View all destinations <span class="arrow">→</span></a>
+          </div>
+        </div>
+
+        <div class="featured-grid" data-stagger>
+
+          <!-- 1 -->
+          <article class="feat-card">
+            <a class="feat-media" href="destination-detail.html?d=ladakh" aria-label="Ladakh — view details">
+              <img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=900&q=80" alt="Ladakh">
+            </a>
+            <div class="feat-info">
+              <div class="region">North · India</div>
+              <h3 class="name">Ladakh</h3>
+              <div class="meta">
+                <span>Sep – Jan</span><span class="dot"></span><span>High desert</span>
+              </div>
+              <div class="feat-actions">
+                <a class="act-details" href="destination-detail.html?d=ladakh">View Details <span>→</span></a>
+                <a class="act-pkg" href="packages.html?d=ladakh">See Packages <span>→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 2 -->
+          <article class="feat-card">
+            <a class="feat-media" href="destination-detail.html?d=andaman" aria-label="Andaman Islands — view details">
+              <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=900&q=80" alt="Andaman Islands">
+            </a>
+            <div class="feat-info">
+              <div class="region">Island · Bay of Bengal</div>
+              <h3 class="name">Andaman Islands</h3>
+              <div class="meta">
+                <span>Nov – Apr</span><span class="dot"></span><span>Coral reefs</span>
+              </div>
+              <div class="feat-actions">
+                <a class="act-details" href="destination-detail.html?d=andaman">View Details <span>→</span></a>
+                <a class="act-pkg" href="packages.html?d=andaman">See Packages <span>→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 3 -->
+          <article class="feat-card">
+            <a class="feat-media" href="destination-detail.html?d=spiti" aria-label="Spiti Valley — view details">
+              <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=900&q=80" alt="Spiti Valley">
+            </a>
+            <div class="feat-info">
+              <div class="region">Himachal · India</div>
+              <h3 class="name">Spiti Valley</h3>
+              <div class="meta">
+                <span>May – Oct</span><span class="dot"></span><span>Monasteries</span>
+              </div>
+              <div class="feat-actions">
+                <a class="act-details" href="destination-detail.html?d=spiti">View Details <span>→</span></a>
+                <a class="act-pkg" href="packages.html?d=spiti">See Packages <span>→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 4 -->
+          <article class="feat-card">
+            <a class="feat-media" href="destination-detail.html?d=manali" aria-label="Manali &amp; Kasol — view details">
+              <img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=900&q=80" alt="Manali">
+            </a>
+            <div class="feat-info">
+              <div class="region">Himachal · Hills</div>
+              <h3 class="name">Manali &amp; Kasol</h3>
+              <div class="meta">
+                <span>Year-round</span><span class="dot"></span><span>Adventure</span>
+              </div>
+              <div class="feat-actions">
+                <a class="act-details" href="destination-detail.html?d=manali">View Details <span>→</span></a>
+                <a class="act-pkg" href="packages.html?d=manali">See Packages <span>→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 5 -->
+          <article class="feat-card">
+            <a class="feat-media" href="destination-detail.html?d=kerala" aria-label="Kerala Backwaters — view details">
+              <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80" alt="Kerala">
+            </a>
+            <div class="feat-info">
+              <div class="region">South · India</div>
+              <h3 class="name">Kerala Backwaters</h3>
+              <div class="meta">
+                <span>Sep – Mar</span><span class="dot"></span><span>Houseboat</span>
+              </div>
+              <div class="feat-actions">
+                <a class="act-details" href="destination-detail.html?d=kerala">View Details <span>→</span></a>
+                <a class="act-pkg" href="packages.html?d=kerala">See Packages <span>→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 6 -->
+          <article class="feat-card">
+            <a class="feat-media" href="destination-detail.html?d=meghalaya" aria-label="Meghalaya — view details">
+              <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=1200&q=80" alt="Meghalaya">
+            </a>
+            <div class="feat-info">
+              <div class="region">North-East · India</div>
+              <h3 class="name">Meghalaya</h3>
+              <div class="meta">
+                <span>Oct – May</span><span class="dot"></span><span>Root bridges</span>
+              </div>
+              <div class="feat-actions">
+                <a class="act-details" href="destination-detail.html?d=meghalaya">View Details <span>→</span></a>
+                <a class="act-pkg" href="packages.html?d=meghalaya">See Packages <span>→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 7 -->
+          <article class="feat-card">
+            <a class="feat-media" href="destination-detail.html?d=jaisalmer" aria-label="Jaisalmer &amp; Jodhpur — view details">
+              <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1200&q=80" alt="Rajasthan">
+            </a>
+            <div class="feat-info">
+              <div class="region">Rajasthan · India</div>
+              <h3 class="name">Jaisalmer &amp; Jodhpur</h3>
+              <div class="meta">
+                <span>Oct – Mar</span><span class="dot"></span><span>Heritage</span>
+              </div>
+              <div class="feat-actions">
+                <a class="act-details" href="destination-detail.html?d=jaisalmer">View Details <span>→</span></a>
+                <a class="act-pkg" href="packages.html?d=jaisalmer">See Packages <span>→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 8 -->
+          <article class="feat-card">
+            <a class="feat-media" href="destination-detail.html?d=goa" aria-label="South Goa — view details">
+              <img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=900&q=80" alt="Goa">
+            </a>
+            <div class="feat-info">
+              <div class="region">West · Coast</div>
+              <h3 class="name">South Goa</h3>
+              <div class="meta">
+                <span>Nov – Feb</span><span class="dot"></span><span>Beaches</span>
+              </div>
+              <div class="feat-actions">
+                <a class="act-details" href="destination-detail.html?d=goa">View Details <span>→</span></a>
+                <a class="act-pkg" href="packages.html?d=goa">See Packages <span>→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 9 -->
+          <article class="feat-card">
+            <a class="feat-media" href="destination-detail.html?d=coorg" aria-label="Coorg — view details">
+              <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?w=900&q=80" alt="Coorg">
+            </a>
+            <div class="feat-info">
+              <div class="region">Karnataka · Hills</div>
+              <h3 class="name">Coorg</h3>
+              <div class="meta">
+                <span>Oct – Mar</span><span class="dot"></span><span>Coffee estates</span>
+              </div>
+              <div class="feat-actions">
+                <a class="act-details" href="destination-detail.html?d=coorg">View Details <span>→</span></a>
+                <a class="act-pkg" href="packages.html?d=coorg">See Packages <span>→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 10 -->
+          <article class="feat-card">
+            <a class="feat-media" href="destination-detail.html?d=sikkim" aria-label="North Sikkim — view details">
+              <img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=900&q=80" alt="Sikkim">
+            </a>
+            <div class="feat-info">
+              <div class="region">North-East · Hills</div>
+              <h3 class="name">North Sikkim</h3>
+              <div class="meta">
+                <span>Mar – Jun</span><span class="dot"></span><span>Snow peaks</span>
+              </div>
+              <div class="feat-actions">
+                <a class="act-details" href="destination-detail.html?d=sikkim">View Details <span>→</span></a>
+                <a class="act-pkg" href="packages.html?d=sikkim">See Packages <span>→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 11 -->
+          <article class="feat-card">
+            <a class="feat-media" href="destination-detail.html?d=munnar" aria-label="Munnar Tea Country — view details">
+              <img src="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=900&q=80" alt="Munnar">
+            </a>
+            <div class="feat-info">
+              <div class="region">Kerala · Hills</div>
+              <h3 class="name">Munnar Tea Country</h3>
+              <div class="meta">
+                <span>Sep – Mar</span><span class="dot"></span><span>Tea estates</span>
+              </div>
+              <div class="feat-actions">
+                <a class="act-details" href="destination-detail.html?d=munnar">View Details <span>→</span></a>
+                <a class="act-pkg" href="packages.html?d=munnar">See Packages <span>→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 12 -->
+          <article class="feat-card">
+            <a class="feat-media" href="destination-detail.html?d=lakshadweep" aria-label="Lakshadweep — view details">
+              <img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=900&q=80" alt="Lakshadweep">
+            </a>
+            <div class="feat-info">
+              <div class="region">Island · Arabian Sea</div>
+              <h3 class="name">Lakshadweep</h3>
+              <div class="meta">
+                <span>Nov – Apr</span><span class="dot"></span><span>Lagoons</span>
+              </div>
+              <div class="feat-actions">
+                <a class="act-details" href="destination-detail.html?d=lakshadweep">View Details <span>→</span></a>
+                <a class="act-pkg" href="packages.html?d=lakshadweep">See Packages <span>→</span></a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         TRAVEL HIGHLIGHTS / EXPERIENCES (FR-HOME-008..009)
+         ============================================================ -->
+    <section class="section-sm">
+      <div class="container-wide">
+        <div class="section-head" style="margin-bottom: var(--s-5);" data-reveal>
+          <div>
+            <p class="overline">Travel Highlights</p>
+            <h2>Twelve experiences <em>worth flying for</em>.</h2>
+          </div>
+          <a href="destinations.html" class="btn-text">All experiences <span class="arrow">→</span></a>
+        </div>
+
+        <div class="float-grid" data-reveal>
+          <a href="destination-detail.html" class="float-card">
+            <img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=700&q=80" alt="Sunrise at Tiger's Nest, Bhutan">
+            <div class="float-card-label">
+              <span class="day">Experience</span>
+              <h3>Sunrise at Tiger's Nest</h3>
+              <span class="place">Bhutan</span>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="float-card">
+            <img src="https://images.unsplash.com/photo-1502786129293-79981df4e689?w=700&q=80" alt="Scuba in Havelock, Andamans">
+            <div class="float-card-label">
+              <span class="day">Experience</span>
+              <h3>Scuba in Havelock</h3>
+              <span class="place">Andamans</span>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="float-card">
+            <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=700&q=80" alt="Stargazing in Spiti, Himachal">
+            <div class="float-card-label">
+              <span class="day">Experience</span>
+              <h3>Stargazing in Spiti</h3>
+              <span class="place">Himachal</span>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="float-card">
+            <img src="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=700&q=80" alt="Tea estate breakfast, Munnar">
+            <div class="float-card-label">
+              <span class="day">Experience</span>
+              <h3>Tea estate breakfast</h3>
+              <span class="place">Munnar</span>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="float-card">
+            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=700&q=80" alt="Backwater houseboat, Kerala">
+            <div class="float-card-label">
+              <span class="day">Experience</span>
+              <h3>Backwater houseboat</h3>
+              <span class="place">Kerala</span>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="float-card">
+            <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=700&q=80" alt="Camel safari at dusk, Jaisalmer">
+            <div class="float-card-label">
+              <span class="day">Experience</span>
+              <h3>Camel safari at dusk</h3>
+              <span class="place">Jaisalmer</span>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="float-card">
+            <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=700&q=80" alt="Root-bridge trek, Meghalaya">
+            <div class="float-card-label">
+              <span class="day">Experience</span>
+              <h3>Root-bridge trek</h3>
+              <span class="place">Meghalaya</span>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="float-card">
+            <img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=700&q=80" alt="Zero point, Yumthang, Sikkim">
+            <div class="float-card-label">
+              <span class="day">Experience</span>
+              <h3>Zero point, Yumthang</h3>
+              <span class="place">Sikkim</span>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="float-card">
+            <img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=700&q=80" alt="Sail the lagoons, Lakshadweep">
+            <div class="float-card-label">
+              <span class="day">Experience</span>
+              <h3>Sail the lagoons</h3>
+              <span class="place">Lakshadweep</span>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="float-card">
+            <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?w=700&q=80" alt="Coffee estate trail, Coorg">
+            <div class="float-card-label">
+              <span class="day">Experience</span>
+              <h3>Coffee estate trail</h3>
+              <span class="place">Coorg</span>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="float-card">
+            <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=700&q=80" alt="Snorkel at Neil Island, Andamans">
+            <div class="float-card-label">
+              <span class="day">Experience</span>
+              <h3>Snorkel at Neil Island</h3>
+              <span class="place">Andamans</span>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="float-card">
+            <img src="https://images.unsplash.com/photo-1494791368093-85217fbbf8de?w=700&q=80" alt="Pangong by moonlight, Ladakh">
+            <div class="float-card-label">
+              <span class="day">Experience</span>
+              <h3>Pangong by moonlight</h3>
+              <span class="place">Ladakh</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+
+
+    <!-- ============================================================
+         ANNOUNCEMENTS (FR-HOME-012..013D)
+         ============================================================ -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="overline">Latest Announcements</p>
+            <h2>What's <em>new</em> this week.</h2>
+          </div>
+          <a href="announcements.html" class="btn-text">All announcements <span class="arrow">→</span></a>
+        </div>
+
+        <div class="announce-grid" data-stagger>
+          <article class="ann-card">
+            <div class="ann-head">
+              <span class="tag tag-gold">New Package</span>
+              <span class="ann-date">12 May 2026</span>
+            </div>
+            <h4>Spiti Valley premium circuit launches with our trusted partners</h4>
+            <p class="ann-excerpt">Seven days of monasteries, motorcycle passes and Himalayan nights — bookings open until 30 June with early-bird pricing.</p>
+            <a class="ann-link">Read more <span class="arrow">→</span></a>
+          </article>
+
+          <article class="ann-card">
+            <div class="ann-head">
+              <span class="tag tag-ember">Limited Time</span>
+              <span class="ann-date">10 May 2026</span>
+            </div>
+            <h4>Monsoon Sale — up to 35% off Kerala packages</h4>
+            <p class="ann-excerpt">Three verified houseboat operators in Alleppey running early-bird discounts through July. Conditions apply.</p>
+            <a class="ann-link">View packages <span class="arrow">→</span></a>
+          </article>
+
+          <article class="ann-card">
+            <div class="ann-head">
+              <span class="tag">Editorial</span>
+              <span class="ann-date">8 May 2026</span>
+            </div>
+            <h4>New blog post: What I learned in Ladakh's high passes</h4>
+            <p class="ann-excerpt">A 14-minute essay on solitude, altitude, and the unexpected geography of attention. Photography by our editor.</p>
+            <a class="ann-link">Read the essay <span class="arrow">→</span></a>
+          </article>
+
+          <article class="ann-card">
+            <div class="ann-head">
+              <span class="tag tag-outline">Shop Update</span>
+              <span class="ann-date">5 May 2026</span>
+            </div>
+            <h4>22 new photographs available for licensing</h4>
+            <p class="ann-excerpt">Fresh from the Spiti Valley shoot — high-resolution stills available for editorial and commercial use, with full release.</p>
+            <a class="ann-link">Browse Shop <span class="arrow">→</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         JOURNAL STRIP — Blog (FR-DEST-013..018)
+         ============================================================ -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="overline">From the Blog</p>
+            <h2>Stories from the <em>field</em>.</h2>
+          </div>
+          <a href="blog.html" class="btn-text">Read the blog <span class="arrow">→</span></a>
+        </div>
+
+        <div class="blog-strip" data-stagger>
+          <a class="blog-card" href="blog-post.html">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=800&q=80" alt=""></div>
+            <div class="category">Essay · Ladakh</div>
+            <h3>What I learned about silence in the high passes</h3>
+            <p class="excerpt">Three weeks at altitude, no signal, one notebook. An essay on solitude, attention, and the geography of slowness.</p>
+            <div class="byline"><span>14 min read</span><span class="sep"></span><span>By Editor</span></div>
+          </a>
+
+          <a class="blog-card" href="blog-post.html">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80" alt=""></div>
+            <div class="category">Photo Essay · Kerala</div>
+            <h3>Forty-eight hours on a houseboat, in pictures</h3>
+            <p class="excerpt">From the slow rituals of the Vembanad — coffee on the deck, the cook humming, herons at dawn.</p>
+            <div class="byline"><span>Photo essay</span><span class="sep"></span><span>22 images</span></div>
+          </a>
+
+          <a class="blog-card" href="blog-post.html">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80" alt=""></div>
+            <div class="category">Field Notes · Meghalaya</div>
+            <h3>The living root bridges of Mawlynnong, and how they grew</h3>
+            <p class="excerpt">A walking guide, a botanical primer, and a meditation on patience — bridges that take fifteen years to build.</p>
+            <div class="byline"><span>9 min read</span><span class="sep"></span><span>By Editor</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SPONSORED PACKAGES SECTION (FR-HOME-014..017)
+         ============================================================ -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="overline">Curated Packages</p>
+            <h2>Trips <em>worth taking</em>, with partners we trust.</h2>
+          </div>
+          <a href="packages.html" class="btn-text">All packages <span class="arrow">→</span></a>
+        </div>
+
+        <div class="pkg-grid cols-2" data-stagger>
+          <article class="pkg-card">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=900&q=80" alt="">
+              <span class="tag tag-gold badge-pos">Sponsored</span>
+            </div>
+            <div class="body">
+              <div class="pkg-region">Himachal · 7 days</div>
+              <h3>Spiti Valley Premium Circuit</h3>
+              <p style="font-size: 0.9rem;">Kaza, Key Monastery, Chandratal lakes, Langza fossils. All meals, certified local guides, premium homestays.</p>
+              <div class="pkg-meta">
+                <span>🏔 Premium</span>
+                <span>⭐ 4.9</span>
+                <span>🛏 6 nights</span>
+              </div>
+              <div class="pkg-foot">
+                <div class="pkg-price">₹42,500<small>/ person</small></div>
+                <a href="package-detail.html" class="btn btn-sm">Details <span class="arrow">→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="pkg-card">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80" alt="">
+              <span class="tag tag-affiliate badge-pos">Affiliate</span>
+            </div>
+            <div class="body">
+              <div class="pkg-region">Kerala · 5 days</div>
+              <h3>Backwater Houseboat Retreat</h3>
+              <p style="font-size: 0.9rem;">Alleppey to Kumarakom on private houseboats, all-inclusive meals, ayurveda options.</p>
+              <div class="pkg-meta">
+                <span>🚤 Luxury</span>
+                <span>⭐ 4.8</span>
+                <span>🛏 4 nights</span>
+              </div>
+              <div class="pkg-foot">
+                <div class="pkg-price">₹28,000<small>/ person</small></div>
+                <a href="#" class="btn btn-sm" data-external data-provider="KeralaLuxe" data-url="https://keralaluxe.example.com">Book now <span class="arrow">→</span></a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         ASK FOR GUIDANCE (FR-HOME-010..011)
+         ============================================================ -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="ask-section" data-reveal>
+          <div>
+            <p class="overline">Ask For Guidance</p>
+            <h2>Not sure where to begin? <em>Tell us</em>, and we'll write back.</h2>
+            <p>Every itinerary starts with a conversation. Drop us a note — about a half-formed idea, a specific destination, or just what you're hoping the trip will feel like. We'll respond within one working day, in our own words.</p>
+            <div class="actions">
+              <a href="mailto:hello@Triplipi.example" class="btn btn-ghost">hello@Triplipi.example</a>
+            </div>
+          </div>
+          <form class="ask-form" data-form data-success-message="Thank you. We'll be in touch within one working day.">
+            <div class="form-row">
+              <input type="text" name="name" placeholder="Your name" required>
+              <input type="email" name="email" placeholder="Email address" required>
+            </div>
+            <input type="text" name="subject" placeholder="Where are you dreaming about?">
+            <textarea name="message" rows="4" placeholder="Tell us a little — destination, dates if you have them, the kind of pace you're after…" required></textarea>
+            <button type="submit" class="btn btn-brand">Send the message <span class="arrow">→</span></button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-partial="footer"></div>
+  <div data-partial="search"></div>
+  <div data-partial="consent"></div>
+  <div data-partial="lightbox"></div>
+
+  <script src="assets/js/partials.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

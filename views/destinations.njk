@@ -1,0 +1,81 @@
+{% import "_pagination.njk" as pg %}{% import "_sponsor.njk" as sp %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Destinations — Triplipi</title>
+  <meta name="description" content="450 curated destinations across India and beyond. Filter by category — beach, mountains, hidden gems, heritage. Every place editor-verified.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <meta name="theme-color" content="#D05527">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+
+  <main>
+    <!-- Page hero -->
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a><span>/</span><span>Destinations</span>
+        </nav>
+        <h1>{{ page.titleHtml | safe }}</h1>
+        <p class="lead">{{ page.lead | safe }}</p>
+      </div>
+    </section>
+
+    <!-- Category pills -->
+    <section class="section-sm" style="padding-top: var(--s-7); padding-bottom: 0; border-bottom: 1px solid var(--c-border);">
+      <div class="container-wide">
+        <div class="category-pills" data-reveal>
+          <button class="category-pill is-active" data-cat="all">All <span class="count">{{ cards | length }}</span></button>
+          {% for cat in categories %}
+          <button class="category-pill" data-cat="{{ cat.slug }}">{{ cat.label }} <span class="count">{{ cat.count }}</span></button>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- Destination grid -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="dest-listing-grid" data-stagger>
+{% for d in cards %}
+          {% if sponsorSlots[loop.index0] %}{{ sp.banner(sponsorSlots[loop.index0], 'sp-span-grid') }}{% endif %}
+          <a href="/destination-detail?d={{ d.slug }}" class="dest-card" data-cats="{{ d.categories | join(' ') if d.categories else '' }}">
+            <div class="media"><img src="{{ d.image }}" alt=""></div>
+            <div class="content">
+              <div class="region">{{ d.region }}</div>
+              <h3 class="name">{{ d.name | safe }}</h3>
+              <div class="meta"><span>{{ d.season }}</span>{% if d.tagline %}<span class="dot"></span><span>{{ d.tagline }}</span>{% endif %}</div>
+            </div>
+          </a>
+{% endfor %}
+        </div>
+
+        {{ pg.nav(pagination, baseUrl) }}
+
+      </div>
+    </section>
+
+    <!-- Affiliate strip -->
+  </main>
+
+
+  <script src="assets/js/partials.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

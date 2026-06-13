@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Not found — Triplipi</title>
+  <meta name="description" content="The page you're looking for has wandered off.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <meta name="theme-color" content="#D05527">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <div data-partial="loader"></div>
+  <div data-partial="header"></div>
+
+  <main>
+    <section class="error-page">
+      <div class="error-page-inner">
+        <div class="error-num">404</div>
+        <h1>This page has <em>wandered off</em>.</h1>
+        <p class="lead">The URL you followed doesn't lead anywhere we know — yet. It may have been moved, retired, or never existed. While we look into it, here are some places we'd love to send you instead.</p>
+
+        <div class="error-actions">
+          <a href="/" class="btn btn-brand">Take me home <span class="arrow">→</span></a>
+          <a href="/destinations" class="btn btn-ghost">Browse destinations</a>
+          <a href="/blog" class="btn btn-ghost">Read the blog</a>
+        </div>
+
+        <div class="error-suggestions">
+          <p class="overline center">Or try one of these</p>
+          <div class="suggestions-grid">
+            <a href="/destination-detail" class="suggestion">
+              <div class="thumb"><img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=400&q=80" alt=""></div>
+              <div>
+                <div class="kicker">Featured destination</div>
+                <h4>Ladakh — The High Desert</h4>
+              </div>
+            </a>
+            <a href="/blog-post" class="suggestion">
+              <div class="thumb"><img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=400&q=80" alt=""></div>
+              <div>
+                <div class="kicker">Latest essay</div>
+                <h4>Silence in the high passes</h4>
+              </div>
+            </a>
+            <a href="/picks" class="suggestion">
+              <div class="thumb"><img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=400&q=80" alt=""></div>
+              <div>
+                <div class="kicker">Our Picks</div>
+                <h4>Top 20 must-see places</h4>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-partial="footer"></div>
+  <div data-partial="search"></div>
+  <div data-partial="consent"></div>
+  <div data-partial="lightbox"></div>
+
+  <script src="assets/js/partials.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

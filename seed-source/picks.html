@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Our Picks — Triplipi</title>
+  <meta name="description" content="Four hand-curated lists, twenty destinations each. The places we'd send our closest friends — ranked, reasoned, ready.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <meta name="theme-color" content="#D05527">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <div data-partial="loader"></div>
+  <div data-partial="header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <nav class="crumbs"><a href="index.html">Home</a><span>/</span><span>Our Picks</span></nav>
+        <h1>Four lists. Twenty places each. <em>One careful index</em>.</h1>
+        <p class="lead">The destinations we'd send our closest friends — ranked, reasoned, updated quarterly by editors who've been to every place on the list. Pick the type. We've done the rest.</p>
+      </div>
+    </section>
+
+    <!-- List selector -->
+    <section class="section-sm" style="padding-top: var(--s-6); padding-bottom: var(--s-4);">
+      <div class="container-wide">
+        <div class="picks-tabs" data-reveal>
+          <button class="picks-tab is-active" data-list="mustsee">
+            <span class="num">01</span>
+            <span class="name">Top Must-See</span>
+            <span class="meta">20 places</span>
+          </button>
+          <button class="picks-tab" data-list="beach">
+            <span class="num">02</span>
+            <span class="name">Best Beach Selection</span>
+            <span class="meta">20 beaches</span>
+          </button>
+          <button class="picks-tab" data-list="hill">
+            <span class="num">03</span>
+            <span class="name">Top Hill Destinations</span>
+            <span class="meta">20 hills</span>
+          </button>
+          <button class="picks-tab" data-list="waterfall">
+            <span class="num">04</span>
+            <span class="name">Top Waterfall Destinations</span>
+            <span class="meta">20 falls</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: var(--s-5);">
+      <div class="container-wide">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="overline">List 01 — Top Must-See Places</p>
+            <h2>Twenty places that <em>belong on every list</em>.</h2>
+          </div>
+          <div>
+            <p style="margin-bottom: var(--s-4); max-width: 480px;">Curated for first-time travellers to India and seasoned explorers alike. Updated 12 May 2026.</p>
+            <a href="trip.html" class="btn-text">Plan a trip from this list <span class="arrow">→</span></a>
+          </div>
+        </div>
+
+        <div class="picks-list" data-stagger>
+          <!-- 20 rows -->
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">01</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Mountain · India</div><h3 class="name">Ladakh — The High Desert</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">02</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Islands · Bay of Bengal</div><h3 class="name">Andaman Islands</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">03</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Himachal · India</div><h3 class="name">Spiti Valley</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">04</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Kerala · South India</div><h3 class="name">Kerala Backwaters</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">05</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">North-East · India</div><h3 class="name">Meghalaya — Cherrapunji</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">06</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Rajasthan · India</div><h3 class="name">Jaisalmer Desert Fort</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">07</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">North-East · Hills</div><h3 class="name">North Sikkim</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">08</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Kerala · Hills</div><h3 class="name">Munnar Tea Country</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">09</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Islands · Arabian Sea</div><h3 class="name">Lakshadweep</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">10</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Karnataka · Hills</div><h3 class="name">Coorg</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">11</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Goa · West Coast</div><h3 class="name">South Goa Beaches</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">12</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Himachal · Hills</div><h3 class="name">Manali &amp; Kasol</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">13</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1502786129293-79981df4e689?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Andaman · Islands</div><h3 class="name">Havelock Island</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">14</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Bhutan · Himalayas</div><h3 class="name">Tiger's Nest Monastery</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">15</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Kerala · Backwaters</div><h3 class="name">Alleppey Houseboats</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">16</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Ladakh · Lakes</div><h3 class="name">Pangong Tso</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">17</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Meghalaya · Bridges</div><h3 class="name">Mawlynnong &amp; Nongriat</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">18</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Rajasthan · Heritage</div><h3 class="name">Udaipur — City of Lakes</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">19</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Spiti · Lakes</div><h3 class="name">Chandratal Lake</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="destination-detail.html" class="picks-row">
+            <div class="rank">20</div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=300&q=80" alt=""></div>
+            <div class="info"><div class="region">Tamil Nadu · Hills</div><h3 class="name">Kodaikanal</h3></div>
+            <div class="actions"><a class="btn btn-sm btn-ghost" href="trip.html">Trip</a><a class="btn btn-sm" href="packages.html">Packages</a></div>
+            <div class="arrow">→</div>
+          </a>
+        </div>
+
+        <!-- Sponsored placement -->
+        <div class="sponsored-block" data-reveal style="margin-top: var(--s-9);">
+          <span class="tag tag-sponsored badge-pos">Sponsored Placement</span>
+          <h4 style="font-family: var(--ff-display); font-style: italic; font-weight: var(--fw-light); font-size: 1.5rem; margin-bottom: var(--s-3);">Discover with India Trails</h4>
+          <p style="margin-bottom: var(--s-4);">Custom itineraries across all twenty must-see destinations, with curated drivers and verified accommodation across India.</p>
+          <a href="#" class="btn-text" data-external data-provider="India Trails" data-url="https://indiatrails.example.com">Visit operator <span class="arrow">→</span></a>
+        </div>
+
+        <!-- Bottom CTA -->
+        <div style="text-align: center; margin-top: var(--s-10); padding-top: var(--s-10); border-top: 1px solid var(--c-border);" data-reveal>
+          <p class="overline center">Methodology</p>
+          <h3 style="font-family: var(--ff-display); font-weight: var(--fw-light); font-size: 1.8rem; margin-bottom: var(--s-4);">How we <em>rank</em> these.</h3>
+          <p style="max-width: 540px; margin: 0 auto var(--s-5);">Each list is curated by our editors — visited personally or independently verified within the last 18 months. Rankings consider season-window, accessibility, cultural depth, and how well a place rewards slow travel.</p>
+          <a href="about.html#methodology" class="btn btn-ghost">Read our editorial standards <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-partial="footer"></div>
+  <div data-partial="search"></div>
+  <div data-partial="consent"></div>
+  <div data-partial="lightbox"></div>
+
+  <script src="assets/js/partials.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

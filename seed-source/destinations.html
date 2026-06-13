@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Destinations — Triplipi</title>
+  <meta name="description" content="450 curated destinations across India and beyond. Filter by category — beach, mountains, hidden gems, heritage. Every place editor-verified.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <meta name="theme-color" content="#D05527">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+  <div data-partial="loader"></div>
+  <div data-partial="header"></div>
+
+  <main>
+    <!-- Page hero -->
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="index.html">Home</a><span>/</span><span>Destinations</span>
+        </nav>
+        <h1>Four hundred and fifty <em>destinations</em>, one careful index.</h1>
+        <p class="lead">Every place here has been visited, photographed, or independently verified. Filter by what you want — mountains for solitude, islands for slowness, heritage for the stories etched into stone.</p>
+      </div>
+    </section>
+
+    <!-- Category pills -->
+    <section class="section-sm" style="padding-top: var(--s-7); padding-bottom: 0; border-bottom: 1px solid var(--c-border);">
+      <div class="container-wide">
+        <div class="category-pills" data-reveal>
+          <button class="category-pill is-active">All <span class="count">450</span></button>
+          <button class="category-pill">Popular <span class="count">48</span></button>
+          <button class="category-pill">Beach <span class="count">62</span></button>
+          <button class="category-pill">Mountains &amp; Hills <span class="count">94</span></button>
+          <button class="category-pill">Islands <span class="count">18</span></button>
+          <button class="category-pill">Water Sports <span class="count">31</span></button>
+          <button class="category-pill">Trek <span class="count">76</span></button>
+          <button class="category-pill">Waterfalls <span class="count">52</span></button>
+          <button class="category-pill">Hidden Gems <span class="count">28</span></button>
+          <button class="category-pill">Heritage <span class="count">41</span></button>
+          <button class="category-pill">Wildlife <span class="count">23</span></button>
+          <button class="category-pill">Spiritual <span class="count">36</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Destination grid -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="dest-listing-grid" data-stagger>
+          <a href="destination-detail.html" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">Mountain · India</div>
+              <h3 class="name">Ladakh</h3>
+              <div class="meta"><span>Sep – Jan</span><span class="dot"></span><span>High desert</span></div>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">Islands · Bay of Bengal</div>
+              <h3 class="name">Andaman Islands</h3>
+              <div class="meta"><span>Nov – Apr</span></div>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">Himachal · India</div>
+              <h3 class="name">Spiti Valley</h3>
+              <div class="meta"><span>May – Oct</span></div>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">Kerala · South India</div>
+              <h3 class="name">Kerala Backwaters</h3>
+              <div class="meta"><span>Sep – Mar</span></div>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">Himachal · Hills</div>
+              <h3 class="name">Manali</h3>
+              <div class="meta"><span>Year-round</span></div>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">North-East · India</div>
+              <h3 class="name">Meghalaya</h3>
+              <div class="meta"><span>Oct – May</span></div>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">Rajasthan · India</div>
+              <h3 class="name">Jaisalmer</h3>
+              <div class="meta"><span>Oct – Mar</span></div>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">Goa · West Coast</div>
+              <h3 class="name">South Goa</h3>
+              <div class="meta"><span>Nov – Feb</span></div>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">Karnataka · Hills</div>
+              <h3 class="name">Coorg</h3>
+              <div class="meta"><span>Oct – Mar</span></div>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">North-East · Hills</div>
+              <h3 class="name">North Sikkim</h3>
+              <div class="meta"><span>Mar – Jun</span></div>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">Kerala · Hills</div>
+              <h3 class="name">Munnar</h3>
+              <div class="meta"><span>Sep – Mar</span></div>
+            </div>
+          </a>
+          <a href="destination-detail.html" class="dest-card">
+            <div class="media"><img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=800&q=80" alt=""></div>
+            <div class="overlay"></div>
+            <div class="content">
+              <div class="region">Islands · Arabian Sea</div>
+              <h3 class="name">Lakshadweep</h3>
+              <div class="meta"><span>Nov – Apr</span></div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Load more -->
+        <div style="text-align: center; margin-top: var(--s-10);" data-reveal>
+          <button class="btn btn-ghost">Load more destinations <span class="arrow">↓</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Affiliate strip -->
+  </main>
+
+  <div data-partial="footer"></div>
+  <div data-partial="search"></div>
+  <div data-partial="consent"></div>
+  <div data-partial="lightbox"></div>
+
+  <script src="assets/js/partials.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

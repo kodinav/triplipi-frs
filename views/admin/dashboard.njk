@@ -1,0 +1,39 @@
+{% extends "admin/layout.njk" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+  <header class="adm-head">
+    <div>
+      <div class="adm-kicker">Dashboard</div>
+      <h1>Pick a page to edit.</h1>
+      <p class="adm-sub">Each page lists its sections in the order they appear on screen. Changes go live the moment you save.</p>
+    </div>
+  </header>
+
+  <h2 class="adm-group-title">Pages</h2>
+  <div class="adm-cards">
+    {% for p in pages %}
+      {% if not p.isSettings %}
+        <a class="adm-card" href="/admin/page/{{ p.key }}">
+          <div class="type">{{ p.sections | length }} section{{ 's' if p.sections | length > 1 }}</div>
+          <h3>{{ p.label }}</h3>
+          <p class="card-intro">{{ p.intro }}</p>
+          <span class="go">Open →</span>
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <h2 class="adm-group-title">Site</h2>
+  <div class="adm-cards">
+    {% for p in pages %}
+      {% if p.isSettings %}
+        <a class="adm-card" href="/admin/page/{{ p.key }}">
+          <div class="type">Brand · navigation · security</div>
+          <h3>{{ p.label }}</h3>
+          <p class="card-intro">{{ p.intro }}</p>
+          <span class="go">Open →</span>
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endblock %}

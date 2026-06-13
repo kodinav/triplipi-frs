@@ -1,0 +1,1225 @@
+{
+  "settings": {
+    "brandName": "Triplipi",
+    "headerCtaLabel": "Shop now",
+    "headerCtaHref": "/shop",
+    "contactEmail": "hello@Triplipi.example",
+    "copyright": "© 2026 Abhinav Saxena Dev's. All rights reserved.",
+    "navLinks": [
+      {
+        "label": "Packages",
+        "href": "/packages"
+      },
+      {
+        "label": "Gallery",
+        "href": "/gallery"
+      },
+      {
+        "label": "Announcements",
+        "href": "/announcements"
+      },
+      {
+        "label": "Blog",
+        "href": "/blog"
+      },
+      {
+        "label": "Contact",
+        "href": "/contact"
+      }
+    ]
+  },
+  "home": {
+    "hero": {
+      "titleHtml": "<span style=\"color: rgb(219, 6, 59);\">Slowly</span>",
+      "lead": "A discovery platform for travellers who measure journeys in moments, not miles. Four hundred and fifty curated destinations.",
+      "bgImage": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=2400&q=85",
+      "ctaPrimaryLabel": "Browse destinations",
+      "ctaPrimaryHref": "/destinations",
+      "ctaSecondaryLabel": "Plan a trip",
+      "ctaSecondaryHref": "/trip"
+    },
+    "featuredHead": {
+      "overline": "Featured Destinations",
+      "titleHtml": "Twelve places that <em>belong on a list</em>.",
+      "blurb": "Editor's choice for this season — selected for their character, their crowds (or lack thereof), and how they reward attention."
+    },
+    "highlightsHead": {
+      "overline": "Travel Highlights",
+      "titleHtml": "Twelve experiences <em>worth flying for</em>."
+    },
+    "announceHead": {
+      "overline": "Latest Announcements",
+      "titleHtml": "What's <em>new</em> this week."
+    },
+    "blogHead": {
+      "overline": "From the Blog",
+      "titleHtml": "Stories from the <em>field</em>."
+    },
+    "packagesHead": {
+      "overline": "Curated Packages",
+      "titleHtml": "Trips <em>worth taking</em>, with partners we trust."
+    },
+    "ask": {
+      "overline": "Ask For Guidance",
+      "titleHtml": "Not sure where to begin? <em>Tell us</em>, and we'll write back.",
+      "body": "Every itinerary starts with a conversation. Drop us a note — about a half-formed idea, a specific destination, or just what you're hoping the trip will feel like. We'll respond within one working day, in our own words.",
+      "email": "hello@Triplipi.example"
+    }
+  },
+  "destinations": [
+    {
+      "slug": "spiti",
+      "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=900&q=80",
+      "region": "Himachal · India",
+      "name": "Spiti Valley",
+      "season": "May – Oct",
+      "tagline": "Monasteries",
+      "featured": true,
+      "categories": [
+        "mountains-hills",
+        "trek",
+        "hidden-gems",
+        "spiritual"
+      ]
+    },
+    {
+      "slug": "ladakh",
+      "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=900&q=80",
+      "region": "North · India",
+      "name": "Ladakh",
+      "season": "Sep – Jan",
+      "tagline": "High desert",
+      "featured": true,
+      "categories": [
+        "popular",
+        "mountains-hills",
+        "trek"
+      ]
+    },
+    {
+      "slug": "andaman",
+      "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=900&q=80",
+      "region": "Island · Bay of Bengal",
+      "name": "Andaman Islands",
+      "season": "Nov – Apr",
+      "tagline": "Coral reefs",
+      "featured": true,
+      "categories": [
+        "islands",
+        "beach",
+        "water-sports",
+        "popular"
+      ]
+    },
+    {
+      "slug": "manali",
+      "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=900&q=80",
+      "region": "Himachal · Hills",
+      "name": "Manali &amp; Kasol",
+      "season": "Year-round",
+      "tagline": "Adventure",
+      "featured": true,
+      "categories": [
+        "popular",
+        "mountains-hills",
+        "trek"
+      ]
+    },
+    {
+      "slug": "kerala",
+      "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80",
+      "region": "South · India",
+      "name": "Kerala Backwaters",
+      "season": "Sep – Mar",
+      "tagline": "Houseboat",
+      "featured": true,
+      "categories": [
+        "popular",
+        "water-sports",
+        "wildlife"
+      ]
+    },
+    {
+      "slug": "meghalaya",
+      "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=1200&q=80",
+      "region": "North-East · India",
+      "name": "Meghalaya",
+      "season": "Oct – May",
+      "tagline": "Root bridges",
+      "featured": true,
+      "categories": [
+        "waterfalls",
+        "trek",
+        "hidden-gems"
+      ]
+    },
+    {
+      "slug": "jaisalmer",
+      "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1200&q=80",
+      "region": "Rajasthan · India",
+      "name": "Jaisalmer &amp; Jodhpur",
+      "season": "Oct – Mar",
+      "tagline": "Heritage",
+      "featured": true,
+      "categories": [
+        "heritage",
+        "popular"
+      ]
+    },
+    {
+      "slug": "goa",
+      "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=900&q=80",
+      "region": "West · Coast",
+      "name": "South Goa",
+      "season": "Nov – Feb",
+      "tagline": "Beaches",
+      "featured": true,
+      "categories": [
+        "beach",
+        "popular",
+        "water-sports"
+      ]
+    },
+    {
+      "slug": "coorg",
+      "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=900&q=80",
+      "region": "Karnataka · Hills",
+      "name": "Coorg",
+      "season": "Oct – Mar",
+      "tagline": "Coffee estates",
+      "featured": true,
+      "categories": [
+        "mountains-hills",
+        "hidden-gems",
+        "waterfalls"
+      ]
+    },
+    {
+      "slug": "sikkim",
+      "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=900&q=80",
+      "region": "North-East · Hills",
+      "name": "North Sikkim",
+      "season": "Mar – Jun",
+      "tagline": "Snow peaks",
+      "featured": true,
+      "categories": [
+        "mountains-hills",
+        "trek",
+        "hidden-gems"
+      ]
+    },
+    {
+      "slug": "munnar",
+      "image": "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=900&q=80",
+      "region": "Kerala · Hills",
+      "name": "Munnar Tea Country",
+      "season": "Sep – Mar",
+      "tagline": "Tea estates",
+      "featured": true,
+      "categories": [
+        "mountains-hills",
+        "popular",
+        "wildlife"
+      ]
+    },
+    {
+      "slug": "lakshadweep",
+      "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=900&q=80",
+      "region": "Island · Arabian Sea",
+      "name": "Lakshadweep",
+      "season": "Nov – Apr",
+      "tagline": "Lagoons",
+      "featured": true,
+      "categories": [
+        "islands",
+        "beach",
+        "water-sports",
+        "hidden-gems"
+      ]
+    }
+  ],
+  "highlights": [
+    {
+      "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=700&q=80",
+      "kicker": "Experience",
+      "title": "Sunrise at Tiger's Nest",
+      "place": "Bhutan"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1502786129293-79981df4e689?w=700&q=80",
+      "kicker": "Experience",
+      "title": "Scuba in Havelock",
+      "place": "Andamans"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=700&q=80",
+      "kicker": "Experience",
+      "title": "Stargazing in Spiti",
+      "place": "Himachal"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=700&q=80",
+      "kicker": "Experience",
+      "title": "Tea estate breakfast",
+      "place": "Munnar"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=700&q=80",
+      "kicker": "Experience",
+      "title": "Backwater houseboat",
+      "place": "Kerala"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=700&q=80",
+      "kicker": "Experience",
+      "title": "Camel safari at dusk",
+      "place": "Jaisalmer"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=700&q=80",
+      "kicker": "Experience",
+      "title": "Root-bridge trek",
+      "place": "Meghalaya"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=700&q=80",
+      "kicker": "Experience",
+      "title": "Zero point, Yumthang",
+      "place": "Sikkim"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=700&q=80",
+      "kicker": "Experience",
+      "title": "Sail the lagoons",
+      "place": "Lakshadweep"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=700&q=80",
+      "kicker": "Experience",
+      "title": "Coffee estate trail",
+      "place": "Coorg"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=700&q=80",
+      "kicker": "Experience",
+      "title": "Snorkel at Neil Island",
+      "place": "Andamans"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1494791368093-85217fbbf8de?w=700&q=80",
+      "kicker": "Experience",
+      "title": "Pangong by moonlight",
+      "place": "Ladakh"
+    }
+  ],
+  "announcements": [
+    {
+      "href": "/package-detail",
+      "category": "package",
+      "external": false,
+      "extProvider": "",
+      "extUrl": "",
+      "tagClass": "tag-gold",
+      "tagLabel": "New Package",
+      "date": "12 May 2026",
+      "title": "Spiti Valley premium circuit launches with our trusted partners",
+      "excerpt": "Seven days of monasteries, motorcycle passes, and Himalayan nights — bookings open until 30 June with early-bird pricing.",
+      "linkLabel": "Read more",
+      "featured": true
+    },
+    {
+      "href": "/packages",
+      "category": "package",
+      "external": false,
+      "extProvider": "",
+      "extUrl": "",
+      "tagClass": "tag-blush",
+      "tagLabel": "Limited Time",
+      "date": "10 May 2026",
+      "title": "Monsoon Sale — up to 35% off Kerala packages",
+      "excerpt": "Three verified houseboat operators in Alleppey running early-bird discounts through July. Conditions apply.",
+      "linkLabel": "View packages",
+      "featured": true
+    },
+    {
+      "href": "/blog-post",
+      "category": "blog",
+      "external": false,
+      "extProvider": "",
+      "extUrl": "",
+      "tagClass": "",
+      "tagLabel": "Editorial",
+      "date": "8 May 2026",
+      "title": "New blog post: What I learned in Ladakh's high passes",
+      "excerpt": "A 14-minute essay on solitude, altitude, and the unexpected geography of attention.",
+      "linkLabel": "Read the essay",
+      "featured": true
+    },
+    {
+      "href": "/shop",
+      "category": "shop",
+      "external": false,
+      "extProvider": "",
+      "extUrl": "",
+      "tagClass": "tag-outline",
+      "tagLabel": "Shop Update",
+      "date": "5 May 2026",
+      "title": "22 new photographs available for licensing",
+      "excerpt": "Fresh from the Spiti Valley shoot — high-resolution stills available for editorial and commercial use, with full release.",
+      "linkLabel": "Browse Shop",
+      "featured": true
+    },
+    {
+      "href": "/destination-detail",
+      "category": "destination",
+      "external": false,
+      "extProvider": "",
+      "extUrl": "",
+      "tagClass": "",
+      "tagLabel": "New Destination",
+      "date": "2 May 2026",
+      "title": "Lakshadweep added to our destination index",
+      "excerpt": "Eleven inhabited atolls, coral reefs, and the most restrictive permit system in India. We've broken it down.",
+      "linkLabel": "Explore Lakshadweep",
+      "featured": false
+    },
+    {
+      "href": "/gallery",
+      "category": "gallery",
+      "external": false,
+      "extProvider": "",
+      "extUrl": "",
+      "tagClass": "tag-dark",
+      "tagLabel": "Gallery Update",
+      "date": "28 Apr 2026",
+      "title": "Twelve new films added to the gallery",
+      "excerpt": "Drone footage from Spiti, Sikkim, and the Andaman reef — now viewable in 4K.",
+      "linkLabel": "View gallery",
+      "featured": false
+    },
+    {
+      "href": "/picks",
+      "category": "picks",
+      "external": false,
+      "extProvider": "",
+      "extUrl": "",
+      "tagClass": "tag-gold",
+      "tagLabel": "Updated List",
+      "date": "22 Apr 2026",
+      "title": "Top 20 Waterfalls list refreshed for monsoon season",
+      "excerpt": "Three new entries from Meghalaya, plus updated visiting windows and access notes for the existing list.",
+      "linkLabel": "See the list",
+      "featured": false
+    },
+    {
+      "href": "/trip",
+      "category": "trip",
+      "external": false,
+      "extProvider": "",
+      "extUrl": "",
+      "tagClass": "tag-outline",
+      "tagLabel": "Feature",
+      "date": "18 Apr 2026",
+      "title": "Plan-a-Trip flow now lets you save drafts",
+      "excerpt": "Build a trip across multiple sessions. Your selections persist locally — no account needed.",
+      "linkLabel": "Try it now",
+      "featured": false
+    },
+    {
+      "href": "#",
+      "category": "affiliate",
+      "external": true,
+      "extProvider": "HimalayanRail",
+      "extUrl": "https://himalayanrail.example.com",
+      "tagClass": "tag-affiliate",
+      "tagLabel": "Affiliate",
+      "date": "15 Apr 2026",
+      "title": "Toy Train tickets to Shimla — our affiliate launches summer fares",
+      "excerpt": "HimalayanRail's heritage carriages from Kalka to Shimla, with early-bird discounts on the Kalka–Shimla narrow gauge.",
+      "linkLabel": "Visit partner",
+      "featured": false
+    },
+    {
+      "href": "/package-detail",
+      "category": "package",
+      "external": false,
+      "extProvider": "",
+      "extUrl": "",
+      "tagClass": "tag-gold",
+      "tagLabel": "New Package",
+      "date": "10 Apr 2026",
+      "title": "Ladakh Cultural Expedition — 9 days, with our anchor partner",
+      "excerpt": "Pangong, Nubra, Tso Moriri. Female-led trip leaders, monastery access, premium camps.",
+      "linkLabel": "View details",
+      "featured": false
+    },
+    {
+      "href": "/blog-post",
+      "category": "blog",
+      "external": false,
+      "extProvider": "",
+      "extUrl": "",
+      "tagClass": "",
+      "tagLabel": "Editorial",
+      "date": "6 Apr 2026",
+      "title": "Photo essay: 48 hours on a Kerala houseboat, in 22 frames",
+      "excerpt": "Coffee on deck, herons at dawn, the slow rituals of the Vembanad.",
+      "linkLabel": "View essay",
+      "featured": false
+    },
+    {
+      "href": "/destination-detail",
+      "category": "destination",
+      "external": false,
+      "extProvider": "",
+      "extUrl": "",
+      "tagClass": "",
+      "tagLabel": "New Destination",
+      "date": "1 Apr 2026",
+      "title": "Mawlynnong &amp; the living root bridges now in our index",
+      "excerpt": "Asia's cleanest village, plus the double-decker bridges of Nongriat. Trek brief and ethical-visit notes included.",
+      "linkLabel": "Visit destination",
+      "featured": false
+    }
+  ],
+  "packages": [
+    {
+      "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=900&q=80",
+      "badgeClass": "tag-gold",
+      "badgeLabel": "Sponsored",
+      "region": "Himachal · 7 days",
+      "title": "Spiti Valley Premium Circuit",
+      "description": "Kaza, Key Monastery, Chandratal lakes, Langza fossils. All meals included.",
+      "metaSpans": [
+        "🏔 Premium",
+        "⭐ 4.9",
+        "🛏 6 nights"
+      ],
+      "price": "₹42,500",
+      "priceUnit": "/ person",
+      "onRequest": false,
+      "ctaHref": "/package-detail",
+      "ctaExternal": false,
+      "ctaProvider": "",
+      "ctaUrl": "",
+      "ctaLabel": "Details",
+      "featured": true
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80",
+      "badgeClass": "tag-affiliate",
+      "badgeLabel": "Affiliate",
+      "region": "Kerala · 5 days",
+      "title": "Backwater Houseboat Retreat",
+      "description": "Alleppey to Kumarakom on private houseboats with all-inclusive luxury meals.",
+      "metaSpans": [
+        "🚤 Luxury",
+        "⭐ 4.8",
+        "🛏 4 nights"
+      ],
+      "price": "₹28,000",
+      "priceUnit": "/ person",
+      "onRequest": false,
+      "ctaHref": "#",
+      "ctaExternal": true,
+      "ctaProvider": "KeralaLuxe",
+      "ctaUrl": "https://keralaluxe.example.com",
+      "ctaLabel": "Book",
+      "featured": true
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=900&q=80",
+      "badgeClass": "tag-gold",
+      "badgeLabel": "Sponsored",
+      "region": "Ladakh · 9 days",
+      "title": "Ladakh Cultural Expedition",
+      "description": "Leh, Nubra, Pangong, Tso Moriri with local guides, premium camps, and monastery visits.",
+      "metaSpans": [
+        "🏔 Premium",
+        "⭐ 4.9",
+        "🛏 8 nights"
+      ],
+      "price": "₹58,000",
+      "priceUnit": "/ person",
+      "onRequest": false,
+      "ctaHref": "/package-detail",
+      "ctaExternal": false,
+      "ctaProvider": "",
+      "ctaUrl": "",
+      "ctaLabel": "Details",
+      "featured": false
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=900&q=80",
+      "badgeClass": "tag-affiliate",
+      "badgeLabel": "Affiliate",
+      "region": "Andaman · 6 days",
+      "title": "Havelock Island Scuba Package",
+      "description": "PADI-certified diving with two-night beach resort and full island transfers.",
+      "metaSpans": [
+        "🤿 Adventure",
+        "⭐ 4.7",
+        "🛏 5 nights"
+      ],
+      "price": "₹35,500",
+      "priceUnit": "/ person",
+      "onRequest": false,
+      "ctaHref": "#",
+      "ctaExternal": true,
+      "ctaProvider": "AndamanDive",
+      "ctaUrl": "https://andamandive.example.com",
+      "ctaLabel": "Book",
+      "featured": false
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=900&q=80",
+      "badgeClass": "",
+      "badgeLabel": "Quote Only",
+      "region": "Rajasthan · 8 days",
+      "title": "Royal Rajasthan Heritage Tour",
+      "description": "Jaisalmer, Jodhpur, Udaipur. Heritage hotels, private guides. Itinerary by request.",
+      "metaSpans": [
+        "👑 Heritage",
+        "⭐ New",
+        "🛏 7 nights"
+      ],
+      "price": "On request",
+      "priceUnit": "",
+      "onRequest": true,
+      "ctaHref": "/contact",
+      "ctaExternal": false,
+      "ctaProvider": "",
+      "ctaUrl": "",
+      "ctaLabel": "Request quote",
+      "featured": false
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=900&q=80",
+      "badgeClass": "tag-affiliate",
+      "badgeLabel": "Affiliate",
+      "region": "Meghalaya · 6 days",
+      "title": "Cherrapunji &amp; Living Roots",
+      "description": "Shillong, Mawlynnong, Nongriat double-decker bridge trek with eco-stays.",
+      "metaSpans": [
+        "🌿 Eco",
+        "⭐ 4.8",
+        "🛏 5 nights"
+      ],
+      "price": "₹32,000",
+      "priceUnit": "/ person",
+      "onRequest": false,
+      "ctaHref": "#",
+      "ctaExternal": true,
+      "ctaProvider": "NorthEastEco",
+      "ctaUrl": "https://nee.example.com",
+      "ctaLabel": "Book",
+      "featured": false
+    }
+  ],
+  "blog": {
+    "feature": {
+      "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=1400&q=85",
+      "category": "Essay · Ladakh",
+      "title": "What I learned about silence in the high passes",
+      "byline": "By Editor · 14 min read · 8 May 2026"
+    },
+    "side": [
+      {
+        "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=400&q=80",
+        "category": "Photo Essay · Kerala",
+        "title": "Forty-eight hours on a houseboat, in pictures",
+        "meta": "22 images · 5 days ago"
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=400&q=80",
+        "category": "Field Notes · Meghalaya",
+        "title": "The living root bridges of Mawlynnong",
+        "meta": "9 min read · 6 days ago"
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=400&q=80",
+        "category": "Guide · Spiti",
+        "title": "Three days in Kaza: a quiet itinerary",
+        "meta": "7 min read · 1 week ago"
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&q=80",
+        "category": "Reportage · Rajasthan",
+        "title": "How Jaisalmer's stone-cutters work",
+        "meta": "11 min read · 2 weeks ago"
+      }
+    ],
+    "posts": [
+      {
+        "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&q=80",
+        "category": "Essay · Ladakh",
+        "title": "The light in Ladakh, and why it does this to you",
+        "excerpt": "Three weeks at altitude. An essay on attention, light, and what high desert does to the way you see.",
+        "bylineSpans": [
+          "14 min read",
+          "By Editor"
+        ],
+        "featured": true
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1502786129293-79981df4e689?w=800&q=80",
+        "category": "Field Notes · Andaman",
+        "title": "Notes from Havelock — diving with manta rays",
+        "excerpt": "The slow pleasure of a slow island. Boat schedules, mosquito coils, and an underwater encounter at Manta Point.",
+        "bylineSpans": [
+          "8 min read",
+          "By Editor"
+        ],
+        "featured": true
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800&q=80",
+        "category": "Guide · Coorg",
+        "title": "The Coorg I keep going back to",
+        "excerpt": "Past the coffee tourism, into the actual coffee. A guide to the estates that still let you walk in.",
+        "bylineSpans": [
+          "10 min read",
+          "By Editor"
+        ],
+        "featured": true
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=800&q=80",
+        "category": "Photo Essay · Munnar",
+        "title": "Munnar at first light — twenty-six frames",
+        "excerpt": "A photo essay on tea-country mornings: the mist patterns, the workers, the slow arrival of the sun over the estates.",
+        "bylineSpans": [
+          "Photo essay",
+          "26 images"
+        ],
+        "featured": false
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=800&q=80",
+        "category": "Field Notes · Sikkim",
+        "title": "North Sikkim is rearranging itself, faster than we are",
+        "excerpt": "A reportage on roads, rivers, and the shifting realities of high-altitude tourism after the floods.",
+        "bylineSpans": [
+          "16 min read",
+          "By Editor"
+        ],
+        "featured": false
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=800&q=80",
+        "category": "Essay · Goa",
+        "title": "South Goa, slowly",
+        "excerpt": "Patnem to Palolem, on foot. An essay on what's left when the season's over.",
+        "bylineSpans": [
+          "11 min read",
+          "By Editor"
+        ],
+        "featured": false
+      }
+    ]
+  },
+  "galleryItems": [
+    {
+      "type": "image",
+      "src": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=2000&q=85",
+      "category": "mountains",
+      "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=900&q=80",
+      "alt": "Ladakh",
+      "label": "Ladakh"
+    },
+    {
+      "type": "image",
+      "src": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=2000&q=85",
+      "category": "beach",
+      "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=900&q=80",
+      "alt": "",
+      "label": "Andaman"
+    },
+    {
+      "type": "video",
+      "src": "https://www.w3schools.com/html/mov_bbb.mp4",
+      "category": "mountains",
+      "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=900&q=80",
+      "alt": "",
+      "label": "Film · Spiti"
+    },
+    {
+      "type": "image",
+      "src": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=2000&q=85",
+      "category": "beach",
+      "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80",
+      "alt": "",
+      "label": "Kerala"
+    },
+    {
+      "type": "image",
+      "src": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=2000&q=85",
+      "category": "mountains",
+      "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=900&q=80",
+      "alt": "",
+      "label": "Meghalaya"
+    },
+    {
+      "type": "image",
+      "src": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=2000&q=85",
+      "category": "mountains",
+      "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=900&q=80",
+      "alt": "",
+      "label": "Manali"
+    },
+    {
+      "type": "image",
+      "src": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=2000&q=85",
+      "category": "heritage",
+      "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=900&q=80",
+      "alt": "",
+      "label": "Jaisalmer"
+    },
+    {
+      "type": "video",
+      "src": "https://www.w3schools.com/html/mov_bbb.mp4",
+      "category": "heritage",
+      "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=900&q=80",
+      "alt": "",
+      "label": "Film · Goa"
+    },
+    {
+      "type": "image",
+      "src": "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=2000&q=85",
+      "category": "mountains",
+      "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=900&q=80",
+      "alt": "",
+      "label": "Coorg"
+    },
+    {
+      "type": "image",
+      "src": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=2000&q=85",
+      "category": "mountains",
+      "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=900&q=80",
+      "alt": "",
+      "label": "Sikkim"
+    },
+    {
+      "type": "image",
+      "src": "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=2000&q=85",
+      "category": "mountains",
+      "image": "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=900&q=80",
+      "alt": "",
+      "label": "Munnar"
+    },
+    {
+      "type": "image",
+      "src": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=2000&q=85",
+      "category": "beach",
+      "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=900&q=80",
+      "alt": "",
+      "label": "Lakshadweep"
+    },
+    {
+      "type": "video",
+      "src": "https://www.w3schools.com/html/mov_bbb.mp4",
+      "category": "beach",
+      "image": "https://images.unsplash.com/photo-1502786129293-79981df4e689?w=900&q=80",
+      "alt": "",
+      "label": "Film · Andaman"
+    },
+    {
+      "type": "image",
+      "src": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=2000&q=85",
+      "category": "mountains",
+      "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=900&q=80",
+      "alt": "",
+      "label": "Bhutan"
+    },
+    {
+      "type": "image",
+      "src": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=2000&q=85",
+      "category": "beach",
+      "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80",
+      "alt": "",
+      "label": "Kerala"
+    },
+    {
+      "type": "image",
+      "src": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=2000&q=85",
+      "category": "mountains",
+      "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=900&q=80",
+      "alt": "",
+      "label": "High desert"
+    },
+    {
+      "type": "image",
+      "src": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=2000&q=85",
+      "category": "mountains",
+      "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=900&q=80",
+      "alt": "",
+      "label": "Spiti Valley"
+    },
+    {
+      "type": "video",
+      "src": "https://www.w3schools.com/html/mov_bbb.mp4",
+      "category": "mountains",
+      "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=900&q=80",
+      "alt": "",
+      "label": "Film · Meghalaya"
+    },
+    {
+      "type": "image",
+      "src": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=2000&q=85",
+      "category": "beach",
+      "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80",
+      "alt": "",
+      "label": "Backwaters"
+    },
+    {
+      "type": "image",
+      "src": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=2000&q=85",
+      "category": "heritage",
+      "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=900&q=80",
+      "alt": "",
+      "label": "Rajasthan"
+    },
+    {
+      "label": "",
+      "category": "testslug",
+      "type": "image",
+      "image": "/assets/uploads/1781265624629-colour-palette-trinket.png",
+      "src": "/assets/uploads/1781265624630-colour-palette-trinket.png",
+      "alt": ""
+    }
+  ],
+  "picks": [
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=300&q=80",
+      "region": "Mountain · India",
+      "name": "Ladakh — The High Desert"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=300&q=80",
+      "region": "Islands · Bay of Bengal",
+      "name": "Andaman Islands"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=300&q=80",
+      "region": "Himachal · India",
+      "name": "Spiti Valley"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=300&q=80",
+      "region": "Kerala · South India",
+      "name": "Kerala Backwaters"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=300&q=80",
+      "region": "North-East · India",
+      "name": "Meghalaya — Cherrapunji"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=300&q=80",
+      "region": "Rajasthan · India",
+      "name": "Jaisalmer Desert Fort"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=300&q=80",
+      "region": "North-East · Hills",
+      "name": "North Sikkim"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=300&q=80",
+      "region": "Kerala · Hills",
+      "name": "Munnar Tea Country"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=300&q=80",
+      "region": "Islands · Arabian Sea",
+      "name": "Lakshadweep"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=300&q=80",
+      "region": "Karnataka · Hills",
+      "name": "Coorg"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=300&q=80",
+      "region": "Goa · West Coast",
+      "name": "South Goa Beaches"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=300&q=80",
+      "region": "Himachal · Hills",
+      "name": "Manali &amp; Kasol"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1502786129293-79981df4e689?w=300&q=80",
+      "region": "Andaman · Islands",
+      "name": "Havelock Island"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=300&q=80",
+      "region": "Bhutan · Himalayas",
+      "name": "Tiger's Nest Monastery"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=300&q=80",
+      "region": "Kerala · Backwaters",
+      "name": "Alleppey Houseboats"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=300&q=80",
+      "region": "Ladakh · Lakes",
+      "name": "Pangong Tso"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=300&q=80",
+      "region": "Meghalaya · Bridges",
+      "name": "Mawlynnong &amp; Nongriat"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=300&q=80",
+      "region": "Rajasthan · Heritage",
+      "name": "Udaipur — City of Lakes"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=300&q=80",
+      "region": "Spiti · Lakes",
+      "name": "Chandratal Lake"
+    },
+    {
+      "href": "/destination-detail",
+      "image": "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=300&q=80",
+      "region": "Tamil Nadu · Hills",
+      "name": "Kodaikanal"
+    }
+  ],
+  "pages": {
+    "destinations": {
+      "titleHtml": "Four hundred and fifty <em>destinations</em>, one careful index.",
+      "lead": "Every place here has been visited, photographed, or independently verified. Filter by what you want — mountains for solitude, islands for slowness, heritage for the stories etched into stone."
+    },
+    "packages": {
+      "titleHtml": "Every package, <em>every verified partner</em>.",
+      "lead": "Sponsored placements are flagged. Affiliate links are flagged. Quote-on-request packages are clearly marked. You'll always know which is which."
+    },
+    "blog": {
+      "titleHtml": "The <em>blog</em>.",
+      "lead": "Long-form essays, photo essays, and field notes. Stories from people who actually went there. Four layout templates, one editorial standard."
+    },
+    "announcements": {
+      "titleHtml": "All <em>announcements</em>, all in one place.",
+      "lead": "Every notice we've ever published — package launches, destination additions, editorial features, partner promotions, gallery updates, and shop releases. Sorted by date, filterable by type."
+    },
+    "gallery": {
+      "titleHtml": "A visual <em>archive</em>.",
+      "lead": "Photographs and footage from the road — fifty videos and fifty images, taken by our editors and trusted contributors. Hover to preview. Click for the full-screen view."
+    },
+    "picks": {
+      "titleHtml": "Four lists. Twenty places each. <em>One careful index</em>.",
+      "lead": "The destinations we'd send our closest friends — ranked, reasoned, updated quarterly by editors who've been to every place on the list. Pick the type. We've done the rest."
+    },
+    "about": {
+      "titleHtml": "An <em>independent</em> travel platform, built by people who actually travel.",
+      "lead": "No SEO content farms. No paid reviews dressed up as recommendations. Every destination is editor-verified or contributor-verified — and we say so, plainly, whenever a link is sponsored."
+    },
+    "contact": {
+      "titleHtml": "Send us a <em>letter</em>.",
+      "lead": "Plan a trip, license a photograph, propose a partnership, or just say hello. We respond to every message within one working day, in our own words."
+    }
+  },
+  "destCategories": [
+    {
+      "label": "Popular",
+      "slug": "popular"
+    },
+    {
+      "label": "Beach",
+      "slug": "beach"
+    },
+    {
+      "label": "Mountains & Hills",
+      "slug": "mountains-hills"
+    },
+    {
+      "label": "Islands",
+      "slug": "islands"
+    },
+    {
+      "label": "Water Sports",
+      "slug": "water-sports"
+    },
+    {
+      "label": "Trek",
+      "slug": "trek"
+    },
+    {
+      "label": "Waterfalls",
+      "slug": "waterfalls"
+    },
+    {
+      "label": "Hidden Gems",
+      "slug": "hidden-gems"
+    },
+    {
+      "label": "Heritage",
+      "slug": "heritage"
+    },
+    {
+      "label": "Wildlife",
+      "slug": "wildlife"
+    },
+    {
+      "label": "Spiritual",
+      "slug": "spiritual"
+    },
+    {
+      "label": "Testing Category",
+      "slug": "test"
+    }
+  ],
+  "galleryCategories": [
+    {
+      "label": "Mountains",
+      "slug": "mountains"
+    },
+    {
+      "label": "Beaches",
+      "slug": "beach"
+    },
+    {
+      "label": "Heritage",
+      "slug": "heritage"
+    },
+    {
+      "label": "Test1",
+      "slug": "testslug"
+    }
+  ],
+  "sponsored": [
+    {
+      "title": "Trans-Himalayan Expeditions — Ladakh circuits",
+      "kind": "package",
+      "description": "Two decades operating in the region. Female-led trip leaders, premium homestays, certified guides.",
+      "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=900&q=80",
+      "partner": "Trans-Himalayan Expeditions",
+      "phone": "+91 98765 43210",
+      "callLabel": "Call now",
+      "linkLabel": "View packages",
+      "linkUrl": "/packages?d=ladakh",
+      "pages": [
+        "gallery",
+        "packages",
+        "blog",
+        "destinations"
+      ]
+    },
+    {
+      "title": "Your Sponsored Package",
+      "kind": "package",
+      "description": "Edit this in Admin → Sponsored. This is the second sponsored slot.",
+      "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80",
+      "partner": "Your Partner Name",
+      "phone": "+91 90000 00000",
+      "callLabel": "Call now",
+      "linkLabel": "",
+      "linkUrl": "",
+      "pages": [
+        "gallery",
+        "packages",
+        "blog",
+        "destinations"
+      ]
+    }
+  ],
+  "legalDocs": [
+    {
+      "slug": "privacy",
+      "navLabel": "Privacy Policy",
+      "crumb": "Privacy Policy",
+      "title": "Privacy <em>policy</em>.",
+      "deck": "How we collect, store, and use information about visitors to the Triplipi platform.",
+      "body": "<p class=\"kicker\">Effective 1 March 2026</p>\n            <h2>Overview</h2>\n            <p>Triplipi (\"we\", \"us\", \"our\") respects your privacy. This Privacy Policy explains what information we collect, how we use it, and the choices you have about how we handle your information. By using Triplipi.example, you agree to the practices described below.</p>\n\n            <h2>Information we collect</h2>\n            <h3>1.1 — Information you provide</h3>\n            <p>When you contact us, request a quote, or sign up for our newsletter, we collect the information you submit voluntarily, including your name, email address, phone number, and any message content. This information is used only to respond to you and is never sold to third parties.</p>\n\n            <h3>1.2 — Automatically collected information</h3>\n            <p>We collect standard server logs, including IP address, browser type, referring page, and time of visit. We use Google Analytics to understand aggregate traffic patterns. You can opt out of Google Analytics via your browser settings or by installing the official Google Analytics Opt-out Browser Add-on.</p>\n\n            <h3>1.3 — Cookies</h3>\n            <p>We use cookies for session management, preferences, and analytics. See our <a href=\"/legal?p=cookies\" style=\"color: var(--c-gold-deep); text-decoration: underline;\">Cookies Policy</a> for the complete list and how to manage them.</p>\n\n            <h2>How we use information</h2>\n            <ul>\n              <li>To respond to your inquiries and provide the services you request</li>\n              <li>To send newsletters or updates, if you have opted in</li>\n              <li>To improve our website, content, and user experience</li>\n              <li>To comply with legal obligations</li>\n            </ul>\n\n            <h2>External providers and affiliate links</h2>\n            <p>Our platform includes links to verified partner websites, including travel package providers, hotels, and affiliate platforms. When you click an external link, a consent modal will appear informing you of:</p>\n            <ul>\n              <li>The name and URL of the destination site</li>\n              <li>Our affiliate disclosure, if applicable</li>\n              <li>What browser information may be shared via standard HTTP referrer mechanisms</li>\n            </ul>\n            <p>You must explicitly consent before any redirect occurs. No personal account information from Triplipi is shared with external providers.</p>\n\n            <h2>Your rights</h2>\n            <p>Under applicable data protection laws, you have the right to access, correct, delete, or restrict the use of your personal information. To exercise any of these rights, please contact <a href=\"mailto:privacy@Triplipi.example\" style=\"color: var(--c-gold-deep); text-decoration: underline;\">privacy@Triplipi.example</a>. We will respond within 30 days.</p>\n\n            <h2>Data retention</h2>\n            <p>We retain personal information only as long as necessary for the purposes for which it was collected. Contact form submissions are retained for two years for record-keeping. Newsletter subscriptions are retained until you unsubscribe.</p>\n\n            <h2>Changes to this policy</h2>\n            <p>We may update this Privacy Policy from time to time. We will notify you of material changes by posting a notice on our home page and updating the \"Last updated\" date above. Continued use of the site after such notice constitutes acceptance of the changes.</p>\n\n            <h2>Contact</h2>\n            <p>For privacy-related inquiries, please write to <a href=\"mailto:privacy@Triplipi.example\" style=\"color: var(--c-gold-deep); text-decoration: underline;\">privacy@Triplipi.example</a> or use our <a href=\"/contact\" style=\"color: var(--c-gold-deep); text-decoration: underline;\">contact form</a>.</p>",
+      "inFooter": true
+    },
+    {
+      "slug": "terms",
+      "navLabel": "Terms & Conditions",
+      "crumb": "Terms & Conditions",
+      "title": "Terms &amp; <em>conditions</em>.",
+      "deck": "The legal agreement between you and Triplipi when you use our platform.",
+      "body": "<p class=\"kicker\">Effective 1 March 2026</p>\n            <h2>Acceptance of terms</h2>\n            <p>By accessing Triplipi.example, you agree to be bound by these Terms &amp; Conditions, our Privacy Policy, and any additional terms applicable to specific services. If you do not agree, please do not use the platform.</p>\n            <h2>Use of the platform</h2>\n            <p>You agree to use Triplipi only for lawful purposes and in a manner that does not infringe the rights of, restrict, or inhibit anyone else's use of the platform. Specifically, you agree not to:</p>\n            <ul>\n              <li>Scrape, harvest, or extract content via automated means without prior written consent</li>\n              <li>Republish, redistribute, or commercially exploit our content without a valid license</li>\n              <li>Attempt to gain unauthorised access to any portion of the platform</li>\n              <li>Interfere with the proper functioning of the platform</li>\n            </ul>\n            <h2>Content ownership</h2>\n            <p>All content on Triplipi, including text, photographs, videos, and design elements, is owned by Triplipi Travel Co. or licensed to it. See our <a href=\"/legal?p=copyright\" style=\"color: var(--c-gold-deep); text-decoration: underline;\">Copyright Information</a> for details.</p>\n            <h2>Third-party links</h2>\n            <p>Triplipi contains links to external websites operated by verified partners. We are not responsible for the content, accuracy, or availability of these sites. Transactions you make with external providers are governed by their terms, not ours.</p>\n            <h2>Limitation of liability</h2>\n            <p>To the maximum extent permitted by applicable law, Triplipi shall not be liable for any indirect, incidental, consequential, or punitive damages arising from your use of the platform or any third-party services accessed through it.</p>\n            <h2>Governing law</h2>\n            <p>These Terms are governed by the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts at Bareilly, Uttar Pradesh.</p>\n            <h2>Changes</h2>\n            <p>We reserve the right to update these Terms at any time. Continued use of the platform after changes constitutes acceptance.</p>",
+      "inFooter": true
+    },
+    {
+      "slug": "usage",
+      "navLabel": "Website Usage",
+      "crumb": "Website Usage",
+      "title": "Website <em>usage</em>.",
+      "deck": "Guidelines for browsing, sharing, and engaging with content on Triplipi.",
+      "body": "<p class=\"kicker\">Effective 1 March 2026</p>\n            <h2>Permitted use</h2>\n            <p>You are welcome to browse, read, and share Triplipi's content for personal, non-commercial purposes. You may link to our pages, share excerpts on social media (with attribution), and reference our content in your own writing with appropriate citation.</p>\n            <h2>Restrictions</h2>\n            <p>Without prior written permission, you may not:</p>\n            <ul>\n              <li>Reproduce or republish substantial portions of our content</li>\n              <li>Use our photographs or videos for commercial purposes (see our <a href=\"/shop\" style=\"color: var(--c-gold-deep); text-decoration: underline;\">Shop</a> for licensing)</li>\n              <li>Mirror, frame, or embed our content on other sites without consent</li>\n              <li>Use our content to train AI models or for any automated extraction</li>\n            </ul>\n            <h2>User contributions</h2>\n            <p>If you submit content to us (testimonials, photos, comments), you grant Triplipi a non-exclusive, royalty-free, worldwide license to use, edit, and display that content in connection with the platform. You warrant that you own the rights to any submission.</p>\n            <h2>Acceptable conduct</h2>\n            <p>When interacting with our team or contributing content, please be respectful. We reserve the right to refuse service or remove content that we find offensive, defamatory, or otherwise inappropriate.</p>",
+      "inFooter": true
+    },
+    {
+      "slug": "cookies",
+      "navLabel": "Cookies Policy",
+      "crumb": "Cookies Policy",
+      "title": "Cookies <em>policy</em>.",
+      "deck": "A complete list of cookies we use and how to manage them.",
+      "body": "<p class=\"kicker\">Effective 1 March 2026</p>\n            <h2>What are cookies?</h2>\n            <p>Cookies are small text files stored on your device when you visit a website. They are used to remember your preferences, track sessions, and analyse aggregate traffic patterns.</p>\n            <h2>Cookies we use</h2>\n            <h3>Essential cookies</h3>\n            <p>These are required for the platform to function: session cookies, cookie consent state, and search preferences. They cannot be disabled.</p>\n            <h3>Analytics cookies</h3>\n            <p>We use Google Analytics 4 (cookies prefixed <code>_ga</code>) to understand aggregate traffic. These cookies expire after 13 months. You can opt out via the cookie banner or by installing the official Google opt-out add-on.</p>\n            <h3>Affiliate tracking cookies</h3>\n            <p>When you click a sponsored or affiliate link and consent to redirect, the destination site may set a cookie that allows our affiliate relationship to be tracked. This is set by the third party, not by us. See our <a href=\"/legal?p=affiliate\" style=\"color: var(--c-gold-deep); text-decoration: underline;\">Affiliate Disclosure</a> for details.</p>\n            <h2>Managing cookies</h2>\n            <p>Most browsers allow you to refuse or delete cookies via settings. Doing so may affect some platform functionality. For detailed help, refer to your browser's help pages.</p>",
+      "inFooter": true
+    },
+    {
+      "slug": "copyright",
+      "navLabel": "Copyright Information",
+      "crumb": "Copyright Information",
+      "title": "Copyright <em>information</em>.",
+      "deck": "Who owns what, and how to license our content.",
+      "body": "<p class=\"kicker\">Effective 1 March 2026</p>\n            <h2>Ownership</h2>\n            <p>All editorial content on Triplipi — including written articles, photographs, videos, illustrations, design elements, and the underlying code — is © Triplipi Travel Co. 2024-2026, except where explicitly credited to a contributor or partner. Contributor work is used under license or shared copyright; specific arrangements are noted in image captions.</p>\n            <h2>What you may do</h2>\n            <ul>\n              <li>Link to our pages</li>\n              <li>Share excerpts (up to 100 words) with full attribution and a link back</li>\n              <li>Quote individual sentences in academic or journalistic work with citation</li>\n            </ul>\n            <h2>What requires permission</h2>\n            <ul>\n              <li>Republishing or syndicating full articles</li>\n              <li>Using our photographs or videos in any context (see <a href=\"/shop\" style=\"color: var(--c-gold-deep); text-decoration: underline;\">Shop</a>)</li>\n              <li>Translating our content into other languages</li>\n              <li>Using our brand name, logo, or design elements</li>\n            </ul>\n            <h2>Licensing</h2>\n            <p>For photography and video licensing, visit our <a href=\"/shop\" style=\"color: var(--c-gold-deep); text-decoration: underline;\">Shop</a>. For editorial syndication, write to <a href=\"mailto:editorial@Triplipi.example\" style=\"color: var(--c-gold-deep); text-decoration: underline;\">editorial@Triplipi.example</a>.</p>\n            <h2>DMCA / Takedown requests</h2>\n            <p>If you believe content on Triplipi infringes your copyright, please write to <a href=\"mailto:legal@Triplipi.example\" style=\"color: var(--c-gold-deep); text-decoration: underline;\">legal@Triplipi.example</a> with: (1) identification of the copyrighted work, (2) the URL of the infringing content, (3) your contact details, (4) a statement of good-faith belief, and (5) a signed declaration of accuracy. We respond to valid notices within 7 days.</p>",
+      "inFooter": true
+    },
+    {
+      "slug": "disclaimer",
+      "navLabel": "Disclaimer",
+      "crumb": "Disclaimer",
+      "title": "Disclaimer.",
+      "deck": "Limitations on the accuracy and use of information published on Triplipi.",
+      "body": "<p class=\"kicker\">Effective 1 March 2026</p>\n            <h2>Accuracy of information</h2>\n            <p>Triplipi publishes information about travel destinations, packages, weather windows, prices, and partner services in good faith. We make reasonable efforts to verify and update content, but cannot guarantee that all information is current, complete, or error-free at the time of your visit.</p>\n            <h2>Travel risks</h2>\n            <p>Travel — particularly to remote, high-altitude, or unfamiliar locations — carries inherent risks. Information on Triplipi is offered as a starting point for planning, not as a substitute for professional advice or safety briefings. Always:</p>\n            <ul>\n              <li>Verify visa, permit, and entry requirements with official sources</li>\n              <li>Consult a qualified medical professional before high-altitude travel</li>\n              <li>Purchase appropriate travel insurance</li>\n              <li>Follow local laws, customs, and safety guidance</li>\n            </ul>\n            <h2>Third-party services</h2>\n            <p>Bookings made through partner websites are governed by the partner's terms. Triplipi is not a party to those transactions and is not liable for service failures, cancellations, or disputes between you and the provider. Our role is editorial and referral; not contractual.</p>\n            <h2>Pricing</h2>\n            <p>Prices shown for packages and services are indicative at the time of publication. Final pricing is set by the partner and may change. Always confirm current pricing on the partner's site before booking.</p>",
+      "inFooter": true
+    },
+    {
+      "slug": "affiliate",
+      "navLabel": "Affiliate Disclosure",
+      "crumb": "Affiliate Disclosure",
+      "title": "Affiliate <em>disclosure</em>.",
+      "deck": "How we earn money, and what that means for you.",
+      "body": "<p class=\"kicker\">Effective 1 March 2026</p>\n            <h2>How Triplipi is funded</h2>\n            <p>Triplipi is funded by two sources: (1) commissions from verified partners when you book through our links, and (2) photography and footage licensing through our Shop. We do not charge readers, and we do not run a paywall.</p>\n            <h2>Affiliate relationships</h2>\n            <p>When we link to a partner's site for a package, hotel, or service, we may receive a commission if you book through that link. This does not affect what you pay. Our editorial team has no commercial pressure to favour any partner over another, and we publish our methodology openly.</p>\n            <h2>How we disclose</h2>\n            <p>Every external link on Triplipi triggers a consent modal that displays:</p>\n            <ul>\n              <li>The name and URL of the destination</li>\n              <li>Whether we have an affiliate relationship with the destination</li>\n              <li>What browser information may be shared via standard referrer headers</li>\n            </ul>\n            <p>You must check two consent boxes — affirming you understand the disclosure and consent to data sharing — before any redirect occurs. You can also decline and stay on Triplipi.</p>\n            <h2>Sponsored content</h2>\n            <p>Some packages and destinations are labelled \"Sponsored\". This means the partner has paid for editorial placement or featured-listing position. Sponsored content is always clearly labelled with a visible tag, and the editorial content itself is not influenced by the sponsor — our writers retain full control over what we say.</p>\n            <h2>Advertising</h2>\n            <p>Triplipi does not currently run display advertising. If we introduce it in the future, this page will be updated first, and any third-party ads will be clearly distinguishable from editorial content.</p>\n            <h2>Independence</h2>\n            <p>Our editorial integrity is the foundation of the platform. If we recommend a place or a partner, it is because our editors believe in it — not because we are paid to.</p>",
+      "inFooter": true
+    },
+    {
+      "slug": "faq",
+      "navLabel": "FAQs",
+      "crumb": "FAQs",
+      "title": "Frequently asked <em>questions</em>.",
+      "deck": "Answers to the questions we hear most often.",
+      "body": "<p class=\"kicker\">General</p>\n            <h2>Is Triplipi a travel agency?</h2>\n            <p>No. We are an editorial discovery platform. We don't sell trips ourselves — we refer you to verified partners with full disclosure. Think of us as a guidebook with hyperlinks.</p>\n\n            <h2>Do you charge for content?</h2>\n            <p>No. All editorial content — destination guides, blog posts, Our Picks lists, gallery viewing — is free to read. We're funded by partner commissions, photography licensing, and display ads.</p>\n\n            <h2>Can I trust the partners you link to?</h2>\n            <p>Every partner in our network has been personally vetted by our team — usually by travelling with them, sometimes by independent verification. We disclose our commercial relationship on every link via a consent modal. We label \"Sponsored\" placements clearly.</p>\n\n            <p class=\"kicker\">Booking &amp; Quotes</p>\n            <h2>How do I book a trip?</h2>\n            <p>Browse destinations, find a package that suits you, click through (with consent) to the verified partner, and book on their site. Or fill our contact form with what you're thinking about, and we'll write back within one working day.</p>\n\n            <h2>Do you offer customised itineraries?</h2>\n            <p>Yes — through our partner network. Request a custom quote via any package page or the contact form, and we'll match you with the best-fit partner.</p>\n\n            <p class=\"kicker\">Photography &amp; Shop</p>\n            <h2>Can I license your photography?</h2>\n            <p>Yes. Visit the <a href=\"/shop\" style=\"color: var(--c-gold-deep); text-decoration: underline;\">Shop</a> to browse our archive. Select the items you want, request a quote, and we'll come back to you with editorial, commercial, and extended-license options. A subset of our work is also available for instant licensing on Shutterstock.</p>\n\n            <h2>Do you accept contributor submissions?</h2>\n            <p>We work with a small group of trusted contributors. If you'd like to be considered, write to <a href=\"mailto:editorial@Triplipi.example\" style=\"color: var(--c-gold-deep); text-decoration: underline;\">editorial@Triplipi.example</a> with your portfolio.</p>\n\n            <p class=\"kicker\">Account &amp; Privacy</p>\n            <h2>Do I need an account?</h2>\n            <p>No. Triplipi can be browsed entirely without an account. Trip drafts and shop selections persist locally in your browser only.</p>\n\n            <h2>How do I unsubscribe from the newsletter?</h2>\n            <p>Every newsletter has an unsubscribe link at the bottom. Alternatively, write to <a href=\"mailto:hello@Triplipi.example\" style=\"color: var(--c-gold-deep); text-decoration: underline;\">hello@Triplipi.example</a> and we'll remove you within 24 hours.</p>",
+      "inFooter": false
+    }
+  ]
+}

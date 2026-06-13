@@ -1,0 +1,20 @@
+{% extends "admin/layout.njk" %}
+{% import "admin/macros.njk" as m %}
+{% block title %}{{ schema.label }}{% endblock %}
+{% block content %}
+  <header class="adm-head">
+    <div>
+      <div class="adm-kicker">{{ schema.label }}</div>
+      <h1>{{ 'Edit item' if index !== null else 'Add item' }}</h1>
+    </div>
+    <a class="adm-btn ghost" href="{{ backUrl }}">← Back</a>
+  </header>
+
+  <form class="adm-form" method="post" action="/admin/section/{{ schema.key }}/save" enctype="multipart/form-data">
+    <input type="hidden" name="_index" value="{{ index if index !== null else '' }}">
+    {% for f in schema.fields %}
+      {{ m.field(f, item[f.name]) }}
+    {% endfor %}
+    <button class="adm-btn primary" type="submit">Save item</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,281 @@
+/* ============================================================
+   BASE — modern reset + typography + accessibility primitives
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--ff-text);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: var(--fw-regular);
+  color: var(--c-text);
+  background: var(--c-bg);
+  overflow-x: hidden;
+  min-height: 100vh;
+  /* prevent text inflation on mobile rotation */
+  text-size-adjust: 100%;
+}
+
+/* When mobile menu / modal open */
+body.no-scroll { overflow: hidden; height: 100vh; }
+
+/* ---------- HEADINGS — editorial display ---------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-snug);
+  color: var(--c-charcoal);
+}
+
+h1 { font-size: var(--fs-h1); line-height: var(--lh-display); letter-spacing: var(--ls-tight); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+h4 { font-size: var(--fs-h4); }
+h5 { font-size: var(--fs-h5); }
+h6 { font-size: var(--fs-h6); }
+
+em, .italic, .accent-italic {
+  font-style: italic;
+}
+
+/* ---------- PARAGRAPH ---------- */
+p {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--c-text-muted);
+  max-width: 65ch;
+}
+p.lead {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-relaxed);
+  color: var(--c-text);
+}
+
+/* ---------- LINKS ---------- */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--d-fast) var(--ease-out),
+              opacity var(--d-fast) var(--ease-out);
+}
+a:hover { color: var(--c-gold-deep); }
+
+/* Subtle underline-on-hover for editorial links */
+a.link-editorial {
+  position: relative;
+  color: var(--c-charcoal);
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 95%;
+  transition: background-size var(--d-base) var(--ease-out);
+}
+a.link-editorial:hover { background-size: 100% 1px; }
+
+/* ---------- MEDIA ---------- */
+img, video, picture, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+img { user-select: none; -webkit-user-drag: none; }
+
+/* ---------- LISTS ---------- */
+ul, ol { list-style: none; }
+ol.list-decimal { list-style: decimal inside; }
+ul.list-disc   { list-style: disc inside; }
+
+/* ---------- FORMS ---------- */
+input, textarea, select, button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+button { cursor: pointer; }
+button:disabled, .disabled { cursor: not-allowed; opacity: 0.5; }
+
+/* Focus ring — accessible and elegant */
+:focus-visible {
+  outline: 2px solid var(--c-gold);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+
+/* ---------- SELECTION ---------- */
+::selection { background: var(--c-terracotta); color: #ffffff; }
+::-moz-selection { background: var(--c-terracotta); color: #ffffff; }
+
+/* ---------- SCROLLBAR ---------- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--c-paper); }
+::-webkit-scrollbar-thumb { background: var(--c-stone); border-radius: var(--r-pill); border: 2px solid var(--c-paper); }
+::-webkit-scrollbar-thumb:hover { background: var(--c-graphite); }
+
+/* ---------- UTILITY ---------- */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+
+.container,
+.container-narrow,
+.container-wide,
+.container-reading {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--pad-page-x);
+}
+.container         { max-width: var(--w-default); }
+.container-narrow  { max-width: var(--w-narrow); }
+.container-wide    { max-width: var(--w-wide); }
+.container-reading { max-width: var(--w-reading); }
+.container-bleed   { max-width: 100%; padding-inline: 0; }
+
+.section { padding-block: var(--pad-section-y); }
+.section-sm { padding-block: clamp(48px, 6vw, 80px); }
+
+/* ---------- SECTION CARDS — folded white panels on the off-white canvas
+   Every top-level section reads as a card sitting on the page (Yatra-style):
+   white surface, rounded corners, soft elevation, and a visible "fold"
+   (the canvas showing through) between consecutive sections. ---------- */
+main > section,
+main > article {
+  background: var(--c-surface);
+  border-radius: clamp(16px, 1.8vw, 26px);
+  margin-inline: clamp(10px, 1.6vw, 26px);
+  margin-block: clamp(14px, 1.8vw, 26px);
+  box-shadow: 0 1px 2px rgba(35, 31, 32, 0.04),
+              0 12px 32px -20px rgba(35, 31, 32, 0.18);
+  /* `clip` (not hidden) keeps rounded corners tidy without breaking
+     position: sticky used inside several sections */
+  overflow: clip;
+}
+/* First card clears the fixed solid-white header, then keeps a small fold */
+main > section:first-child,
+main > article:first-child { margin-top: calc(var(--header-h) + clamp(12px, 1.4vw, 20px)); }
+/* Last card keeps a fold before the footer */
+main > section:last-child,
+main > article:last-child { margin-bottom: clamp(18px, 2.2vw, 32px); }
+
+/* Overline — editorial section labels */
+.overline {
+  font-family: var(--ff-text);
+  font-size: var(--fs-overline);
+  font-weight: var(--fw-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-widest);
+  color: #34689D;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.overline::before {
+  content: "";
+  width: 32px; height: 1px;
+  background: currentColor;
+  display: inline-block;
+}
+.overline.center { justify-content: center; }
+.overline.center::before { width: 24px; }
+.overline.center::after {
+  content: "";
+  width: 24px; height: 1px;
+  background: currentColor;
+}
+
+/* Headline kicker — small uppercase line above headings */
+.kicker {
+  font-family: var(--ff-text);
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-widest);
+  color: #34689D;
+  margin-bottom: var(--s-4);
+}
+
+/* Display headline — large editorial */
+.display {
+  font-family: var(--ff-display);
+  font-size: var(--fs-display);
+  font-weight: var(--fw-light);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-tight);
+}
+
+/* Eyebrow / tag */
+.eyebrow {
+  display: inline-block;
+  font-family: var(--ff-text);
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wider);
+  padding: 6px 12px;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-pill);
+  background: var(--c-surface);
+  color: var(--c-text);
+}
+
+/* Divider rule */
+.rule {
+  border: 0;
+  height: 1px;
+  background: var(--c-border);
+  margin-block: var(--s-9);
+}
+.rule-gold {
+  height: 3px;
+  background: linear-gradient(90deg, #D05527, #F3A8AE, #34689D);
+  width: 60px;
+  margin-block: var(--s-6);
+  border: 0;
+  border-radius: 3px;
+}
+
+/* Editorial dropcap — first letter */
+.dropcap::first-letter {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: 5em;
+  line-height: 0.8;
+  float: left;
+  margin: 8px 12px 0 0;
+  color: #D05527;
+  font-weight: var(--fw-light);
+}
+
+/* Sectional theme — dark surface */
+.theme-dark {
+  background: var(--c-ink);
+  color: var(--c-bone);
+}
+.theme-dark p { color: rgba(255, 255, 255, 0.75); }
+.theme-dark h1, .theme-dark h2, .theme-dark h3,
+.theme-dark h4, .theme-dark h5, .theme-dark h6 { color: #ffffff; }
+.theme-dark .overline { color: #34689D; }
+.theme-dark .kicker { color: #34689D; }
+
+/* No-tap-highlight on mobile */
+a, button { -webkit-tap-highlight-color: transparent; }
+
+/* Print-shy: hide print stuff offscreen */
+@media print { .no-print { display: none !important; } }

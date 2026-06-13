@@ -1,0 +1,98 @@
+{% extends "admin/layout.njk" %}
+{% import "admin/macros.njk" as m %}
+{% block title %}{{ page.label }}{% endblock %}
+{% set pageView = page.view %}
+{% block content %}
+  <header class="adm-head">
+    <div>
+      <div class="adm-kicker">{{ 'Site' if page.isSettings else 'Page' }}</div>
+      <h1>{{ page.label }}</h1>
+      <p class="adm-sub">{{ page.intro }}</p>
+    </div>
+    <a class="adm-btn ghost" href="{{ page.view }}" target="_blank">View page ↗</a>
+  </header>
+
+  <div class="adm-sections">
+    {% for sec in sections %}
+      <details class="adm-sec" id="sec-{{ sec.schema.key }}" {% if loop.first and sections | length <= 3 %}open{% endif %}>
+        <summary>
+          <span class="num">{{ loop.index }}</span>
+          <span class="sec-title">
+            <strong>{{ sec.schema.label }}</strong>
+            <small>{{ sec.hint }}</small>
+          </span>
+          <span class="sec-meta">
+            {% if sec.schema.type == 'list' %}{{ sec.value | length }} items{% elif sec.schema.type == 'picker' %}{{ (sec.value | selectattr('featured') | list) | length }} of {{ sec.value | length }} picked{% else %}Edit{% endif %}
+            <span class="chev">▾</span>
+          </span>
+        </summary>
+
+        {% if sec.schema.type == 'picker' %}
+          <form class="adm-picker" method="post" action="/admin/section/{{ sec.schema.key }}">
+            {% for item in sec.value %}
+              <label class="pick-row">
+                <input type="checkbox" name="pick_{{ loop.index0 }}" {% if item.featured %}checked{% endif %}>
+                {% if item.image %}<img class="thumb" src="{{ item.image }}" alt="">{% endif %}
+                <span class="pick-title">{{ item[sec.schema.itemTitle] | striptags | truncate(60) | safe }}</span>
+              </label>
+            {% else %}
+              <p class="adm-empty">Nothing to pick from yet — add items on their own page first.</p>
+            {% endfor %}
+            <button class="adm-btn primary" type="submit">Save selection</button>
+          </form>
+        {% elif sec.schema.type == 'object' %}
+          <form class="adm-form inline" method="post" action="/admin/section/{{ sec.schema.key }}" enctype="multipart/form-data">
+            {% for f in sec.schema.fields %}
+              {{ m.field(f, sec.value[f.name]) }}
+            {% endfor %}
+            <button class="adm-btn primary" type="submit">Save</button>
+          </form>
+        {% else %}
+          <div class="adm-list inline">
+            {% for item in sec.value %}
+              <div class="adm-row">
+                {% if item.image %}<img class="thumb" src="{{ item.image }}" alt="">{% endif %}
+                <div class="title">
+                  <strong>{{ item[sec.schema.itemTitle] | striptags | truncate(60) | safe }}</strong>
+                  <small>#{{ loop.index }}{% if item.featured %} · <span class="on-home">★ on homepage</span>{% endif %}</small>
+                </div>
+                <div class="row-actions">
+                  <form method="post" action="/admin/section/{{ sec.schema.key }}/{{ loop.index0 }}/move">
+                    <button name="dir" value="up" {% if loop.first %}disabled{% endif %} title="Move up">↑</button>
+                    <button name="dir" value="down" {% if loop.last %}disabled{% endif %} title="Move down">↓</button>
+                  </form>
+                  <a class="adm-btn sm" href="/admin/section/{{ sec.schema.key }}/{{ loop.index0 }}/edit">Edit</a>
+                  <form method="post" action="/admin/section/{{ sec.schema.key }}/{{ loop.index0 }}/delete"
+                        onsubmit="return confirm('Delete this item?');">
+                    <button class="adm-btn sm danger" type="submit">Delete</button>
+                  </form>
+                </div>
+              </div>
+            {% else %}
+              <p class="adm-empty">No items yet.</p>
+            {% endfor %}
+            <a class="adm-btn primary" style="justify-self:start;" href="/admin/section/{{ sec.schema.key }}/new">+ Add item</a>
+          </div>
+        {% endif %}
+      </details>
+    {% endfor %}
+
+    {% if page.isSettings %}
+      <details class="adm-sec" id="sec-password">
+        <summary>
+          <span class="num">{{ sections | length + 1 }}</span>
+          <span class="sec-title">
+            <strong>Admin password</strong>
+            <small>Change the password used to sign in to this panel.</small>
+          </span>
+          <span class="sec-meta">Edit <span class="chev">▾</span></span>
+        </summary>
+        <form class="adm-form inline" method="post" action="/admin/password">
+          <label>Current password <input type="password" name="current" placeholder="The password you use now" required></label>
+          <label>New password (min 8 chars) <input type="password" name="next" minlength="8" placeholder="At least 8 characters" required></label>
+          <button class="adm-btn primary" type="submit">Change password</button>
+        </form>
+      </details>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{# Shared admin form-field renderer #}
+{% macro field(f, v) %}
+  {% set ph = f.ph or ('e.g. page.html or https://…' if f.type == 'url'
+              else ('Comma-separated values' if f.type == 'csv' else '')) %}
+  {% if f.type == 'textarea' and f.rich %}
+    {# Full visual editor (headings, lists, alignment) — admin.js enhances it #}
+    <div class="adm-field">
+      <span class="adm-label">{{ f.label }}</span>
+      <div class="rte" data-rich="block">
+        <textarea name="{{ f.name }}" class="rte-source" hidden>{{ v }}</textarea>
+      </div>
+    </div>
+  {% elif f.type == 'textarea' and f.richInline %}
+    {# Inline visual editor (bold / italic / colour / link) for headings & single paragraphs #}
+    <div class="adm-field">
+      <span class="adm-label">{{ f.label }}</span>
+      <div class="rte rte-inline" data-rich="inline">
+        <textarea name="{{ f.name }}" class="rte-source" hidden>{{ v }}</textarea>
+      </div>
+    </div>
+  {% elif f.type == 'multiselect' %}
+    {# NOT wrapped in <label>: a <details> dropdown with checkboxes inside a
+       label breaks click handling (nested labels + summary activation). #}
+    {% set selected = v or [] %}
+    <div class="adm-field">
+      <span class="adm-label">{{ f.label }}</span>
+      <details class="adm-dd">
+        <summary>
+          {% if selected | length %}
+            {% for o in f.options %}{% if o.value in selected %}<span class="dd-chip">{{ o.label }}</span>{% endif %}{% endfor %}
+          {% else %}
+            <span class="dd-placeholder">Choose from the list…</span>
+          {% endif %}
+          <span class="dd-arrow">▾</span>
+        </summary>
+        <div class="dd-list">
+          {% for o in f.options %}
+            <label class="dd-option">
+              <input type="checkbox" name="{{ f.name }}" value="{{ o.value }}" {% if o.value in selected %}checked{% endif %}>
+              {{ o.label }}
+            </label>
+          {% else %}
+            <p class="dd-empty">No options yet — add them in their categories section first.</p>
+          {% endfor %}
+        </div>
+      </details>
+    </div>
+  {% elif f.type == 'image' %}
+    <div class="adm-field">
+      <span class="adm-label">{{ f.label }}</span>
+      <div class="adm-img-field">
+        {% if v %}<img class="img-preview" src="{{ v }}" alt="" onerror="this.style.display='none'">{% endif %}
+        <div class="img-inputs">
+          <input type="text" name="{{ f.name }}" value="{{ v }}" placeholder="Paste an image URL, e.g. https://images.unsplash.com/…">
+          <span class="img-or">or upload from your computer</span>
+          <input type="file" name="{{ f.name }}__file" accept="image/*,video/*">
+          <small class="img-note">Choosing a file overrides the URL. Max 15&nbsp;MB.</small>
+        </div>
+      </div>
+    </div>
+  {% else %}
+  <label>
+    {{ f.label }}
+    {% if f.type == 'textarea' %}
+      <textarea name="{{ f.name }}" rows="{{ f.rows or 3 }}" placeholder="{{ ph }}"{% if f.rows and f.rows > 6 %} style="font-family: var(--mono, monospace); font-size: 0.82rem; line-height: 1.55;"{% endif %}>{{ v }}</textarea>
+    {% elif f.type == 'csv' %}
+      <input type="text" name="{{ f.name }}" value="{{ v | join(', ') if v else '' }}" placeholder="{{ ph }}">
+    {% elif f.type == 'bool' %}
+      <span class="adm-check"><input type="checkbox" name="{{ f.name }}" {% if v %}checked{% endif %}> Yes</span>
+    {% elif f.type == 'select' %}
+      <select name="{{ f.name }}" class="adm-select">
+        <option value="" {% if not v %}selected{% endif %} disabled>— choose —</option>
+        {% for o in f.options %}
+          <option value="{{ o.value }}" {% if o.value == v %}selected{% endif %}>{{ o.label }}</option>
+        {% endfor %}
+      </select>
+    {% else %}
+      <input type="text" name="{{ f.name }}" value="{{ v }}" placeholder="{{ ph }}">
+    {% endif %}
+  </label>
+  {% endif %}
+{% endmacro %}
