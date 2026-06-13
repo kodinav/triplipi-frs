@@ -905,121 +905,141 @@
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=300&q=80",
       "region": "Mountain · India",
-      "name": "Ladakh — The High Desert"
+      "name": "Ladakh — The High Desert",
+      "list": "mustsee"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=300&q=80",
       "region": "Islands · Bay of Bengal",
-      "name": "Andaman Islands"
+      "name": "Andaman Islands",
+      "list": "beach"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=300&q=80",
       "region": "Himachal · India",
-      "name": "Spiti Valley"
+      "name": "Spiti Valley",
+      "list": "mustsee"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=300&q=80",
       "region": "Kerala · South India",
-      "name": "Kerala Backwaters"
+      "name": "Kerala Backwaters",
+      "list": "waterfall"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=300&q=80",
       "region": "North-East · India",
-      "name": "Meghalaya — Cherrapunji"
+      "name": "Meghalaya — Cherrapunji",
+      "list": "mustsee"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=300&q=80",
       "region": "Rajasthan · India",
-      "name": "Jaisalmer Desert Fort"
+      "name": "Jaisalmer Desert Fort",
+      "list": "mustsee"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=300&q=80",
       "region": "North-East · Hills",
-      "name": "North Sikkim"
+      "name": "North Sikkim",
+      "list": "hill"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=300&q=80",
       "region": "Kerala · Hills",
-      "name": "Munnar Tea Country"
+      "name": "Munnar Tea Country",
+      "list": "hill"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=300&q=80",
       "region": "Islands · Arabian Sea",
-      "name": "Lakshadweep"
+      "name": "Lakshadweep",
+      "list": "beach"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=300&q=80",
       "region": "Karnataka · Hills",
-      "name": "Coorg"
+      "name": "Coorg",
+      "list": "hill"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=300&q=80",
       "region": "Goa · West Coast",
-      "name": "South Goa Beaches"
+      "name": "South Goa Beaches",
+      "list": "beach"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=300&q=80",
       "region": "Himachal · Hills",
-      "name": "Manali &amp; Kasol"
+      "name": "Manali &amp; Kasol",
+      "list": "hill"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1502786129293-79981df4e689?w=300&q=80",
       "region": "Andaman · Islands",
-      "name": "Havelock Island"
+      "name": "Havelock Island",
+      "list": "beach"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=300&q=80",
       "region": "Bhutan · Himalayas",
-      "name": "Tiger's Nest Monastery"
+      "name": "Tiger's Nest Monastery",
+      "list": "mustsee"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=300&q=80",
       "region": "Kerala · Backwaters",
-      "name": "Alleppey Houseboats"
+      "name": "Alleppey Houseboats",
+      "list": "waterfall"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=300&q=80",
       "region": "Ladakh · Lakes",
-      "name": "Pangong Tso"
+      "name": "Pangong Tso",
+      "list": "waterfall"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=300&q=80",
       "region": "Meghalaya · Bridges",
-      "name": "Mawlynnong &amp; Nongriat"
+      "name": "Mawlynnong &amp; Nongriat",
+      "list": "waterfall"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=300&q=80",
       "region": "Rajasthan · Heritage",
-      "name": "Udaipur — City of Lakes"
+      "name": "Udaipur — City of Lakes",
+      "list": "mustsee"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=300&q=80",
       "region": "Spiti · Lakes",
-      "name": "Chandratal Lake"
+      "name": "Chandratal Lake",
+      "list": "waterfall"
     },
     {
       "href": "/destination-detail",
       "image": "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=300&q=80",
       "region": "Tamil Nadu · Hills",
-      "name": "Kodaikanal"
+      "name": "Kodaikanal",
+      "list": "hill"
     }
   ],
   "pages": {
@@ -1414,5 +1434,41 @@
       "archived": false,
       "expiry": ""
     }
-  ]
+  ],
+  "pickLists": [
+    {
+      "key": "mustsee",
+      "label": "Top Must-See",
+      "meta": "Editor’s choice",
+      "heading": "Twenty places that <em>belong on every list</em>.",
+      "blurb": "Curated for first-time travellers and seasoned explorers alike — visited personally or independently verified within the last 18 months."
+    },
+    {
+      "key": "beach",
+      "label": "Best Beach Selection",
+      "meta": "Sand & sea",
+      "heading": "Where the map ends and the <em>water begins</em>.",
+      "blurb": "Islands, coves and coastlines we return to — for the slowness as much as the swimming."
+    },
+    {
+      "key": "hill",
+      "label": "Top Hill Destinations",
+      "meta": "Highlands",
+      "heading": "Cooler air, longer views, <em>slower days</em>.",
+      "blurb": "Mountains and hill stations for solitude, switchbacks and the particular quiet of altitude."
+    },
+    {
+      "key": "waterfall",
+      "label": "Top Waterfall & Lakes",
+      "meta": "Monsoon magic",
+      "heading": "Water, falling and <em>still</em>.",
+      "blurb": "Falls, lakes and the green country around them — at their best just after the rains."
+    }
+  ],
+  "trip": {
+    "heroTitle": "Plan your next escape in <em>seven careful steps</em>.",
+    "heroLead": "Pick a category. Pick a destination. See verified packages. Continue, with full disclosure, to a trusted partner. We make the path short, but never sloppy.",
+    "step1Title": "What kind of trip <em>are you after</em>?",
+    "step1Body": "Each category opens to a curated list of destinations with the seven sub-categories we believe matter — season, how to reach, where to stay, how to get around, what to do, what to see, and the small details only locals know."
+  }
 }

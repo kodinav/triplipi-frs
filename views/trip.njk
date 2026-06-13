@@ -32,8 +32,8 @@
         <nav class="crumbs" style="justify-content: center;">
           <a href="/">Home</a><span>/</span><span>Go For A Trip</span>
         </nav>
-        <h1>Plan your next escape in <em>seven careful steps</em>.</h1>
-        <p class="lead" style="margin-inline: auto;">Pick a category. Pick a destination. See verified packages. Continue, with full disclosure, to a trusted partner. We make the path short, but never sloppy.</p>
+        <h1>{{ trip.heroTitle | safe if trip.heroTitle else 'Plan your next escape in <em>seven careful steps</em>.' }}</h1>
+        <p class="lead" style="margin-inline: auto;">{{ trip.heroLead | safe if trip.heroLead else 'Pick a category. Pick a destination. See verified packages. Continue, with full disclosure, to a trusted partner. We make the path short, but never sloppy.' }}</p>
 
         <ol class="trip-stepper" data-reveal>
           <li class="step is-active"><span class="num">1</span> Category</li>
@@ -52,43 +52,21 @@
       <div class="container-wide">
         <div class="section-head-center" data-reveal>
           <p class="overline center">Step 1</p>
-          <h2>What kind of trip <em>are you after</em>?</h2>
-          <p>Each category opens to a curated list of destinations with the seven sub-categories we believe matter — season, how to reach, where to stay, how to get around, what to do, what to see, and the small details only locals know.</p>
+          <h2>{{ trip.step1Title | safe if trip.step1Title else 'What kind of trip <em>are you after</em>?' }}</h2>
+          <p>{{ trip.step1Body | safe if trip.step1Body else 'Each category opens to a curated list of destinations with the seven sub-categories we believe matter — season, how to reach, where to stay, how to get around, what to do, what to see, and the small details only locals know.' }}</p>
         </div>
 
         <div class="cat-grid" data-stagger>
-          <a href="/destinations" class="cat-tile">
-            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80" alt="">
-            <span class="cat-label"><span class="name">Popular</span><span class="sub">Crowd-favourites</span></span>
+{% for cat in categories %}
+          <a href="/destinations?cat={{ cat.slug }}" class="cat-tile">
+            <img src="{{ cat.image }}" alt="{{ cat.label }}">
+            <span class="cat-label"><span class="name">{{ cat.label }}</span><span class="sub">{{ cat.count }} destination{{ 's' if cat.count != 1 }}</span></span>
           </a>
+{% else %}
           <a href="/destinations" class="cat-tile">
-            <img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=800&q=80" alt="">
-            <span class="cat-label"><span class="name">Beach</span><span class="sub">Sand &amp; sea</span></span>
+            <span class="cat-label"><span class="name">All destinations</span><span class="sub">Browse the index</span></span>
           </a>
-          <a href="/destinations" class="cat-tile">
-            <img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&q=80" alt="">
-            <span class="cat-label"><span class="name">Mountains &amp; Hills</span><span class="sub">Highlands</span></span>
-          </a>
-          <a href="/destinations" class="cat-tile">
-            <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800&q=80" alt="">
-            <span class="cat-label"><span class="name">Islands</span><span class="sub">Island time</span></span>
-          </a>
-          <a href="/destinations" class="cat-tile">
-            <img src="https://images.unsplash.com/photo-1502786129293-79981df4e689?w=800&q=80" alt="">
-            <span class="cat-label"><span class="name">Water Sports</span><span class="sub">Active</span></span>
-          </a>
-          <a href="/destinations" class="cat-tile">
-            <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800&q=80" alt="">
-            <span class="cat-label"><span class="name">Trek</span><span class="sub">On foot</span></span>
-          </a>
-          <a href="/destinations" class="cat-tile">
-            <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80" alt="">
-            <span class="cat-label"><span class="name">Waterfalls</span><span class="sub">Monsoon magic</span></span>
-          </a>
-          <a href="/destinations" class="cat-tile">
-            <img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=800&q=80" alt="">
-            <span class="cat-label"><span class="name">Hidden Gems</span><span class="sub">Off the map</span></span>
-          </a>
+{% endfor %}
         </div>
 
         <div style="text-align: center; margin-top: var(--s-9);" data-reveal>

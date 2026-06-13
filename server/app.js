@@ -353,6 +353,7 @@ const SCHEMAS = [
   { key: 'picks', group: 'Content', label: 'Ranked picks', type: 'list', path: 'picks',
     itemTitle: 'name',
     fields: [
+      { name: 'list', label: 'Which list', type: 'select', optionsFrom: 'pickLists', optionValue: 'key', optionLabel: 'label' },
       { name: 'name', label: 'Name', ph: 'e.g. Ladakh' },
       { name: 'region', label: 'Region line', ph: 'e.g. North · India' },
       { name: 'image', label: 'Thumbnail', type: 'image' },
@@ -372,6 +373,26 @@ const SCHEMAS = [
     fields: [
       { name: 'label', label: 'Label shown on the filter chip', ph: 'e.g. Mountains' },
       { name: 'slug', label: 'Slug (used to tag gallery items)', ph: 'lowercase-with-dashes, e.g. mountains' },
+    ] },
+
+  /* ----- Go For A Trip: page copy (the funnel itself is data-driven) ----- */
+  { key: 'trip', group: 'Trip', label: 'Go For A Trip — page copy', type: 'object', path: 'trip',
+    fields: [
+      { name: 'heroTitle', label: 'Hero heading (HTML, <em> = accent)', type: 'textarea', richInline: true, ph: 'e.g. Plan your next escape in <em>seven careful steps</em>.' },
+      { name: 'heroLead', label: 'Hero intro', type: 'textarea', richInline: true },
+      { name: 'step1Title', label: 'Step 1 — heading (HTML)', type: 'textarea', richInline: true, ph: 'e.g. What kind of trip <em>are you after</em>?' },
+      { name: 'step1Body', label: 'Step 1 — intro', type: 'textarea', richInline: true },
+    ] },
+
+  /* ----- Our Picks: the four ranked lists ----- */
+  { key: 'pickLists', group: 'Trip', label: 'Pick lists (the tabs)', type: 'list', path: 'pickLists',
+    itemTitle: 'label',
+    fields: [
+      { name: 'key', label: 'Slug (used in the URL: /picks?list=slug)', ph: 'lowercase, e.g. beach' },
+      { name: 'label', label: 'Tab label', ph: 'e.g. Best Beach Selection' },
+      { name: 'meta', label: 'Tab sub-label', ph: 'e.g. 20 beaches' },
+      { name: 'heading', label: 'List heading (HTML, <em> = accent)', type: 'textarea', richInline: true, ph: 'e.g. Twenty places that <em>belong on every list</em>.' },
+      { name: 'blurb', label: 'List intro paragraph', type: 'textarea', richInline: true },
     ] },
 
   /* ----- Shop: media licensing archive (FR-SHOP) ----- */
@@ -564,11 +585,17 @@ const ADMIN_PAGES = [
       { key: 'galleryItems', hint: 'Every tile. Pick a category from the dropdown; type "Film / video" shows a play button.' },
       { key: 'galleryCategories', hint: 'The filter chips above the grid. Counts are automatic.' },
     ] },
+  { key: 'trip', label: 'Go For A Trip', view: '/trip',
+    intro: 'The trip-planning funnel. The category tiles are built automatically from your destination categories — edit the page copy here.',
+    sections: [
+      { key: 'trip', hint: 'Hero heading/intro and the Step 1 heading. The category tiles below pull from Destinations automatically.' },
+    ] },
   { key: 'picks', label: 'Our Picks', view: '/picks',
-    intro: 'The ranked list — rank numbers are automatic from the order here.',
+    intro: 'Four ranked lists, shown as tabs. Each pick is tagged to a list; rank numbers come from the order within that list.',
     sections: [
       { key: 'page-picks', hint: 'Big title and intro at the top of the page.' },
-      { key: 'picks', hint: 'The ranked rows, in order.' },
+      { key: 'pickLists', hint: 'The tabs across the top — each is one ranked list. Order here sets the tab order; the first tab opens by default.' },
+      { key: 'picks', hint: 'Every ranked place. Set "Which list" so it shows under the right tab; order within each list sets its rank.' },
     ] },
   { key: 'shop', label: 'Shop', view: '/shop',
     intro: 'The photography & footage licensing page — media tiles, Shutterstock link, and the quote form.',
@@ -830,8 +857,14 @@ const PAGES = {
       ...cat,
       count: all.filter((d) => (d.categories || []).includes(cat.slug)).length,
     }));
-    const { items, pagination } = paginate(all, req);
-    return { page: c().pages.destinations, cards: items, categories, pagination, baseUrl: '/destinations', sponsorSlots: sponsorSlots('destinations', items.length) };
+    // Server-side category filter so /destinations?cat=beach (from the trip
+    // funnel, mega menu, deep links) actually narrows the grid.
+    const activeCat = (req && req.query && req.query.cat) || '';
+    const catObj = categories.find((x) => x.slug === activeCat) || null;
+    const filtered = catObj ? all.filter((d) => (d.categories || []).includes(activeCat)) : all;
+    const { items, pagination } = paginate(filtered, req);
+    const baseUrl = catObj ? '/destinations?cat=' + encodeURIComponent(activeCat) : '/destinations';
+    return { page: c().pages.destinations, cards: items, categories, activeCat, activeCatLabel: catObj ? catObj.label : '', totalAll: all.length, pagination, baseUrl, sponsorSlots: sponsorSlots('destinations', items.length) };
   },
   packages: (req) => {
     let all = pub(c().packages);
@@ -868,8 +901,18 @@ const PAGES = {
     };
   },
   picks: (req) => {
-    const { items, pagination } = paginate(pub(c().picks), req);
-    return { page: c().pages.picks, picks: items, pagination, baseUrl: '/picks' };
+    const allPicks = pub(c().picks);
+    const lists = (c().pickLists || []).map((l) => ({
+      ...l, count: allPicks.filter((p) => p.list === l.key).length,
+    }));
+    // active list: ?list= if valid, else the first list
+    const reqList = (req && req.query && req.query.list) || '';
+    const active = lists.find((l) => l.key === reqList) || lists[0] || null;
+    // picks in this list; if there are no lists defined yet, fall back to all picks
+    const inList = active ? allPicks.filter((p) => p.list === active.key) : allPicks;
+    const { items, pagination } = paginate(inList, req);
+    const baseUrl = active ? '/picks?list=' + encodeURIComponent(active.key) : '/picks';
+    return { page: c().pages.picks, picks: items, lists, active, pagination, baseUrl };
   },
   about: () => ({ page: c().pages.about }),
   contact: () => ({ page: c().pages.contact, settings: c().settings }),
@@ -879,7 +922,19 @@ const PAGES = {
     const doc = docs.find((d) => d.slug === slug) || docs[0];
     return { legalDocs: docs, doc };
   },
-  trip: () => ({}), '404': () => ({}),
+  trip: () => {
+    const dests = pub(c().destinations);
+    // Real categories, each with a representative image (first destination in it)
+    // so the Step-1 tiles link into the actual funnel: /destinations?cat=slug.
+    const cats = (c().destCategories || [])
+      .map((cat) => {
+        const inCat = dests.filter((d) => (d.categories || []).includes(cat.slug));
+        return { ...cat, count: inCat.length, image: (inCat[0] && (inCat[0].image || inCat[0].heroImage)) || '' };
+      })
+      .filter((cat) => cat.count > 0);
+    return { trip: c().trip || {}, categories: cats };
+  },
+  '404': () => ({}),
   shop: (req) => {
     const { items, pagination } = paginate(pub(c().shopItems), req);
     return { shop: c().shop || {}, items, pagination, baseUrl: '/shop', settings: c().settings, sponsorSlots: sponsorSlots('shop', items.length) };

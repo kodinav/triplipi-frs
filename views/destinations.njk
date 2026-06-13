@@ -41,9 +41,9 @@
     <section class="section-sm" style="padding-top: var(--s-7); padding-bottom: 0; border-bottom: 1px solid var(--c-border);">
       <div class="container-wide">
         <div class="category-pills" data-reveal>
-          <button class="category-pill is-active" data-cat="all">All <span class="count">{{ cards | length }}</span></button>
+          <a class="category-pill{% if not activeCat %} is-active{% endif %}" href="/destinations">All <span class="count">{{ totalAll }}</span></a>
           {% for cat in categories %}
-          <button class="category-pill" data-cat="{{ cat.slug }}">{{ cat.label }} <span class="count">{{ cat.count }}</span></button>
+          <a class="category-pill{% if cat.slug == activeCat %} is-active{% endif %}" href="/destinations?cat={{ cat.slug }}">{{ cat.label }} <span class="count">{{ cat.count }}</span></a>
           {% endfor %}
         </div>
       </div>

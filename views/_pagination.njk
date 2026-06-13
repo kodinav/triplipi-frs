@@ -1,19 +1,22 @@
-{# Shared page-number navigation — renders nothing when there's only one page #}
+{# Shared page-number navigation — renders nothing when there's only one page.
+   baseUrl may already carry a query (e.g. /picks?list=beach); we pick the
+   right separator so the page param is appended correctly. #}
 {% macro nav(p, baseUrl) %}
   {% if p and p.pages > 1 %}
+    {% set sep = '&' if '?' in baseUrl else '?' %}
     <nav class="pagination" aria-label="Pages" data-reveal>
       {% if p.page > 1 %}
-        <a class="page-btn arrow" href="{{ baseUrl }}?page={{ p.page - 1 }}" aria-label="Previous page">←</a>
+        <a class="page-btn arrow" href="{{ baseUrl }}{{ sep }}page={{ p.page - 1 }}" aria-label="Previous page">←</a>
       {% endif %}
       {% for i in range(1, p.pages + 1) %}
         {% if i == p.page %}
           <span class="page-btn is-current" aria-current="page">{{ i }}</span>
         {% else %}
-          <a class="page-btn" href="{{ baseUrl }}?page={{ i }}">{{ i }}</a>
+          <a class="page-btn" href="{{ baseUrl }}{{ sep }}page={{ i }}">{{ i }}</a>
         {% endif %}
       {% endfor %}
       {% if p.page < p.pages %}
-        <a class="page-btn arrow" href="{{ baseUrl }}?page={{ p.page + 1 }}" aria-label="Next page">→</a>
+        <a class="page-btn arrow" href="{{ baseUrl }}{{ sep }}page={{ p.page + 1 }}" aria-label="Next page">→</a>
       {% endif %}
     </nav>
   {% endif %}

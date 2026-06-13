@@ -35,42 +35,31 @@
     </section>
 
     <!-- List selector -->
+{% if lists and lists | length %}
     <section class="section-sm" style="padding-top: var(--s-6); padding-bottom: var(--s-4);">
       <div class="container-wide">
         <div class="picks-tabs" data-reveal>
-          <button class="picks-tab is-active" data-list="mustsee">
-            <span class="num">01</span>
-            <span class="name">Top Must-See</span>
-            <span class="meta">20 places</span>
-          </button>
-          <button class="picks-tab" data-list="beach">
-            <span class="num">02</span>
-            <span class="name">Best Beach Selection</span>
-            <span class="meta">20 beaches</span>
-          </button>
-          <button class="picks-tab" data-list="hill">
-            <span class="num">03</span>
-            <span class="name">Top Hill Destinations</span>
-            <span class="meta">20 hills</span>
-          </button>
-          <button class="picks-tab" data-list="waterfall">
-            <span class="num">04</span>
-            <span class="name">Top Waterfall Destinations</span>
-            <span class="meta">20 falls</span>
-          </button>
+{% for l in lists %}
+          <a class="picks-tab{% if active and l.key == active.key %} is-active{% endif %}" href="/picks?list={{ l.key }}">
+            <span class="num">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+            <span class="name">{{ l.label }}</span>
+            <span class="meta">{{ l.meta or (l.count ~ ' places') }}</span>
+          </a>
+{% endfor %}
         </div>
       </div>
     </section>
+{% endif %}
 
     <section class="section" style="padding-top: var(--s-5);">
       <div class="container-wide">
         <div class="section-head" data-reveal>
           <div>
-            <p class="overline">List 01 — Top Must-See Places</p>
-            <h2>Twenty places that <em>belong on every list</em>.</h2>
+            <p class="overline">{{ active.label if active else 'Our Picks' }}</p>
+            <h2>{{ active.heading | safe if active and active.heading else 'The places we’d send our <em>closest friends</em>.' }}</h2>
           </div>
           <div>
-            <p style="margin-bottom: var(--s-4); max-width: 480px;">Curated for first-time travellers to India and seasoned explorers alike. Updated 12 May 2026.</p>
+            <p style="margin-bottom: var(--s-4); max-width: 480px;">{{ active.blurb | safe if active and active.blurb else 'Curated by our editors — visited personally or independently verified.' }}</p>
             <a href="/trip" class="btn-text">Plan a trip from this list <span class="arrow">→</span></a>
           </div>
         </div>
@@ -78,12 +67,14 @@
         <div class="picks-list" data-stagger>
 {% for p in picks %}
           <a href="{{ p.href }}" class="picks-row">
-            <div class="rank">{% set rank = pagination.offset + loop.index %}{% if rank < 10 %}0{% endif %}{{ rank }}</div>
+            <div class="rank">{% set rank = (pagination.offset if pagination else 0) + loop.index %}{% if rank < 10 %}0{% endif %}{{ rank }}</div>
             <div class="thumb"><img src="{{ p.image }}" alt=""></div>
             <div class="info"><div class="region">{{ p.region }}</div><h3 class="name">{{ p.name | safe }}</h3></div>
             <div class="actions"><a class="btn btn-sm btn-ghost" href="/trip">Trip</a><a class="btn btn-sm" href="/packages">Packages</a></div>
             <div class="arrow">→</div>
           </a>
+{% else %}
+          <p class="adm-empty">No places in this list yet.</p>
 {% endfor %}
         </div>
 
