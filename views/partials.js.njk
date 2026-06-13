@@ -27,11 +27,16 @@
           </a>
 
           <nav class="nav-primary" aria-label="Primary">
-            <button class="nav-link" data-mega="mega-destinations" aria-haspopup="true" aria-expanded="false">Destinations</button>
-            <button class="nav-link" data-mega="mega-trip" aria-haspopup="true" aria-expanded="false">Go For A Trip</button>
-            {% for link in settings.navLinks %}{% if loop.index == 2 %}<button class="nav-link" data-mega="mega-picks" aria-haspopup="true" aria-expanded="false">Our Picks</button>
-            {% endif %}<a class="nav-link" href="{{ link.href }}">{{ link.label }}</a>
-            {% endfor %}
+            <button class="nav-link" data-mega="mega-destinations" data-path="/destinations" aria-haspopup="true" aria-expanded="false">Destination Guide</button>
+            <button class="nav-link" data-mega="mega-trip" data-path="/trip" aria-haspopup="true" aria-expanded="false">Go For A Trip</button>
+            <a class="nav-link" href="/packages">Check Packages</a>
+            <button class="nav-link" data-mega="mega-picks" data-path="/picks" aria-haspopup="true" aria-expanded="false">Our Picks</button>
+            <a class="nav-link" href="/gallery">Gallery</a>
+            <a class="nav-link" href="/about">About</a>
+            <a class="nav-link" href="/announcements">Announcements</a>
+            <a class="nav-link" href="/shop">Shop</a>
+            <a class="nav-link" href="/blog">Blog</a>
+            <a class="nav-link" href="/contact">Contact</a>
           </nav>
 
           <div class="nav-utils">
@@ -49,142 +54,55 @@
       <!-- Mega menus -->
       <div class="mega-backdrop"></div>
 
+      <!-- Destination Guide — 2-column category grid + View All (FRS 5.2) -->
       <div class="mega" id="mega-destinations">
-        <div class="mega-inner">
-          <div>
-            <div class="mega-title"><em>Discover</em> the world's most extraordinary places</div>
-            <div class="mega-tag">From hidden coves of the Andamans to the high passes of Ladakh — every destination, curated and verified by travellers who've actually been there.</div>
+        <div class="mega-inner mega-cats">
+          <div class="mega-cats-head">
+            <div class="mega-title"><em>Explore</em> by category</div>
+            <div class="mega-tag">Every place is editor- or contributor-verified. Pick a category, or browse the full index.</div>
+            <a class="btn-text" href="/destinations">View all destinations <span class="arrow">→</span></a>
           </div>
-          <div class="mega-columns">
-            <div class="mega-col">
-              <h6>By Geography</h6>
-              <ul>
-                <li><a href="/destinations?cat=beach">Beach &amp; Coast</a></li>
-                <li><a href="/destinations?cat=mountains">Mountains &amp; Hills</a></li>
-                <li><a href="/destinations?cat=islands">Islands</a></li>
-                <li><a href="/destinations?cat=waterfalls">Waterfalls</a></li>
-                <li><a href="/destinations?cat=hidden">Hidden Gems</a></li>
-              </ul>
-            </div>
-            <div class="mega-col">
-              <h6>By Experience</h6>
-              <ul>
-                <li><a href="/destinations?cat=trek">Trekking</a></li>
-                <li><a href="/destinations?cat=watersports">Water Sports</a></li>
-                <li><a href="/destinations?cat=heritage">Heritage</a></li>
-                <li><a href="/destinations?cat=wildlife">Wildlife</a></li>
-                <li><a href="/destinations?cat=spiritual">Spiritual</a></li>
-              </ul>
-            </div>
-            <div class="mega-col">
-              <h6>Editor's Picks</h6>
-              <ul>
-                <li><a href="/destinations?cat=popular">Popular Now</a></li>
-                <li><a href="/destinations?cat=monsoon">Monsoon Magic</a></li>
-                <li><a href="/destinations?cat=offbeat">Offbeat Trails</a></li>
-                <li><a href="/destinations?cat=weekend">Weekend Escapes</a></li>
-                <li><a href="/destinations">View all 450 →</a></li>
-              </ul>
-            </div>
+          <div class="mega-cat-grid">
+            {% for cat in navCategories %}
+            <a href="/destinations?cat={{ cat.slug }}"><span class="cat-name">{{ cat.label }}</span><span class="cat-count">{{ cat.count }}</span></a>
+            {% endfor %}
+            <a class="mega-cat-all" href="/destinations">View all categories <span class="arrow">→</span></a>
           </div>
-          <a href="/destinations?featured=ladakh" class="mega-feature">
-            <img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&q=80" alt="">
-            <div class="mega-feature-content">
-              <div class="kicker">Editor's Note</div>
-              <h4>Where silence becomes a destination — Ladakh's high desert</h4>
-              <span class="btn-text">Read the story <span class="arrow">→</span></span>
-            </div>
-          </a>
         </div>
       </div>
 
+      <!-- Go For A Trip — same categories, into the 7-step funnel (FRS Flow 2) -->
       <div class="mega" id="mega-trip">
-        <div class="mega-inner">
-          <div>
-            <div class="mega-title"><em>Plan</em> your next escape in seven steps</div>
-            <div class="mega-tag">Tell us where you want to go. We'll match you with verified partners, vetted packages, and exclusive offers — with full consent and transparency at every step.</div>
+        <div class="mega-inner mega-cats">
+          <div class="mega-cats-head">
+            <div class="mega-title"><em>Plan</em> a trip — pick a category</div>
+            <div class="mega-tag">Choose a category to see destinations, then verified packages — with full consent before any redirect.</div>
+            <a class="btn-text" href="/trip">Start the 7-step planner <span class="arrow">→</span></a>
           </div>
-          <div class="mega-columns">
-            <div class="mega-col">
-              <h6>Trending Trips</h6>
-              <ul>
-                <li><a href="/trip?d=ladakh">Ladakh Expedition</a></li>
-                <li><a href="/trip?d=andaman">Andaman Islands</a></li>
-                <li><a href="/trip?d=spiti">Spiti Valley</a></li>
-                <li><a href="/trip?d=kerala">Kerala Backwaters</a></li>
-              </ul>
-            </div>
-            <div class="mega-col">
-              <h6>Trip Style</h6>
-              <ul>
-                <li><a href="/trip?style=luxury">Luxury Retreats</a></li>
-                <li><a href="/trip?style=adventure">Adventure</a></li>
-                <li><a href="/trip?style=honeymoon">Honeymoon</a></li>
-                <li><a href="/trip?style=family">Family</a></li>
-              </ul>
-            </div>
-            <div class="mega-col">
-              <h6>By Duration</h6>
-              <ul>
-                <li><a href="/trip?dur=weekend">Weekend (2-3 days)</a></li>
-                <li><a href="/trip?dur=short">Short (4-6 days)</a></li>
-                <li><a href="/trip?dur=week">Week-long (7+ days)</a></li>
-                <li><a href="/trip?dur=expedition">Expedition (15+ days)</a></li>
-              </ul>
-            </div>
+          <div class="mega-cat-grid">
+            {% for cat in navCategories %}
+            <a href="/destinations?cat={{ cat.slug }}"><span class="cat-name">{{ cat.label }}</span><span class="cat-count">{{ cat.count }}</span></a>
+            {% endfor %}
+            <a class="mega-cat-all" href="/destinations">View all categories <span class="arrow">→</span></a>
           </div>
-          <a href="/trip?featured=spiti" class="mega-feature">
-            <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800&q=80" alt="">
-            <div class="mega-feature-content">
-              <div class="kicker">Featured Itinerary</div>
-              <h4>Seven days in the Spiti Valley — monasteries, motorcycles, midnight skies</h4>
-              <span class="btn-text">See itinerary <span class="arrow">→</span></span>
-            </div>
-          </a>
         </div>
       </div>
 
+      <!-- Our Picks — the four curated lists (FRS 5.6) -->
       <div class="mega" id="mega-picks">
-        <div class="mega-inner">
-          <div>
+        <div class="mega-inner mega-cats">
+          <div class="mega-cats-head">
             <div class="mega-title">Our <em>most cherished</em> places</div>
-            <div class="mega-tag">Four hand-curated lists, twenty destinations each — the places we'd send our closest friends, ranked, reasoned, and ready to inspire.</div>
+            <div class="mega-tag">Hand-curated lists — the places we'd send our closest friends, ranked and reasoned.</div>
+            <a class="btn-text" href="/picks">View all picks <span class="arrow">→</span></a>
           </div>
-          <div class="mega-columns">
-            <div class="mega-col">
-              <h6>The Four Lists</h6>
-              <ul>
-                <li><a href="/picks?list=mustsee">Top Must-See Places</a></li>
-                <li><a href="/picks?list=beach">Best Beach Selection</a></li>
-                <li><a href="/picks?list=hill">Top Hill Destinations</a></li>
-                <li><a href="/picks?list=waterfall">Top Waterfall Destinations</a></li>
-              </ul>
-            </div>
-            <div class="mega-col">
-              <h6>What Makes a Pick</h6>
-              <ul>
-                <li><a href="/about">Our editorial standards</a></li>
-                <li><a href="/about#methodology">How we rank</a></li>
-                <li><a href="/about#updates">Update frequency</a></li>
-              </ul>
-            </div>
-            <div class="mega-col">
-              <h6>More</h6>
-              <ul>
-                <li><a href="/announcements">Latest Announcements</a></li>
-                <li><a href="/about">About the Editor</a></li>
-                <li><a href="/contact">Suggest a place</a></li>
-              </ul>
-            </div>
+          <div class="mega-picks-list">
+            {% for l in pickLists %}
+            <a href="/picks?list={{ l.key }}"><span class="num">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span><span class="pl-name">{{ l.label }}</span><span class="pl-meta">{{ l.meta }}</span></a>
+            {% else %}
+            <a href="/picks"><span class="pl-name">Browse our picks</span></a>
+            {% endfor %}
           </div>
-          <a href="/picks?list=mustsee" class="mega-feature">
-            <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80" alt="">
-            <div class="mega-feature-content">
-              <div class="kicker">This Month's Selection</div>
-              <h4>Twenty places that will rearrange how you think about India</h4>
-              <span class="btn-text">View the list <span class="arrow">→</span></span>
-            </div>
-          </a>
         </div>
       </div>
 
@@ -192,46 +110,36 @@
       <nav class="mobile-nav" aria-label="Mobile navigation">
         <div class="mobile-nav-inner">
           <button class="mobile-nav-link" data-sub="" aria-expanded="false">
-            Destinations <span class="arrow">+</span>
+            Destination Guide <span class="arrow">+</span>
           </button>
           <div class="mobile-nav-sub">
-            <a href="/destinations?cat=beach">Beach &amp; Coast</a>
-            <a href="/destinations?cat=mountains">Mountains</a>
-            <a href="/destinations?cat=islands">Islands</a>
-            <a href="/destinations?cat=waterfalls">Waterfalls</a>
-            <a href="/destinations?cat=trek">Trekking</a>
-            <a href="/destinations?cat=hidden">Hidden Gems</a>
-            <a href="/destinations">View all →</a>
+            {% for cat in navCategories %}<a href="/destinations?cat={{ cat.slug }}">{{ cat.label }}</a>
+            {% endfor %}<a href="/destinations">View all destinations →</a>
           </div>
 
           <button class="mobile-nav-link" data-sub="" aria-expanded="false">
             Go For A Trip <span class="arrow">+</span>
           </button>
           <div class="mobile-nav-sub">
-            <a href="/trip?d=ladakh">Ladakh Expedition</a>
-            <a href="/trip?d=andaman">Andaman Islands</a>
-            <a href="/trip?d=spiti">Spiti Valley</a>
-            <a href="/trip?d=kerala">Kerala Backwaters</a>
-            <a href="/trip">All trips →</a>
+            {% for cat in navCategories %}<a href="/destinations?cat={{ cat.slug }}">{{ cat.label }}</a>
+            {% endfor %}<a href="/trip">Start the planner →</a>
           </div>
 
-          <a href="/packages" class="mobile-nav-link">Packages <span class="arrow">→</span></a>
+          <a href="/packages" class="mobile-nav-link">Check Packages <span class="arrow">→</span></a>
 
           <button class="mobile-nav-link" data-sub="" aria-expanded="false">
             Our Picks <span class="arrow">+</span>
           </button>
           <div class="mobile-nav-sub">
-            <a href="/picks?list=mustsee">Top Must-See Places</a>
-            <a href="/picks?list=beach">Best Beach Selection</a>
-            <a href="/picks?list=hill">Top Hill Destinations</a>
-            <a href="/picks?list=waterfall">Top Waterfall Destinations</a>
+            {% for l in pickLists %}<a href="/picks?list={{ l.key }}">{{ l.label }}</a>
+            {% endfor %}<a href="/picks">View all picks →</a>
           </div>
 
           <a href="/gallery" class="mobile-nav-link">Gallery <span class="arrow">→</span></a>
-          <a href="/shop" class="mobile-nav-link">Shop <span class="arrow">→</span></a>
-          <a href="/announcements" class="mobile-nav-link">Announcements <span class="arrow">→</span></a>
-          <a href="/blog" class="mobile-nav-link">Blog <span class="arrow">→</span></a>
           <a href="/about" class="mobile-nav-link">About <span class="arrow">→</span></a>
+          <a href="/announcements" class="mobile-nav-link">Announcements <span class="arrow">→</span></a>
+          <a href="/shop" class="mobile-nav-link">Shop <span class="arrow">→</span></a>
+          <a href="/blog" class="mobile-nav-link">Blog <span class="arrow">→</span></a>
           <a href="/contact" class="mobile-nav-link">Contact <span class="arrow">→</span></a>
         </div>
         <div class="mobile-nav-footer">

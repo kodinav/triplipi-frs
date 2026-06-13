@@ -652,11 +652,19 @@ app.get('/assets/js/partials.js', (req, res) => {
   const siteTop = (bannersByZone()['site-top'] || []).map((b) => ({
     ...b, href: b.section === 'external' || b.external ? (b.extUrl || b.href) : b.href,
   }));
+  // Mega-menu categories: real destination categories (with counts), up to 8
+  const dests = pub(store.get('destinations') || []);
+  const navCategories = (store.get('destCategories') || [])
+    .map((cat) => ({ slug: cat.slug, label: cat.label, count: dests.filter((d) => (d.categories || []).includes(cat.slug)).length }))
+    .filter((cat) => cat.count > 0)
+    .slice(0, 8);
   res.render('partials.js.njk', {
     settings: store.get('settings'),
     legalDocs: store.get('legalDocs') || [],
     customPages: pub(store.get('customPages') || []).filter((p) => p.inFooter),
     siteTopBanners: siteTop,
+    navCategories,
+    pickLists: store.get('pickLists') || [],
   });
 });
 app.use('/assets', express.static(path.join(ROOT, 'assets')));

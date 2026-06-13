@@ -90,16 +90,16 @@
 .nav-primary {
   display: flex;
   align-items: center;
-  gap: var(--s-5);
+  gap: 1.15rem;
   justify-self: center;
 }
 .nav-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   font-weight: var(--fw-bold);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   color: var(--c-charcoal);
   padding-block: 24px;
   position: relative;
@@ -120,6 +120,7 @@
   transition: transform var(--d-base) var(--ease-out);
 }
 .nav-link:hover::after,
+.nav-link.is-active::after,
 .nav-link[aria-expanded="true"]::after { transform: scaleX(1); }
 .nav-link[aria-haspopup="true"]::before {
   content: "";
@@ -290,6 +291,59 @@
   font-size: 1.5rem;
   margin-bottom: var(--s-3);
 }
+
+/* Category mega — head + 2-column grid of categories (FRS 5.2) */
+.mega-inner.mega-cats {
+  grid-template-columns: 300px 1fr;
+  gap: var(--s-10);
+  align-items: start;
+}
+.mega-cats-head .mega-tag { margin-bottom: var(--s-5); }
+.mega-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-3) var(--s-5);
+}
+.mega-cat-grid > a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  color: var(--c-text);
+  font-size: 0.95rem;
+  font-weight: var(--fw-medium);
+  transition: border-color var(--d-fast), background var(--d-fast), color var(--d-fast);
+}
+.mega-cat-grid > a:hover { border-color: #D05527; color: #D05527; background: var(--c-bone-soft); }
+.mega-cat-grid .cat-count { font-size: var(--fs-micro); color: var(--c-text-muted); }
+.mega-cat-grid > a:hover .cat-count { color: #D05527; }
+.mega-cat-all {
+  grid-column: 1 / -1;
+  justify-content: center !important;
+  border-style: dashed !important;
+  font-weight: var(--fw-semi);
+}
+
+/* Picks mega — list of the four curated lists (FRS 5.6) */
+.mega-picks-list { display: grid; gap: var(--s-3); }
+.mega-picks-list > a {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-4);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  color: var(--c-text);
+  transition: border-color var(--d-fast), color var(--d-fast), background var(--d-fast);
+}
+.mega-picks-list > a:hover { border-color: #D05527; color: #D05527; background: var(--c-bone-soft); }
+.mega-picks-list .num { font-family: var(--ff-display); font-size: 1.4rem; color: #D05527; line-height: 1; }
+.mega-picks-list .pl-name { font-weight: var(--fw-semi); }
+.mega-picks-list .pl-meta { font-size: var(--fs-micro); color: var(--c-text-muted); text-transform: uppercase; letter-spacing: var(--ls-wide); }
 
 /* Backdrop when mega open */
 .mega-backdrop {
@@ -506,7 +560,7 @@
 /* ============================================================
    RESPONSIVE — header & footer
    ============================================================ */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .nav-primary { display: none; }
   .menu-toggle { display: block; }
   .mega { display: none; }

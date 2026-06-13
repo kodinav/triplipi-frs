@@ -70,6 +70,17 @@
   // ============================================================
   // MEGA MENU (Desktop)
   // ============================================================
+  // Mark the nav tab matching the current page (FRS active-underline)
+  const initActiveNav = () => {
+    const path = (window.location.pathname.replace(/\/+$/, '') || '/');
+    $$('.nav-link').forEach((l) => {
+      const href = l.getAttribute('href') || l.dataset.path || '';
+      const p = href.replace(/\/+$/, '');
+      if (!p) return;
+      if (p === path || (p !== '' && p !== '/' && path.indexOf(p) === 0)) l.classList.add('is-active');
+    });
+  };
+
   const initMegaMenu = () => {
     const triggers = $$('.nav-link[data-mega]');
     const megas = $$('.mega');
@@ -992,6 +1003,7 @@
     initLoader();
     initHeader();
     initMegaMenu();
+    initActiveNav();
     initMobileNav();
     initSearch();
     initConsentModal();
