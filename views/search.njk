@@ -3,14 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Search results — Triplipi</title>
-  <meta name="description" content="Search results across destinations, packages, blog posts, and announcements.">
+  {% include "_seo.njk" %}
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <meta name="theme-color" content="#D05527">
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -28,133 +26,59 @@
   <div data-partial="header"></div>
 
   <main>
-    <!-- Search page hero -->
     <section class="search-page-head">
       <div class="container-wide">
         <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Search</span></nav>
-        <h1>Results for <em>"ladakh"</em></h1>
-        <p class="lead">28 matches across destinations, packages, blog posts, and announcements.</p>
+        <h1>{% if q %}Results for <em>"{{ q }}"</em>{% else %}Search <em>Triplipi</em>{% endif %}</h1>
+        <p class="lead">{% if q %}{{ count }} match{{ '' if count == 1 else 'es' }} across destinations, packages, blog, announcements and pages.{% else %}Find destinations, packages, blog posts, announcements and pages.{% endif %}</p>
 
-        <!-- Search input visible on page -->
-        <form class="page-search-form" data-form data-success-message="Searching…" onsubmit="event.preventDefault();">
+        <form class="page-search-form" method="get" action="/search">
           <div class="page-search-input">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-            <input type="search" value="ladakh" placeholder="Search again…">
-            <button class="btn btn-sm">Search</button>
+            <input type="search" name="q" value="{{ q }}" placeholder="Search…" autofocus>
+            <button class="btn btn-sm" type="submit">Search</button>
           </div>
         </form>
       </div>
     </section>
 
-    <!-- Filter -->
+    {% if q and count %}
     <section class="section-sm" style="padding-top: var(--s-5); padding-bottom: var(--s-4); border-bottom: 1px solid var(--c-border);">
       <div class="container-wide">
-        <div class="gallery-filter" data-reveal>
+        <div class="search-filter" data-reveal>
           <span style="font-size: var(--fs-micro); letter-spacing: var(--ls-wider); text-transform: uppercase; color: var(--c-text-muted); margin-right: var(--s-2);">Refine</span>
-          <button class="filter-chip is-active" data-filter="all">All Results <span style="opacity: 0.6;">· 28</span></button>
-          <button class="filter-chip" data-filter="destination">Destinations <span style="opacity: 0.6;">· 4</span></button>
-          <button class="filter-chip" data-filter="package">Packages <span style="opacity: 0.6;">· 6</span></button>
-          <button class="filter-chip" data-filter="blog">Blog <span style="opacity: 0.6;">· 12</span></button>
-          <button class="filter-chip" data-filter="announcement">Announcements <span style="opacity: 0.6;">· 4</span></button>
-          <button class="filter-chip" data-filter="gallery">Gallery <span style="opacity: 0.6;">· 2</span></button>
+          <button class="filter-chip is-active" data-filter="all">All <span style="opacity:.6;">· {{ count }}</span></button>
+          {% for t in ['Destination','Package','Blog','Announcement','Pick','Page'] %}
+            {% set n = (results | selectattr('type','equalto',t) | list) | length %}
+            {% if n %}<button class="filter-chip" data-filter="{{ t | lower }}">{{ t }}s <span style="opacity:.6;">· {{ n }}</span></button>{% endif %}
+          {% endfor %}
         </div>
       </div>
     </section>
+    {% endif %}
 
-    <!-- Results -->
     <section class="section" style="padding-top: var(--s-7);">
       <div class="container-wide">
-
-        <!-- Exact match section -->
-        <div data-reveal style="margin-bottom: var(--s-9);">
-          <p class="overline">Exact match</p>
-          <a class="search-result is-large" data-type="destination" href="/destination-detail">
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=400&q=80" alt=""></div>
-            <div>
-              <div class="type">Destination · Mountain · India</div>
-              <h3 style="font-family: var(--ff-display); font-weight: var(--fw-light); font-size: 1.6rem; margin: 4px 0 6px;">Ladakh — The High Desert</h3>
-              <p>Buddhist monasteries, motorcycle passes, and the highest motorable roads on earth. Best season Sep – Jan. Altitude 3,500m+. 7–14 day trips recommended.</p>
-            </div>
-            <span class="arrow">→</span>
-          </a>
-        </div>
-
-        <!-- Partial matches -->
-        <div data-reveal>
-          <p class="overline">Related results</p>
-
-          <a class="search-result" data-type="package" href="/package-detail">
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=200&q=70" alt=""></div>
-            <div>
-              <div class="type">Package · 9 days</div>
-              <h4>Ladakh Cultural Expedition</h4>
-              <p>Leh, Nubra, Pangong, Tso Moriri with local guides, premium camps, and monastery visits. ₹58,000 / person.</p>
-            </div>
-            <span class="arrow">→</span>
-          </a>
-
-          <a class="search-result" data-type="blog" href="/blog-post">
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=200&q=70" alt=""></div>
-            <div>
-              <div class="type">Essay · 14 min read</div>
-              <h4>What I learned about silence in the high passes of Ladakh</h4>
-              <p>Three weeks at altitude, no signal, one notebook. An essay on solitude, attention, and the geography of slowness.</p>
-            </div>
-            <span class="arrow">→</span>
-          </a>
-
-          <a class="search-result" data-type="blog" href="/blog-post">
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=200&q=70" alt=""></div>
-            <div>
-              <div class="type">Guide · 7 min read</div>
-              <h4>What to pack for altitude in Ladakh</h4>
-              <p>A first-timer's kit list for visits to 3,500m+ : layers, hydration, and what to leave at home.</p>
-            </div>
-            <span class="arrow">→</span>
-          </a>
-
-          <a class="search-result" data-type="destination" href="/destination-detail">
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=200&q=70" alt=""></div>
-            <div>
-              <div class="type">Destination · Ladakh</div>
-              <h4>Pangong Tso</h4>
-              <p>The 40-mile glacial lake on the India-China border. Sub-section of the Ladakh destination guide.</p>
-            </div>
-            <span class="arrow">→</span>
-          </a>
-
-          <a class="search-result" data-type="announcement" href="/announcements">
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=200&q=70" alt=""></div>
-            <div>
-              <div class="type">Announcement · 10 Apr</div>
-              <h4>Ladakh Cultural Expedition — 9 days, with our anchor partner</h4>
-              <p>Female-led trip leaders, monastery access, premium camps. Trans-Himalayan Expeditions launches its summer 2026 circuit.</p>
-            </div>
-            <span class="arrow">→</span>
-          </a>
-
-          <a class="search-result" data-type="blog" href="/blog-post">
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=200&q=70" alt=""></div>
-            <div>
-              <div class="type">Field Notes · 6 min read</div>
-              <h4>Hemis Festival — what to expect, and when to arrive</h4>
-              <p>The annual masked dance festival at Hemis Monastery. Practical notes for first-time attendees.</p>
-            </div>
-            <span class="arrow">→</span>
-          </a>
-
-          <a class="search-result" data-type="package" href="/package-detail">
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=200&q=70" alt=""></div>
-            <div>
-              <div class="type">Package · 7 days</div>
-              <h4>Leh and Surrounds — Short Circuit</h4>
-              <p>A shorter introduction to Ladakh: Leh, Likir, Alchi, Khardung La. For first-time visitors. ₹38,000 / person.</p>
-            </div>
-            <span class="arrow">→</span>
-          </a>
-        </div>
-
-
+        {% if not q %}
+          <p class="adm-empty" style="color: var(--c-text-muted);">Type a query above to search the site.</p>
+        {% elif count == 0 %}
+          <div data-reveal style="text-align:center; padding-block: var(--s-9);">
+            <h3 style="font-family: var(--ff-display); font-weight:700; margin-bottom: var(--s-3);">No results for "{{ q }}".</h3>
+            <p style="color: var(--c-text-muted);">Try a shorter or different keyword — e.g. a destination, package or topic.</p>
+          </div>
+        {% else %}
+          <div class="search-results" data-stagger>
+            {% for r in results %}
+            <a class="search-result" data-type="{{ r.type | lower }}" href="{{ r.url }}">
+              <div>
+                <div class="type">{{ r.type }}{% if r.desc %} · {{ r.desc | striptags }}{% endif %}</div>
+                <h4>{{ r.title | safe }}</h4>
+              </div>
+              <span class="arrow">→</span>
+            </a>
+            {% endfor %}
+          </div>
+        {% endif %}
       </div>
     </section>
   </main>

@@ -372,3 +372,23 @@ body.login-page { display: grid; place-items: center; }
 }
 .rte-inline .rte-editor p { margin: 0; }
 .rte-inline .rte-editor em { color: var(--terra); font-style: italic; }
+
+/* dashboard analytics */
+.adm-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 12px; margin-bottom: 24px; }
+.adm-stats .stat { background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px; text-decoration:none; color:var(--ink); }
+.adm-stats .stat.link:hover { border-color: var(--terra); }
+.adm-stats .stat .n { font-family:"Playfair Display",serif; font-weight:700; font-size:1.9rem; color:var(--terra); line-height:1; }
+.adm-stats .stat .l { font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--blue); margin-top:8px; font-weight:700; }
+.adm-toppages { background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px 20px; margin-bottom:24px; }
+.adm-toppages h3 { font-size:1rem; margin-bottom:10px; }
+.adm-toppages ol { list-style:none; display:grid; gap:6px; }
+.adm-toppages li { display:flex; justify-content:space-between; font-size:0.86rem; border-bottom:1px solid var(--line); padding-bottom:5px; }
+.adm-toppages .path { color:#5a514e; } .adm-toppages .views { font-weight:700; color:var(--blue-deep); }
+
+/* item status fieldset + list badges */
+.adm-status { border:1px solid var(--line); border-radius:12px; padding:14px 16px; display:grid; gap:10px; }
+.adm-status legend { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--blue); padding:0 6px; }
+.adm-status label { font-size:0.82rem; font-weight:600; color:#5a514e; display:grid; gap:6px; }
+.adm-status .adm-check { display:flex; align-items:center; gap:8px; }
+.adm-status input[type=date] { font:inherit; padding:9px 11px; border:1px solid var(--line); border-radius:8px; background:#fdfaf4; max-width:220px; }
+.badge-arch { color:#8a5a16; font-weight:700; }

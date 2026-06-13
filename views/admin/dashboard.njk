@@ -9,6 +9,23 @@
     </div>
   </header>
 
+  {% if stats %}
+  <div class="adm-stats">
+    <div class="stat"><div class="n">{{ stats.total }}</div><div class="l">Total page views</div></div>
+    <div class="stat"><div class="n">{{ stats.today }}</div><div class="l">Views today</div></div>
+    <a class="stat link" href="/admin/inbox"><div class="n">{{ inboxCount }}</div><div class="l">Unread messages</div></a>
+    <a class="stat link" href="/admin/links"><div class="n">↗</div><div class="l">Check link health</div></a>
+  </div>
+  {% if stats.top | length %}
+  <div class="adm-toppages">
+    <h3>Most-viewed pages</h3>
+    <ol>
+      {% for p in stats.top %}<li><span class="path">{{ p.path }}</span><span class="views">{{ p.views }}</span></li>{% endfor %}
+    </ol>
+  </div>
+  {% endif %}
+  {% endif %}
+
   <h2 class="adm-group-title">Pages</h2>
   <div class="adm-cards">
     {% for p in pages %}

@@ -1,0 +1,23 @@
+{# Shared SEO head block — fed by `seo` (res.locals.seo, overridden per page).
+   Falls back gracefully if `seo` is absent. #}
+<title>{{ seo.title if seo and seo.title else 'Triplipi — A Travel Discovery Platform' }}</title>
+<meta name="description" content="{{ seo.description if seo and seo.description else 'A premium discovery platform for the discerning traveller.' }}">
+<meta name="robots" content="{{ seo.robots if seo and seo.robots else 'index, follow' }}">
+{% if seo and seo.canonical %}<link rel="canonical" href="{{ seo.canonical }}">{% endif %}
+<meta name="theme-color" content="#D05527">
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="{{ seo.brand if seo and seo.brand else 'Triplipi' }}">
+<meta property="og:type" content="{{ seo.type if seo and seo.type else 'website' }}">
+<meta property="og:title" content="{{ seo.title if seo and seo.title else 'Triplipi' }}">
+<meta property="og:description" content="{{ seo.description if seo and seo.description else '' }}">
+{% if seo and seo.canonical %}<meta property="og:url" content="{{ seo.canonical }}">{% endif %}
+{% if seo and seo.image %}<meta property="og:image" content="{{ seo.image }}">{% endif %}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="{{ 'summary_large_image' if seo and seo.image else 'summary' }}">
+<meta name="twitter:title" content="{{ seo.title if seo and seo.title else 'Triplipi' }}">
+<meta name="twitter:description" content="{{ seo.description if seo and seo.description else '' }}">
+{% if seo and seo.image %}<meta name="twitter:image" content="{{ seo.image }}">{% endif %}
+
+{% if seo and seo.jsonLd %}<script type="application/ld+json">{{ seo.jsonLd | dump | safe }}</script>{% endif %}

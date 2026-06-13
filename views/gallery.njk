@@ -3,14 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Gallery — Triplipi</title>
-  <meta name="description" content="A visual archive of our travels — fifty videos, fifty images. Hover to preview. Click for full-screen.">
+  {% include "_seo.njk" %}
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <meta name="theme-color" content="#D05527">
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -57,8 +55,12 @@
         <div class="masonry" data-stagger>
 {% for g in items %}
           {% if sponsorSlots[loop.index0] %}{{ sp.banner(sponsorSlots[loop.index0], 'sp-span-columns') }}{% endif %}
-          <a data-lightbox{% if g.type == 'video' %} data-type="video"{% endif %} data-src="{{ g.src }}" data-cat="{{ g.category }}" data-kind="{{ g.type }}" class="gallery-tile{% if g.type == 'video' %} is-video{% endif %}">
+          <a data-lightbox{% if g.type == 'video' %} data-type="video"{% endif %} data-src="{{ g.src }}" data-cat="{{ g.category }}" data-kind="{{ g.type }}"{% if g.type == 'video' and g.src %} data-hover-video{% endif %} class="gallery-tile{% if g.type == 'video' %} is-video{% endif %}">
+            {% if g.type == 'video' and g.src %}
+            <video src="{{ g.src }}" poster="{{ g.image }}" muted loop playsinline preload="metadata"></video>
+            {% else %}
             <img src="{{ g.image }}" alt="{{ g.alt }}">
+            {% endif %}
             {% if g.type == 'video' %}<div class="play-icon">▶</div>{% endif %}
             <div class="overlay"><span class="tag tag-plain">{{ g.label }}</span></div>
           </a>

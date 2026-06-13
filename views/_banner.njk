@@ -1,0 +1,31 @@
+{# Promo banner zone renderer (FR-OTHER-012).
+   Usage: {% import "_banner.njk" as bn %} ... {{ bn.zone(banners, 'home-top') }} #}
+{% macro one(b) %}
+  {% if b.style == 'wide' and b.image %}
+  <a class="promo-banner promo-wide{% if b.animate %} promo-animate{% endif %}" href="{{ b.href or '#' }}"
+     style="background-image: linear-gradient(rgba(35,31,32,.35), rgba(35,31,32,.5)), url('{{ b.image }}');"
+     {% if b.external %}data-external data-provider="{{ b.extProvider }}" data-url="{{ b.extUrl }}"{% endif %}>
+    <div class="promo-wide-inner">
+      <div class="promo-text">{{ b.text | safe }}</div>
+      {% if b.ctaLabel %}<span class="btn btn-brand btn-sm">{{ b.ctaLabel }} <span class="arrow">→</span></span>{% endif %}
+    </div>
+  </a>
+  {% else %}
+  <div class="promo-banner promo-strip{% if b.animate %} promo-animate{% endif %}">
+    <span class="promo-text">{{ b.text | safe }}</span>
+    {% if b.ctaLabel and b.href %}
+    <a class="btn btn-sm btn-brand" href="{{ b.href }}"{% if b.external %} data-external data-provider="{{ b.extProvider }}" data-url="{{ b.extUrl }}"{% endif %}>{{ b.ctaLabel }} <span class="arrow">→</span></a>
+    {% endif %}
+  </div>
+  {% endif %}
+{% endmacro %}
+
+{% macro zone(banners, name) %}
+{% if banners and banners[name] and banners[name] | length %}
+  <section class="section-sm promo-zone promo-zone--{{ name }}">
+    <div class="container-wide">
+      {% for b in banners[name] %}{{ one(b) }}{% endfor %}
+    </div>
+  </section>
+{% endif %}
+{% endmacro %}

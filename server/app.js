@@ -10,6 +10,7 @@ const crypto = require('crypto');
 const express = require('express');
 const nunjucks = require('nunjucks');
 const multer = require('multer');
+const nodemailer = require('nodemailer');
 const store = require('./store');
 
 const app = express();
@@ -26,7 +27,62 @@ const env = nunjucks.configure(path.join(ROOT, 'views'), {
 });
 app.set('view engine', 'njk');
 
+/* slugify — stable id for linking to detail pages (survives pagination/slicing) */
+const slugify = (s) => String(s || '')
+  .replace(/&[a-z]+;/gi, ' ').replace(/<[^>]+>/g, '')
+  .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+env.addFilter('slug', slugify);
+
 app.use(express.urlencoded({ extended: true }));
+
+/* ---------- analytics: count public page views (FR-OTHER-010) ---------- */
+const ANALYTICS_FILE = path.join(__dirname, 'data', 'analytics.json');
+function readAnalytics() {
+  try { return JSON.parse(fs.readFileSync(ANALYTICS_FILE, 'utf8')); }
+  catch (e) { return { total: 0, pages: {}, days: {} }; }
+}
+let _analytics = readAnalytics();
+let _analyticsDirty = false;
+setInterval(() => { if (_analyticsDirty) { fs.writeFileSync(ANALYTICS_FILE, JSON.stringify(_analytics)); _analyticsDirty = false; } }, 10000);
+app.use((req, res, next) => {
+  if (req.method === 'GET' && !req.path.startsWith('/admin') && !req.path.startsWith('/assets')
+      && !req.path.includes('.') && (req.headers.accept || '').includes('text/html')) {
+    _analytics.total += 1;
+    _analytics.pages[req.path] = (_analytics.pages[req.path] || 0) + 1;
+    const day = new Date().toISOString().slice(0, 10);
+    _analytics.days[day] = (_analytics.days[day] || 0) + 1;
+    _analyticsDirty = true;
+  }
+  next();
+});
+function analyticsSummary() {
+  const a = _analytics;
+  const top = Object.entries(a.pages).sort((x, y) => y[1] - x[1]).slice(0, 10)
+    .map(([path, views]) => ({ path, views }));
+  const today = new Date().toISOString().slice(0, 10);
+  return { total: a.total, top, today: a.days[today] || 0, days: a.days };
+}
+
+/* ---------- external link health checker (D7 / FR-OTHER) ---------- */
+async function checkLinks() {
+  const d = store.content;
+  const urls = new Set();
+  (d.sponsored || []).forEach((s) => { if (s.linkUrl) urls.add(s.linkUrl); });
+  (d.packages || []).forEach((p) => { if (p.ctaExternal && p.ctaUrl) urls.add(p.ctaUrl); });
+  (d.announcements || []).forEach((a) => { if (a.external && a.extUrl) urls.add(a.extUrl); });
+  const list = [...urls];
+  const results = await Promise.all(list.map(async (url) => {
+    try {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 7000);
+      let r = await fetch(url, { method: 'HEAD', redirect: 'follow', signal: ctrl.signal });
+      if (r.status >= 400) r = await fetch(url, { method: 'GET', redirect: 'follow', signal: ctrl.signal });
+      clearTimeout(t);
+      return { url, status: r.status, ok: r.status < 400 };
+    } catch (e) { return { url, status: 0, ok: false, error: e.name }; }
+  }));
+  return results;
+}
 
 /* ---------- uploads (admin images) ---------- */
 const UPLOAD_DIR = path.join(ROOT, 'assets', 'uploads');
@@ -99,6 +155,9 @@ const SCHEMAS = [
       { name: 'headerCtaHref', label: 'Header button link', type: 'url', ph: 'e.g. shop.html' },
       { name: 'contactEmail', label: 'Contact email', ph: 'e.g. hello@triplipi.com' },
       { name: 'copyright', label: 'Copyright line', ph: 'e.g. © 2026 Triplipi. All rights reserved.' },
+      { name: 'siteUrl', label: 'Public website address (for SEO)', type: 'url', ph: 'e.g. https://triplipi.com' },
+      { name: 'metaDescription', label: 'Default search-engine description', type: 'textarea', ph: 'One or two sentences describing the site, used when a page has none.' },
+      { name: 'ogImage', label: 'Default social-share image', type: 'image', ph: 'A wide image shown when the site is shared on social media.' },
     ] },
   { key: 'nav', group: 'Global', label: 'Header navigation links', type: 'list', path: 'settings.navLinks',
     itemTitle: 'label',
@@ -133,7 +192,24 @@ const SCHEMAS = [
       { name: 'season', label: 'Season', ph: 'e.g. Sep – Jan' },
       { name: 'tagline', label: 'Tagline', ph: 'e.g. High desert' },
       { name: 'categories', label: 'Categories', type: 'multiselect', optionsFrom: 'destCategories', optionValue: 'slug', optionLabel: 'label' },
-      { name: 'image', label: 'Image', type: 'image' },
+      { name: 'image', label: 'Card image', type: 'image' },
+      // ----- detail page (/destination-detail?d=slug) -----
+      { name: 'heroImage', label: 'Detail hero image (optional — falls back to card image)', type: 'image' },
+      { name: 'lead', label: 'Detail intro line', type: 'textarea', richInline: true, ph: 'One-line summary under the title.' },
+      { name: 'altitude', label: 'Quick fact — Altitude', ph: 'e.g. 3,500m+' },
+      { name: 'tripLength', label: 'Quick fact — Trip length', ph: 'e.g. 7–14 days' },
+      { name: 'currency', label: 'Quick fact — Currency', ph: 'e.g. INR' },
+      { name: 'language', label: 'Quick fact — Language', ph: 'e.g. Ladakhi, Hindi' },
+      { name: 'difficulty', label: 'Quick fact — Difficulty', ph: 'e.g. Moderate' },
+      { name: 'overview', label: 'Overview', type: 'textarea', rich: true },
+      { name: 'secSeason', label: 'Sub-section 1 — Season-wise expectations', type: 'textarea', rich: true },
+      { name: 'secReach', label: 'Sub-section 2 — How to reach', type: 'textarea', rich: true },
+      { name: 'secStay', label: 'Sub-section 3 — Where to stay', type: 'textarea', rich: true },
+      { name: 'secTravel', label: 'Sub-section 4 — Getting around', type: 'textarea', rich: true },
+      { name: 'secActivities', label: 'Sub-section 5 — Activities to do', type: 'textarea', rich: true },
+      { name: 'secLandmarks', label: 'Sub-section 6 — Landmarks to visit', type: 'textarea', rich: true },
+      { name: 'secNotes', label: 'Sub-section 7 — Any other notes', type: 'textarea', rich: true },
+      { name: 'gallery', label: 'Detail gallery image URLs (comma-separated)', type: 'csv', ph: 'https://… , https://…' },
     ] },
   { key: 'highlightsHead', group: 'Homepage', label: 'Section heading — Travel Highlights', type: 'object', path: 'home.highlightsHead',
     fields: [
@@ -163,6 +239,11 @@ const SCHEMAS = [
       { name: 'overline', label: 'Overline' , ph: 'Small label above the heading, e.g. Travel Highlights' },
       { name: 'titleHtml', label: 'Heading (HTML)', type: 'textarea', richInline: true, ph: 'e.g. Stories from the <em>field</em>.' },
     ] },
+  { key: 'mediaHead', group: 'Homepage', label: 'Section heading — Media wall', type: 'object', path: 'home.mediaHead',
+    fields: [
+      { name: 'overline', label: 'Overline' , ph: 'Small label above the heading, e.g. In Motion' },
+      { name: 'titleHtml', label: 'Heading (HTML)', type: 'textarea', richInline: true, ph: 'e.g. The world, <em>in motion</em>.' },
+    ] },
   { key: 'ask', group: 'Homepage', label: 'Ask for Guidance block', type: 'object', path: 'home.ask',
     fields: [
       { name: 'overline', label: 'Overline' , ph: 'Small label above the heading, e.g. Travel Highlights' },
@@ -182,8 +263,21 @@ const SCHEMAS = [
       { name: 'date', label: 'Date', ph: 'e.g. 12 May 2026' },
       { name: 'category', label: 'Filter category', ph: 'package, sale, editorial, shop or affiliate' },
       { name: 'linkLabel', label: 'Link label', ph: 'e.g. Read more' },
-      { name: 'href', label: 'Link', type: 'url', ph: 'e.g. packages.html or https://…' },
-      { name: 'external', label: 'External partner link?', type: 'bool' },
+      // ----- where this announcement links (FR-HOME-013B/C) -----
+      { name: 'section', label: 'Links to section', type: 'select', options: [
+        { value: 'destination', label: 'A destination page' },
+        { value: 'trip', label: 'Go For A Trip' },
+        { value: 'picks', label: 'Our Picks' },
+        { value: 'packages', label: 'Check Packages' },
+        { value: 'shop', label: 'Shop' },
+        { value: 'gallery', label: 'Gallery' },
+        { value: 'blog', label: 'A blog post' },
+        { value: 'external', label: 'External / affiliate website (consent-gated)' },
+        { value: 'url', label: 'Any internal URL' },
+      ] },
+      { name: 'target', label: 'Target (slug or URL for the section above)', ph: 'e.g. ladakh, or a blog/package slug, or https://…' },
+      { name: 'href', label: 'Fallback link (used if no section chosen)', type: 'url', ph: 'e.g. /packages' },
+      { name: 'external', label: 'External partner link? (consent modal)', type: 'bool' },
       { name: 'extProvider', label: 'Partner name (if external)', ph: 'e.g. HimalayanRail' },
       { name: 'extUrl', label: 'Partner URL (if external)', type: 'url', ph: 'https://partner-website.com' },
     ] },
@@ -204,6 +298,12 @@ const SCHEMAS = [
       { name: 'ctaExternal', label: 'External partner link?', type: 'bool' },
       { name: 'ctaProvider', label: 'Partner name (if external)', ph: 'e.g. KeralaLuxe' },
       { name: 'ctaUrl', label: 'Partner URL (if external)', type: 'url', ph: 'https://partner-website.com' },
+      // ----- detail page (/package-detail?p=index) -----
+      { name: 'destinationSlugs', label: 'Applies to destinations', type: 'multiselect', optionsFrom: 'destinations', optionValue: 'slug', optionLabel: 'name' },
+      { name: 'overview', label: 'Detail — Overview', type: 'textarea', rich: true },
+      { name: 'itinerary', label: 'Detail — Day-by-day itinerary', type: 'textarea', rich: true },
+      { name: 'inclusions', label: 'Detail — Inclusions (comma-separated)', type: 'csv', ph: 'All meals, Certified guides, Premium homestays' },
+      { name: 'providerInfo', label: 'Detail — About the provider', type: 'textarea', rich: true },
     ] },
   { key: 'blogFeature', group: 'Content', label: 'Featured story', type: 'object', path: 'blog.feature',
     fields: [
@@ -228,6 +328,16 @@ const SCHEMAS = [
       { name: 'excerpt', label: 'Excerpt', type: 'textarea', richInline: true, ph: 'One or two sentences shown under the title.' },
       { name: 'bylineSpans', label: 'Byline parts (comma-separated)', type: 'csv', ph: 'e.g. 14 min read, By Editor' },
       { name: 'image', label: 'Thumbnail', type: 'image' },
+      // ----- detail page (/blog-post?b=index) -----
+      { name: 'layout', label: 'Layout template', type: 'select', options: [
+        { value: '1', label: 'Layout 1 — Centered editorial' },
+        { value: '2', label: 'Layout 2 — Wide hero' },
+        { value: '3', label: 'Layout 3 — Minimal' },
+        { value: '4', label: 'Layout 4 — Photo-led' },
+      ] },
+      { name: 'heroImage', label: 'Hero image (optional — falls back to thumbnail)', type: 'image' },
+      { name: 'deck', label: 'Deck / standfirst', type: 'textarea', richInline: true, ph: 'The italic intro under the headline.' },
+      { name: 'body', label: 'Article body', type: 'textarea', rich: true },
     ] },
   { key: 'galleryItems', group: 'Content', label: 'Gallery tiles', type: 'list', path: 'galleryItems',
     itemTitle: 'label',
@@ -304,6 +414,44 @@ const SCHEMAS = [
       ] },
     ] },
 
+  /* ----- Promo banners / animation zones (FR-OTHER-012) ----- */
+  { key: 'banners', label: 'Promo banners', type: 'list', path: 'banners',
+    itemTitle: 'title',
+    fields: [
+      { name: 'title', label: 'Internal title', ph: 'e.g. Monsoon sale strip' },
+      { name: 'zone', label: 'Where it appears', type: 'select', options: [
+        { value: 'site-top', label: 'Thin bar at the very top of every page' },
+        { value: 'home-top', label: 'Homepage — below the hero' },
+        { value: 'home-mid', label: 'Homepage — mid page' },
+      ] },
+      { name: 'style', label: 'Style', type: 'select', options: [
+        { value: 'strip', label: 'Slim text strip' },
+        { value: 'wide', label: 'Wide image banner' },
+      ] },
+      { name: 'text', label: 'Headline / message', type: 'textarea', richInline: true, ph: 'e.g. Monsoon sale — up to 35% off Kerala packages.' },
+      { name: 'image', label: 'Background / banner image (wide style)', type: 'image' },
+      { name: 'ctaLabel', label: 'Button label', ph: 'e.g. See offers' },
+      { name: 'href', label: 'Button link', type: 'url', ph: 'e.g. /packages or https://…' },
+      { name: 'external', label: 'External partner link? (consent modal)', type: 'bool' },
+      { name: 'extProvider', label: 'Partner name (if external)', ph: 'e.g. HimalayanRail' },
+      { name: 'extUrl', label: 'Partner URL (if external)', type: 'url', ph: 'https://partner-website.com' },
+      { name: 'animate', label: 'Subtle entrance animation?', type: 'bool' },
+    ] },
+
+  /* ----- Custom pages (FR-PAGES-010 / FR-OTHER-004) ----- */
+  { key: 'customPages', label: 'Custom pages', type: 'list', path: 'customPages',
+    itemTitle: 'navLabel',
+    fields: [
+      { name: 'navLabel', label: 'Menu / title label', ph: 'e.g. Careers' },
+      { name: 'slug', label: 'Slug (URL: /p/slug)', ph: 'lowercase-with-dashes, e.g. careers' },
+      { name: 'crumb', label: 'Breadcrumb & browser title', ph: 'e.g. Careers at Triplipi' },
+      { name: 'title', label: 'Page heading (HTML, <em> = accent)', type: 'textarea', richInline: true, ph: 'e.g. Work <em>with us</em>.' },
+      { name: 'deck', label: 'Intro line under the heading', type: 'textarea', richInline: true, ph: 'One sentence shown at the top.' },
+      { name: 'heroImage', label: 'Hero image (optional)', type: 'image' },
+      { name: 'body', label: 'Page content', type: 'textarea', rich: true },
+      { name: 'inFooter', label: 'Show in footer “Company” column?', type: 'bool' },
+    ] },
+
   /* ----- Homepage pickers — choose which master items are featured ----- */
   { key: 'pick-destinations', label: 'Pick destinations for the homepage', type: 'picker',
     path: 'destinations', itemTitle: 'name' },
@@ -313,6 +461,8 @@ const SCHEMAS = [
     path: 'blog.posts', itemTitle: 'title' },
   { key: 'pick-packages', label: 'Pick packages for the homepage', type: 'picker',
     path: 'packages', itemTitle: 'title' },
+  { key: 'pick-gallery', label: 'Pick media for the homepage wall', type: 'picker',
+    path: 'galleryItems', itemTitle: 'label' },
 
   /* ----- Page heroes ----- */
   ...['destinations', 'packages', 'blog', 'announcements', 'gallery', 'picks', 'about', 'contact'].map((p) => ({
@@ -348,6 +498,8 @@ const ADMIN_PAGES = [
       { key: 'pick-blogPosts', hint: 'Tick which blog posts appear on the homepage.' },
       { key: 'packagesHead', hint: 'Heading row of the packages strip.' },
       { key: 'pick-packages', hint: 'Tick which packages appear on the homepage.' },
+      { key: 'mediaHead', hint: 'Heading row of the media wall (photos & films).' },
+      { key: 'pick-gallery', hint: 'Tick which gallery tiles appear on the homepage media wall (films auto-play on hover).' },
       { key: 'ask', hint: 'The cream contact block near the bottom.' },
     ] },
   { key: 'destinations', label: 'Destinations', view: '/destinations',
@@ -406,6 +558,16 @@ const ADMIN_PAGES = [
     sections: [
       { key: 'legalDocs', hint: 'Each document’s heading, intro and full body. “Show in footer” controls the footer Legal column; reorder to set the footer + sidebar order.' },
     ] },
+  { key: 'banners', label: 'Promo Banners', view: '/',
+    intro: 'Promotional banners and animation strips placed in fixed zones across the site. Use Status to schedule or hide each one.',
+    sections: [
+      { key: 'banners', hint: 'Pick a zone (site-wide top bar, or below/mid the homepage). Slim strips show text + a button; wide banners show your image. External links open the consent modal.' },
+    ] },
+  { key: 'pages', label: 'Custom Pages', view: '/',
+    intro: 'Build standalone pages (Careers, Press, FAQs…) that live at /p/your-slug. Optionally link them in the footer.',
+    sections: [
+      { key: 'customPages', hint: 'Each page has a heading, intro, optional hero image and a full rich-text body. “Show in footer” adds it to the footer Company column.' },
+    ] },
   { key: 'site', label: 'Site Settings', view: '/', isSettings: true,
     intro: 'Brand, header navigation, footer and admin security.',
     sections: [
@@ -425,7 +587,15 @@ const backTo = (sectionKey, saved) =>
 /* partials.js rendered from template so header/footer are CMS-driven */
 app.get('/assets/js/partials.js', (req, res) => {
   res.type('application/javascript');
-  res.render('partials.js.njk', { settings: store.get('settings'), legalDocs: store.get('legalDocs') || [] });
+  const siteTop = (bannersByZone()['site-top'] || []).map((b) => ({
+    ...b, href: b.section === 'external' || b.external ? (b.extUrl || b.href) : b.href,
+  }));
+  res.render('partials.js.njk', {
+    settings: store.get('settings'),
+    legalDocs: store.get('legalDocs') || [],
+    customPages: pub(store.get('customPages') || []).filter((p) => p.inFooter),
+    siteTopBanners: siteTop,
+  });
 });
 app.use('/assets', express.static(path.join(ROOT, 'assets')));
 
@@ -460,6 +630,73 @@ function sponsorSlots(pageKey, count) {
   return slots;
 }
 
+/* Hide archived, unpublished, or expired items from the public site
+   (FR-OTHER-003 archive, 003A auto-expiry, 005 publish/hide). Admin sees all. */
+function isVisible(item) {
+  if (!item || typeof item !== 'object') return true;
+  if (item.archived === true) return false;
+  if (item.published === false) return false;
+  if (item.expiry) {
+    const d = new Date(item.expiry);
+    if (!Number.isNaN(d.getTime()) && d.getTime() < Date.now()) return false;
+  }
+  return true;
+}
+const pub = (arr) => (arr || []).filter(isVisible);
+
+/* Resolve an announcement's destination link from its section + target
+   (FR-HOME-013B/C). Returns the list with each item's `href` set. */
+function resolveAnnouncements(list) {
+  return (list || []).map((a) => {
+    let href = a.href || '/announcements';
+    const t = (a.target || '').trim();
+    switch (a.section) {
+      case 'destination': href = '/destination-detail?d=' + encodeURIComponent(t); break;
+      case 'trip': href = t ? '/trip?d=' + encodeURIComponent(t) : '/trip'; break;
+      case 'picks': href = '/picks'; break;
+      case 'packages': href = t ? '/packages?d=' + encodeURIComponent(t) : '/packages'; break;
+      case 'shop': href = '/shop'; break;
+      case 'gallery': href = '/gallery'; break;
+      case 'blog': href = '/blog-post?b=' + encodeURIComponent(t); break;
+      case 'external': href = a.extUrl || a.href || '#'; break;
+      case 'url': if (t) href = t; break;
+      default: break;
+    }
+    return { ...a, href };
+  });
+}
+
+/* Active promo banners grouped by zone (FR-OTHER-012). */
+function bannersByZone() {
+  const out = {};
+  pub(c().banners).forEach((b) => {
+    const zone = b.zone || 'home-top';
+    (out[zone] = out[zone] || []).push(b);
+  });
+  return out;
+}
+
+/* Build a flat, typed search index over all content; runSearch filters it */
+function searchIndex() {
+  const d = c();
+  const out = [];
+  pub(d.destinations).forEach((x) => out.push({ type: 'Destination', title: x.name, desc: [x.region, x.tagline].filter(Boolean).join(' · '), url: '/destination-detail?d=' + x.slug }));
+  pub(d.packages).forEach((x) => out.push({ type: 'Package', title: x.title, desc: x.region || x.description, url: '/package-detail?p=' + slugify(x.title) }));
+  pub(d.blog && d.blog.posts).forEach((x) => out.push({ type: 'Blog', title: x.title, desc: x.category || x.excerpt, url: '/blog-post?b=' + slugify(x.title) }));
+  pub(d.announcements).forEach((x) => out.push({ type: 'Announcement', title: x.title, desc: x.date || x.excerpt, url: x.href || '/announcements' }));
+  pub(d.picks).forEach((x) => out.push({ type: 'Pick', title: x.name, desc: x.region, url: x.href || '/picks' }));
+  (d.legalDocs || []).forEach((x) => out.push({ type: 'Page', title: x.crumb, desc: 'Legal', url: '/legal?p=' + x.slug }));
+  ['About', 'Contact', 'Gallery', 'Shop'].forEach((p) => out.push({ type: 'Page', title: p, desc: '', url: '/' + p.toLowerCase() }));
+  return out;
+}
+function runSearch(q) {
+  const query = String(q || '').trim().toLowerCase();
+  if (!query) return [];
+  return searchIndex()
+    .filter((it) => (it.title + ' ' + (it.desc || '')).toLowerCase().includes(query))
+    .sort((a, b) => (a.title.toLowerCase() === query ? 0 : 1) - (b.title.toLowerCase() === query ? 0 : 1));
+}
+
 /* Clean URLs: /page is canonical; legacy /page.html 301-redirects to it */
 app.use((req, res, next) => {
   if (req.path.endsWith('.html')) {
@@ -470,18 +707,91 @@ app.use((req, res, next) => {
   next();
 });
 
+/* ============================================================
+   SEO — canonical URLs, per-page meta, schema.org JSON-LD
+   ============================================================ */
+function siteOrigin(req) {
+  const s = c().settings || {};
+  const u = (s.siteUrl || '').trim().replace(/\/+$/, '');
+  if (u) return u;
+  return req.protocol + '://' + req.get('host');
+}
+function absUrl(req, p) {
+  if (!p) return '';
+  if (/^https?:\/\//i.test(p)) return p;
+  return siteOrigin(req) + (String(p).startsWith('/') ? p : '/' + p);
+}
+const plain = (s) => String(s || '').replace(/<[^>]+>/g, '').replace(/&[a-z]+;/gi, ' ').replace(/\s+/g, ' ').trim();
+const clip = (s, n) => { const t = plain(s); return t.length > n ? t.slice(0, n - 1).trimEnd() + '…' : t; };
+
+// Friendly titles for the static / listing pages (path -> title fragment)
+const PAGE_TITLES = {
+  '/': 'A Travel Discovery Platform',
+  '/destinations': 'Destinations',
+  '/packages': 'Travel Packages',
+  '/blog': 'The Journal',
+  '/announcements': 'Announcements',
+  '/gallery': 'Gallery',
+  '/picks': 'Our Picks',
+  '/about': 'About Us',
+  '/contact': 'Contact',
+  '/trip': 'Plan a Trip',
+  '/shop': 'Shop',
+  '/legal': 'Legal',
+  '/search': 'Search',
+};
+function defaultSeo(req) {
+  const s = c().settings || {};
+  const brand = s.brandName || 'Triplipi';
+  const frag = PAGE_TITLES[req.path];
+  return {
+    brand,
+    title: frag ? frag + ' — ' + brand : brand,
+    description: clip(s.metaDescription, 300) || 'A premium discovery platform for the discerning traveller. Curated destinations, verified packages, and original travel photography.',
+    canonical: absUrl(req, req.path === '/' ? '/' : req.path),
+    image: absUrl(req, s.ogImage || ''),
+    type: 'website',
+    robots: 'index, follow',
+    jsonLd: null,
+  };
+}
+// Build SEO defaults for every public request; detail builders override via returned `seo`.
+app.use((req, res, next) => {
+  if (req.path.startsWith('/admin') || req.path.startsWith('/assets')) return next();
+  try {
+    res.locals.seo = defaultSeo(req);
+    res.locals.banners = bannersByZone();
+  } catch (e) { /* settings not ready */ }
+  next();
+});
+
 const PAGES = {
-  index: (req) => ({
-    settings: c().settings,
-    home: c().home,
-    destinations: c().destinations.filter((d) => d.featured),
-    highlights: c().highlights,
-    announcements: c().announcements.filter((a) => a.featured),
-    blogPosts: c().blog.posts.filter((p) => p.featured),
-    packages: c().packages.filter((p) => p.featured),
-  }),
+  index: (req) => {
+    const s = c().settings || {};
+    const brand = s.brandName || 'Triplipi';
+    return {
+      settings: s,
+      home: c().home,
+      destinations: pub(c().destinations).filter((d) => d.featured),
+      highlights: pub(c().highlights),
+      announcements: resolveAnnouncements(pub(c().announcements).filter((a) => a.featured)),
+      blogPosts: pub(c().blog.posts).filter((p) => p.featured),
+      packages: pub(c().packages).filter((p) => p.featured),
+      mediaItems: pub(c().galleryItems).filter((g) => g.featured).slice(0, 100),
+      seo: {
+        ...defaultSeo(req),
+        title: brand + ' — A Travel Discovery Platform',
+        jsonLd: {
+          '@context': 'https://schema.org', '@type': 'TravelAgency',
+          name: brand, url: siteOrigin(req), areaServed: 'Worldwide',
+          description: clip(s.metaDescription, 300) || 'A curated travel discovery platform with verified destinations and packages.',
+          ...(s.ogImage ? { image: absUrl(req, s.ogImage) } : {}),
+        },
+      },
+    };
+  },
   destinations: (req) => {
-    const all = c().destinations;
+    const all = pub(c().destinations);
     const categories = (c().destCategories || []).map((cat) => ({
       ...cat,
       count: all.filter((d) => (d.categories || []).includes(cat.slug)).length,
@@ -490,19 +800,26 @@ const PAGES = {
     return { page: c().pages.destinations, cards: items, categories, pagination, baseUrl: '/destinations', sponsorSlots: sponsorSlots('destinations', items.length) };
   },
   packages: (req) => {
-    const { items, pagination } = paginate(c().packages, req);
-    return { page: c().pages.packages, packages: items, pagination, baseUrl: '/packages', sponsorSlots: sponsorSlots('packages', items.length) };
+    let all = pub(c().packages);
+    const d = req && req.query && req.query.d;
+    let destFilter = null;
+    if (d) {
+      const tagged = all.filter((p) => (p.destinationSlugs || []).includes(d));
+      if (tagged.length) { all = tagged; destFilter = (c().destinations.find((x) => x.slug === d) || {}).name || d; }
+    }
+    const { items, pagination } = paginate(all, req);
+    return { page: c().pages.packages, packages: items, pagination, baseUrl: '/packages', sponsorSlots: sponsorSlots('packages', items.length), destFilter: destFilter };
   },
   blog: (req) => {
-    const { items, pagination } = paginate(c().blog.posts, req);
+    const { items, pagination } = paginate(pub(c().blog.posts), req);
     return { page: c().pages.blog, blog: { ...c().blog, posts: items }, pagination, baseUrl: '/blog', sponsorSlots: sponsorSlots('blog', items.length) };
   },
   announcements: (req) => {
-    const { items, pagination } = paginate(c().announcements, req);
+    const { items, pagination } = paginate(resolveAnnouncements(pub(c().announcements)), req);
     return { page: c().pages.announcements, announcements: items, pagination, baseUrl: '/announcements' };
   },
   gallery: (req) => {
-    const all = c().galleryItems;
+    const all = pub(c().galleryItems);
     const categories = (c().galleryCategories || []).map((cat) => ({
       ...cat,
       count: all.filter((g) => g.category === cat.slug).length,
@@ -517,7 +834,7 @@ const PAGES = {
     };
   },
   picks: (req) => {
-    const { items, pagination } = paginate(c().picks, req);
+    const { items, pagination } = paginate(pub(c().picks), req);
     return { page: c().pages.picks, picks: items, pagination, baseUrl: '/picks' };
   },
   about: () => ({ page: c().pages.about }),
@@ -528,16 +845,190 @@ const PAGES = {
     const doc = docs.find((d) => d.slug === slug) || docs[0];
     return { legalDocs: docs, doc };
   },
-  /* static passthroughs (templated copies, no data binding yet) */
-  trip: () => ({}), shop: () => ({}), search: () => ({}),
-  'blog-post': () => ({}),
-  'destination-detail': () => ({}), 'package-detail': () => ({}), '404': () => ({}),
+  trip: () => ({}), shop: () => ({}), '404': () => ({}),
+  'destination-detail': (req) => {
+    const all = c().destinations || [];
+    const slug = (req && req.query && req.query.d) || '';
+    const dest = all.find((d) => d.slug === slug) || all[0] || {};
+    const brand = (c().settings || {}).brandName || 'Triplipi';
+    const img = absUrl(req, dest.heroImage || dest.image || '');
+    const desc = clip(dest.lead || dest.tagline || dest.overview, 300);
+    const seo = {
+      brand,
+      title: (dest.name || 'Destination') + ' — ' + brand,
+      description: desc,
+      canonical: absUrl(req, '/destination-detail?d=' + (dest.slug || '')),
+      image: img,
+      type: 'article',
+      robots: 'index, follow',
+      jsonLd: {
+        '@context': 'https://schema.org', '@type': 'TouristDestination',
+        name: dest.name || '', description: desc,
+        image: img || undefined, url: absUrl(req, '/destination-detail?d=' + (dest.slug || '')),
+        ...(dest.region ? { touristType: dest.region } : {}),
+      },
+    };
+    return { dest, related: all.filter((d) => d.slug !== dest.slug).slice(0, 4), seo };
+  },
+  'package-detail': (req) => {
+    const all = c().packages || [];
+    const key = (req && req.query && req.query.p) || '';
+    const pkg = all.find((x) => slugify(x.title) === key) || all[parseInt(key, 10)] || all[0] || {};
+    const brand = (c().settings || {}).brandName || 'Triplipi';
+    const img = absUrl(req, pkg.image || '');
+    const desc = clip(pkg.description || pkg.overview, 300);
+    const seo = {
+      brand,
+      title: (plain(pkg.title) || 'Package') + ' — ' + brand,
+      description: desc,
+      canonical: absUrl(req, '/package-detail?p=' + slugify(pkg.title || '')),
+      image: img,
+      type: 'product',
+      robots: 'index, follow',
+      jsonLd: {
+        '@context': 'https://schema.org', '@type': 'Product',
+        name: plain(pkg.title) || '', description: desc, image: img || undefined,
+        url: absUrl(req, '/package-detail?p=' + slugify(pkg.title || '')),
+        ...(pkg.price ? { offers: { '@type': 'Offer', price: String(pkg.price).replace(/[^0-9.]/g, ''), priceCurrency: pkg.priceCurrency || 'INR', availability: 'https://schema.org/InStock' } } : {}),
+      },
+    };
+    return { pkg, seo };
+  },
+  'blog-post': (req) => {
+    const all = (c().blog && c().blog.posts) || [];
+    const key = (req && req.query && req.query.b) || '';
+    let idx = all.findIndex((x) => slugify(x.title) === key);
+    if (idx < 0) idx = Number.isNaN(parseInt(key, 10)) ? 0 : parseInt(key, 10);
+    const post = all[idx] || all[0] || {};
+    const related = all.map((p, j) => ({ p, j, key: slugify(p.title) })).filter((x) => x.j !== idx).slice(0, 3);
+    const brand = (c().settings || {}).brandName || 'Triplipi';
+    const img = absUrl(req, post.heroImage || post.image || '');
+    const desc = clip(post.deck || post.excerpt || post.body, 300);
+    const seo = {
+      brand,
+      title: (plain(post.title) || 'Story') + ' — ' + brand,
+      description: desc,
+      canonical: absUrl(req, '/blog-post?b=' + slugify(post.title || '')),
+      image: img,
+      type: 'article',
+      robots: 'index, follow',
+      jsonLd: {
+        '@context': 'https://schema.org', '@type': 'BlogPosting',
+        headline: plain(post.title) || '', description: desc, image: img || undefined,
+        url: absUrl(req, '/blog-post?b=' + slugify(post.title || '')),
+        ...(post.date ? { datePublished: post.date } : {}),
+        ...(post.author ? { author: { '@type': 'Person', name: post.author } } : {}),
+        publisher: { '@type': 'Organization', name: brand },
+      },
+    };
+    return { post, related, seo };
+  },
+  search: (req) => {
+    const q = (req && req.query && req.query.q) || '';
+    const results = runSearch(q);
+    return { q, results, count: results.length, seo: { ...defaultSeo(req), robots: 'noindex, follow' } };
+  },
 };
+
+/* ----- robots.txt + sitemap.xml (FR SEO) ----- */
+app.get('/robots.txt', (req, res) => {
+  const origin = siteOrigin(req);
+  res.type('text/plain').send(
+    'User-agent: *\n' +
+    'Allow: /\n' +
+    'Disallow: /admin\n' +
+    'Disallow: /search\n' +
+    'Sitemap: ' + origin + '/sitemap.xml\n'
+  );
+});
+app.get('/sitemap.xml', (req, res) => {
+  const origin = siteOrigin(req);
+  const urls = [];
+  const add = (loc, priority) => urls.push({ loc: origin + loc, priority });
+  // Static / listing pages
+  ['/', '/destinations', '/packages', '/blog', '/announcements', '/gallery', '/picks', '/about', '/contact', '/trip', '/shop']
+    .forEach((p) => add(p, p === '/' ? '1.0' : '0.8'));
+  // Legal docs
+  (c().legalDocs || []).forEach((d) => d.slug && add('/legal?p=' + encodeURIComponent(d.slug), '0.3'));
+  // Detail pages (only visible items)
+  pub(c().destinations).forEach((d) => d.slug && add('/destination-detail?d=' + encodeURIComponent(d.slug), '0.7'));
+  pub(c().packages).forEach((p) => p.title && add('/package-detail?p=' + encodeURIComponent(slugify(p.title)), '0.7'));
+  pub((c().blog && c().blog.posts) || []).forEach((p) => p.title && add('/blog-post?b=' + encodeURIComponent(slugify(p.title)), '0.6'));
+  // Custom pages
+  pub(c().customPages).forEach((p) => p.slug && add('/p/' + encodeURIComponent(p.slug), '0.5'));
+  const xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+    urls.map((u) => '  <url><loc>' + u.loc.replace(/&/g, '&amp;') + '</loc><priority>' + u.priority + '</priority></url>').join('\n') +
+    '\n</urlset>\n';
+  res.type('application/xml').send(xml);
+});
 
 app.get('/', (req, res) => res.render('index.njk', PAGES.index(req)));
 for (const [name, data] of Object.entries(PAGES)) {
   app.get('/' + name, (req, res) => res.render(name + '.njk', data(req)));
 }
+
+/* Dynamic custom pages (FR-PAGES-010 / FR-OTHER-004) — /p/:slug */
+app.get('/p/:slug', (req, res) => {
+  const page = pub(c().customPages).find((p) => p.slug === req.params.slug);
+  if (!page) return res.status(404).render('404.njk', {});
+  const brand = (c().settings || {}).brandName || 'Triplipi';
+  const seo = {
+    ...defaultSeo(req),
+    title: (page.crumb || plain(page.title) || page.navLabel || 'Page') + ' — ' + brand,
+    description: clip(page.deck || page.body, 300),
+    canonical: absUrl(req, '/p/' + page.slug),
+    image: absUrl(req, page.heroImage || ''),
+  };
+  res.render('custompage.njk', { page, seo });
+});
+
+/* ============================================================
+   FORM SUBMISSIONS — store every submission + email (if SMTP set)
+   Used by: Contact, Ask for Guidance, Shop quote, provider fallback
+   ============================================================ */
+const SUBM_FILE = path.join(__dirname, 'data', 'submissions.json');
+function readSubmissions() {
+  try { return JSON.parse(fs.readFileSync(SUBM_FILE, 'utf8')); } catch (e) { return []; }
+}
+function writeSubmissions(list) {
+  fs.writeFileSync(SUBM_FILE, JSON.stringify(list, null, 2));
+}
+let mailer = null;
+if (process.env.SMTP_HOST) {
+  mailer = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: parseInt(process.env.SMTP_PORT || '587', 10),
+    secure: process.env.SMTP_SECURE === 'true',
+    auth: process.env.SMTP_USER ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS } : undefined,
+  });
+}
+app.post('/submit', upload.none(), (req, res) => {
+  const body = req.body || {};
+  const formName = body._form || 'Form';
+  const fields = {};
+  Object.keys(body).forEach((k) => { if (k[0] !== '_') fields[k] = body[k]; });
+
+  const entry = { id: Date.now().toString(36), form: formName, fields, at: new Date().toISOString(), read: false };
+  const list = readSubmissions();
+  list.unshift(entry);
+  writeSubmissions(list);
+
+  /* email the owner if SMTP is configured (otherwise it's saved to the admin Inbox) */
+  const to = body._to || store.get('settings').contactEmail;
+  if (mailer && to) {
+    const lines = Object.entries(fields).map(([k, v]) => `${k}: ${v}`).join('\n');
+    mailer.sendMail({
+      from: process.env.SMTP_FROM || `Triplipi <no-reply@${(to.split('@')[1] || 'triplipi.local')}>`,
+      to,
+      subject: `[${formName}] new submission`,
+      text: lines,
+    }).catch((err) => console.error('mail error:', err.message));
+  }
+
+  if ((req.headers.accept || '').includes('application/json')) return res.json({ ok: true });
+  res.send('<!doctype html><meta charset="utf-8"><title>Thank you</title><body style="font-family:Georgia,serif;display:grid;place-items:center;min-height:100vh;background:#F2ECE1;color:#231F20;text-align:center"><div><h1>Thank you.</h1><p>Your message has been received.</p><a href="/" style="color:#D05527">Back to the site</a></div>');
+});
 
 /* ============================================================
    ADMIN ROUTES — organised by page
@@ -575,9 +1066,34 @@ app.post('/admin/logout', requireAuth, (req, res) => {
   res.redirect('/admin/login');
 });
 
-/* Dashboard — one card per page of the site */
+/* Dashboard — one card per page of the site + analytics */
 app.get('/admin', requireAuth, (req, res) =>
-  res.render('admin/dashboard.njk', { ...adminCtx(null), saved: req.query.saved }));
+  res.render('admin/dashboard.njk', {
+    ...adminCtx(null), saved: req.query.saved,
+    stats: analyticsSummary(),
+    inboxCount: readSubmissions().filter((s) => !s.read).length,
+  }));
+
+/* Messages inbox — form submissions */
+app.get('/admin/inbox', requireAuth, (req, res) => {
+  const list = readSubmissions();
+  res.render('admin/inbox.njk', { ...adminCtx('inbox'), submissions: list, smtp: !!mailer });
+});
+app.post('/admin/inbox/:id/delete', requireAuth, (req, res) => {
+  writeSubmissions(readSubmissions().filter((s) => s.id !== req.params.id));
+  res.redirect('/admin/inbox');
+});
+app.post('/admin/inbox/read', requireAuth, (req, res) => {
+  const list = readSubmissions().map((s) => ({ ...s, read: true }));
+  writeSubmissions(list);
+  res.redirect('/admin/inbox');
+});
+
+/* Link health check — scans all external URLs, flags broken ones */
+app.get('/admin/links', requireAuth, async (req, res) => {
+  const checked = req.query.run ? await checkLinks() : null;
+  res.render('admin/links.njk', { ...adminCtx('links'), checked });
+});
 
 /* Page hub — all sections of one page, in on-screen order, editable inline */
 app.get('/admin/page/:pkey', requireAuth, (req, res) => {
@@ -633,6 +1149,10 @@ app.post('/admin/section/:key/save', requireAuth, upload.any(), (req, res) => {
   const item = {};
   for (const f of schema.fields) item[f.name] = castField(f, req.body[f.name]);
   applyUploads(schema, req, item);
+  // universal status fields (publish / archive / auto-expire)
+  item.published = req.body._published === 'on';
+  item.archived = req.body._archived === 'on';
+  item.expiry = (req.body._expiry || '').trim();
   const idx = req.body._index === '' ? null : parseInt(req.body._index, 10);
   if (idx === null || Number.isNaN(idx)) items.push(item);
   else items[idx] = { ...items[idx], ...item };

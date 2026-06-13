@@ -22,6 +22,9 @@
           <a href="/admin/page/{{ p.key }}" class="{% if active == p.key %}is-active{% endif %}">{{ p.label }}</a>
         {% endif %}
       {% endfor %}
+      <div class="adm-group">Tools</div>
+      <a href="/admin/inbox" class="{% if active == 'inbox' %}is-active{% endif %}">Messages</a>
+      <a href="/admin/links" class="{% if active == 'links' %}is-active{% endif %}">Link health</a>
       <div class="adm-group">Site</div>
       {% for p in pages %}
         {% if p.isSettings %}

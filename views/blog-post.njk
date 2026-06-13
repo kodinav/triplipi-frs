@@ -3,16 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>What I learned about silence in the high passes — Triplipi</title>
-  <meta name="description" content="An essay on solitude, altitude, and the unexpected geography of attention in Ladakh.">
+  {% include "_seo.njk" %}
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <meta name="theme-color" content="#D05527">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="apple-touch-icon" href="assets/favicon.svg">
 
@@ -27,156 +23,53 @@
   <div data-partial="loader"></div>
   <div data-partial="header"></div>
 
-  <main>
-    <!-- Article hero -->
+  <main class="article article--l{{ post.layout or '1' }}">
     <section class="article-hero">
+      {% if post.heroImage or post.image %}
       <div class="article-hero-img" data-parallax="-0.06">
-        <img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=2400&q=85" alt="" loading="eager">
+        <img src="{{ post.heroImage or post.image }}" alt="" loading="eager">
       </div>
+      {% endif %}
       <div class="article-hero-inner">
         <nav class="crumbs" style="justify-content: center;">
-          <a href="/">Home</a><span>/</span>
-          <a href="/blog">Blog</a><span>/</span>
-          <span>Ladakh</span>
+          <a href="/">Home</a><span>/</span><a href="/blog">Blog</a><span>/</span><span>Story</span>
         </nav>
-        <div class="article-category">Essay · Ladakh · 14 min read</div>
-        <h1>What I learned about silence in <em>the high passes</em>.</h1>
-        <p class="article-deck">Three weeks at altitude. No signal. One notebook. An essay on solitude, attention, and the unexpected geography of slowness.</p>
+        {% if post.category %}<div class="article-category">{{ post.category }}</div>{% endif %}
+        <h1>{{ post.title | safe }}</h1>
+        {% if post.deck or post.excerpt %}<p class="article-deck">{{ post.deck | safe if post.deck else post.excerpt | safe }}</p>{% endif %}
         <div class="article-byline">
           <div class="avatar"></div>
           <div>
-            <div class="name">By Editor</div>
-            <div class="meta">Published 8 May 2026 · Photographs by Triplipi</div>
+            <div class="name">{{ post.bylineSpans[1] if post.bylineSpans and post.bylineSpans | length > 1 else 'By Editor' }}</div>
+            <div class="meta">{{ post.bylineSpans | join(' · ') if post.bylineSpans else '' }}</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Article body -->
     <article class="section">
       <div class="container-reading">
-
+        {% if post.body %}
+        <div class="article-body rich-body" data-reveal>{{ post.body | safe }}</div>
+        {% else %}
         <div class="article-body" data-reveal>
-          <p class="dropcap">The first morning at altitude, you wake up at four. Not because the light is in, but because your body has decided, on its own, that this is a new ratio of breath to thought. The room is cold. The dog outside is quiet. There is a small thrill in being awake while the world hasn't quite caught up.</p>
-
-          <p>Leh is at 3,500 metres. The flight in from Delhi takes about ninety minutes, and you arrive feeling fine — better than fine — until the first staircase. Then you understand. The air is the same, but there is less of it; what you took for granted has been quietly rationed.</p>
-
-          <p>I went to Ladakh in late September, when the season is ending and the light has the particular gold that only the high desert gets. I went without an itinerary. I had two notebooks, one camera, three rolls of film I never developed, and a vague intention to walk to Hemis Monastery and stop somewhere along the way if a tea shop looked right.</p>
-
-          <h2>The geography of slowness</h2>
-
-          <p>You cannot rush at altitude. This is not a metaphor. The body refuses. You climb a flight of stairs and you have to wait, breath catching up to the act of having taken the stairs, before you can do the next thing. The first day, this feels like an inconvenience. By the third day, it feels like a kind of permission.</p>
-
-          <p>I started writing differently. Not better, necessarily, but slower. Sentences that would have been three sentences became one. I stopped looking at my phone — partly because there was no signal in the villages, partly because the act of looking down at a screen suddenly felt absurd, given what was at eye level.</p>
+          <p class="dropcap">{{ post.excerpt | safe if post.excerpt else 'This story is being written.' }}</p>
+          <p>The full article for this post hasn't been added yet — add it in Admin → Blog → Post grid → this post → “Article body”.</p>
         </div>
+        {% endif %}
 
-        <!-- Bleed figure -->
-        <figure class="article-figure is-bleed" data-reveal="scale">
-          <img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=2000&q=85" alt="">
-          <figcaption>Above Leh, at the turn of the road that leads to Khardung La. The colour the sky becomes at this altitude is its own thing.</figcaption>
-        </figure>
-
-        <div class="article-body" data-reveal>
-          <p>There's a thing that happens in Hemis Monastery, when you arrive at the right hour. The puja is starting. The young monks are filing in, their crimson robes pooling around them. There's a drum, then a horn, then the kind of low chanting that you can feel in your sternum before you can hear it.</p>
-
-          <blockquote class="article-pullquote">
-            <p>The first time I felt the chanting in my chest, I realised I had been listening with the wrong organ.</p>
-            <cite>— Field note, day 4</cite>
-          </blockquote>
-
-          <p>I sat there for two hours. I did not check my watch. I did not feel restless. When it ended, the head lama looked at the small group of visitors and smiled — at no-one in particular, at all of us — and that smile contained more attention than most conversations I have had.</p>
-
-          <h2>What altitude takes, and what it gives back</h2>
-
-          <p>The first time I felt the chanting in my chest, I realised I had been listening with the wrong organ. We talk about <em>listening</em> as if it were a quality of the ears, but at four thousand metres, with one's heart going a bit faster than usual, it becomes apparent that the whole body listens, given the chance.</p>
-        </div>
-
-        <!-- Article CTA -->
         <div class="article-cta" data-reveal>
           <div>
-            <h4>Plan your own Ladakh trip</h4>
-            <p>See verified packages from our partner network.</p>
+            <h4>Inspired to go?</h4>
+            <p>Plan a trip or see verified packages.</p>
           </div>
-          <a href="/packages?d=ladakh" class="btn btn-brand">Check Packages <span class="arrow">→</span></a>
+          <a href="/trip" class="btn btn-brand">Go For A Trip <span class="arrow">→</span></a>
         </div>
-
-        <div class="article-body" data-reveal>
-          <p>This is the gift altitude gives you, in exchange for the small rationing of breath: a return to the body. You become aware of your pulse. You become aware of your steps. You become aware, when you sit down somewhere, that you have actually sat down — not collapsed into a chair while continuing some other mental motion.</p>
-
-          <h2>The road to Pangong, and the silence that comes after</h2>
-
-          <p>From Leh, the road to Pangong is one of those drives that begins as a logistical proposition and becomes, by hour four, a sort of pilgrimage. You cross Chang La, the third-highest motorable pass in the world, where prayer flags fly in such density that the wind takes on a sound — a paper sound — that you don't hear anywhere else.</p>
-
-          <p>You descend, then climb, then descend, and at some point the lake comes into view. It is forty miles long. It changes colour roughly every ten minutes. There are no buildings near most of its shoreline. You stop the car, get out, and there is nothing to say.</p>
-        </div>
-
-        <!-- Inline two-image grid -->
-        <div class="article-figure-grid" data-reveal>
-          <figure class="article-figure">
-            <img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=1000&q=80" alt="">
-            <figcaption>Pangong Tso in late afternoon.</figcaption>
-          </figure>
-          <figure class="article-figure">
-            <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=1000&q=80" alt="">
-            <figcaption>Prayer flags on the descent.</figcaption>
-          </figure>
-        </div>
-
-        <div class="article-body" data-reveal>
-          <h2>What I brought back</h2>
-
-          <p>I came home with three rolls of film I haven't developed. I came home with two notebooks I am still reading. I came home with the particular ache that high-altitude travel leaves in the soft tissue around your eyes, which lasts for about a week after you return to sea level.</p>
-
-          <p>And I came home with this — the small, lasting suspicion that most of what we call attention is actually just busy-ness wearing a coat. That somewhere at four thousand metres, with the wind moving through the prayer flags and the chanting moving through the body, there is a different, older version of attention that we have largely forgotten how to access.</p>
-
-          <p>It's still there. It's just that you have to climb to get to it.</p>
-        </div>
-
-        <!-- Sponsored block -->
-        <div class="sponsored-block" data-reveal style="margin-block: var(--s-9);">
-          <span class="tag tag-sponsored badge-pos">Sponsored</span>
-          <h4 style="font-family: var(--ff-display); font-style: italic; font-weight: var(--fw-light); font-size: 1.5rem; margin-bottom: var(--s-3);">Trans-Himalayan Expeditions — Ladakh circuits</h4>
-          <p style="margin-bottom: var(--s-4);">Two decades operating in the region. Female-led trip leaders. Premium homestays.</p>
-          <a href="#" class="btn-text" data-external data-provider="Trans-Himalayan Expeditions" data-url="https://transhimalayan.example.com">Visit operator <span class="arrow">→</span></a>
-        </div>
-
-        <!-- Article foot -->
-        <div class="article-foot" data-reveal>
-          <div class="article-share">
-            <span class="lbl">Share</span>
-            <button>X / Twitter</button>
-            <button>Facebook</button>
-            <button>Pinterest</button>
-            <button>Copy link</button>
-          </div>
-          <div class="article-tags">
-            <span class="tag tag-outline">Ladakh</span>
-            <span class="tag tag-outline">Slow travel</span>
-            <span class="tag tag-outline">Solo</span>
-            <span class="tag tag-outline">High altitude</span>
-            <span class="tag tag-outline">Essay</span>
-          </div>
-        </div>
-
-        <!-- Trip / Packages CTAs -->
-        <div class="article-end-ctas" data-reveal>
-          <a href="/trip?d=ladakh" class="article-end-cta">
-            <div class="kicker">Inspired?</div>
-            <h4>Go For A Trip to Ladakh</h4>
-            <span class="btn-text">Plan it <span class="arrow">→</span></span>
-          </a>
-          <a href="/packages?d=ladakh" class="article-end-cta">
-            <div class="kicker">Or skip the planning</div>
-            <h4>Check verified Ladakh packages</h4>
-            <span class="btn-text">View packages <span class="arrow">→</span></span>
-          </a>
-        </div>
-
       </div>
     </article>
 
-    <!-- Related stories -->
-    <section class="section">
+    {% if related and related | length %}
+    <section class="section" style="background: var(--c-bone); border-top: 1px solid var(--c-border);">
       <div class="container-wide">
         <div class="section-head" data-reveal>
           <div>
@@ -186,30 +79,18 @@
           <a href="/blog" class="btn-text">All stories <span class="arrow">→</span></a>
         </div>
         <div class="blog-strip" data-stagger>
-          <a class="blog-card" href="/blog-post">
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80" alt=""></div>
-            <div class="category">Photo Essay · Kerala</div>
-            <h3>Forty-eight hours on a houseboat, in pictures</h3>
-            <p class="excerpt">From the slow rituals of the Vembanad — coffee on the deck, the cook humming, herons at dawn.</p>
-            <div class="byline"><span>22 images</span></div>
+          {% for r in related %}
+          <a class="blog-card" href="/blog-post?b={{ r.key }}">
+            <div class="thumb"><img src="{{ r.p.image }}" alt=""></div>
+            <div class="category">{{ r.p.category }}</div>
+            <h3>{{ r.p.title | safe }}</h3>
+            <p class="excerpt">{{ r.p.excerpt | safe }}</p>
           </a>
-          <a class="blog-card" href="/blog-post">
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800&q=80" alt=""></div>
-            <div class="category">Guide · Spiti</div>
-            <h3>Three days in Kaza: a quiet itinerary</h3>
-            <p class="excerpt">A pacing guide for first-timers in the Spiti Valley.</p>
-            <div class="byline"><span>7 min read</span></div>
-          </a>
-          <a class="blog-card" href="/blog-post">
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80" alt=""></div>
-            <div class="category">Field Notes · Meghalaya</div>
-            <h3>The living root bridges of Mawlynnong</h3>
-            <p class="excerpt">A walking guide, a botanical primer, a meditation on patience.</p>
-            <div class="byline"><span>9 min read</span></div>
-          </a>
+          {% endfor %}
         </div>
       </div>
     </section>
+    {% endif %}
   </main>
 
   <div data-partial="footer"></div>

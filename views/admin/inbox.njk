@@ -1,0 +1,35 @@
+{% extends "admin/layout.njk" %}
+{% block title %}Messages{% endblock %}
+{% block content %}
+  <header class="adm-head">
+    <div>
+      <div class="adm-kicker">Tools</div>
+      <h1>Messages</h1>
+      <p class="adm-sub">Every contact, guidance, and quote-request submission. {% if smtp %}Email delivery is on.{% else %}Email is not configured — submissions are stored here only (set SMTP_* env vars to also email them).{% endif %}</p>
+    </div>
+    {% if submissions | length %}
+    <form method="post" action="/admin/inbox/read"><button class="adm-btn ghost" type="submit">Mark all read</button></form>
+    {% endif %}
+  </header>
+
+  {% if not submissions | length %}
+    <p class="adm-empty">No messages yet. Submissions from the Contact form, Ask for Guidance, and Shop quote requests will appear here.</p>
+  {% else %}
+    <div class="adm-list">
+      {% for s in submissions %}
+        <div class="adm-row" style="align-items: flex-start;">
+          <div class="title" style="flex:1;">
+            <strong>{{ s.form }}{% if not s.read %} <span class="on-home">● new</span>{% endif %}</strong>
+            <small>{{ s.at }}</small>
+            <div style="margin-top:8px; display:grid; gap:3px; font-size:0.86rem; font-weight:500; color:#5a514e;">
+              {% for k, v in s.fields %}<div><strong style="color:var(--ink);">{{ k }}:</strong> {{ v }}</div>{% endfor %}
+            </div>
+          </div>
+          <form method="post" action="/admin/inbox/{{ s.id }}/delete" onsubmit="return confirm('Delete this message?');">
+            <button class="adm-btn sm danger" type="submit">Delete</button>
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}

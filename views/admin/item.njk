@@ -15,6 +15,14 @@
     {% for f in schema.fields %}
       {{ m.field(f, item[f.name]) }}
     {% endfor %}
+
+    <fieldset class="adm-status">
+      <legend>Status &amp; scheduling</legend>
+      <label class="adm-check"><input type="checkbox" name="_published" {% if item.published !== false %}checked{% endif %}> Published (visible on the site)</label>
+      <label class="adm-check"><input type="checkbox" name="_archived" {% if item.archived %}checked{% endif %}> Archived (hidden from the site, kept here)</label>
+      <label>Auto-expire on (optional) <input type="date" name="_expiry" value="{{ item.expiry }}"></label>
+    </fieldset>
+
     <button class="adm-btn primary" type="submit">Save item</button>
   </form>
 {% endblock %}

@@ -216,14 +216,20 @@
       });
     });
 
-    // Live filter on input typing (client-side fuzzy match across labels)
+    // Enter (or the form) runs a real site-wide search on the results page
     if (input) {
+      const go = () => {
+        const q = input.value.trim();
+        if (q) window.location.href = '/search?q=' + encodeURIComponent(q);
+      };
+      on(input, 'keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); go(); } });
+      const form = input.closest('form');
+      if (form) on(form, 'submit', (e) => { e.preventDefault(); go(); });
+      // live narrowing of the quick-links already shown in the overlay
       on(input, 'input', () => {
         const q = input.value.trim().toLowerCase();
-        if (!q) return;
         $$('.search-result', overlay).forEach(r => {
-          const text = r.textContent.toLowerCase();
-          r.style.display = text.includes(q) ? '' : 'none';
+          r.style.display = (!q || r.textContent.toLowerCase().includes(q)) ? '' : 'none';
         });
       });
     }
@@ -578,8 +584,16 @@
           showToast('Please complete required fields');
           return;
         }
-        showToast(form.dataset.successMessage || 'Message sent. Thank you.');
-        form.reset();
+        // Real submission → /submit (stored in admin Inbox + emailed if SMTP set)
+        const data = new FormData(form);
+        if (!data.get('_form')) data.append('_form', form.dataset.form || form.dataset.successMessage || 'Form');
+        const btn = $('[type=submit]', form);
+        if (btn) btn.disabled = true;
+        fetch('/submit', { method: 'POST', body: data, headers: { Accept: 'application/json' } })
+          .then((r) => r.json())
+          .then(() => { showToast(form.dataset.successMessage || 'Message sent. Thank you.'); form.reset(); })
+          .catch(() => { showToast('Could not send — please try again.'); })
+          .finally(() => { if (btn) btn.disabled = false; });
       });
     });
   };
@@ -596,6 +610,16 @@
         pill.classList.add('is-active');
       });
     });
+
+    // Search results page — filter rendered results by type
+    $$('.search-filter .filter-chip').forEach((chip) => on(chip, 'click', () => {
+      $$('.search-filter .filter-chip').forEach((c) => c.classList.remove('is-active'));
+      chip.classList.add('is-active');
+      const f = chip.dataset.filter;
+      $$('.search-results .search-result').forEach((r) => {
+        r.style.display = (f === 'all' || r.dataset.type === f) ? '' : 'none';
+      });
+    }));
 
     // Destination category filter — pills with data-cat filter the listing grid
     $$('.category-pills .category-pill[data-cat]').forEach(pill => {
@@ -900,7 +924,6 @@
     initParallax();
     initSmoothAnchors();
     initCarousel();
-    initPkgDestFilter();
     initImageFallback();
   };
 

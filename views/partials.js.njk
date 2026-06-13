@@ -10,6 +10,15 @@
 
     // ====== HEADER ======
     header: `
+      {% if siteTopBanners and siteTopBanners | length %}
+      <div class="site-topbar" role="region" aria-label="Announcement">
+        {% for b in siteTopBanners %}
+        <a class="site-topbar-item" href="{{ b.href or '#' }}"{% if b.external %} data-external data-provider="{{ b.extProvider }}" data-url="{{ b.extUrl }}"{% endif %}>
+          <span>{{ b.text | safe }}</span>{% if b.ctaLabel %} <strong>{{ b.ctaLabel }} →</strong>{% endif %}
+        </a>
+        {% endfor %}
+      </div>
+      {% endif %}
       <header class="site-header" role="banner">
         <div class="header-inner">
           <a href="/" class="brand" aria-label="{{ settings.brandName }} home">
@@ -292,6 +301,8 @@
                 <li><a href="/contact">Contact</a></li>
                 <li><a href="/legal?p=faq">FAQs</a></li>
                 <li><a href="/contact#partner">Become a partner</a></li>
+                {% for p in customPages %}<li><a href="/p/{{ p.slug }}">{{ p.navLabel }}</a></li>
+                {% endfor %}
               </ul>
             </div>
 

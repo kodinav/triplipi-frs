@@ -11,6 +11,10 @@ node_modules/
 server/data/content.json
 # admin credentials (created on first run)
 server/data/admin.json
+# form submissions inbox (created at runtime)
+server/data/submissions.json
+# page-view analytics (created at runtime)
+server/data/analytics.json
 # admin-uploaded images/videos (keep the folder, ignore its contents)
 assets/uploads/*
 !assets/uploads/.gitkeep

@@ -54,7 +54,7 @@
                 {% if item.image %}<img class="thumb" src="{{ item.image }}" alt="">{% endif %}
                 <div class="title">
                   <strong>{{ item[sec.schema.itemTitle] | striptags | truncate(60) | safe }}</strong>
-                  <small>#{{ loop.index }}{% if item.featured %} · <span class="on-home">★ on homepage</span>{% endif %}</small>
+                  <small>#{{ loop.index }}{% if item.featured %} · <span class="on-home">★ on homepage</span>{% endif %}{% if item.archived %} · <span class="badge-arch">archived</span>{% elif item.published == false %} · <span class="badge-arch">hidden</span>{% endif %}</small>
                 </div>
                 <div class="row-actions">
                   <form method="post" action="/admin/section/{{ sec.schema.key }}/{{ loop.index0 }}/move">

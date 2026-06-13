@@ -1,0 +1,30 @@
+{% extends "admin/layout.njk" %}
+{% block title %}Link health{% endblock %}
+{% block content %}
+  <header class="adm-head">
+    <div>
+      <div class="adm-kicker">Tools</div>
+      <h1>Link health</h1>
+      <p class="adm-sub">Checks every external link (sponsored posts, packages, announcements) and flags broken ones.</p>
+    </div>
+    <a class="adm-btn primary" href="/admin/links?run=1">Run check now</a>
+  </header>
+
+  {% if not checked %}
+    <p class="adm-empty">Click “Run check now” to scan all external links. Large lists may take a few seconds.</p>
+  {% elif not checked | length %}
+    <p class="adm-empty">No external links found to check.</p>
+  {% else %}
+    <div class="adm-list">
+      {% for c in checked %}
+        <div class="adm-row">
+          <div class="title" style="flex:1;">
+            <strong style="color: {{ '#256225' if c.ok else '#b3261e' }};">{{ '✓ OK' if c.ok else '✗ Broken' }} {% if c.status %}· {{ c.status }}{% endif %}</strong>
+            <small style="word-break: break-all;">{{ c.url }}</small>
+          </div>
+          <a class="adm-btn sm" href="{{ c.url }}" target="_blank" rel="noopener">Open ↗</a>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}

@@ -64,6 +64,10 @@
       "titleHtml": "Not sure where to begin? <em>Tell us</em>, and we'll write back.",
       "body": "Every itinerary starts with a conversation. Drop us a note — about a half-formed idea, a specific destination, or just what you're hoping the trip will feel like. We'll respond within one working day, in our own words.",
       "email": "hello@Triplipi.example"
+    },
+    "mediaHead": {
+      "overline": "In Motion",
+      "titleHtml": "The world, <em>in motion</em>."
     }
   },
   "destinations": [
@@ -725,7 +729,8 @@
       "category": "mountains",
       "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=900&q=80",
       "alt": "Ladakh",
-      "label": "Ladakh"
+      "label": "Ladakh",
+      "featured": true
     },
     {
       "type": "image",
@@ -733,7 +738,8 @@
       "category": "beach",
       "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=900&q=80",
       "alt": "",
-      "label": "Andaman"
+      "label": "Andaman",
+      "featured": true
     },
     {
       "type": "video",
@@ -741,7 +747,8 @@
       "category": "mountains",
       "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=900&q=80",
       "alt": "",
-      "label": "Film · Spiti"
+      "label": "Film · Spiti",
+      "featured": true
     },
     {
       "type": "image",
@@ -749,7 +756,8 @@
       "category": "beach",
       "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80",
       "alt": "",
-      "label": "Kerala"
+      "label": "Kerala",
+      "featured": true
     },
     {
       "type": "image",
@@ -757,7 +765,8 @@
       "category": "mountains",
       "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=900&q=80",
       "alt": "",
-      "label": "Meghalaya"
+      "label": "Meghalaya",
+      "featured": true
     },
     {
       "type": "image",
@@ -765,7 +774,8 @@
       "category": "mountains",
       "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=900&q=80",
       "alt": "",
-      "label": "Manali"
+      "label": "Manali",
+      "featured": true
     },
     {
       "type": "image",
@@ -773,7 +783,8 @@
       "category": "heritage",
       "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=900&q=80",
       "alt": "",
-      "label": "Jaisalmer"
+      "label": "Jaisalmer",
+      "featured": true
     },
     {
       "type": "video",
@@ -781,7 +792,8 @@
       "category": "heritage",
       "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=900&q=80",
       "alt": "",
-      "label": "Film · Goa"
+      "label": "Film · Goa",
+      "featured": true
     },
     {
       "type": "image",
@@ -1220,6 +1232,39 @@
       "deck": "Answers to the questions we hear most often.",
       "body": "<p class=\"kicker\">General</p>\n            <h2>Is Triplipi a travel agency?</h2>\n            <p>No. We are an editorial discovery platform. We don't sell trips ourselves — we refer you to verified partners with full disclosure. Think of us as a guidebook with hyperlinks.</p>\n\n            <h2>Do you charge for content?</h2>\n            <p>No. All editorial content — destination guides, blog posts, Our Picks lists, gallery viewing — is free to read. We're funded by partner commissions, photography licensing, and display ads.</p>\n\n            <h2>Can I trust the partners you link to?</h2>\n            <p>Every partner in our network has been personally vetted by our team — usually by travelling with them, sometimes by independent verification. We disclose our commercial relationship on every link via a consent modal. We label \"Sponsored\" placements clearly.</p>\n\n            <p class=\"kicker\">Booking &amp; Quotes</p>\n            <h2>How do I book a trip?</h2>\n            <p>Browse destinations, find a package that suits you, click through (with consent) to the verified partner, and book on their site. Or fill our contact form with what you're thinking about, and we'll write back within one working day.</p>\n\n            <h2>Do you offer customised itineraries?</h2>\n            <p>Yes — through our partner network. Request a custom quote via any package page or the contact form, and we'll match you with the best-fit partner.</p>\n\n            <p class=\"kicker\">Photography &amp; Shop</p>\n            <h2>Can I license your photography?</h2>\n            <p>Yes. Visit the <a href=\"/shop\" style=\"color: var(--c-gold-deep); text-decoration: underline;\">Shop</a> to browse our archive. Select the items you want, request a quote, and we'll come back to you with editorial, commercial, and extended-license options. A subset of our work is also available for instant licensing on Shutterstock.</p>\n\n            <h2>Do you accept contributor submissions?</h2>\n            <p>We work with a small group of trusted contributors. If you'd like to be considered, write to <a href=\"mailto:editorial@Triplipi.example\" style=\"color: var(--c-gold-deep); text-decoration: underline;\">editorial@Triplipi.example</a> with your portfolio.</p>\n\n            <p class=\"kicker\">Account &amp; Privacy</p>\n            <h2>Do I need an account?</h2>\n            <p>No. Triplipi can be browsed entirely without an account. Trip drafts and shop selections persist locally in your browser only.</p>\n\n            <h2>How do I unsubscribe from the newsletter?</h2>\n            <p>Every newsletter has an unsubscribe link at the bottom. Alternatively, write to <a href=\"mailto:hello@Triplipi.example\" style=\"color: var(--c-gold-deep); text-decoration: underline;\">hello@Triplipi.example</a> and we'll remove you within 24 hours.</p>",
       "inFooter": false
+    }
+  ],
+  "customPages": [
+    {
+      "navLabel": "FAQs",
+      "slug": "faqs",
+      "crumb": "Frequently Asked Questions",
+      "title": "Frequently asked <em>questions</em>.",
+      "deck": "Everything travellers ask us most — payments, partners, photography licensing and more.",
+      "heroImage": "",
+      "body": "<h3>How are destinations chosen?</h3><p>Every destination is either editor-verified or contributor-verified. We say so, plainly, on each page.</p><h3>Do you take commissions?</h3><p>Some partner links are affiliate links. We disclose this before any external redirect, via a consent step.</p><h3>Can I license your photography?</h3><p>Yes — visit the Shop, or contact us for custom licensing.</p>",
+      "inFooter": true,
+      "published": true,
+      "archived": false,
+      "expiry": ""
+    }
+  ],
+  "banners": [
+    {
+      "title": "Monsoon sale strip",
+      "zone": "home-top",
+      "style": "strip",
+      "text": "Monsoon escapes — up to <strong>35% off</strong> verified Kerala & Spiti packages.",
+      "image": "",
+      "ctaLabel": "See offers",
+      "href": "/packages",
+      "external": false,
+      "extProvider": "",
+      "extUrl": "",
+      "animate": true,
+      "published": true,
+      "archived": false,
+      "expiry": ""
     }
   ]
 }
