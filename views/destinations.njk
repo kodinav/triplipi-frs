@@ -30,7 +30,8 @@
     <section class="page-hero">
       <div class="page-hero-inner">
         <nav class="crumbs" aria-label="Breadcrumb">
-          <a href="/">Home</a><span>/</span><span>Destinations</span>
+          <a href="/">Home</a><span>/</span>
+          {% if activeCatLabel %}<a href="/destinations">Destinations</a><span>/</span><span>{{ activeCatLabel }}</span>{% else %}<span>Destinations</span>{% endif %}
         </nav>
         <h1>{{ page.titleHtml | safe }}</h1>
         <p class="lead">{{ page.lead | safe }}</p>
@@ -54,9 +55,8 @@
       <div class="container-wide">
         <div class="dest-listing-grid" data-stagger>
 {% for d in cards %}
-          {% if sponsorSlots[loop.index0] %}{{ sp.banner(sponsorSlots[loop.index0], 'sp-span-grid') }}{% endif %}
           <a href="/destination-detail?d={{ d.slug }}" class="dest-card" data-cats="{{ d.categories | join(' ') if d.categories else '' }}">
-            <div class="media"><img src="{{ d.image }}" alt=""></div>
+            <div class="media"><img loading="lazy" src="{{ d.image }}" alt=""></div>
             <div class="content">
               <div class="region">{{ d.region }}</div>
               <h3 class="name">{{ d.name | safe }}</h3>
@@ -71,7 +71,6 @@
       </div>
     </section>
 
-    <!-- Affiliate strip -->
   </main>
 
 

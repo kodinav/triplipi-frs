@@ -652,11 +652,6 @@ const ADMIN_PAGES = [
   { key: 'contact', label: 'Contact', view: '/contact',
     intro: 'Title and intro of the Contact page.',
     sections: [{ key: 'page-contact', hint: 'Big title and intro at the top of the page.' }] },
-  { key: 'sponsor', label: 'Sponsored', view: '/gallery',
-    intro: 'Sponsored banners shown mid-grid on the pages you choose. Each has a Call button. All targeted items appear, spread through the grid.',
-    sections: [
-      { key: 'sponsored', hint: 'Every item that targets a page is shown, spaced through the grid. Items without a title stay hidden (drafts).' },
-    ] },
   { key: 'legal', label: 'Legal Pages', view: '/legal',
     intro: 'The legal documents shown at /legal and linked in the footer "Legal" column. Edit each one’s full content here.',
     sections: [
@@ -852,7 +847,7 @@ const PAGE_TITLES = {
   '/picks': 'Our Picks',
   '/about': 'About Us',
   '/contact': 'Contact',
-  '/trip': 'Plan a Trip',
+  '/trip': 'Go For A Trip',
   '/shop': 'Shop',
   '/legal': 'Legal',
   '/search': 'Search',
@@ -923,7 +918,10 @@ const PAGES = {
     return { page: c().pages.destinations, cards: items, categories, activeCat, activeCatLabel: catObj ? catObj.label : '', totalAll: all.length, pagination, baseUrl, sponsorSlots: sponsorSlots('destinations', items.length) };
   },
   packages: (req) => {
-    const allPkgs = pub(c().packages);
+    // FR-PKG-002: only show packages that lead somewhere — a provider/affiliate
+    // link, a details link, or a contact-form fallback (provider name/info).
+    const hasLink = (p) => !!(p.ctaUrl || (p.ctaExternal && p.ctaUrl) || p.ctaHref || p.ctaProvider || p.providerInfo);
+    const allPkgs = pub(c().packages).filter(hasLink);
     let all = allPkgs;
     const q = (req && req.query) || {};
     // destination funnel filter (?d=) — keep as-is

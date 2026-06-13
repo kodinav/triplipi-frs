@@ -32,7 +32,7 @@
             {% for item in sec.value %}
               <label class="pick-row">
                 <input type="checkbox" name="pick_{{ loop.index0 }}" {% if item.featured %}checked{% endif %}>
-                {% if item.image %}<img class="thumb" src="{{ item.image }}" alt="">{% endif %}
+                {% if item.image %}<img loading="lazy" class="thumb" src="{{ item.image }}" alt="">{% endif %}
                 <span class="pick-title">{{ item[sec.schema.itemTitle] | striptags | truncate(60) | safe }}</span>
               </label>
             {% else %}
@@ -51,7 +51,7 @@
           <div class="adm-list inline">
             {% for item in sec.value %}
               <div class="adm-row">
-                {% if item.image %}<img class="thumb" src="{{ item.image }}" alt="">{% endif %}
+                {% if item.image %}<img loading="lazy" class="thumb" src="{{ item.image }}" alt="">{% endif %}
                 <div class="title">
                   <strong>{{ item[sec.schema.itemTitle] | striptags | truncate(60) | safe }}</strong>
                   <small>#{{ loop.index }}{% if item.featured %} · <span class="on-home">★ on homepage</span>{% endif %}{% if item.archived %} · <span class="badge-arch">archived</span>{% elif item.published == false %} · <span class="badge-arch">hidden</span>{% endif %}</small>

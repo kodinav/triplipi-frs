@@ -34,7 +34,6 @@
             <a class="nav-link" href="/gallery">Gallery</a>
             <a class="nav-link" href="/about">About</a>
             <a class="nav-link" href="/announcements">Announcements</a>
-            <a class="nav-link" href="/shop">Shop</a>
             <a class="nav-link" href="/blog">Blog</a>
             <a class="nav-link" href="/contact">Contact</a>
           </nav>
@@ -71,19 +70,19 @@
         </div>
       </div>
 
-      <!-- Go For A Trip — same categories, into the 7-step funnel (FRS Flow 2) -->
+      <!-- Go For A Trip — categories open the destination listing (Flow 2) -->
       <div class="mega" id="mega-trip">
         <div class="mega-inner mega-cats">
           <div class="mega-cats-head">
             <div class="mega-title"><em>Plan</em> a trip — pick a category</div>
-            <div class="mega-tag">Choose a category to see destinations, then verified packages — with full consent before any redirect.</div>
+            <div class="mega-tag">Choose a category to browse its destinations, then continue to verified packages.</div>
             <a class="btn-text" href="/trip">Start the 7-step planner <span class="arrow">→</span></a>
           </div>
           <div class="mega-cat-grid">
             {% for cat in navCategories %}
             <a href="/destinations?cat={{ cat.slug }}"><span class="cat-name">{{ cat.label }}</span><span class="cat-count">{{ cat.count }}</span></a>
             {% endfor %}
-            <a class="mega-cat-all" href="/destinations">View all categories <span class="arrow">→</span></a>
+            <a class="mega-cat-all" href="/destinations">View All Categories <span class="arrow">→</span></a>
           </div>
         </div>
       </div>
@@ -122,7 +121,7 @@
           </button>
           <div class="mobile-nav-sub">
             {% for cat in navCategories %}<a href="/destinations?cat={{ cat.slug }}">{{ cat.label }}</a>
-            {% endfor %}<a href="/trip">Start the planner →</a>
+            {% endfor %}<a href="/destinations">View All Categories →</a>
           </div>
 
           <a href="/packages" class="mobile-nav-link">Check Packages <span class="arrow">→</span></a>
@@ -138,7 +137,6 @@
           <a href="/gallery" class="mobile-nav-link">Gallery <span class="arrow">→</span></a>
           <a href="/about" class="mobile-nav-link">About <span class="arrow">→</span></a>
           <a href="/announcements" class="mobile-nav-link">Announcements <span class="arrow">→</span></a>
-          <a href="/shop" class="mobile-nav-link">Shop <span class="arrow">→</span></a>
           <a href="/blog" class="mobile-nav-link">Blog <span class="arrow">→</span></a>
           <a href="/contact" class="mobile-nav-link">Contact <span class="arrow">→</span></a>
         </div>
@@ -203,7 +201,7 @@
               <h6>Explore</h6>
               <ul>
                 <li><a href="/destinations">Destinations</a></li>
-                <li><a href="/trip">Plan a Trip</a></li>
+                <li><a href="/trip">Go For A Trip</a></li>
                 <li><a href="/packages">Packages</a></li>
                 <li><a href="/picks">Our Picks</a></li>
                 <li><a href="/blog">Blog</a></li>
@@ -279,7 +277,7 @@
             <section class="search-section">
               <h6>Suggested Destinations</h6>
               <a class="search-result" data-type="destination" href="/destinations">
-                <div class="thumb"><img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=200&q=70" alt=""></div>
+                <div class="thumb"><img loading="lazy" src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=200&q=70" alt=""></div>
                 <div>
                   <div class="type">Destination · Mountains</div>
                   <h4>Ladakh — The High Desert</h4>
@@ -288,7 +286,7 @@
                 <span class="arrow">→</span>
               </a>
               <a class="search-result" data-type="destination" href="/destinations">
-                <div class="thumb"><img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=200&q=70" alt=""></div>
+                <div class="thumb"><img loading="lazy" src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=200&q=70" alt=""></div>
                 <div>
                   <div class="type">Destination · Islands</div>
                   <h4>Andaman Islands</h4>
@@ -297,7 +295,7 @@
                 <span class="arrow">→</span>
               </a>
               <a class="search-result" data-type="destination" href="/destinations">
-                <div class="thumb"><img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=200&q=70" alt=""></div>
+                <div class="thumb"><img loading="lazy" src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=200&q=70" alt=""></div>
                 <div>
                   <div class="type">Destination · Backwaters</div>
                   <h4>Kerala — God's Own Country</h4>
@@ -310,7 +308,7 @@
             <section class="search-section">
               <h6>Packages &amp; Trips</h6>
               <a class="search-result" data-type="package" href="/package-detail">
-                <div class="thumb"><img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=200&q=70" alt=""></div>
+                <div class="thumb"><img loading="lazy" src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=200&q=70" alt=""></div>
                 <div>
                   <div class="type">Package · 7 days</div>
                   <h4>Spiti Valley Circuit — Premium Edition</h4>
@@ -319,7 +317,7 @@
                 <span class="arrow">→</span>
               </a>
               <a class="search-result" data-type="package" href="/package-detail">
-                <div class="thumb"><img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=200&q=70" alt=""></div>
+                <div class="thumb"><img loading="lazy" src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=200&q=70" alt=""></div>
                 <div>
                   <div class="type">Package · 5 days</div>
                   <h4>Kerala Backwater Houseboat Retreat</h4>
@@ -332,7 +330,7 @@
             <section class="search-section">
               <h6>From the Blog</h6>
               <a class="search-result" data-type="blog" href="/blog-post">
-                <div class="thumb"><img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=200&q=70" alt=""></div>
+                <div class="thumb"><img loading="lazy" src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=200&q=70" alt=""></div>
                 <div>
                   <div class="type">Story · 14 min read</div>
                   <h4>What I learned about silence in the high passes of Ladakh</h4>
@@ -341,7 +339,7 @@
                 <span class="arrow">→</span>
               </a>
               <a class="search-result" data-type="announcement" href="/announcements">
-                <div class="thumb"><img src="https://images.unsplash.com/photo-1494791368093-85217fbbf8de?w=200&q=70" alt=""></div>
+                <div class="thumb"><img loading="lazy" src="https://images.unsplash.com/photo-1494791368093-85217fbbf8de?w=200&q=70" alt=""></div>
                 <div>
                   <div class="type">Announcement · 2 days ago</div>
                   <h4>Monsoon Sale — Up to 35% off Kerala packages</h4>

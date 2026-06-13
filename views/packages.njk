@@ -55,10 +55,9 @@
         {% endif %}
         <div class="pkg-grid cols-2" data-stagger>
 {% for k in packages %}
-          {% if sponsorSlots[loop.index0] %}{{ sp.banner(sponsorSlots[loop.index0], 'sp-span-grid') }}{% endif %}
           <article class="pkg-card">
             <div class="thumb">
-              <img src="{{ k.image }}" alt="">
+              <img loading="lazy" src="{{ k.image }}" alt="">
               {% if k.badgeLabel %}<span class="tag{% if k.badgeClass %} {{ k.badgeClass }}{% endif %} badge-pos">{{ k.badgeLabel }}</span>{% endif %}
             </div>
             <div class="body">

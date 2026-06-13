@@ -46,7 +46,7 @@
 
           <article>
             {% if pkg.image %}
-            <div class="pkg-hero-img" data-reveal="scale"><img src="{{ pkg.image }}" alt=""></div>
+            <div class="pkg-hero-img" data-reveal="scale"><img loading="lazy" src="{{ pkg.image }}" alt=""></div>
             {% endif %}
 
             <div class="pkg-tabs" data-reveal>
@@ -108,7 +108,7 @@
               <ul class="includes">{% for m in pkg.metaSpans %}<li>{{ m }}</li>{% endfor %}</ul>
               {% endif %}
               {% if pkg.ctaExternal and pkg.ctaUrl %}
-              <a href="#" class="btn btn-brand" data-external data-provider="{{ pkg.ctaProvider }}" data-url="{{ pkg.ctaUrl }}" style="width: 100%;">Continue to provider <span class="arrow">→</span></a>
+              <a href="#" class="btn btn-brand" data-external data-provider="{{ pkg.ctaProvider }}" data-url="{{ pkg.ctaUrl }}" style="width: 100%;">Check Out Further <span class="arrow">→</span></a>
               <p style="font-size: var(--fs-micro); color: var(--c-text-muted); margin-top: var(--s-4); text-align: center;">Affiliate disclosure shown on next screen</p>
               {% endif %}
               <hr class="rule" style="margin-block: var(--s-5);">

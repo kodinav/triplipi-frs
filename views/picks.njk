@@ -60,7 +60,7 @@
           </div>
           <div>
             <p style="margin-bottom: var(--s-4); max-width: 480px;">{{ active.blurb | safe if active and active.blurb else 'Curated by our editors — visited personally or independently verified.' }}</p>
-            <a href="/trip" class="btn-text">Plan a trip from this list <span class="arrow">→</span></a>
+            <a href="/trip" class="btn-text">Go For A Trip <span class="arrow">→</span></a>
           </div>
         </div>
 
@@ -68,7 +68,7 @@
 {% for p in picks %}
           <a href="{{ p.href }}" class="picks-row">
             <div class="rank">{% set rank = (pagination.offset if pagination else 0) + loop.index %}{% if rank < 10 %}0{% endif %}{{ rank }}</div>
-            <div class="thumb"><img src="{{ p.image }}" alt=""></div>
+            <div class="thumb"><img loading="lazy" src="{{ p.image }}" alt=""></div>
             <div class="info"><div class="region">{{ p.region }}</div><h3 class="name">{{ p.name | safe }}</h3></div>
             <div class="actions"><a class="btn btn-sm btn-ghost" href="/trip">Trip</a><a class="btn btn-sm" href="/packages">Packages</a></div>
             <div class="arrow">→</div>
@@ -79,14 +79,6 @@
         </div>
 
         {{ pg.nav(pagination, baseUrl) }}
-
-        <!-- Sponsored placement -->
-        <div class="sponsored-block" data-reveal style="margin-top: var(--s-9);">
-          <span class="tag tag-sponsored badge-pos">Sponsored Placement</span>
-          <h4 style="font-family: var(--ff-display); font-style: italic; font-weight: var(--fw-light); font-size: 1.5rem; margin-bottom: var(--s-3);">Discover with India Trails</h4>
-          <p style="margin-bottom: var(--s-4);">Custom itineraries across all twenty must-see destinations, with curated drivers and verified accommodation across India.</p>
-          <a href="#" class="btn-text" data-external data-provider="India Trails" data-url="https://indiatrails.example.com">Visit operator <span class="arrow">→</span></a>
-        </div>
 
         <!-- Bottom CTA -->
         <div style="text-align: center; margin-top: var(--s-10); padding-top: var(--s-10); border-top: 1px solid var(--c-border);" data-reveal>

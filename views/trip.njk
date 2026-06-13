@@ -59,7 +59,7 @@
         <div class="cat-grid" data-stagger>
 {% for cat in categories %}
           <a href="/destinations?cat={{ cat.slug }}" class="cat-tile">
-            <img src="{{ cat.image }}" alt="{{ cat.label }}">
+            <img loading="lazy" src="{{ cat.image }}" alt="{{ cat.label }}">
             <span class="cat-label"><span class="name">{{ cat.label }}</span><span class="sub">{{ cat.count }} destination{{ 's' if cat.count != 1 }}</span></span>
           </a>
 {% else %}

@@ -26,7 +26,7 @@
   <main>
     <section class="page-hero has-image">
       <div class="page-hero-bg" data-parallax="-0.06">
-        <img src="{{ dest.heroImage or dest.image }}" alt="{{ dest.name }} landscape">
+        <img loading="lazy" src="{{ dest.heroImage or dest.image }}" alt="{{ dest.name }} landscape">
       </div>
       <div class="page-hero-inner">
         <nav class="crumbs">
@@ -62,7 +62,16 @@
             {% if dest.gallery and dest.gallery | length %}
             <div class="dest-gallery" data-reveal>
               {% for g in dest.gallery %}
-              <a data-lightbox data-src="{{ g }}" class="gallery-tile"><img src="{{ g }}" alt=""></a>
+              {% set gl = g | lower %}
+              {% set isVid = ('.mp4' in gl) or ('.webm' in gl) or ('.mov' in gl) or ('.ogg' in gl) %}
+              {% if isVid %}
+              <a data-lightbox data-type="video" data-src="{{ g }}" data-hover-video class="gallery-tile is-video">
+                <video src="{{ g }}" muted loop playsinline preload="metadata"></video>
+                <div class="play-icon">▶</div>
+              </a>
+              {% else %}
+              <a data-lightbox data-src="{{ g }}" class="gallery-tile"><img loading="lazy" src="{{ g }}" alt=""></a>
+              {% endif %}
               {% endfor %}
             </div>
             {% endif %}

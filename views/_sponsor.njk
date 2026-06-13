@@ -3,7 +3,7 @@
   {% if s %}
     <aside class="sp-banner {{ span }}" aria-label="Sponsored">
       <div class="sp-media">
-        <img src="{{ s.image }}" alt="{{ s.partner }}">
+        <img loading="lazy" src="{{ s.image }}" alt="{{ s.partner }}">
       </div>
       <div class="sp-body">
         <div class="sp-kicker"><span class="dot"></span>Sponsored · {{ s.kind | title }}</div>

@@ -40,7 +40,7 @@
         <!-- Featured story + side strip -->
         <div class="blog-landing-head" data-reveal>
           <a class="blog-feature-main" href="/blog-post">
-            <img src="{{ blog.feature.image }}" alt="">
+            <img loading="lazy" src="{{ blog.feature.image }}" alt="">
             <div class="content">
               <div class="category">{{ blog.feature.category }}</div>
               <h2>{{ blog.feature.title | safe }}</h2>
@@ -51,7 +51,7 @@
           <div class="blog-feature-side">
 {% for s in blog.side %}
             <a href="/blog-post" class="blog-feature-item">
-              <div class="thumb"><img src="{{ s.image }}" alt=""></div>
+              <div class="thumb"><img loading="lazy" src="{{ s.image }}" alt=""></div>
               <div>
                 <div class="category">{{ s.category }}</div>
                 <h4>{{ s.title | safe }}</h4>
@@ -75,9 +75,8 @@
         <!-- Grid -->
         <div class="blog-list-grid" data-stagger>
 {% for p in blog.posts %}
-          {% if sponsorSlots[loop.index0] %}{{ sp.banner(sponsorSlots[loop.index0], 'sp-span-grid') }}{% endif %}
           <a class="blog-card" href="/blog-post?b={{ p.title | slug }}">
-            <div class="thumb"><img src="{{ p.image }}" alt=""></div>
+            <div class="thumb"><img loading="lazy" src="{{ p.image }}" alt=""></div>
             <div class="category">{{ p.category }}</div>
             <h3>{{ p.title | safe }}</h3>
             <p class="excerpt">{{ p.excerpt | safe }}</p>

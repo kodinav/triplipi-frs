@@ -1415,6 +1415,8 @@
   margin-bottom: 4px;
 }
 .article-cta p { color: rgba(245, 239, 230, 0.7); font-size: 0.95rem; margin: 0; }
+.article-cta-actions { display: flex; gap: var(--s-3); flex-wrap: wrap; }
+.article-cta-actions .btn-ghost { --btn-fg: var(--c-bone); --btn-border: rgba(245,239,230,0.4); }
 @media (max-width: 720px) {
   .article-cta { grid-template-columns: 1fr; }
 }

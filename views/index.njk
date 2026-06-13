@@ -92,7 +92,7 @@
 {% for d in destinations %}
           <article class="feat-card">
             <a class="feat-media" href="/destination-detail?d={{ d.slug }}" aria-label="{{ d.name | striptags }} — view details">
-              <img src="{{ d.image }}" alt="{{ d.name | striptags }}">
+              <img loading="lazy" src="{{ d.image }}" alt="{{ d.name | striptags }}">
             </a>
             <div class="feat-info">
               <div class="region">{{ d.region }}</div>
@@ -128,7 +128,7 @@
         <div class="float-grid" data-reveal>
 {% for h in highlights %}
           <a href="/destination-detail" class="float-card">
-            <img src="{{ h.image }}" alt="{{ h.title }}, {{ h.place }}">
+            <img loading="lazy" src="{{ h.image }}" alt="{{ h.title }}, {{ h.place }}">
             <div class="float-card-label">
               <span class="day">{{ h.kicker }}</span>
               <h3>{{ h.title }}</h3>
@@ -189,7 +189,7 @@
         <div class="blog-strip" data-stagger>
 {% for p in blogPosts %}
           <a class="blog-card" href="/blog-post?b={{ p.title | slug }}">
-            <div class="thumb"><img src="{{ p.image }}" alt=""></div>
+            <div class="thumb"><img loading="lazy" src="{{ p.image }}" alt=""></div>
             <div class="category">{{ p.category }}</div>
             <h3>{{ p.title | safe }}</h3>
             <p class="excerpt">{{ p.excerpt | safe }}</p>
@@ -218,7 +218,7 @@
 {% for k in packages %}
           <article class="pkg-card">
             <div class="thumb">
-              <img src="{{ k.image }}" alt="">
+              <img loading="lazy" src="{{ k.image }}" alt="">
               {% if k.badgeLabel %}<span class="tag{% if k.badgeClass %} {{ k.badgeClass }}{% endif %} badge-pos">{{ k.badgeLabel }}</span>{% endif %}
             </div>
             <div class="body">
@@ -262,7 +262,7 @@
             {% if g.type == 'video' and g.src %}
             <video src="{{ g.src }}" poster="{{ g.image }}" muted loop playsinline preload="metadata"></video>
             {% else %}
-            <img src="{{ g.image }}" alt="{{ g.alt }}">
+            <img loading="lazy" src="{{ g.image }}" alt="{{ g.alt }}">
             {% endif %}
             {% if g.type == 'video' %}<div class="play-icon">▶</div>{% endif %}
             <div class="overlay"><span class="tag tag-plain">{{ g.label }}</span></div>

@@ -63,7 +63,10 @@
             <h4>Inspired to go?</h4>
             <p>Plan a trip or see verified packages.</p>
           </div>
-          <a href="/trip" class="btn btn-brand">Go For A Trip <span class="arrow">→</span></a>
+          <div class="article-cta-actions">
+            <a href="/trip" class="btn btn-brand">Go For A Trip <span class="arrow">→</span></a>
+            <a href="/packages" class="btn btn-ghost">Check Packages <span class="arrow">→</span></a>
+          </div>
         </div>
       </div>
     </article>
@@ -81,7 +84,7 @@
         <div class="blog-strip" data-stagger>
           {% for r in related %}
           <a class="blog-card" href="/blog-post?b={{ r.key }}">
-            <div class="thumb"><img src="{{ r.p.image }}" alt=""></div>
+            <div class="thumb"><img loading="lazy" src="{{ r.p.image }}" alt=""></div>
             <div class="category">{{ r.p.category }}</div>
             <h3>{{ r.p.title | safe }}</h3>
             <p class="excerpt">{{ r.p.excerpt | safe }}</p>

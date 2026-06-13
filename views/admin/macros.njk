@@ -49,7 +49,7 @@
     <div class="adm-field">
       <span class="adm-label">{{ f.label }}</span>
       <div class="adm-img-field">
-        {% if v %}<img class="img-preview" src="{{ v }}" alt="" onerror="this.style.display='none'">{% endif %}
+        {% if v %}<img loading="lazy" class="img-preview" src="{{ v }}" alt="" onerror="this.style.display='none'">{% endif %}
         <div class="img-inputs">
           <input type="text" name="{{ f.name }}" value="{{ v }}" placeholder="Paste an image URL, e.g. https://images.unsplash.com/…">
           <span class="img-or">or upload from your computer</span>
