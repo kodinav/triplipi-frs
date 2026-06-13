@@ -471,8 +471,10 @@ const SCHEMAS = [
       { name: 'title', label: 'Internal title', ph: 'e.g. Monsoon sale strip' },
       { name: 'zone', label: 'Where it appears', type: 'select', options: [
         { value: 'site-top', label: 'Thin bar at the very top of every page' },
+        { value: 'site-bottom', label: 'Above the footer — every page' },
         { value: 'home-top', label: 'Homepage — below the hero' },
         { value: 'home-mid', label: 'Homepage — mid page' },
+        { value: 'home-bottom', label: 'Homepage — above the footer' },
       ] },
       { name: 'style', label: 'Style', type: 'select', options: [
         { value: 'strip', label: 'Slim text strip' },
@@ -500,6 +502,41 @@ const SCHEMAS = [
       { name: 'heroImage', label: 'Hero image (optional)', type: 'image' },
       { name: 'body', label: 'Page content', type: 'textarea', rich: true },
       { name: 'inFooter', label: 'Show in footer “Company” column?', type: 'bool' },
+    ] },
+
+  /* ----- About page sections (FR-PAGES-001) ----- */
+  { key: 'about', group: 'About', label: 'About — story, mission & CTA', type: 'object', path: 'about',
+    fields: [
+      { name: 'storyOverline', label: 'Story — overline', ph: 'e.g. The story' },
+      { name: 'storyTitle', label: 'Story — heading (HTML)', type: 'textarea', richInline: true, ph: 'e.g. Triplipi began with a <em>simple frustration</em>.' },
+      { name: 'storyImage', label: 'Story — portrait image', type: 'image' },
+      { name: 'storyBody', label: 'Story — body', type: 'textarea', rich: true },
+      { name: 'missionOverline', label: 'Mission — overline', ph: 'e.g. Mission & Vision' },
+      { name: 'missionTitle', label: 'Mission — heading (HTML)', type: 'textarea', richInline: true },
+      { name: 'missionBody', label: 'Mission — body', type: 'textarea', rich: true },
+      { name: 'offersOverline', label: 'What we offer — overline', ph: 'e.g. What we offer' },
+      { name: 'offersTitle', label: 'What we offer — heading (HTML)', type: 'textarea', richInline: true },
+      { name: 'ctaOverline', label: 'Contact CTA — overline', ph: 'e.g. Get in touch' },
+      { name: 'ctaTitle', label: 'Contact CTA — heading (HTML)', type: 'textarea', richInline: true },
+      { name: 'ctaBody', label: 'Contact CTA — body', type: 'textarea', richInline: true },
+      { name: 'ctaPrimaryLabel', label: 'CTA — primary button label', ph: 'e.g. Get in touch' },
+      { name: 'ctaPrimaryHref', label: 'CTA — primary button link', type: 'url', ph: 'e.g. /contact' },
+      { name: 'ctaSecondaryLabel', label: 'CTA — secondary button label', ph: 'e.g. Become a partner' },
+      { name: 'ctaSecondaryHref', label: 'CTA — secondary button link', type: 'url', ph: 'e.g. /contact#partner' },
+    ] },
+  { key: 'aboutStats', group: 'About', label: 'About — stat tiles', type: 'list', path: 'aboutStats',
+    itemTitle: 'label',
+    fields: [
+      { name: 'value', label: 'Number', ph: 'e.g. 450' },
+      { name: 'label', label: 'Label', ph: 'e.g. Destinations indexed' },
+    ] },
+  { key: 'aboutOffers', group: 'About', label: 'About — “what we offer” cards', type: 'list', path: 'aboutOffers',
+    itemTitle: 'title',
+    fields: [
+      { name: 'title', label: 'Card title', ph: 'e.g. A curated destination index' },
+      { name: 'body', label: 'Card body', type: 'textarea', rich: true },
+      { name: 'linkLabel', label: 'Link label', ph: 'e.g. Browse destinations' },
+      { name: 'linkHref', label: 'Link', type: 'url', ph: 'e.g. /destinations' },
     ] },
 
   /* ----- Homepage pickers — choose which master items are featured ----- */
@@ -605,8 +642,13 @@ const ADMIN_PAGES = [
       { key: 'shopItems', hint: 'Every licensable image/video. Each becomes a selectable tile; visitors add items and request a quote — which lands in Messages (and is emailed if SMTP is set).' },
     ] },
   { key: 'about', label: 'About', view: '/about',
-    intro: 'Title and intro of the About page.',
-    sections: [{ key: 'page-about', hint: 'Big title and intro at the top of the page.' }] },
+    intro: 'The About page — hero, owner story, mission, what you offer, and the contact CTA.',
+    sections: [
+      { key: 'page-about', hint: 'Hero title and intro at the top of the page.' },
+      { key: 'about', hint: 'The four sections: owner story, mission & vision, “what we offer” heading, and the contact call-to-action.' },
+      { key: 'aboutStats', hint: 'The number tiles in the Mission section (e.g. 450 destinations).' },
+      { key: 'aboutOffers', hint: 'The “what we offer” cards (the three things you do).' },
+    ] },
   { key: 'contact', label: 'Contact', view: '/contact',
     intro: 'Title and intro of the Contact page.',
     sections: [{ key: 'page-contact', hint: 'Big title and intro at the top of the page.' }] },
@@ -652,9 +694,10 @@ app.get('/assets/js/partials.js', (req, res) => {
   // CMS-driven (header/footer/nav change with content) — always revalidate so
   // edits show immediately instead of serving a stale cached copy.
   res.set('Cache-Control', 'no-cache, must-revalidate');
-  const siteTop = (bannersByZone()['site-top'] || []).map((b) => ({
-    ...b, href: b.section === 'external' || b.external ? (b.extUrl || b.href) : b.href,
-  }));
+  const resolveB = (b) => ({ ...b, href: b.section === 'external' || b.external ? (b.extUrl || b.href) : b.href });
+  const zones = bannersByZone();
+  const siteTop = (zones['site-top'] || []).map(resolveB);
+  const siteBottom = (zones['site-bottom'] || []).map(resolveB);
   // Mega-menu categories: real destination categories (with counts), up to 8
   const dests = pub(store.get('destinations') || []);
   const navCategories = (store.get('destCategories') || [])
@@ -666,6 +709,7 @@ app.get('/assets/js/partials.js', (req, res) => {
     legalDocs: store.get('legalDocs') || [],
     customPages: pub(store.get('customPages') || []).filter((p) => p.inFooter),
     siteTopBanners: siteTop,
+    siteBottomBanners: siteBottom,
     navCategories,
     pickLists: store.get('pickLists') || [],
   });
@@ -950,7 +994,7 @@ const PAGES = {
     const baseUrl = active ? '/picks?list=' + encodeURIComponent(active.key) : '/picks';
     return { page: c().pages.picks, picks: items, lists, active, pagination, baseUrl };
   },
-  about: () => ({ page: c().pages.about }),
+  about: () => ({ page: c().pages.about, about: c().about || {}, aboutStats: c().aboutStats || [], aboutOffers: c().aboutOffers || [] }),
   contact: () => ({ page: c().pages.contact, settings: c().settings }),
   legal: (req) => {
     const docs = c().legalDocs || [];

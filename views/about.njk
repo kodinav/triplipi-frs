@@ -39,15 +39,17 @@
       <div class="container-wide">
         <div class="about-intro" data-reveal>
           <div class="about-portrait">
-            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1200&q=85" alt="Editor portrait">
+            <img src="{{ about.storyImage or 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1200&q=85' }}" alt="Editor portrait">
           </div>
           <div>
-            <p class="overline">The story</p>
-            <h2>Triplipi began with a <em>simple frustration</em>.</h2>
+            <p class="overline">{{ about.storyOverline or 'The story' }}</p>
+            <h2>{{ about.storyTitle | safe if about.storyTitle else 'Triplipi began with a <em>simple frustration</em>.' }}</h2>
+            {% if about.storyBody %}
+            <div class="rich-body">{{ about.storyBody | safe }}</div>
+            {% else %}
             <p>For years, every trip we tried to plan began the same way — searching the same five sites, reading the same recycled paragraphs, clicking through the same affiliate funnels disguised as journalism. We wanted something different. A travel platform that read like a curated guidebook, looked like a magazine, and behaved like a friend with local knowledge.</p>
             <p>So we built it. Triplipi launched in 2024 as a small editorial project — three writers, two photographers, a list of 60 destinations we'd actually been to. Two years later, we've indexed 450 places, partnered with 180 verified providers, and published more than 320 long-form stories. Everything else has changed except the original idea: depth over speed, and honesty about how we earn our money.</p>
-            <p style="font-family: var(--ff-display); font-style: italic; font-size: 1.2rem; color: var(--c-gold-deep); padding-left: var(--s-5); border-left: 2px solid var(--c-gold);">"The internet has more travel content than ever, and less useful travel writing than ever. We're trying to be a small correction to that."</p>
-            <p style="font-size: var(--fs-small); color: var(--c-text-muted);">— Editor, in conversation with Conde Nast Traveller India, March 2026</p>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -57,28 +59,28 @@
     <section class="about-mission" id="methodology">
       <div class="container-wide">
         <div class="mission-content" data-reveal>
-          <p class="overline" style="border-color: rgba(245,239,230,0.2);">Mission &amp; Vision</p>
-          <h2 style="color: var(--c-bone);">To make travel <em>discovery</em> feel less like research, and more like <em>reading</em>.</h2>
+          <p class="overline" style="border-color: rgba(245,239,230,0.2);">{{ about.missionOverline or 'Mission & Vision' }}</p>
+          <h2 style="color: var(--c-bone);">{{ about.missionTitle | safe if about.missionTitle else 'To make travel <em>discovery</em> feel less like research, and more like <em>reading</em>.' }}</h2>
+          {% if about.missionBody %}
+          <div class="rich-body" style="margin-block: var(--s-6); color: rgba(245,239,230,0.85);">{{ about.missionBody | safe }}</div>
+          {% else %}
           <p style="font-size: var(--fs-body-lg); margin-block: var(--s-6); color: rgba(245,239,230,0.85);">We believe that the best trips begin with the best stories. Our mission is to be the first place a curious traveller turns — not for booking, not for prices, but for the kind of honest, considered, photographically-rich account of a destination that helps you know whether you actually want to go.</p>
           <p style="color: rgba(245,239,230,0.7); margin-bottom: var(--s-7);">When you're ready to book, we connect you to verified partners — with full disclosure of every commercial relationship, every time. Our editorial team has no commercial pressure to favour any partner over another, and we publish our methodology openly. Slow travel deserves slow journalism, and that's what we try to make.</p>
+          {% endif %}
 
+          {% set stats = aboutStats if aboutStats and aboutStats | length else [
+            {'value':'450','label':'Destinations indexed'},
+            {'value':'180+','label':'Verified partners'},
+            {'value':'320+','label':'Published stories'},
+            {'value':'2024','label':'Founded'}
+          ] %}
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--s-6); margin-top: var(--s-8);">
+            {% for s in stats %}
             <div>
-              <div style="font-family: var(--ff-display); font-style: italic; font-size: 2.5rem; color: var(--c-gold); line-height: 1; margin-bottom: var(--s-3);">450</div>
-              <div style="font-size: var(--fs-micro); text-transform: uppercase; letter-spacing: var(--ls-wider); color: rgba(245,239,230,0.6);">Destinations indexed</div>
+              <div style="font-family: var(--ff-display); font-style: italic; font-size: 2.5rem; color: var(--c-gold); line-height: 1; margin-bottom: var(--s-3);">{{ s.value }}</div>
+              <div style="font-size: var(--fs-micro); text-transform: uppercase; letter-spacing: var(--ls-wider); color: rgba(245,239,230,0.6);">{{ s.label }}</div>
             </div>
-            <div>
-              <div style="font-family: var(--ff-display); font-style: italic; font-size: 2.5rem; color: var(--c-gold); line-height: 1; margin-bottom: var(--s-3);">180+</div>
-              <div style="font-size: var(--fs-micro); text-transform: uppercase; letter-spacing: var(--ls-wider); color: rgba(245,239,230,0.6);">Verified partners</div>
-            </div>
-            <div>
-              <div style="font-family: var(--ff-display); font-style: italic; font-size: 2.5rem; color: var(--c-gold); line-height: 1; margin-bottom: var(--s-3);">320+</div>
-              <div style="font-size: var(--fs-micro); text-transform: uppercase; letter-spacing: var(--ls-wider); color: rgba(245,239,230,0.6);">Published stories</div>
-            </div>
-            <div>
-              <div style="font-family: var(--ff-display); font-style: italic; font-size: 2.5rem; color: var(--c-gold); line-height: 1; margin-bottom: var(--s-3);">2024</div>
-              <div style="font-size: var(--fs-micro); text-transform: uppercase; letter-spacing: var(--ls-wider); color: rgba(245,239,230,0.6);">Founded</div>
-            </div>
+            {% endfor %}
           </div>
         </div>
       </div>
@@ -89,30 +91,25 @@
       <div class="container-wide">
         <div class="section-head" data-reveal>
           <div>
-            <p class="overline">What we offer</p>
-            <h2>Three things, done <em>properly</em>.</h2>
+            <p class="overline">{{ about.offersOverline or 'What we offer' }}</p>
+            <h2>{{ about.offersTitle | safe if about.offersTitle else 'Three things, done <em>properly</em>.' }}</h2>
           </div>
         </div>
 
+        {% set offers = aboutOffers if aboutOffers and aboutOffers | length else [
+          {'title':'A curated destination index','body':'Four hundred and fifty destinations — every one editor-verified or contributor-verified within the last 18 months. Organised across 100 careful categories. Every page includes seven sub-sections covering everything from season to landmarks, with original photography.','linkLabel':'Browse destinations','linkHref':'/destinations'},
+          {'title':'Verified partner network','body':'180+ vetted package providers, hotel partners, and affiliate platforms — every one personally evaluated. We disclose our commercial position on every link, every time, with consent-gated redirects so you always know what\'s happening before it happens.','linkLabel':'View packages','linkHref':'/packages'},
+          {'title':'Original photography & writing','body':'A growing archive of editor-shot photography and long-form travel writing. Available for licensing through our Shop, and free to read on our Blog. We take our photographs seriously, and we\'d rather publish less and mean more.','linkLabel':'Visit the gallery','linkHref':'/gallery'}
+        ] %}
         <div class="offers-grid" data-stagger>
+          {% for o in offers %}
           <div class="offer-card">
-            <div class="num">01</div>
-            <h3>A curated destination index</h3>
-            <p>Four hundred and fifty destinations — every one editor-verified or contributor-verified within the last 18 months. Organised across 100 careful categories. Every page includes seven sub-sections covering everything from season to landmarks, with original photography.</p>
-            <a href="/destinations" class="btn-text">Browse destinations <span class="arrow">→</span></a>
+            <div class="num">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</div>
+            <h3>{{ o.title | safe }}</h3>
+            <div class="rich-body">{{ o.body | safe }}</div>
+            {% if o.linkLabel %}<a href="{{ o.linkHref or '#' }}" class="btn-text">{{ o.linkLabel }} <span class="arrow">→</span></a>{% endif %}
           </div>
-          <div class="offer-card">
-            <div class="num">02</div>
-            <h3>Verified partner network</h3>
-            <p>180+ vetted package providers, hotel partners, and affiliate platforms — every one personally evaluated. We disclose our commercial position on every link, every time, with consent-gated redirects so you always know what's happening before it happens.</p>
-            <a href="/packages" class="btn-text">View packages <span class="arrow">→</span></a>
-          </div>
-          <div class="offer-card">
-            <div class="num">03</div>
-            <h3>Original photography &amp; writing</h3>
-            <p>A growing archive of editor-shot photography and long-form travel writing. Available for licensing through our Shop, and free to read on our Blog. We take our photographs seriously, and we'd rather publish less and mean more.</p>
-            <a href="/gallery" class="btn-text">Visit the gallery <span class="arrow">→</span></a>
-          </div>
+          {% endfor %}
         </div>
       </div>
     </section>
@@ -121,12 +118,12 @@
     <section class="section">
       <div class="container-wide">
         <div style="text-align: center; max-width: 720px; margin: 0 auto;" data-reveal>
-          <p class="overline center">Get in touch</p>
-          <h2>If you've made it this far, <em>let's talk</em>.</h2>
-          <p style="margin-bottom: var(--s-6);">Whether you want to plan a trip, license our photography, partner with us as a verified provider, or just say hello — we'd love to hear from you. We respond to every message within one working day.</p>
+          <p class="overline center">{{ about.ctaOverline or 'Get in touch' }}</p>
+          <h2>{{ about.ctaTitle | safe if about.ctaTitle else "If you've made it this far, <em>let's talk</em>." }}</h2>
+          <p style="margin-bottom: var(--s-6);">{{ about.ctaBody | safe if about.ctaBody else "Whether you want to plan a trip, license our photography, partner with us as a verified provider, or just say hello — we'd love to hear from you. We respond to every message within one working day." }}</p>
           <div style="display: flex; gap: var(--s-3); justify-content: center; flex-wrap: wrap;">
-            <a href="/contact" class="btn btn-brand">Get in touch <span class="arrow">→</span></a>
-            <a href="/contact#partner" class="btn btn-ghost">Become a partner</a>
+            <a href="{{ about.ctaPrimaryHref or '/contact' }}" class="btn btn-brand">{{ about.ctaPrimaryLabel or 'Get in touch' }} <span class="arrow">→</span></a>
+            <a href="{{ about.ctaSecondaryHref or '/contact#partner' }}" class="btn btn-ghost">{{ about.ctaSecondaryLabel or 'Become a partner' }}</a>
           </div>
         </div>
       </div>

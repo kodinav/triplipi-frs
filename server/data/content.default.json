@@ -1499,5 +1499,61 @@
     "heroLead": "Pick a category. Pick a destination. See verified packages. Continue, with full disclosure, to a trusted partner. We make the path short, but never sloppy.",
     "step1Title": "What kind of trip <em>are you after</em>?",
     "step1Body": "Each category opens to a curated list of destinations with the seven sub-categories we believe matter — season, how to reach, where to stay, how to get around, what to do, what to see, and the small details only locals know."
-  }
+  },
+  "about": {
+    "storyOverline": "The story",
+    "storyTitle": "Triplipi began with a <em>simple frustration</em>.",
+    "storyImage": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1200&q=85",
+    "storyBody": "<p>For years, every trip we tried to plan began the same way — searching the same five sites, reading the same recycled paragraphs, clicking through the same affiliate funnels disguised as journalism. We wanted something different: a travel platform that read like a curated guidebook, looked like a magazine, and behaved like a friend with local knowledge.</p><p>So we built it. Triplipi launched in 2024 as a small editorial project — three writers, two photographers, a list of 60 destinations we'd actually been to. Today we've indexed 450 places, partnered with 180 verified providers, and published more than 320 long-form stories. The original idea hasn't changed: depth over speed, and honesty about how we earn our money.</p>",
+    "missionOverline": "Mission & Vision",
+    "missionTitle": "To make travel <em>discovery</em> feel less like research, and more like <em>reading</em>.",
+    "missionBody": "<p>We believe the best trips begin with the best stories. Our mission is to be the first place a curious traveller turns — not for booking, not for prices, but for the kind of honest, considered, photographically-rich account of a destination that helps you know whether you actually want to go.</p><p>When you're ready to book, we connect you to verified partners — with full disclosure of every commercial relationship, every time. Slow travel deserves slow journalism, and that's what we try to make.</p>",
+    "offersOverline": "What we offer",
+    "offersTitle": "Three things, done <em>properly</em>.",
+    "ctaOverline": "Get in touch",
+    "ctaTitle": "If you've made it this far, <em>let's talk</em>.",
+    "ctaBody": "Whether you want to plan a trip, license our photography, partner with us as a verified provider, or just say hello — we'd love to hear from you. We respond to every message within one working day.",
+    "ctaPrimaryLabel": "Get in touch",
+    "ctaPrimaryHref": "/contact",
+    "ctaSecondaryLabel": "Become a partner",
+    "ctaSecondaryHref": "/contact#partner"
+  },
+  "aboutStats": [
+    {
+      "value": "450",
+      "label": "Destinations indexed"
+    },
+    {
+      "value": "180+",
+      "label": "Verified partners"
+    },
+    {
+      "value": "320+",
+      "label": "Published stories"
+    },
+    {
+      "value": "2024",
+      "label": "Founded"
+    }
+  ],
+  "aboutOffers": [
+    {
+      "title": "A curated destination index",
+      "body": "<p>Four hundred and fifty destinations — every one editor-verified or contributor-verified within the last 18 months. Organised across 100 careful categories, each with seven sub-sections from season to landmarks, with original photography.</p>",
+      "linkLabel": "Browse destinations",
+      "linkHref": "/destinations"
+    },
+    {
+      "title": "Verified partner network",
+      "body": "<p>180+ vetted package providers, hotel partners, and affiliate platforms — every one personally evaluated. We disclose our commercial position on every link, with consent-gated redirects so you always know what is happening before it happens.</p>",
+      "linkLabel": "View packages",
+      "linkHref": "/packages"
+    },
+    {
+      "title": "Original photography & writing",
+      "body": "<p>A growing archive of editor-shot photography and long-form travel writing — available for licensing through our Shop, and free to read on the Blog. We would rather publish less and mean more.</p>",
+      "linkLabel": "Visit the gallery",
+      "linkHref": "/gallery"
+    }
+  ]
 }
