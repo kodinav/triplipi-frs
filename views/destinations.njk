@@ -77,8 +77,12 @@
 {% endfor %}
               </dl>
               <div class="dest-card-cta">
-                <a class="btn btn-sm btn-ghost" href="/destination-detail?d={{ d.slug }}">Read More</a>
+                <a class="btn btn-sm btn-ghost" href="/destination-detail?d={{ d.slug }}{% if flow == 'trip' %}?flow=trip{% endif %}">Read More</a>
+                {% if flow == 'trip' %}
+                <a class="btn btn-sm btn-brand" href="/packages?d={{ d.slug }}">Check Packages <span class="arrow">→</span></a>
+                {% else %}
                 <a class="btn btn-sm btn-brand" href="/trip?d={{ d.slug }}">Go For A Trip <span class="arrow">→</span></a>
+                {% endif %}
               </div>
             </div>
           </article>
