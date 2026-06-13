@@ -919,14 +919,8 @@ const PAGES = {
     const catObj = categories.find((x) => x.slug === activeCat) || null;
     const filtered = catObj ? all.filter((d) => (d.categories || []).includes(activeCat)) : all;
     const { items, pagination } = paginate(filtered, req);
-    // Flow context (FR-TRIP-002): when entered from the Go For A Trip menu the
-    // listing's second CTA is "Check Available Packages"; otherwise "Go For A Trip".
-    const flow = (req && req.query && req.query.flow) === 'trip' ? 'trip' : '';
-    const qp = [];
-    if (catObj) qp.push('cat=' + encodeURIComponent(activeCat));
-    if (flow) qp.push('flow=trip');
-    const baseUrl = '/destinations' + (qp.length ? '?' + qp.join('&') : '');
-    return { page: c().pages.destinations, cards: items, categories, activeCat, activeCatLabel: catObj ? catObj.label : '', totalAll: all.length, flow, dParam: '', pagination, baseUrl, sponsorSlots: sponsorSlots('destinations', items.length) };
+    const baseUrl = catObj ? '/destinations?cat=' + encodeURIComponent(activeCat) : '/destinations';
+    return { page: c().pages.destinations, cards: items, categories, activeCat, activeCatLabel: catObj ? catObj.label : '', totalAll: all.length, pagination, baseUrl, sponsorSlots: sponsorSlots('destinations', items.length) };
   },
   packages: (req) => {
     const allPkgs = pub(c().packages);

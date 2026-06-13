@@ -213,33 +213,42 @@
 .card:hover { transform: translateY(-4px); box-shadow: var(--sh-lift); }
 
 /* ---------- DESTINATION CARD ---------- */
-/* Destination digest card (FRS FR-DEST-003/004): image top, then the
-   7-sub-category digest + two CTAs (Read More + Go For A Trip). */
 .dest-card {
   border-radius: var(--r-lg);
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  background: var(--c-paper, #fff);
-  border: 1px solid var(--c-border);
-  transition: box-shadow var(--d-base) var(--ease-out), transform var(--d-base) var(--ease-out);
-}
-.dest-card:hover { box-shadow: var(--sh-lift); transform: translateY(-3px); }
-.dest-card-media {
+  position: relative;
   display: block;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: var(--c-ink);
+  cursor: pointer;
+  isolation: isolate;
 }
-.dest-card-media img {
+.dest-card .media {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+}
+.dest-card img,
+.dest-card video {
+  position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
   transition: transform var(--d-cinema) var(--ease-out);
 }
-.dest-card:hover .dest-card-media img { transform: scale(1.05); }
+.dest-card:hover img,
+.dest-card:hover video { transform: scale(1.06); }
+
+.dest-card .overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, var(--a-ink-90) 0%, var(--a-ink-30) 40%, transparent 70%);
+  transition: opacity var(--d-base) var(--ease-out);
+}
 .dest-card .content {
-  padding: var(--s-5);
+  position: absolute; inset: 0;
+  padding: var(--s-7);
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  color: var(--c-bone);
 }
 .dest-card .region {
   font-family: var(--ff-text);
@@ -247,54 +256,52 @@
   text-transform: uppercase;
   letter-spacing: var(--ls-widest);
   color: #34689D;
-  margin-bottom: var(--s-2);
+  margin-bottom: var(--s-3);
 }
 .dest-card .name {
   font-family: var(--ff-display);
-  font-size: 1.35rem;
+  font-size: clamp(1.4rem, 1.1rem + 1vw, 1.85rem);
   font-weight: 700;
+  font-style: normal;
   letter-spacing: -0.01em;
-  line-height: 1.15;
-  color: var(--c-ink);
+  line-height: 1.12;
   margin-bottom: var(--s-3);
+  color: var(--c-bone);
 }
-.dest-card .name a { color: inherit; text-decoration: none; }
-.dest-card .name a:hover { color: #D05527; }
-
-/* 7-sub-category digest (compact labelled rows) */
-.dest-digest {
-  display: grid;
-  gap: 3px;
-  margin-bottom: var(--s-4);
-  border-top: 1px solid var(--c-border);
-  padding-top: var(--s-3);
-}
-.dg-row {
-  display: grid;
-  grid-template-columns: 82px 1fr;
-  gap: var(--s-3);
-  font-size: var(--fs-micro);
-  line-height: 1.5;
-}
-.dg-row dt {
-  color: var(--c-text-muted);
-  text-transform: uppercase;
-  letter-spacing: var(--ls-wide);
-  font-weight: var(--fw-semi);
-}
-.dg-row dd {
-  margin: 0;
-  color: var(--c-text);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.dest-card-cta {
+.dest-card .meta {
   display: flex;
-  gap: var(--s-3);
-  margin-top: auto;
+  gap: var(--s-4);
+  font-size: var(--fs-small);
+  opacity: 0.85;
+  border-top: 1px solid rgba(245,239,230, 0.2);
+  padding-top: var(--s-3);
+  margin-top: var(--s-3);
+  flex-wrap: wrap;
 }
-.dest-card-cta .btn { flex: 1; justify-content: center; }
+.dest-card .meta span { display: inline-flex; align-items: center; gap: 6px; }
+.dest-card .meta .dot { width: 4px; height: 4px; background: #34689D; border-radius: 50%; }
+
+.dest-card .read-more {
+  position: absolute;
+  top: var(--s-6); right: var(--s-6);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(245, 239, 230, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(245, 239, 230, 0.3);
+  display: grid; place-items: center;
+  color: var(--c-bone);
+  transform: scale(0.85);
+  opacity: 0;
+  transition: opacity var(--d-base) var(--ease-out),
+              transform var(--d-base) var(--ease-out);
+}
+.dest-card:hover .read-more { opacity: 1; transform: scale(1); }
+
+/* Larger feature variant */
+.dest-card.is-featured { aspect-ratio: 3 / 4; }
+.dest-card.is-wide { aspect-ratio: 5 / 4; }
+.dest-card.is-tall { aspect-ratio: 3 / 5; }
 
 /* ---------- BLOG CARD ---------- */
 .blog-card {

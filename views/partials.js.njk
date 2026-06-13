@@ -81,9 +81,9 @@
           </div>
           <div class="mega-cat-grid">
             {% for cat in navCategories %}
-            <a href="/destinations?cat={{ cat.slug }}&flow=trip"><span class="cat-name">{{ cat.label }}</span><span class="cat-count">{{ cat.count }}</span></a>
+            <a href="/destinations?cat={{ cat.slug }}"><span class="cat-name">{{ cat.label }}</span><span class="cat-count">{{ cat.count }}</span></a>
             {% endfor %}
-            <a class="mega-cat-all" href="/destinations?flow=trip">View all categories <span class="arrow">→</span></a>
+            <a class="mega-cat-all" href="/destinations">View all categories <span class="arrow">→</span></a>
           </div>
         </div>
       </div>
@@ -121,7 +121,7 @@
             Go For A Trip <span class="arrow">+</span>
           </button>
           <div class="mobile-nav-sub">
-            {% for cat in navCategories %}<a href="/destinations?cat={{ cat.slug }}&flow=trip">{{ cat.label }}</a>
+            {% for cat in navCategories %}<a href="/destinations?cat={{ cat.slug }}">{{ cat.label }}</a>
             {% endfor %}<a href="/trip">Start the planner →</a>
           </div>
 
