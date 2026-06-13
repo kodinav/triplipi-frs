@@ -55,14 +55,33 @@
         <div class="dest-listing-grid" data-stagger>
 {% for d in cards %}
           {% if sponsorSlots[loop.index0] %}{{ sp.banner(sponsorSlots[loop.index0], 'sp-span-grid') }}{% endif %}
-          <a href="/destination-detail?d={{ d.slug }}" class="dest-card" data-cats="{{ d.categories | join(' ') if d.categories else '' }}">
-            <div class="media"><img src="{{ d.image }}" alt=""></div>
+          {% set digest = [
+            {'l':'Season','v': d.season or (d.secSeason | striptags)},
+            {'l':'Reach','v': d.secReach | striptags},
+            {'l':'Stay','v': d.secStay | striptags},
+            {'l':'Travel','v': d.secTravel | striptags},
+            {'l':'Activities','v': d.secActivities | striptags},
+            {'l':'Landmarks','v': d.secLandmarks | striptags},
+            {'l':'Notes','v': d.secNotes | striptags or d.tagline}
+          ] %}
+          <article class="dest-card" data-cats="{{ d.categories | join(' ') if d.categories else '' }}">
+            <a class="dest-card-media" href="/destination-detail?d={{ d.slug }}" aria-label="Read more about {{ d.name | striptags }}">
+              <img src="{{ d.image }}" alt="{{ d.name | striptags }}">
+            </a>
             <div class="content">
               <div class="region">{{ d.region }}</div>
-              <h3 class="name">{{ d.name | safe }}</h3>
-              <div class="meta"><span>{{ d.season }}</span>{% if d.tagline %}<span class="dot"></span><span>{{ d.tagline }}</span>{% endif %}</div>
+              <h3 class="name"><a href="/destination-detail?d={{ d.slug }}">{{ d.name | safe }}</a></h3>
+              <dl class="dest-digest">
+{% for row in digest %}
+                <div class="dg-row"><dt>{{ row.l }}</dt><dd>{{ (row.v | trim | truncate(42)) if (row.v | trim) else '—' }}</dd></div>
+{% endfor %}
+              </dl>
+              <div class="dest-card-cta">
+                <a class="btn btn-sm btn-ghost" href="/destination-detail?d={{ d.slug }}">Read More</a>
+                <a class="btn btn-sm btn-brand" href="/trip?d={{ d.slug }}">Go For A Trip <span class="arrow">→</span></a>
+              </div>
             </div>
-          </a>
+          </article>
 {% endfor %}
         </div>
 
