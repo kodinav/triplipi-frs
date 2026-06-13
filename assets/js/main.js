@@ -295,14 +295,14 @@
       showToast('Redirecting to ' + (providerNameEl.textContent || 'provider') + '…');
     });
 
-    // Bind to all external links flagged with data-external
-    $$('a[data-external]').forEach(link => {
-      on(link, 'click', (e) => {
-        e.preventDefault();
-        const provider = link.dataset.provider || 'External Provider';
-        const url = link.dataset.url || link.getAttribute('href') || '#';
-        open(provider, url);
-      });
+    // Delegated so links added later (AJAX-filtered grids, etc.) also work
+    on(document, 'click', (e) => {
+      const link = e.target.closest('a[data-external]');
+      if (!link) return;
+      e.preventDefault();
+      const provider = link.dataset.provider || 'External Provider';
+      const url = link.dataset.url || link.getAttribute('href') || '#';
+      open(provider, url);
     });
 
     // Public API for trigger from anywhere
@@ -450,6 +450,67 @@
       vid.loop = true;
       on(wrap, 'mouseenter', () => { vid.currentTime = 0; vid.play().catch(() => {}); });
       on(wrap, 'mouseleave', () => { vid.pause(); vid.currentTime = 0; });
+    });
+  };
+
+
+  // ============================================================
+  // AJAX FILTERS — category / list / pagination without a full reload
+  // (Destinations, Packages, Our Picks). Falls back to normal navigation.
+  // ============================================================
+  const initAjaxFilters = () => {
+    const main = document.querySelector('main');
+    if (!main) return;
+    const bar = main.querySelector('.pkg-filters, .category-pills, .picks-tabs');
+    if (!bar) return; // only on the filter pages
+
+    const SEL = '.pkg-filters a, .category-pills a, .picks-tabs a, .pagination a';
+
+    const revealAll = () => {
+      main.querySelectorAll('[data-reveal], [data-stagger]').forEach((el) => el.classList.add('is-visible'));
+    };
+
+    const swap = (href, push) => {
+      main.classList.add('is-filtering');
+      fetch(href, { headers: { 'X-Requested-With': 'fetch' } })
+        .then((r) => r.text())
+        .then((html) => {
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const newMain = doc.querySelector('main');
+          if (!newMain) { window.location.href = href; return; }
+          main.innerHTML = newMain.innerHTML;
+          const t = doc.querySelector('title');
+          if (t) document.title = t.textContent;
+          if (push) history.pushState({ ajax: true }, '', href);
+          revealAll();
+          // bring the freshly-filtered results into view, just under the header
+          const target = main.querySelector('.pkg-filters, .category-pills, .picks-tabs');
+          if (target) {
+            const top = target.getBoundingClientRect().top + window.scrollY - 90;
+            if (window.scrollY > top + 40 || window.scrollY < top - 40) {
+              window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+            }
+          }
+        })
+        .catch(() => { window.location.href = href; })
+        .finally(() => main.classList.remove('is-filtering'));
+    };
+
+    on(main, 'click', (e) => {
+      const link = e.target.closest(SEL);
+      if (!link || !main.contains(link)) return;
+      const href = link.getAttribute('href');
+      if (!href) return;
+      const url = new URL(href, window.location.href);
+      // only intercept same-page links — let real navigation happen otherwise
+      if (url.origin !== window.location.origin || url.pathname !== window.location.pathname) return;
+      e.preventDefault();
+      if (url.href === window.location.href) return;
+      swap(url.href, true);
+    });
+
+    on(window, 'popstate', () => {
+      if (main.querySelector('.pkg-filters, .category-pills, .picks-tabs')) swap(window.location.href, false);
     });
   };
 
@@ -938,6 +999,7 @@
     initReveals();
     initCounters();
     initHoverVideos();
+    initAjaxFilters();
     initShop();
     initForms();
     initPills();

@@ -2796,6 +2796,15 @@
 @media (max-width: 900px) { .media-wall { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 600px) { .media-wall { grid-template-columns: repeat(2, 1fr); } }
 
+/* AJAX filtering — brief dim on the results while the new set loads */
+main.is-filtering .pkg-grid,
+main.is-filtering .dest-listing-grid,
+main.is-filtering .picks-list {
+  opacity: 0.45;
+  transition: opacity 0.2s var(--ease, ease);
+  pointer-events: none;
+}
+
 /* Package detail tab panes */
 .pkg-tab-pane { padding-block: var(--s-7); }
 
