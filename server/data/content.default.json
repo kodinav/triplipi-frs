@@ -507,7 +507,13 @@
       "ctaProvider": "",
       "ctaUrl": "",
       "ctaLabel": "Details",
-      "featured": true
+      "featured": true,
+      "categories": [
+        "mountains-hills",
+        "trek",
+        "hidden-gems",
+        "spiritual"
+      ]
     },
     {
       "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80",
@@ -529,7 +535,11 @@
       "ctaProvider": "KeralaLuxe",
       "ctaUrl": "https://keralaluxe.example.com",
       "ctaLabel": "Book",
-      "featured": true
+      "featured": true,
+      "categories": [
+        "waterfalls",
+        "popular"
+      ]
     },
     {
       "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=900&q=80",
@@ -551,7 +561,13 @@
       "ctaProvider": "",
       "ctaUrl": "",
       "ctaLabel": "Details",
-      "featured": false
+      "featured": false,
+      "categories": [
+        "mountains-hills",
+        "trek",
+        "popular",
+        "spiritual"
+      ]
     },
     {
       "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=900&q=80",
@@ -573,7 +589,12 @@
       "ctaProvider": "AndamanDive",
       "ctaUrl": "https://andamandive.example.com",
       "ctaLabel": "Book",
-      "featured": false
+      "featured": false,
+      "categories": [
+        "islands",
+        "beach",
+        "water-sports"
+      ]
     },
     {
       "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=900&q=80",
@@ -595,7 +616,11 @@
       "ctaProvider": "",
       "ctaUrl": "",
       "ctaLabel": "Request quote",
-      "featured": false
+      "featured": false,
+      "categories": [
+        "heritage",
+        "popular"
+      ]
     },
     {
       "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=900&q=80",
@@ -617,7 +642,11 @@
       "ctaProvider": "NorthEastEco",
       "ctaUrl": "https://nee.example.com",
       "ctaLabel": "Book",
-      "featured": false
+      "featured": false,
+      "categories": [
+        "waterfalls",
+        "hidden-gems"
+      ]
     }
   ],
   "blog": {

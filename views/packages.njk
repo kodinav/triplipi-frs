@@ -36,21 +36,22 @@
 
     <section class="section">
       <div class="container-wide">
-        <!-- Filters -->
+        <!-- Filters (categories shared with Destinations) -->
+        {% if categories and categories | length %}
         <div class="pkg-filters" data-reveal>
           <span class="label">Filter:</span>
-          <button class="filter-chip is-active" data-filter="all">All Packages</button>
-          <button class="filter-chip">Sponsored</button>
-          <button class="filter-chip">Affiliate</button>
-          <button class="filter-chip">Quote Only</button>
-          <button class="filter-chip">Mountains</button>
-          <button class="filter-chip">Beach</button>
-          <button class="filter-chip">Luxury</button>
-          <button class="filter-chip">Budget</button>
+          <a class="filter-chip{% if not activeCat %} is-active{% endif %}" href="/packages{% if dParam %}?d={{ dParam }}{% endif %}">All Packages</a>
+          {% for cat in categories %}
+          <a class="filter-chip{% if cat.slug == activeCat %} is-active{% endif %}" href="/packages?{% if dParam %}d={{ dParam }}&{% endif %}cat={{ cat.slug }}">{{ cat.label }} <span class="count">{{ cat.count }}</span></a>
+          {% endfor %}
         </div>
+        {% endif %}
 
         {% if destFilter %}
         <div class="pkg-dest-note" data-reveal>Showing packages for <strong>{{ destFilter }}</strong>. <a href="/packages">Show all packages</a></div>
+        {% endif %}
+        {% if activeCat %}
+        <div class="pkg-dest-note" data-reveal>Filtered by category. <a href="/packages{% if dParam %}?d={{ dParam }}{% endif %}">Clear category</a></div>
         {% endif %}
         <div class="pkg-grid cols-2" data-stagger>
 {% for k in packages %}

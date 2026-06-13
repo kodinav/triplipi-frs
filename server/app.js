@@ -289,6 +289,7 @@ const SCHEMAS = [
       { name: 'region', label: 'Region · duration', ph: 'e.g. Himachal · 7 days' },
       { name: 'description', label: 'Description', type: 'textarea', richInline: true, ph: 'e.g. Kaza, Key Monastery, Chandratal lakes. All meals included.' },
       { name: 'image', label: 'Image', type: 'image' },
+      { name: 'categories', label: 'Categories (same list as destinations)', type: 'multiselect', optionsFrom: 'destCategories', optionValue: 'slug', optionLabel: 'label' },
       { name: 'badgeLabel', label: 'Badge', ph: 'Sponsored, Affiliate, Quote Only — or leave blank' },
       { name: 'badgeClass', label: 'Badge style', ph: 'tag-gold, tag-affiliate — or leave blank' },
       { name: 'metaSpans', label: 'Meta chips (comma-separated)', type: 'csv', ph: 'e.g. 🏔 Premium, ⭐ 4.9, 🛏 6 nights' },
@@ -867,15 +868,33 @@ const PAGES = {
     return { page: c().pages.destinations, cards: items, categories, activeCat, activeCatLabel: catObj ? catObj.label : '', totalAll: all.length, pagination, baseUrl, sponsorSlots: sponsorSlots('destinations', items.length) };
   },
   packages: (req) => {
-    let all = pub(c().packages);
-    const d = req && req.query && req.query.d;
+    const allPkgs = pub(c().packages);
+    let all = allPkgs;
+    const q = (req && req.query) || {};
+    // destination funnel filter (?d=) — keep as-is
     let destFilter = null;
-    if (d) {
-      const tagged = all.filter((p) => (p.destinationSlugs || []).includes(d));
-      if (tagged.length) { all = tagged; destFilter = (c().destinations.find((x) => x.slug === d) || {}).name || d; }
+    if (q.d) {
+      const tagged = all.filter((p) => (p.destinationSlugs || []).includes(q.d));
+      if (tagged.length) { all = tagged; destFilter = (c().destinations.find((x) => x.slug === q.d) || {}).name || q.d; }
     }
+    // category filter (?cat=) — pills drawn from the destination categories
+    const categories = (c().destCategories || []).map((cat) => ({
+      ...cat, count: allPkgs.filter((p) => (p.categories || []).includes(cat.slug)).length,
+    })).filter((cat) => cat.count > 0);
+    const activeCat = q.cat || '';
+    const catObj = categories.find((x) => x.slug === activeCat) || null;
+    if (catObj) all = all.filter((p) => (p.categories || []).includes(activeCat));
     const { items, pagination } = paginate(all, req);
-    return { page: c().pages.packages, packages: items, pagination, baseUrl: '/packages', sponsorSlots: sponsorSlots('packages', items.length), destFilter: destFilter };
+    // preserve active filters across pagination
+    const qs = [];
+    if (q.d) qs.push('d=' + encodeURIComponent(q.d));
+    if (catObj) qs.push('cat=' + encodeURIComponent(activeCat));
+    const baseUrl = '/packages' + (qs.length ? '?' + qs.join('&') : '');
+    return {
+      page: c().pages.packages, packages: items, pagination, baseUrl,
+      sponsorSlots: sponsorSlots('packages', items.length),
+      destFilter, categories, activeCat, dParam: q.d || '',
+    };
   },
   blog: (req) => {
     const { items, pagination } = paginate(pub(c().blog.posts), req);
