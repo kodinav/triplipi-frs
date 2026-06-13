@@ -1266,5 +1266,153 @@
       "archived": false,
       "expiry": ""
     }
+  ],
+  "shop": {
+    "heroTitle": "License original <em>photography</em> &amp; <em>footage</em>.",
+    "heroLead": "Every image and video in our archive is editor-shot or contributor-verified, available for editorial and commercial use. Browse, select, and request a custom quote — or visit our Shutterstock portfolio for instant licensing.",
+    "archiveTabLabel": "Triplipi Archive",
+    "archiveTabMeta": "Custom licensing · Quote on request",
+    "ssTabLabel": "Shutterstock Portfolio",
+    "ssTabMeta": "Instant licensing · Standard rates",
+    "ssUrl": "https://www.shutterstock.com/g/Triplipi",
+    "ctaTitle": "Need it now? Browse our <em>Shutterstock portfolio</em>.",
+    "ctaBody": "A curated selection of our archive is available for instant licensing on Shutterstock. Standard editorial and commercial rates apply, with extended licenses available on request.",
+    "ctaImage1": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&q=80",
+    "ctaImage2": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80",
+    "quoteEmail": ""
+  },
+  "shopItems": [
+    {
+      "serial": "AET-IMG-001",
+      "title": "Ladakh — High desert at noon",
+      "type": "photo",
+      "badge": "Photograph",
+      "spec": "12000×8000 · RAW available",
+      "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&q=80",
+      "published": true,
+      "archived": false,
+      "expiry": ""
+    },
+    {
+      "serial": "AET-IMG-002",
+      "title": "Andaman — Reef from above",
+      "type": "photo",
+      "badge": "Photograph",
+      "spec": "9000×6000 · Drone footage available",
+      "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800&q=80",
+      "published": true,
+      "archived": false,
+      "expiry": ""
+    },
+    {
+      "serial": "AET-VID-003",
+      "title": "Spiti Valley — Time-lapse, Kunzum La",
+      "type": "video",
+      "badge": "Video · 4K",
+      "spec": "4K · 02:34 · 24fps",
+      "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800&q=80",
+      "published": true,
+      "archived": false,
+      "expiry": ""
+    },
+    {
+      "serial": "AET-IMG-004",
+      "title": "Kerala — Houseboat at dawn",
+      "type": "photo",
+      "badge": "Photograph",
+      "spec": "10000×6500",
+      "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80",
+      "published": true,
+      "archived": false,
+      "expiry": ""
+    },
+    {
+      "serial": "AET-IMG-005",
+      "title": "Meghalaya — Living root bridge",
+      "type": "photo",
+      "badge": "Photograph",
+      "spec": "8000×5300",
+      "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80",
+      "published": true,
+      "archived": false,
+      "expiry": ""
+    },
+    {
+      "serial": "AET-VID-006",
+      "title": "Manali — River flow, Beas valley",
+      "type": "video",
+      "badge": "Video · 4K",
+      "spec": "4K · 04:12 · 30fps",
+      "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=800&q=80",
+      "published": true,
+      "archived": false,
+      "expiry": ""
+    },
+    {
+      "serial": "AET-IMG-007",
+      "title": "Jaisalmer — Fort at dusk",
+      "type": "photo",
+      "badge": "Photograph",
+      "spec": "11000×7300",
+      "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&q=80",
+      "published": true,
+      "archived": false,
+      "expiry": ""
+    },
+    {
+      "serial": "AET-IMG-008",
+      "title": "Goa — Beach in late season",
+      "type": "photo",
+      "badge": "Photograph",
+      "spec": "7500×5000",
+      "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=800&q=80",
+      "published": true,
+      "archived": false,
+      "expiry": ""
+    },
+    {
+      "serial": "AET-VID-009",
+      "title": "Coorg — Coffee estate morning",
+      "type": "video",
+      "badge": "Video · 4K",
+      "spec": "4K · 01:48",
+      "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800&q=80",
+      "published": true,
+      "archived": false,
+      "expiry": ""
+    },
+    {
+      "serial": "AET-IMG-010",
+      "title": "Sikkim — Yumthang Valley",
+      "type": "photo",
+      "badge": "Photograph",
+      "spec": "9500×6300",
+      "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=800&q=80",
+      "published": true,
+      "archived": false,
+      "expiry": ""
+    },
+    {
+      "serial": "AET-IMG-011",
+      "title": "Munnar — Tea estate at sunrise",
+      "type": "photo",
+      "badge": "Photograph",
+      "spec": "12000×8000",
+      "image": "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=800&q=80",
+      "published": true,
+      "archived": false,
+      "expiry": ""
+    },
+    {
+      "serial": "AET-IMG-012",
+      "title": "Lakshadweep — Coral atoll",
+      "type": "photo",
+      "badge": "Photograph",
+      "spec": "10000×6700",
+      "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=800&q=80",
+      "published": true,
+      "archived": false,
+      "expiry": ""
+    }
   ]
 }

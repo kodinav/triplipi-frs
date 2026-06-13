@@ -1,4 +1,4 @@
-<!doctype html>
+{% import "_pagination.njk" as pg %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -29,8 +29,8 @@
     <section class="page-hero">
       <div class="page-hero-inner">
         <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Shop</span></nav>
-        <h1>License original <em>photography</em> &amp; <em>footage</em>.</h1>
-        <p class="lead">Every image and video in our archive is editor-shot or contributor-verified, available for editorial and commercial use. Browse, select, and request a custom quote — or visit our Shutterstock portfolio for instant licensing.</p>
+        <h1>{{ shop.heroTitle | safe if shop.heroTitle else 'License original <em>photography</em> &amp; <em>footage</em>.' }}</h1>
+        <p class="lead">{{ shop.heroLead | safe if shop.heroLead else 'Every image and video in our archive is editor-shot or contributor-verified, available for editorial and commercial use. Browse, select, and request a custom quote — or visit our Shutterstock portfolio for instant licensing.' }}</p>
       </div>
     </section>
 
@@ -39,13 +39,13 @@
       <div class="container-wide">
         <div class="shop-tab-switcher" data-reveal>
           <button class="shop-tab is-active" data-shop-tab="archive">
-            <div class="tab-label">Triplipi Archive</div>
-            <div class="tab-meta">Custom licensing · Quote on request</div>
+            <div class="tab-label">{{ shop.archiveTabLabel or 'Triplipi Archive' }}</div>
+            <div class="tab-meta">{{ shop.archiveTabMeta or 'Custom licensing · Quote on request' }}</div>
           </button>
-          <button class="shop-tab" data-shop-tab="shutterstock" id="shutterstock">
-            <div class="tab-label">Shutterstock Portfolio</div>
-            <div class="tab-meta">Instant licensing · Standard rates</div>
-          </button>
+          <a class="shop-tab" id="shutterstock" href="{{ shop.ssUrl or '#' }}" data-external data-provider="Shutterstock" data-url="{{ shop.ssUrl or '' }}">
+            <div class="tab-label">{{ shop.ssTabLabel or 'Shutterstock Portfolio' }}</div>
+            <div class="tab-meta">{{ shop.ssTabMeta or 'Instant licensing · Standard rates' }}</div>
+          </a>
         </div>
       </div>
     </section>
@@ -58,138 +58,23 @@
           <!-- Media grid -->
           <div>
             <div class="shop-grid">
-              <article class="shop-tile" data-serial="AET-IMG-001" data-media-type="Photograph · 12000×8000">
-                <div class="serial">001</div>
-                <span class="type-badge">Photograph</span>
-                <img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&q=80" alt="">
+{% for it in items %}
+              <article class="shop-tile" data-serial="{{ it.serial or ('AET-' + (loop.index)) }}" data-media-type="{{ (it.badge or 'Media') ~ (' · ' + it.spec if it.spec else '') }}">
+                <div class="serial">{{ ((pagination.offset if pagination else 0) + loop.index) | pad3 }}</div>
+                <span class="type-badge">{{ it.badge or ('Video · 4K' if it.type == 'video' else 'Photograph') }}</span>
+                <img src="{{ it.image }}" alt="{{ it.title | striptags }}">
                 <div class="info">
-                  <h4>Ladakh — High desert at noon</h4>
-                  <p>12000×8000 · RAW available</p>
+                  <h4>{{ it.title }}</h4>
+                  <p>{{ it.spec }}</p>
                 </div>
-                <button class="select-btn">+</button>
+                <button class="select-btn" type="button" aria-label="Add to selection">+</button>
               </article>
-
-              <article class="shop-tile" data-serial="AET-IMG-002" data-media-type="Photograph · 9000×6000">
-                <div class="serial">002</div>
-                <span class="type-badge">Photograph</span>
-                <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800&q=80" alt="">
-                <div class="info">
-                  <h4>Andaman — Reef from above</h4>
-                  <p>9000×6000 · Drone footage available</p>
-                </div>
-                <button class="select-btn">+</button>
-              </article>
-
-              <article class="shop-tile" data-serial="AET-VID-003" data-media-type="4K Video · 02:34">
-                <div class="serial">003</div>
-                <span class="type-badge">Video · 4K</span>
-                <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800&q=80" alt="">
-                <div class="info">
-                  <h4>Spiti Valley — Time-lapse, Kunzum La</h4>
-                  <p>4K · 02:34 · 24fps</p>
-                </div>
-                <button class="select-btn">+</button>
-              </article>
-
-              <article class="shop-tile" data-serial="AET-IMG-004" data-media-type="Photograph · 10000×6500">
-                <div class="serial">004</div>
-                <span class="type-badge">Photograph</span>
-                <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80" alt="">
-                <div class="info">
-                  <h4>Kerala — Houseboat at dawn</h4>
-                  <p>10000×6500</p>
-                </div>
-                <button class="select-btn">+</button>
-              </article>
-
-              <article class="shop-tile" data-serial="AET-IMG-005" data-media-type="Photograph · 8000×5300">
-                <div class="serial">005</div>
-                <span class="type-badge">Photograph</span>
-                <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80" alt="">
-                <div class="info">
-                  <h4>Meghalaya — Living root bridge</h4>
-                  <p>8000×5300</p>
-                </div>
-                <button class="select-btn">+</button>
-              </article>
-
-              <article class="shop-tile" data-serial="AET-VID-006" data-media-type="4K Video · 04:12">
-                <div class="serial">006</div>
-                <span class="type-badge">Video · 4K</span>
-                <img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=800&q=80" alt="">
-                <div class="info">
-                  <h4>Manali — River flow, Beas valley</h4>
-                  <p>4K · 04:12 · 30fps</p>
-                </div>
-                <button class="select-btn">+</button>
-              </article>
-
-              <article class="shop-tile" data-serial="AET-IMG-007" data-media-type="Photograph · 11000×7300">
-                <div class="serial">007</div>
-                <span class="type-badge">Photograph</span>
-                <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&q=80" alt="">
-                <div class="info">
-                  <h4>Jaisalmer — Fort at dusk</h4>
-                  <p>11000×7300</p>
-                </div>
-                <button class="select-btn">+</button>
-              </article>
-
-              <article class="shop-tile" data-serial="AET-IMG-008" data-media-type="Photograph · 7500×5000">
-                <div class="serial">008</div>
-                <span class="type-badge">Photograph</span>
-                <img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=800&q=80" alt="">
-                <div class="info">
-                  <h4>Goa — Beach in late season</h4>
-                  <p>7500×5000</p>
-                </div>
-                <button class="select-btn">+</button>
-              </article>
-
-              <article class="shop-tile" data-serial="AET-VID-009" data-media-type="4K Video · 01:48">
-                <div class="serial">009</div>
-                <span class="type-badge">Video · 4K</span>
-                <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800&q=80" alt="">
-                <div class="info">
-                  <h4>Coorg — Coffee estate morning</h4>
-                  <p>4K · 01:48</p>
-                </div>
-                <button class="select-btn">+</button>
-              </article>
-
-              <article class="shop-tile" data-serial="AET-IMG-010" data-media-type="Photograph · 9500×6300">
-                <div class="serial">010</div>
-                <span class="type-badge">Photograph</span>
-                <img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=800&q=80" alt="">
-                <div class="info">
-                  <h4>Sikkim — Yumthang Valley</h4>
-                  <p>9500×6300</p>
-                </div>
-                <button class="select-btn">+</button>
-              </article>
-
-              <article class="shop-tile" data-serial="AET-IMG-011" data-media-type="Photograph · 12000×8000">
-                <div class="serial">011</div>
-                <span class="type-badge">Photograph</span>
-                <img src="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=800&q=80" alt="">
-                <div class="info">
-                  <h4>Munnar — Tea estate at sunrise</h4>
-                  <p>12000×8000</p>
-                </div>
-                <button class="select-btn">+</button>
-              </article>
-
-              <article class="shop-tile" data-serial="AET-IMG-012" data-media-type="Photograph · 10000×6700">
-                <div class="serial">012</div>
-                <span class="type-badge">Photograph</span>
-                <img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=800&q=80" alt="">
-                <div class="info">
-                  <h4>Lakshadweep — Coral atoll</h4>
-                  <p>10000×6700</p>
-                </div>
-                <button class="select-btn">+</button>
-              </article>
+{% else %}
+              <p class="adm-empty" style="grid-column:1/-1;">No media has been added to the shop yet.</p>
+{% endfor %}
             </div>
+
+            {% if pagination and pagination.pages > 1 %}{{ pg.nav(pagination, baseUrl) }}{% endif %}
 
           </div>
 
@@ -200,6 +85,7 @@
               <div class="panel-meta">Selected items appear here</div>
             </div>
 
+            <div class="selection-list"></div>
 
             <div class="shop-empty">
               <div class="empty-ico">+</div>
@@ -207,17 +93,17 @@
             </div>
 
             <div style="padding: 0 var(--s-5) var(--s-5);">
-              <button class="btn btn-brand" style="width: 100%;" data-action="seek-quote">Seek a Quote <span class="arrow">→</span></button>
+              <button class="btn btn-brand" style="width: 100%;" type="button" data-action="seek-quote">Seek a Quote <span class="arrow">→</span></button>
             </div>
 
             <!-- Quote form (expands on click) -->
-            <form class="quote-form">
+            <form class="quote-form" data-quote-to="{{ shop.quoteEmail or settings.contactEmail }}">
               <h5>Tell us about the use</h5>
               <input type="text" name="name" placeholder="Your name *" required>
               <input type="email" name="email" placeholder="Email *" required>
               <input type="tel" name="phone" placeholder="Phone *" required>
               <textarea name="usage" rows="3" placeholder="Intended use (editorial, commercial, social, etc.)" style="padding: 14px var(--s-4); border: 1px solid var(--c-border); border-radius: var(--r-sm); font-family: var(--ff-text); font-size: 0.9rem; resize: vertical;"></textarea>
-              <button class="btn btn-ember" data-action="submit-quote">Send quote request <span class="arrow">→</span></button>
+              <button class="btn btn-ember" type="button" data-action="submit-quote">Send quote request <span class="arrow">→</span></button>
               <p style="font-size: var(--fs-micro); color: var(--c-text-muted); text-align: center; margin: 4px 0 0;">We respond within 24 working hours.</p>
             </form>
           </aside>
@@ -232,13 +118,13 @@
         <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--s-9); align-items: center;" data-reveal>
           <div>
             <p class="overline" style="border-color: rgba(245,239,230,0.2);">Instant Licensing</p>
-            <h2 style="color: var(--c-bone);">Need it now? Browse our <em>Shutterstock portfolio</em>.</h2>
-            <p style="margin-bottom: var(--s-5);">A curated selection of our archive is available for instant licensing on Shutterstock. Standard editorial and commercial rates apply, with extended licenses available on request.</p>
-            <a href="#" class="btn btn-brand" data-external data-provider="Shutterstock" data-url="https://www.shutterstock.com/g/Triplipi">Visit Shutterstock Portfolio <span class="arrow">→</span></a>
+            <h2 style="color: var(--c-bone);">{{ shop.ctaTitle | safe if shop.ctaTitle else 'Need it now? Browse our <em>Shutterstock portfolio</em>.' }}</h2>
+            <p style="margin-bottom: var(--s-5);">{{ shop.ctaBody | safe if shop.ctaBody else 'A curated selection of our archive is available for instant licensing on Shutterstock. Standard editorial and commercial rates apply, with extended licenses available on request.' }}</p>
+            <a href="{{ shop.ssUrl or '#' }}" class="btn btn-brand" data-external data-provider="Shutterstock" data-url="{{ shop.ssUrl or '' }}">Visit Shutterstock Portfolio <span class="arrow">→</span></a>
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3);">
-            <img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&q=80" alt="" style="aspect-ratio: 3/4; object-fit: cover; border-radius: var(--r-md);">
-            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80" alt="" style="aspect-ratio: 3/4; object-fit: cover; border-radius: var(--r-md); margin-top: var(--s-7);">
+            <img src="{{ shop.ctaImage1 or 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&q=80' }}" alt="" style="aspect-ratio: 3/4; object-fit: cover; border-radius: var(--r-md);">
+            <img src="{{ shop.ctaImage2 or 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80' }}" alt="" style="aspect-ratio: 3/4; object-fit: cover; border-radius: var(--r-md); margin-top: var(--s-7);">
           </div>
         </div>
       </div>

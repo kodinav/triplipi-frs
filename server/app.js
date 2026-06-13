@@ -32,6 +32,7 @@ const slugify = (s) => String(s || '')
   .replace(/&[a-z]+;/gi, ' ').replace(/<[^>]+>/g, '')
   .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 env.addFilter('slug', slugify);
+env.addFilter('pad3', (n) => String(n == null ? '' : n).padStart(3, '0'));
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -373,6 +374,33 @@ const SCHEMAS = [
       { name: 'slug', label: 'Slug (used to tag gallery items)', ph: 'lowercase-with-dashes, e.g. mountains' },
     ] },
 
+  /* ----- Shop: media licensing archive (FR-SHOP) ----- */
+  { key: 'shop', group: 'Shop', label: 'Shop page — headings, tabs & Shutterstock', type: 'object', path: 'shop',
+    fields: [
+      { name: 'heroTitle', label: 'Page heading (HTML, <em> = accent)', type: 'textarea', richInline: true, ph: 'e.g. License original <em>photography</em>.' },
+      { name: 'heroLead', label: 'Intro paragraph', type: 'textarea', richInline: true, ph: 'One or two sentences under the heading.' },
+      { name: 'archiveTabLabel', label: 'Archive tab — label', ph: 'e.g. Triplipi Archive' },
+      { name: 'archiveTabMeta', label: 'Archive tab — sublabel', ph: 'e.g. Custom licensing · Quote on request' },
+      { name: 'ssTabLabel', label: 'Shutterstock tab — label', ph: 'e.g. Shutterstock Portfolio' },
+      { name: 'ssTabMeta', label: 'Shutterstock tab — sublabel', ph: 'e.g. Instant licensing · Standard rates' },
+      { name: 'ssUrl', label: 'Shutterstock portfolio URL', type: 'url', ph: 'https://www.shutterstock.com/g/yourname' },
+      { name: 'ctaTitle', label: 'Bottom strip — heading (HTML)', type: 'textarea', richInline: true, ph: 'e.g. Need it now? Browse our <em>Shutterstock portfolio</em>.' },
+      { name: 'ctaBody', label: 'Bottom strip — text', type: 'textarea', richInline: true },
+      { name: 'ctaImage1', label: 'Bottom strip — image 1', type: 'image' },
+      { name: 'ctaImage2', label: 'Bottom strip — image 2', type: 'image' },
+      { name: 'quoteEmail', label: 'Send quote requests to (email)', ph: 'Leave blank to use the site contact email' },
+    ] },
+  { key: 'shopItems', group: 'Shop', label: 'Shop media (images & footage)', type: 'list', path: 'shopItems',
+    itemTitle: 'title',
+    fields: [
+      { name: 'serial', label: 'Serial / reference', ph: 'e.g. AET-IMG-001' },
+      { name: 'title', label: 'Title', ph: 'e.g. Ladakh — High desert at noon' },
+      { name: 'type', label: 'Type', type: 'select', options: [ { value: 'photo', label: 'Photograph' }, { value: 'video', label: 'Video / footage' } ] },
+      { name: 'badge', label: 'Type badge label', ph: 'e.g. Photograph  or  Video · 4K' },
+      { name: 'spec', label: 'Spec line', ph: 'e.g. 12000×8000 · RAW available' },
+      { name: 'image', label: 'Image / poster', type: 'image' },
+    ] },
+
   /* ----- Legal documents (footer Legal column + /legal pages) ----- */
   { key: 'legalDocs', label: 'Legal documents', type: 'list', path: 'legalDocs',
     itemTitle: 'navLabel',
@@ -541,6 +569,12 @@ const ADMIN_PAGES = [
     sections: [
       { key: 'page-picks', hint: 'Big title and intro at the top of the page.' },
       { key: 'picks', hint: 'The ranked rows, in order.' },
+    ] },
+  { key: 'shop', label: 'Shop', view: '/shop',
+    intro: 'The photography & footage licensing page — media tiles, Shutterstock link, and the quote form.',
+    sections: [
+      { key: 'shop', hint: 'Page headings, the two tab labels, your Shutterstock URL, the bottom strip, and where quote requests are emailed.' },
+      { key: 'shopItems', hint: 'Every licensable image/video. Each becomes a selectable tile; visitors add items and request a quote — which lands in Messages (and is emailed if SMTP is set).' },
     ] },
   { key: 'about', label: 'About', view: '/about',
     intro: 'Title and intro of the About page.',
@@ -845,7 +879,11 @@ const PAGES = {
     const doc = docs.find((d) => d.slug === slug) || docs[0];
     return { legalDocs: docs, doc };
   },
-  trip: () => ({}), shop: () => ({}), '404': () => ({}),
+  trip: () => ({}), '404': () => ({}),
+  shop: (req) => {
+    const { items, pagination } = paginate(pub(c().shopItems), req);
+    return { shop: c().shop || {}, items, pagination, baseUrl: '/shop', settings: c().settings, sponsorSlots: sponsorSlots('shop', items.length) };
+  },
   'destination-detail': (req) => {
     const all = c().destinations || [];
     const slug = (req && req.query && req.query.d) || '';

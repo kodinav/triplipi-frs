@@ -539,23 +539,45 @@
       }
     });
 
-    // Submit
+    // Submit — real POST to /submit (stored in admin Inbox + emailed if SMTP set)
     on(submitBtn, 'click', (e) => {
       e.preventDefault();
       const name = $('input[name=name]', formWrap).value.trim();
       const email = $('input[name=email]', formWrap).value.trim();
       const phone = $('input[name=phone]', formWrap).value.trim();
+      const usage = formWrap.querySelector('textarea[name=usage]') ? formWrap.querySelector('textarea[name=usage]').value.trim() : '';
       if (!name || !email || !phone) {
         showToast('Please fill all fields');
         return;
       }
-      // Simulate submit
-      showToast('Quote request sent. We\'ll respond within 24 hours.');
-      selected.clear();
-      $$('.shop-tile.is-selected', grid).forEach(t => t.classList.remove('is-selected'));
-      formWrap.classList.remove('is-open');
-      $$('input', formWrap).forEach(i => i.value = '');
-      render();
+      if (selected.size === 0) {
+        showToast('Select at least one item first');
+        return;
+      }
+      const fd = new FormData();
+      fd.append('_form', 'Shop quote request');
+      fd.append('name', name);
+      fd.append('email', email);
+      fd.append('phone', phone);
+      fd.append('usage', usage);
+      // the selected media references the visitor is asking about
+      fd.append('items', Array.from(selected.values()).map(i => i.serial + ' (' + i.type + ')').join(', '));
+      const to = formWrap.dataset.quoteTo;
+      if (to) fd.append('_to', to);
+
+      submitBtn.disabled = true;
+      fetch('/submit', { method: 'POST', body: fd, headers: { Accept: 'application/json' } })
+        .then((r) => r.json())
+        .then(() => {
+          showToast('Quote request sent. We\'ll respond within 24 hours.');
+          selected.clear();
+          $$('.shop-tile.is-selected', grid).forEach(t => t.classList.remove('is-selected'));
+          formWrap.classList.remove('is-open');
+          $$('input, textarea', formWrap).forEach(i => i.value = '');
+          render();
+        })
+        .catch(() => showToast('Could not send — please try again.'))
+        .finally(() => { submitBtn.disabled = false; });
     });
 
     render();
