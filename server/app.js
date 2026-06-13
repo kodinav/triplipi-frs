@@ -649,6 +649,9 @@ const backTo = (sectionKey, saved) =>
 /* partials.js rendered from template so header/footer are CMS-driven */
 app.get('/assets/js/partials.js', (req, res) => {
   res.type('application/javascript');
+  // CMS-driven (header/footer/nav change with content) — always revalidate so
+  // edits show immediately instead of serving a stale cached copy.
+  res.set('Cache-Control', 'no-cache, must-revalidate');
   const siteTop = (bannersByZone()['site-top'] || []).map((b) => ({
     ...b, href: b.section === 'external' || b.external ? (b.extUrl || b.href) : b.href,
   }));
