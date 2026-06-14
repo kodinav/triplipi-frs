@@ -23,7 +23,9 @@ const ROOT = path.join(__dirname, '..');
 const env = nunjucks.configure(path.join(ROOT, 'views'), {
   autoescape: true,
   express: app,
-  noCache: !PROD,          // cache templates in production
+  // Always re-read templates from disk: a git-pull deploy reflects immediately
+  // even if the Node process isn't restarted (cheap for a content site).
+  noCache: true,
 });
 app.set('view engine', 'njk');
 
