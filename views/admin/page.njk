@@ -58,10 +58,6 @@
                   <small><span class="row-num">#{{ loop.index }}</span>{% if item.featured %} · <span class="on-home">★ on homepage</span>{% endif %}{% if item.archived %} · <span class="badge-arch">archived</span>{% elif item.published == false %} · <span class="badge-arch">hidden</span>{% endif %}</small>
                 </div>
                 <div class="row-actions">
-                  <form method="post" action="/admin/section/{{ sec.schema.key }}/{{ loop.index0 }}/move">
-                    <button name="dir" value="up" {% if loop.first %}disabled{% endif %} title="Move up">↑</button>
-                    <button name="dir" value="down" {% if loop.last %}disabled{% endif %} title="Move down">↓</button>
-                  </form>
                   <a class="adm-btn sm" href="/admin/section/{{ sec.schema.key }}/{{ loop.index0 }}/edit">Edit</a>
                   <form method="post" action="/admin/section/{{ sec.schema.key }}/{{ loop.index0 }}/delete"
                         onsubmit="return confirm('Delete this item?');">
