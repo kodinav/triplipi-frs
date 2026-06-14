@@ -33,9 +33,11 @@
   content: "";
   position: absolute;
   inset: 0;
+  /* Center-aware scrim: keeps the photo cinematic but darkens enough behind
+     the centered headline/CTAs/search bar so white text always reads. */
   background:
-    linear-gradient(180deg, rgba(35, 31, 32,0.25) 0%, rgba(35, 31, 32,0.45) 50%, rgba(35, 31, 32,0.7) 100%),
-    linear-gradient(90deg, rgba(35, 31, 32,0.5) 0%, rgba(35, 31, 32,0.1) 50%, transparent 100%);
+    linear-gradient(180deg, rgba(35,31,32,0.50) 0%, rgba(35,31,32,0.44) 45%, rgba(35,31,32,0.72) 100%),
+    radial-gradient(125% 90% at 50% 42%, transparent 28%, rgba(35,31,32,0.42) 100%);
 }
 
 .hero-inner {
@@ -92,6 +94,7 @@
   letter-spacing: -0.02em;
   color: var(--c-bone);
   margin-bottom: var(--s-6);
+  text-shadow: 0 2px 28px rgba(20, 16, 16, 0.35);
 }
 .hero h1 em {
   font-style: italic;
@@ -112,9 +115,10 @@
 
 .hero p.lead {
   font-size: var(--fs-lead);
-  color: rgba(245, 239, 230, 0.85);
+  color: rgba(245, 239, 230, 0.92);
   max-width: 50ch;
   margin-bottom: var(--s-7);
+  text-shadow: 0 1px 16px rgba(20, 16, 16, 0.45);
   animation: fadeUp 1s var(--ease-cinema) 0.5s both;
 }
 
