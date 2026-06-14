@@ -158,6 +158,18 @@
       if (drawer.classList.contains('is-open')) close(); else open();
     });
 
+    // Bottom tab bar "Menu" button opens the same drawer
+    $$('[data-action="open-menu"]').forEach(btn => on(btn, 'click', () => {
+      if (drawer.classList.contains('is-open')) close(); else open();
+    }));
+
+    // Highlight the active bottom tab for the current page
+    const path = location.pathname;
+    $$('.mobile-tabbar .tab-item[data-tab]').forEach(t => {
+      const tp = t.getAttribute('data-tab');
+      if (tp === path || (tp !== '/' && path.indexOf(tp) === 0)) t.classList.add('is-active');
+    });
+
     // Sub-menu collapsibles
     $$('.mobile-nav-link[data-sub]', drawer).forEach(btn => {
       on(btn, 'click', () => {

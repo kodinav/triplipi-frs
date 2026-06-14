@@ -1,0 +1,244 @@
+/* ============================================================
+   MOBILE — dedicated mobile experience
+   ------------------------------------------------------------
+   SAFETY CONTRACT:
+   • This file is loaded LAST, after pages.css.
+   • Every visual rule lives inside `@media (max-width: 768px)`,
+     so the desktop build (>768px) is NEVER affected.
+   • The only rules outside the media query simply HIDE brand-new
+     mobile-only elements (.mobile-tabbar, .m-only) that do not
+     exist in the desktop design — so they can't change any
+     existing desktop pixel.
+   ============================================================ */
+
+/* New mobile-only elements are hidden everywhere by default;
+   the media query below switches them on for small screens. */
+.mobile-tabbar { display: none; }
+.m-only        { display: none; }
+
+
+@media (max-width: 768px) {
+
+  /* ========================================================
+     1 · TOKENS — retuned for small screens
+     ======================================================== */
+  :root {
+    /* tighter, app-like type scale */
+    --fs-h1:      clamp(2.1rem, 8.5vw, 2.9rem);
+    --fs-h2:      clamp(1.7rem, 6.6vw, 2.3rem);
+    --fs-h3:      clamp(1.4rem, 5.2vw, 1.8rem);
+    --fs-h4:      clamp(1.2rem, 4.6vw, 1.45rem);
+    --fs-display: clamp(2.6rem, 12vw, 3.6rem);
+    --fs-lead:    1.0625rem;
+
+    /* calmer vertical rhythm so the app doesn't feel sparse */
+    --pad-section-y: clamp(36px, 9vw, 56px);
+    --pad-page-x:    18px;
+
+    --tabbar-h: 62px;
+  }
+
+  /* safety net: break a too-long word only if it would overflow
+     (no forced hyphenation — keeps editorial headlines clean) */
+  h1, h2, h3, h4, .display, .hero h1, .page-hero-inner h1 {
+    overflow-wrap: break-word;
+  }
+
+  /* keep page content clear of the fixed bottom tab bar */
+  body { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px)); }
+
+
+  /* ========================================================
+     2 · HEADER — stripped back to a clean app bar
+     The bottom tab bar now owns search / menu / CTA, so the
+     top bar is just the brand.
+     ======================================================== */
+  .nav-utils .btn-brand,                 /* SHOP NOW */
+  .nav-utils .icon-btn[data-action="open-search"],
+  .menu-toggle {                         /* top hamburger */
+    display: none;
+  }
+  .header-inner { grid-template-columns: 1fr; }
+  .brand { font-size: 1.25rem; }
+  .brand-mark { width: 30px; height: 30px; }
+
+
+  /* ========================================================
+     3 · BOTTOM TAB BAR — the signature mobile pattern
+     ======================================================== */
+  .mobile-tabbar {
+    display: flex;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: var(--z-header);
+    height: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: rgba(255, 255, 255, 0.92);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    backdrop-filter: saturate(180%) blur(14px);
+    border-top: 1px solid rgba(35, 31, 32, 0.08);
+    box-shadow: 0 -6px 24px -12px rgba(35, 31, 32, 0.25);
+  }
+  .mobile-tabbar::before {              /* brand stripe accent */
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #D05527 0%, #F3A8AE 50%, #34689D 100%);
+  }
+  .tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    background: none;
+    border: 0;
+    color: var(--c-graphite);
+    font-family: var(--ff-text);
+    font-size: 0.625rem;
+    font-weight: var(--fw-semi);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    -webkit-tap-highlight-color: transparent;
+    transition: color var(--d-fast) var(--ease-out);
+  }
+  .tab-item svg { width: 23px; height: 23px; stroke-width: 1.6; }
+  .tab-item .tab-ico {
+    display: grid; place-items: center;
+    width: 26px; height: 26px;
+  }
+  .tab-item.is-active { color: var(--c-terracotta); }
+  .tab-item:active { color: var(--c-terracotta-deep); }
+
+
+  /* ========================================================
+     4 · SECTION RHYTHM — slimmer cards, less wasted space
+     ======================================================== */
+  main > section,
+  main > article { margin-inline: 10px; border-radius: 18px; }
+  main > section:first-child,
+  main > article:first-child { margin-top: calc(var(--header-h-mobile) + 10px); }
+
+  .section    { padding-block: var(--pad-section-y); }
+  .section-sm { padding-block: clamp(28px, 7vw, 44px); }
+
+  /* section heads: tighten and align left */
+  .section-head { gap: var(--s-4); margin-bottom: var(--s-6); }
+  .section-head .btn-text { font-size: 0.85rem; }
+
+
+  /* ========================================================
+     5 · HERO — full-bleed, app-style, big touch CTAs
+     ======================================================== */
+  .hero {
+    min-height: calc(100svh - var(--header-h-mobile) - 28px);
+    border-radius: 18px;
+  }
+  .hero-inner { padding: var(--s-8) var(--s-5) var(--s-9); gap: var(--s-6); }
+  .hero h1 { margin-bottom: var(--s-4); }
+  .hero p.lead { font-size: var(--fs-lead); margin-bottom: var(--s-5); }
+
+  .hero-cta { flex-direction: column; width: 100%; gap: var(--s-3); }
+  .hero-cta .btn { width: 100%; justify-content: center; padding-block: 15px; }
+
+  .hero-search-centered { width: 100%; }
+  .scroll-indicator { display: none; }
+
+
+  /* ========================================================
+     6 · CAROUSELS — swipeable rails replace desktop grids
+     ======================================================== */
+  .featured-grid,
+  .blog-strip,
+  .pkg-grid.cols-2 {
+    display: flex;
+    grid-template-columns: none;          /* override desktop grid */
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* bleed to the section edges, inset the first card */
+    margin-inline: calc(-1 * var(--pad-page-x));
+    padding: 4px var(--pad-page-x) var(--s-3);
+    scroll-padding-inline: var(--pad-page-x);
+  }
+  .featured-grid::-webkit-scrollbar,
+  .blog-strip::-webkit-scrollbar,
+  .pkg-grid.cols-2::-webkit-scrollbar { display: none; }
+
+  .featured-grid > *,
+  .blog-strip > *,
+  .pkg-grid.cols-2 > * {
+    flex: 0 0 82%;
+    max-width: 82%;
+    scroll-snap-align: start;
+  }
+  /* packages are taller/denser — give them a touch more width */
+  .pkg-grid.cols-2 > * { flex-basis: 88%; max-width: 88%; }
+
+  /* disable hover-lift transforms that feel wrong on touch */
+  .feat-card:hover,
+  .pkg-card:hover,
+  .blog-card:hover { transform: none; }
+
+
+  /* ========================================================
+     7 · STACKED SECTIONS — announcements, ask form, footer
+     ======================================================== */
+  .announce-grid { grid-template-columns: 1fr; gap: var(--s-4); }
+
+  .ask-section { gap: var(--s-7); }
+  .ask-form .form-row { grid-template-columns: 1fr; gap: var(--s-3); }
+  .ask-form .btn,
+  .ask-form button[type="submit"] { width: 100%; justify-content: center; }
+
+  .footer-cols { grid-template-columns: 1fr 1fr; gap: var(--s-6); }
+  .footer-hero h2 { font-size: clamp(1.9rem, 8vw, 2.6rem); }
+
+  /* contact: stack each channel's label / value / hint vertically */
+  .channel { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .channel .hint { font-size: var(--fs-small); }
+  .contact-form .form-grid { grid-template-columns: 1fr; }
+  .contact-form .btn,
+  .contact-form button[type="submit"] { width: 100%; justify-content: center; }
+
+  /* picks: ranked rows -> tidy stacked cards (was 80px 200px 1fr auto) */
+  .picks-row {
+    grid-template-columns: 48px 1fr;
+    grid-template-areas:
+      "rank info"
+      "thumb thumb"
+      "actions actions";
+    gap: var(--s-3) var(--s-4);
+    align-items: center;
+    padding: var(--s-5) var(--s-4);
+  }
+  .picks-row .rank    { grid-area: rank; font-size: 1.9rem; }
+  .picks-row .info    { grid-area: info; min-width: 0; }
+  .picks-row .info .name { font-size: 1.2rem; }
+  .picks-row .thumb   { grid-area: thumb; width: 100%; aspect-ratio: 16/9; border-radius: var(--r-md); overflow: hidden; }
+  .picks-row .thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .picks-row .actions { grid-area: actions; display: flex; gap: var(--s-3); }
+  .picks-row .actions .btn { flex: 1; justify-content: center; }
+  .picks-row .arrow   { display: none; }
+
+
+  /* ========================================================
+     8 · TOUCH TARGETS — comfortable hit areas
+     ======================================================== */
+  .btn { min-height: 46px; }
+  .btn-sm { min-height: 40px; }
+  .category-pills { margin-inline: calc(-1 * var(--pad-page-x)); padding-inline: var(--pad-page-x); }
+}
+
+
+/* finer phones */
+@media (max-width: 400px) {
+  .featured-grid > *,
+  .blog-strip > * { flex-basis: 86%; max-width: 86%; }
+  .footer-cols { grid-template-columns: 1fr; }
+  .tab-item { font-size: 0.5625rem; }
+}

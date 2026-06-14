@@ -129,6 +129,30 @@
           <a href="/legal">Terms</a>
         </div>
       </nav>
+
+      <!-- App-style bottom tab bar (mobile only; hidden ≥769px via mobile.css) -->
+      <nav class="mobile-tabbar" aria-label="Quick navigation">
+        <a class="tab-item" href="/" data-tab="/">
+          <span class="tab-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg></span>
+          <span>Home</span>
+        </a>
+        <a class="tab-item" href="/destinations" data-tab="/destinations">
+          <span class="tab-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="11" r="8"/><path d="m9.5 13.5 1.2-3.8 3.8-1.2-1.2 3.8z"/></svg></span>
+          <span>Explore</span>
+        </a>
+        <a class="tab-item" href="/packages" data-tab="/packages">
+          <span class="tab-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z"/><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9"/></svg></span>
+          <span>Packages</span>
+        </a>
+        <button class="tab-item" type="button" data-action="open-search">
+          <span class="tab-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
+          <span>Search</span>
+        </button>
+        <button class="tab-item" type="button" data-action="open-menu" aria-label="Open menu">
+          <span class="tab-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>
+          <span>Menu</span>
+        </button>
+      </nav>
     `,
 
     // ====== FOOTER ======
