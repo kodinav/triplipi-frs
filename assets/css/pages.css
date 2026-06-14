@@ -167,7 +167,7 @@
   box-shadow: var(--sh-float);
   padding: 8px;
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: 1fr auto;
   gap: 0;
   align-items: center;
   animation: fadeUp 1s var(--ease-cinema) 1.1s both;
