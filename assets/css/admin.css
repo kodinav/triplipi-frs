@@ -385,6 +385,18 @@ body.login-page { display: grid; place-items: center; }
 .adm-toppages li { display:flex; justify-content:space-between; font-size:0.86rem; border-bottom:1px solid var(--line); padding-bottom:5px; }
 .adm-toppages .path { color:#5a514e; } .adm-toppages .views { font-weight:700; color:var(--blue-deep); }
 
+/* content overview table */
+.adm-content-overview { background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px 20px; margin-bottom:24px; }
+.adm-content-overview h3 { font-size:1rem; margin-bottom:12px; display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; }
+.adm-content-overview .co-totals { font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--blue); font-weight:700; }
+.adm-content-table { width:100%; border-collapse:collapse; font-size:0.86rem; }
+.adm-content-table th { text-align:left; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; color:#8a807c; font-weight:700; padding:0 8px 8px; border-bottom:1px solid var(--line); }
+.adm-content-table th:not(:first-child), .adm-content-table td:not(:first-child) { text-align:center; }
+.adm-content-table td { padding:7px 8px; border-bottom:1px solid var(--line); }
+.adm-content-table tr:last-child td { border-bottom:0; }
+.adm-content-table .co-label { font-weight:600; color:var(--ink); }
+.adm-content-table .co-live { font-weight:700; color:#256225; }
+
 /* item status fieldset + list badges */
 .adm-status { border:1px solid var(--line); border-radius:12px; padding:14px 16px; display:grid; gap:10px; }
 .adm-status legend { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--blue); padding:0 6px; }

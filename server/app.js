@@ -756,6 +756,35 @@ function isVisible(item) {
 }
 const pub = (arr) => (arr || []).filter(isVisible);
 
+/* Content status overview for the admin dashboard (FR-OTHER-010):
+   per-collection counts of live / archived / hidden / scheduled items. */
+function contentStats() {
+  const d = c();
+  const collections = [
+    ['Destinations', d.destinations],
+    ['Packages', d.packages],
+    ['Blog posts', d.blog && d.blog.posts],
+    ['Announcements', d.announcements],
+    ['Gallery', d.galleryItems],
+    ['Our Picks', d.picks],
+    ['Shop media', d.shopItems],
+    ['Promo banners', d.banners],
+    ['Custom pages', d.customPages],
+  ];
+  const totals = { total: 0, live: 0, archived: 0, hidden: 0, scheduled: 0 };
+  const rows = collections.map(([label, raw]) => {
+    const arr = raw || [];
+    const archived = arr.filter((x) => x && x.archived === true).length;
+    const hidden = arr.filter((x) => x && x.archived !== true && x.published === false).length;
+    const scheduled = arr.filter((x) => x && x.expiry).length;
+    const live = arr.filter(isVisible).length;
+    totals.total += arr.length; totals.live += live;
+    totals.archived += archived; totals.hidden += hidden; totals.scheduled += scheduled;
+    return { label, total: arr.length, live, archived, hidden, scheduled };
+  });
+  return { rows, totals };
+}
+
 /* Resolve an announcement's destination link from its section + target
    (FR-HOME-013B/C). Returns the list with each item's `href` set. */
 function resolveAnnouncements(list) {
@@ -1236,6 +1265,7 @@ app.get('/admin', requireAuth, (req, res) =>
   res.render('admin/dashboard.njk', {
     ...adminCtx(null), saved: req.query.saved,
     stats: analyticsSummary(),
+    content: contentStats(),
     inboxCount: readSubmissions().filter((s) => !s.read).length,
   }));
 

@@ -26,6 +26,29 @@
   {% endif %}
   {% endif %}
 
+  {% if content %}
+  <div class="adm-content-overview">
+    <h3>Content overview
+      <span class="co-totals">{{ content.totals.live }} live · {{ content.totals.archived }} archived · {{ content.totals.hidden }} hidden · {{ content.totals.scheduled }} scheduled</span>
+    </h3>
+    <table class="adm-content-table">
+      <thead><tr><th>Collection</th><th>Total</th><th>Live</th><th>Archived</th><th>Hidden</th><th>Scheduled</th></tr></thead>
+      <tbody>
+        {% for r in content.rows %}
+        <tr>
+          <td class="co-label">{{ r.label }}</td>
+          <td>{{ r.total }}</td>
+          <td><span class="co-live">{{ r.live }}</span></td>
+          <td>{{ r.archived if r.archived else '—' }}</td>
+          <td>{{ r.hidden if r.hidden else '—' }}</td>
+          <td>{{ r.scheduled if r.scheduled else '—' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+
   <h2 class="adm-group-title">Pages</h2>
   <div class="adm-cards">
     {% for p in pages %}
