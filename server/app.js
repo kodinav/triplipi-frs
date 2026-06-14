@@ -1356,6 +1356,21 @@ app.post('/admin/section/:key/save', requireAuth, upload.any(), (req, res) => {
   store.set(schema.path, items);
   res.redirect(backTo(schema.key, true));
 });
+/* Drag-to-reorder: body.order is the new sequence of the items' current
+   indices (a permutation of 0..n-1). Rebuilds the array in that order. */
+app.post('/admin/section/:key/reorder', requireAuth, (req, res) => {
+  const schema = schemaByKey[req.params.key];
+  if (!schema) return res.status(404).json({ ok: false });
+  const items = store.get(schema.path) || [];
+  const order = String(req.body.order || '')
+    .split(',').map((n) => parseInt(n, 10)).filter((n) => !Number.isNaN(n));
+  const valid = order.length === items.length
+    && new Set(order).size === items.length
+    && order.every((i) => i >= 0 && i < items.length);
+  if (!valid) return res.status(400).json({ ok: false, error: 'bad order' });
+  store.set(schema.path, order.map((i) => items[i]));
+  res.json({ ok: true });
+});
 app.post('/admin/section/:key/:idx/delete', requireAuth, (req, res) => {
   const schema = schemaByKey[req.params.key];
   const items = store.get(schema.path) || [];

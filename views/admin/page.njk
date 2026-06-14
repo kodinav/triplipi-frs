@@ -48,13 +48,14 @@
             <button class="adm-btn primary" type="submit">Save</button>
           </form>
         {% else %}
-          <div class="adm-list inline">
+          <div class="adm-list inline" data-sortable data-key="{{ sec.schema.key }}">
             {% for item in sec.value %}
-              <div class="adm-row">
+              <div class="adm-row" data-idx="{{ loop.index0 }}" draggable="true">
+                <span class="drag-handle" title="Drag to reorder" aria-hidden="true">⠿</span>
                 {% if item.image %}<img loading="lazy" class="thumb" src="{{ item.image }}" alt="">{% endif %}
                 <div class="title">
                   <strong>{{ item[sec.schema.itemTitle] | striptags | truncate(60) | safe }}</strong>
-                  <small>#{{ loop.index }}{% if item.featured %} · <span class="on-home">★ on homepage</span>{% endif %}{% if item.archived %} · <span class="badge-arch">archived</span>{% elif item.published == false %} · <span class="badge-arch">hidden</span>{% endif %}</small>
+                  <small><span class="row-num">#{{ loop.index }}</span>{% if item.featured %} · <span class="on-home">★ on homepage</span>{% endif %}{% if item.archived %} · <span class="badge-arch">archived</span>{% elif item.published == false %} · <span class="badge-arch">hidden</span>{% endif %}</small>
                 </div>
                 <div class="row-actions">
                   <form method="post" action="/admin/section/{{ sec.schema.key }}/{{ loop.index0 }}/move">

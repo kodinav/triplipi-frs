@@ -2,6 +2,86 @@
 (function () {
   'use strict';
 
+  /* ---------- drag-to-reorder list items (slide anywhere) ---------- */
+  document.querySelectorAll('[data-sortable]').forEach((list) => {
+    const key = list.dataset.key;
+    let dragEl = null;
+
+    const rowAfter = (y) => {
+      const rows = Array.from(list.querySelectorAll('.adm-row:not(.dragging)'));
+      for (const r of rows) {
+        const box = r.getBoundingClientRect();
+        if (y < box.top + box.height / 2) return r;
+      }
+      return null;
+    };
+
+    // After a reorder: renumber rows and re-point each row's action URLs so
+    // Edit/Delete/▲▼ still target the right item without a page reload.
+    const reindex = () => {
+      const rows = Array.from(list.querySelectorAll('.adm-row'));
+      rows.forEach((row, i) => {
+        row.dataset.idx = i;
+        const num = row.querySelector('.row-num');
+        if (num) num.textContent = '#' + (i + 1);
+        const mv = row.querySelector('.row-actions form[action*="/move"]');
+        if (mv) {
+          mv.setAttribute('action', '/admin/section/' + key + '/' + i + '/move');
+          const up = mv.querySelector('button[value="up"]');
+          const down = mv.querySelector('button[value="down"]');
+          if (up) up.disabled = i === 0;
+          if (down) down.disabled = i === rows.length - 1;
+        }
+        const ed = row.querySelector('a[href*="/edit"]');
+        if (ed) ed.setAttribute('href', '/admin/section/' + key + '/' + i + '/edit');
+        const del = row.querySelector('form[action*="/delete"]');
+        if (del) del.setAttribute('action', '/admin/section/' + key + '/' + i + '/delete');
+      });
+    };
+
+    const persist = () => {
+      const order = Array.from(list.querySelectorAll('.adm-row'))
+        .map((r) => r.dataset.idx).join(',');
+      list.classList.add('is-saving');
+      fetch('/admin/section/' + key + '/reorder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'order=' + encodeURIComponent(order),
+      }).then((r) => {
+        if (!r.ok) throw new Error('reorder failed');
+        reindex();
+      }).catch(() => window.location.reload())
+        .finally(() => list.classList.remove('is-saving'));
+    };
+
+    list.addEventListener('dragstart', (e) => {
+      const row = e.target.closest('.adm-row');
+      if (!row || !list.contains(row)) return;
+      if (e.target.closest('.row-actions')) { e.preventDefault(); return; } // buttons aren't drag-grips
+      dragEl = row;
+      row.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      try { e.dataTransfer.setData('text/plain', row.dataset.idx); } catch (_) { /* noop */ }
+    });
+
+    list.addEventListener('dragover', (e) => {
+      if (!dragEl) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      const after = rowAfter(e.clientY);
+      const addBtn = list.querySelector('a.adm-btn.primary');
+      if (after == null) list.insertBefore(dragEl, addBtn);
+      else if (after !== dragEl) list.insertBefore(dragEl, after);
+    });
+
+    list.addEventListener('drop', (e) => { e.preventDefault(); persist(); });
+
+    list.addEventListener('dragend', () => {
+      if (dragEl) dragEl.classList.remove('dragging');
+      dragEl = null;
+    });
+  });
+
   /* ---------- multiselect dropdowns: live feedback + outside-click close ---------- */
   document.querySelectorAll('.adm-dd').forEach((dd) => {
     const summary = dd.querySelector('summary');
