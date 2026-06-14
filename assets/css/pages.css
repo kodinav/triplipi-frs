@@ -217,12 +217,13 @@
   font-weight: var(--fw-medium);
 }
 .hero-search .btn {
-  padding: 14px 24px;
+  padding: 0;
   width: 56px;
   height: 56px;
   border-radius: 50%;
   flex-shrink: 0;
 }
+.hero-search .btn svg { width: 26px; height: 26px; }
 
 @media (max-width: 1024px) {
   .hero-inner { grid-template-columns: 1fr; gap: var(--s-9); padding-bottom: var(--s-12); }
