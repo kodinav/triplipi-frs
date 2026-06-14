@@ -51,7 +51,19 @@
         "href": "/contact",
         "mega": "none"
       }
-    ]
+    ],
+    "megaMenus": {
+      "destHeadLabel": "View all destinations",
+      "destHeadHref": "/destinations",
+      "destAllLabel": "View all categories",
+      "destAllHref": "/destinations",
+      "tripHeadLabel": "Start the 7-step planner",
+      "tripHeadHref": "/trip",
+      "tripAllLabel": "View All Categories",
+      "tripAllHref": "/destinations",
+      "picksHeadLabel": "View all picks",
+      "picksHeadHref": "/picks"
+    }
   },
   "home": {
     "hero": {

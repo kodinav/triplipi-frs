@@ -55,13 +55,13 @@
           <div class="mega-cats-head">
             <div class="mega-title"><em>Explore</em> by category</div>
             <div class="mega-tag">Every place is editor- or contributor-verified. Pick a category, or browse the full index.</div>
-            <a class="btn-text" href="/destinations">View all destinations <span class="arrow">→</span></a>
+            <a class="btn-text" href="{{ settings.megaMenus.destHeadHref or '/destinations' }}">{{ settings.megaMenus.destHeadLabel or 'View all destinations' }} <span class="arrow">→</span></a>
           </div>
           <div class="mega-cat-grid">
             {% for cat in navCategories %}
             <a href="/destinations?cat={{ cat.slug }}"><span class="cat-name">{{ cat.label }}</span><span class="cat-count">{{ cat.count }}</span></a>
             {% endfor %}
-            <a class="mega-cat-all" href="/destinations">View all categories <span class="arrow">→</span></a>
+            <a class="mega-cat-all" href="{{ settings.megaMenus.destAllHref or '/destinations' }}">{{ settings.megaMenus.destAllLabel or 'View all categories' }} <span class="arrow">→</span></a>
           </div>
         </div>
       </div>
@@ -72,13 +72,13 @@
           <div class="mega-cats-head">
             <div class="mega-title"><em>Plan</em> a trip — pick a category</div>
             <div class="mega-tag">Choose a category to browse its destinations, then continue to verified packages.</div>
-            <a class="btn-text" href="/trip">Start the 7-step planner <span class="arrow">→</span></a>
+            <a class="btn-text" href="{{ settings.megaMenus.tripHeadHref or '/trip' }}">{{ settings.megaMenus.tripHeadLabel or 'Start the 7-step planner' }} <span class="arrow">→</span></a>
           </div>
           <div class="mega-cat-grid">
             {% for cat in navCategories %}
             <a href="/destinations?cat={{ cat.slug }}"><span class="cat-name">{{ cat.label }}</span><span class="cat-count">{{ cat.count }}</span></a>
             {% endfor %}
-            <a class="mega-cat-all" href="/destinations">View All Categories <span class="arrow">→</span></a>
+            <a class="mega-cat-all" href="{{ settings.megaMenus.tripAllHref or '/destinations' }}">{{ settings.megaMenus.tripAllLabel or 'View All Categories' }} <span class="arrow">→</span></a>
           </div>
         </div>
       </div>
@@ -89,7 +89,7 @@
           <div class="mega-cats-head">
             <div class="mega-title">Our <em>most cherished</em> places</div>
             <div class="mega-tag">Hand-curated lists — the places we'd send our closest friends, ranked and reasoned.</div>
-            <a class="btn-text" href="/picks">View all picks <span class="arrow">→</span></a>
+            <a class="btn-text" href="{{ settings.megaMenus.picksHeadHref or '/picks' }}">{{ settings.megaMenus.picksHeadLabel or 'View all picks' }} <span class="arrow">→</span></a>
           </div>
           <div class="mega-picks-list">
             {% for l in pickLists %}

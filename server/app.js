@@ -174,6 +174,19 @@ const SCHEMAS = [
         { value: 'picks', label: 'Opens the Our Picks dropdown' },
       ] },
     ] },
+  { key: 'megaMenus', group: 'Navbar', label: 'Dropdown menu links (“View all …”)', type: 'object', path: 'settings.megaMenus',
+    fields: [
+      { name: 'destHeadLabel', label: 'Destination Guide — top link label', ph: 'View all destinations' },
+      { name: 'destHeadHref', label: 'Destination Guide — top link', type: 'url', ph: '/destinations' },
+      { name: 'destAllLabel', label: 'Destination Guide — bottom “View all categories” label', ph: 'View all categories' },
+      { name: 'destAllHref', label: 'Destination Guide — bottom “View all categories” link', type: 'url', ph: '/destinations' },
+      { name: 'tripHeadLabel', label: 'Go For A Trip — top link label', ph: 'Start the 7-step planner' },
+      { name: 'tripHeadHref', label: 'Go For A Trip — top link', type: 'url', ph: '/trip' },
+      { name: 'tripAllLabel', label: 'Go For A Trip — bottom “View all categories” label', ph: 'View All Categories' },
+      { name: 'tripAllHref', label: 'Go For A Trip — bottom “View all categories” link', type: 'url', ph: '/destinations' },
+      { name: 'picksHeadLabel', label: 'Our Picks — top link label', ph: 'View all picks' },
+      { name: 'picksHeadHref', label: 'Our Picks — top link', type: 'url', ph: '/picks' },
+    ] },
 
   /* ----- Homepage ----- */
   { key: 'hero', group: 'Homepage', label: 'Hero banner', type: 'object', path: 'home.hero',
@@ -679,6 +692,7 @@ const ADMIN_PAGES = [
     intro: 'The links in the header navigation bar. Drag the handle to reorder, edit a label or link, or add a new one. A link can optionally open one of the built-in dropdown menus.',
     sections: [
       { key: 'nav', hint: 'Each header link: its label, where it points, and (optionally) which dropdown it opens. Drag ⠿ to reorder; “+ Add item” for a new link.' },
+      { key: 'megaMenus', hint: 'The “View all …” links inside the dropdown menus — their text and where they go.' },
     ] },
   { key: 'site', label: 'Site Settings', view: '/', isSettings: true,
     intro: 'Brand, header button, footer and admin security.',
