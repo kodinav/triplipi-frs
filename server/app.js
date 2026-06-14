@@ -162,11 +162,17 @@ const SCHEMAS = [
       { name: 'metaDescription', label: 'Default search-engine description', type: 'textarea', ph: 'One or two sentences describing the site, used when a page has none.' },
       { name: 'ogImage', label: 'Default social-share image', type: 'image', ph: 'A wide image shown when the site is shared on social media.' },
     ] },
-  { key: 'nav', group: 'Global', label: 'Header navigation links', type: 'list', path: 'settings.navLinks',
+  { key: 'nav', group: 'Navbar', label: 'Header navigation links', type: 'list', path: 'settings.navLinks',
     itemTitle: 'label',
     fields: [
-      { name: 'label', label: 'Label', ph: 'e.g. Packages' },
-      { name: 'href', label: 'Link', type: 'url', ph: 'e.g. packages.html or https://…' },
+      { name: 'label', label: 'Label', ph: 'e.g. Gallery' },
+      { name: 'href', label: 'Link', type: 'url', ph: 'e.g. /gallery or https://…' },
+      { name: 'mega', label: 'Dropdown menu', type: 'select', options: [
+        { value: 'none', label: 'No dropdown — plain link' },
+        { value: 'destinations', label: 'Opens the Destination categories dropdown' },
+        { value: 'trip', label: 'Opens the Go For A Trip dropdown' },
+        { value: 'picks', label: 'Opens the Our Picks dropdown' },
+      ] },
     ] },
 
   /* ----- Homepage ----- */
@@ -669,11 +675,15 @@ const ADMIN_PAGES = [
     sections: [
       { key: 'customPages', hint: 'Each page has a heading, intro, optional hero image and a full rich-text body. “Show in footer” adds it to the footer Company column.' },
     ] },
+  { key: 'navbar', label: 'Navbar', view: '/', isSettings: true,
+    intro: 'The links in the header navigation bar. Drag the handle to reorder, edit a label or link, or add a new one. A link can optionally open one of the built-in dropdown menus.',
+    sections: [
+      { key: 'nav', hint: 'Each header link: its label, where it points, and (optionally) which dropdown it opens. Drag ⠿ to reorder; “+ Add item” for a new link.' },
+    ] },
   { key: 'site', label: 'Site Settings', view: '/', isSettings: true,
-    intro: 'Brand, header navigation, footer and admin security.',
+    intro: 'Brand, header button, footer and admin security.',
     sections: [
       { key: 'settings', hint: 'Brand name, header button, contact email, copyright.' },
-      { key: 'nav', hint: 'The links in the header bar (and their order).' },
     ] },
 ];
 const adminPageByKey = Object.fromEntries(ADMIN_PAGES.map((p) => [p.key, p]));

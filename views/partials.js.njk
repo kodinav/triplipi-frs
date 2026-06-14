@@ -27,15 +27,11 @@
           </a>
 
           <nav class="nav-primary" aria-label="Primary">
-            <button class="nav-link" data-mega="mega-destinations" data-path="/destinations" aria-haspopup="true" aria-expanded="false">Destination Guide</button>
-            <button class="nav-link" data-mega="mega-trip" data-path="/trip" aria-haspopup="true" aria-expanded="false">Go For A Trip</button>
-            <a class="nav-link" href="/packages">Check Packages</a>
-            <button class="nav-link" data-mega="mega-picks" data-path="/picks" aria-haspopup="true" aria-expanded="false">Our Picks</button>
-            <a class="nav-link" href="/gallery">Gallery</a>
-            <a class="nav-link" href="/about">About</a>
-            <a class="nav-link" href="/announcements">Announcements</a>
-            <a class="nav-link" href="/blog">Blog</a>
-            <a class="nav-link" href="/contact">Contact</a>
+            {% for link in settings.navLinks %}{% if link.mega and link.mega != 'none' %}
+            <button class="nav-link" data-mega="mega-{{ link.mega }}" data-path="{{ link.href }}" aria-haspopup="true" aria-expanded="false">{{ link.label }}</button>
+            {% else %}
+            <a class="nav-link" href="{{ link.href }}">{{ link.label }}</a>
+            {% endif %}{% endfor %}
           </nav>
 
           <div class="nav-utils">
@@ -105,40 +101,26 @@
         </div>
       </div>
 
-      <!-- Mobile drawer -->
+      <!-- Mobile drawer (same links as the header bar) -->
       <nav class="mobile-nav" aria-label="Mobile navigation">
         <div class="mobile-nav-inner">
-          <button class="mobile-nav-link" data-sub="" aria-expanded="false">
-            Destination Guide <span class="arrow">+</span>
-          </button>
+          {% for link in settings.navLinks %}
+          {% if link.mega == 'destinations' or link.mega == 'trip' %}
+          <button class="mobile-nav-link" data-sub="" aria-expanded="false">{{ link.label }} <span class="arrow">+</span></button>
           <div class="mobile-nav-sub">
             {% for cat in navCategories %}<a href="/destinations?cat={{ cat.slug }}">{{ cat.label }}</a>
-            {% endfor %}<a href="/destinations">View all destinations →</a>
+            {% endfor %}<a href="{{ link.href }}">View All Categories →</a>
           </div>
-
-          <button class="mobile-nav-link" data-sub="" aria-expanded="false">
-            Go For A Trip <span class="arrow">+</span>
-          </button>
-          <div class="mobile-nav-sub">
-            {% for cat in navCategories %}<a href="/destinations?cat={{ cat.slug }}">{{ cat.label }}</a>
-            {% endfor %}<a href="/destinations">View All Categories →</a>
-          </div>
-
-          <a href="/packages" class="mobile-nav-link">Check Packages <span class="arrow">→</span></a>
-
-          <button class="mobile-nav-link" data-sub="" aria-expanded="false">
-            Our Picks <span class="arrow">+</span>
-          </button>
+          {% elif link.mega == 'picks' %}
+          <button class="mobile-nav-link" data-sub="" aria-expanded="false">{{ link.label }} <span class="arrow">+</span></button>
           <div class="mobile-nav-sub">
             {% for l in pickLists %}<a href="/picks?list={{ l.key }}">{{ l.label }}</a>
-            {% endfor %}<a href="/picks">View all picks →</a>
+            {% endfor %}<a href="{{ link.href }}">View all picks →</a>
           </div>
-
-          <a href="/gallery" class="mobile-nav-link">Gallery <span class="arrow">→</span></a>
-          <a href="/about" class="mobile-nav-link">About <span class="arrow">→</span></a>
-          <a href="/announcements" class="mobile-nav-link">Announcements <span class="arrow">→</span></a>
-          <a href="/blog" class="mobile-nav-link">Blog <span class="arrow">→</span></a>
-          <a href="/contact" class="mobile-nav-link">Contact <span class="arrow">→</span></a>
+          {% else %}
+          <a href="{{ link.href }}" class="mobile-nav-link">{{ link.label }} <span class="arrow">→</span></a>
+          {% endif %}
+          {% endfor %}
         </div>
         <div class="mobile-nav-footer">
           <span>{{ settings.copyright }}</span>
