@@ -152,7 +152,8 @@
      ======================================================== */
   .featured-grid,
   .blog-strip,
-  .pkg-grid.cols-2 {
+  .pkg-grid.cols-2,
+  .announce-grid {
     display: flex;
     grid-template-columns: none;          /* override desktop grid */
     gap: 14px;
@@ -167,17 +168,21 @@
   }
   .featured-grid::-webkit-scrollbar,
   .blog-strip::-webkit-scrollbar,
-  .pkg-grid.cols-2::-webkit-scrollbar { display: none; }
+  .pkg-grid.cols-2::-webkit-scrollbar,
+  .announce-grid::-webkit-scrollbar { display: none; }
 
   .featured-grid > *,
   .blog-strip > *,
-  .pkg-grid.cols-2 > * {
+  .pkg-grid.cols-2 > *,
+  .announce-grid > * {
     flex: 0 0 82%;
     max-width: 82%;
     scroll-snap-align: start;
   }
   /* packages are taller/denser — give them a touch more width */
   .pkg-grid.cols-2 > * { flex-basis: 88%; max-width: 88%; }
+  /* announcement cards: even height across the rail */
+  .announce-grid > * { flex-basis: 80%; max-width: 80%; height: auto; }
 
   /* disable hover-lift transforms that feel wrong on touch */
   .feat-card:hover,
@@ -188,10 +193,16 @@
   /* ========================================================
      7 · STACKED SECTIONS — announcements, ask form, footer
      ======================================================== */
-  .announce-grid { grid-template-columns: 1fr; gap: var(--s-4); }
-
-  .ask-section { gap: var(--s-7); }
+  /* ask for guidance: thinner panel padding so the form gets real width
+     (was 48px all round -> ~274px usable); full-width controls */
+  .ask-section { padding: var(--s-6); gap: var(--s-6); border-radius: var(--r-xl); }
+  .ask-section h2 { margin-bottom: var(--s-3); }
+  .ask-section .actions { margin-top: var(--s-5); }
+  .ask-section .actions .btn { width: 100%; justify-content: center; }
+  .ask-form { gap: var(--s-3); }
   .ask-form .form-row { grid-template-columns: 1fr; gap: var(--s-3); }
+  .ask-form input,
+  .ask-form textarea { font-size: 0.95rem; text-overflow: ellipsis; }
   .ask-form .btn,
   .ask-form button[type="submit"] { width: 100%; justify-content: center; }
 
