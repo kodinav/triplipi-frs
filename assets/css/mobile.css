@@ -195,8 +195,25 @@
   .ask-form .btn,
   .ask-form button[type="submit"] { width: 100%; justify-content: center; }
 
-  .footer-cols { grid-template-columns: 1fr 1fr; gap: var(--s-6); }
-  .footer-hero h2 { font-size: clamp(1.9rem, 8vw, 2.6rem); }
+  /* footer: compact 2-up link columns, brand full-width, tighter rhythm
+     (was collapsing to one ~1930px-tall single column) */
+  .site-footer { padding-block: var(--s-9) var(--s-7); }
+  .footer-hero { padding-bottom: var(--s-7); margin-bottom: var(--s-7); }
+  .footer-hero h2 { font-size: clamp(1.8rem, 7.5vw, 2.4rem); max-width: none; }
+  .footer-hero p { font-size: var(--fs-body); }
+  .footer-hero .btn { width: 100%; justify-content: center; margin-top: var(--s-5); }
+  .footer-cols {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-7) var(--s-5);
+    padding-bottom: var(--s-7);
+  }
+  .footer-brand-block { grid-column: 1 / -1; }
+  .footer-brand-block p { max-width: 48ch; }
+  .footer-col h6 { margin-bottom: var(--s-3); }
+  .footer-col ul { gap: var(--s-2); }
+  .footer-col a { font-size: 0.875rem; }
+  .footer-bottom { gap: var(--s-3); }
+  .footer-bottom ul { gap: var(--s-4) var(--s-5); }
 
   /* contact: stack each channel's label / value / hint vertically */
   .channel { flex-direction: column; align-items: flex-start; gap: 4px; }
@@ -239,6 +256,5 @@
 @media (max-width: 400px) {
   .featured-grid > *,
   .blog-strip > * { flex-basis: 86%; max-width: 86%; }
-  .footer-cols { grid-template-columns: 1fr; }
   .tab-item { font-size: 0.5625rem; }
 }
