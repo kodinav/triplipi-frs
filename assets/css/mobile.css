@@ -253,6 +253,27 @@
   .picks-row .actions .btn { flex: 1; justify-content: center; }
   .picks-row .arrow   { display: none; }
 
+  /* home highlights: labels were tiny (8px) -> legible on mobile */
+  .float-card-label { padding: var(--s-4); }
+  .float-card-label .day   { font-size: 0.72rem; letter-spacing: 0.12em; }
+  .float-card-label h3     { font-size: 1.05rem; margin-bottom: 6px; }
+  .float-card-label .place { font-size: 0.72rem; }
+
+  /* shop: keep the mono meta line readable / wrapping cleanly */
+  .shop-tab .tab-meta { letter-spacing: 0.06em; }
+  /* shop "Shutterstock" CTA: inline-style 1.4fr|1fr grid -> single col
+     (inline style needs !important to override on mobile) */
+  .shop-cta { grid-template-columns: 1fr !important; gap: var(--s-6) !important; }
+
+  /* card CTAs in dense rows: never clip the label/arrow */
+  .pkg-card .pkg-foot .btn { flex-shrink: 0; white-space: nowrap; }
+  .pkg-card .pkg-foot { gap: var(--s-3); }
+
+  /* search-results page: keep the "Search" submit button from squishing,
+     and let the input shrink (min-width:0) so the row fits the pill */
+  .page-search-input .btn { flex-shrink: 0; white-space: nowrap; }
+  .page-search-input input { min-width: 0; }
+
 
   /* ========================================================
      8 · TOUCH TARGETS — comfortable hit areas
