@@ -104,27 +104,58 @@
             </div>
             {% endif %}
 
-            <div class="article-cta" data-reveal>
-              <div>
-                <h4>Ready to plan this trip?</h4>
-                <p>See verified packages for {{ dest.name }} from our partner network.</p>
-              </div>
-              <a href="/packages?d={{ dest.slug }}" class="btn btn-brand">Check Packages <span class="arrow">→</span></a>
+            {% set extSubs = [
+              {k:'extItinerary', kicker:'Suggested Itinerary', h:'A <em>day-by-day</em> plan.'},
+              {k:'extFood', kicker:'Food & Cuisine', h:'What to <em>eat</em>.'},
+              {k:'extCulture', kicker:'Culture & Festivals', h:'People, <em>customs</em> & festivals.'},
+              {k:'extBudget', kicker:'Costs & Budget', h:'What it <em>costs</em>.'},
+              {k:'extFaq', kicker:'Traveller FAQ', h:'Questions, <em>answered</em>.'}
+            ] %}
+            {% set hasExtended = dest.extItinerary or dest.extFood or dest.extCulture or dest.extBudget or dest.extFaq %}
+
+            <div class="dest-foot-cta" data-reveal>
+              {% if hasExtended %}
+              <button type="button" class="btn btn-outline btn-lg" data-action="toggle-more" aria-expanded="false" aria-controls="dest-extended">
+                <span class="rm-label">Read More About Destination</span>
+              </button>
+              {% else %}
+              <a href="/packages?d={{ dest.slug }}" class="btn btn-outline btn-lg">Read More About Destination</a>
+              {% endif %}
+              {% if affiliate %}
+              <a href="{{ affiliate.url }}" class="btn btn-brand btn-lg" data-external data-provider="{{ affiliate.provider }}" data-url="{{ affiliate.url }}">Go For A Trip <span class="arrow">→</span></a>
+              {% else %}
+              <a href="/trip?d={{ dest.slug }}" class="btn btn-brand btn-lg">Go For A Trip <span class="arrow">→</span></a>
+              {% endif %}
             </div>
 
-            <div class="sticky-cta">
-              <div class="info">
-                <span class="label">Ready when you are</span>
-                <span class="name">{{ dest.name }} trip planning</span>
+            {# Extended guide — extra in-depth content, revealed below by "Read More About Destination" #}
+            {% if hasExtended %}
+            <div class="dest-extended" id="dest-extended" data-dest-more>
+              <div class="dest-section dest-extended-head" data-reveal>
+                <p class="kicker">The Complete Guide</p>
+                <h2>{{ dest.name }} in <em>more depth</em>.</h2>
+                <p>Everything above, expanded — a deeper guide for planning the trip in detail.</p>
               </div>
-              <div class="actions">
-                <a href="/trip?d={{ dest.slug }}" class="btn btn-sm btn-light">Go For A Trip <span class="arrow">→</span></a>
-                <a href="/packages?d={{ dest.slug }}" class="btn btn-sm btn-brand">Packages</a>
-              </div>
+              {% for s in extSubs %}
+                {% if dest[s.k] %}
+                <div class="dest-section" data-reveal>
+                  <p class="kicker">{{ s.kicker }}</p>
+                  <h2>{{ s.h | safe }}</h2>
+                  <div class="rich-body">{{ dest[s.k] | safe }}</div>
+                </div>
+                {% endif %}
+              {% endfor %}
             </div>
+            {% endif %}
           </article>
 
           <aside class="sidebar" data-reveal="left">
+            <div class="info-card pkg-cta-card">
+              <h4>Verified packages</h4>
+              <p style="font-size: var(--fs-small); color: var(--c-text-muted); margin-bottom: var(--s-4);">Sponsored &amp; affiliate trips for {{ dest.name }}, from our partner network.</p>
+              <a href="/packages?d={{ dest.slug }}" class="btn btn-brand" style="width: 100%;">Check Packages <span class="arrow">→</span></a>
+            </div>
+
             <div class="info-card">
               <h4>Quick Facts</h4>
               <dl>

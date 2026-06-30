@@ -138,6 +138,11 @@
 }
 .nav-link[aria-expanded="true"]::before { transform: rotate(225deg); margin-top: 3px; }
 
+/* Home icon (first item in the primary nav) */
+.nav-home { display: inline-flex; align-items: center; padding-inline: 2px; }
+.nav-home svg { width: 21px; height: 21px; display: block; }
+.nav-home::after { left: 2px; right: 2px; }
+
 /* Right cluster */
 .nav-utils {
   display: flex;
@@ -345,12 +350,42 @@
 .mega-picks-list .pl-name { font-weight: var(--fw-semi); }
 .mega-picks-list .pl-meta { font-size: var(--fs-micro); color: var(--c-text-muted); text-transform: uppercase; letter-spacing: var(--ls-wide); }
 
-/* Backdrop when mega open */
+/* ---- List-style dropdown (compact menu anchored under its nav item) ---- */
+.mega.mega-list {
+  left: 0;            /* precise left is set by JS to align under the trigger */
+  right: auto;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-lift);
+  max-height: min(70vh, 560px);
+}
+.mega-list-inner { padding: var(--s-4); }
+.mega-list-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: 0 var(--s-2) var(--s-3);
+  margin-bottom: var(--s-2);
+  border-bottom: 1px solid var(--c-border);
+}
+.mega-list-title { font-weight: var(--fw-semi); font-size: 0.95rem; }
+.mega-list-all { font-size: var(--fs-micro); color: #34689D; white-space: nowrap; }
+.mega-list .mega-picks-list { gap: 2px; }
+.mega-list .mega-picks-list > a {
+  border: 0;
+  border-radius: var(--r-md);
+  padding: var(--s-3);
+}
+.mega-list .mega-picks-list > a:hover { background: var(--c-bone-soft); }
+
+/* Backdrop when mega open (transparent — just catches outside clicks) */
 .mega-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(35, 31, 32, 0.45);
-  backdrop-filter: blur(4px);
+  background: transparent;
   z-index: calc(var(--z-header) - 2);
   opacity: 0;
   visibility: hidden;

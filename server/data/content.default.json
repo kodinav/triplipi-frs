@@ -7,14 +7,9 @@
     "copyright": "© 2026 Abhinav Saxena Dev's. All rights reserved.",
     "navLinks": [
       {
-        "label": "Destination Guide",
-        "href": "/destinations",
-        "mega": "destinations"
-      },
-      {
-        "label": "Go For A Trip",
-        "href": "/trip",
-        "mega": "trip"
+        "label": "Categories",
+        "href": "/categories",
+        "mega": "none"
       },
       {
         "label": "Check Packages",
@@ -118,10 +113,37 @@
       "featured": true,
       "categories": [
         "mountains-hills",
-        "trek",
-        "hidden-gems",
-        "spiritual"
-      ]
+        "spiritual",
+        "snow",
+        "adventure",
+        "trek"
+      ],
+      "heroImage": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=1800&q=85",
+      "gallery": [
+        "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=900&q=80",
+        "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=900&q=80",
+        "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=900&q=80",
+        "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=900&q=80"
+      ],
+      "altitude": "3,800 m+ (Kaza 3,650 m)",
+      "tripLength": "7–10 days",
+      "currency": "Indian Rupee (₹)",
+      "language": "Spiti Bhoti · Hindi",
+      "difficulty": "Challenging",
+      "lead": "A cold mountain desert of whitewashed monasteries, fossil villages and rivers the colour of glacier-melt.",
+      "overview": "<p>Spiti — literally “the middle land” between India and Tibet — is a high-altitude desert valley cradled in the trans-Himalaya. Days are sharp and blue, nights bitterly clear, and the few villages clinging to its slopes are among the highest inhabited places on earth.</p><p>It is raw, remote and slow to reach, which is exactly the point. You come for thousand-year-old gompas, for the silence between two ridgelines, and for a night sky so dense with stars it feels close enough to touch.</p>",
+      "secSeason": "<p>The valley is realistically open from <strong>mid-May to mid-October</strong>, once Kunzum Pass clears of snow. June to September are the warmest, safest months. By late October the passes begin to close and the Manali route shuts for winter.</p><p>Winter Spiti (via Shimla–Kinnaur) is possible for hardy travellers — frozen, severe and beautiful, with the chance of spotting snow leopard.</p>",
+      "secReach": "<p>Two roads lead in. The <strong>Shimla–Kinnaur</strong> approach (via Reckong Peo and Nako) stays open most of the year and helps you acclimatise gradually. The <strong>Manali–Kunzum La</strong> approach is shorter and more dramatic but summer-only.</p><p>Nearest airport: Bhuntar (Kullu). Nearest railhead: Shimla or Chandigarh. Most travellers hire a shared cab or self-drive a sturdy SUV.</p>",
+      "secStay": "<p>Expect homestays and small guesthouses rather than hotels. Kaza is the main base with the most options; villages like <strong>Kibber, Langza, Komic</strong> and <strong>Demul</strong> run warm, simple homestays — the best way to meet Spiti and support its families.</p>",
+      "secTravel": "<p>There is a skeletal local bus network, but the most reliable way around is a hired vehicle with a local driver who knows the road and the altitude. Distances look short on the map but are slow on the ground.</p>",
+      "secActivities": "<ul><li>Monastery circuit — Key, Dhankar, Tabo and Komic</li><li>Stargazing and astrophotography from Langza or Kibber</li><li>Short acclimatised treks and village walks</li><li>Spotting blue sheep, ibex and (in winter) snow leopard</li><li>The world’s highest post office at Hikkim</li></ul>",
+      "secLandmarks": "<ul><li><strong>Key Monastery</strong> — the iconic hillside gompa</li><li><strong>Dhankar</strong> — a fort-monastery on a cliff edge</li><li><strong>Tabo</strong> — the 1,000-year-old “Ajanta of the Himalayas”</li><li><strong>Chandratal Lake</strong> — the crescent-moon lake near Kunzum La</li><li><strong>Langza</strong> — Buddha statue, fossils and peak views</li></ul>",
+      "secNotes": "<p>Altitude is the real challenge — build in a day or two to acclimatise and drink plenty of water. Carry cash; ATMs are scarce. Mobile coverage is limited (BSNL/Jio postpaid works best). Pack layers for sub-zero nights even in summer, and respect monastery etiquette.</p>",
+      "extItinerary": "<p>A classic 8-day Spiti loop, taking the gentler Shimla–Kinnaur road in (better for acclimatising) and exiting via Manali.</p><ul><li><strong>Day 1–2:</strong> Shimla → Sangla / Chitkul, easing up in altitude</li><li><strong>Day 3:</strong> Chitkul → Nako → Tabo — the first Spiti monasteries</li><li><strong>Day 4:</strong> Tabo → Dhankar → Pin Valley</li><li><strong>Day 5:</strong> Kaza base — Key, Kibber, Hikkim & Komic</li><li><strong>Day 6:</strong> Langza, Lalung and Demul villages</li><li><strong>Day 7:</strong> Kaza → Chandratal over Kunzum La</li><li><strong>Day 8:</strong> Chandratal → Manali via Rohtang</li></ul>",
+      "extFood": "<p>Spiti food is hearty, warming and Tibetan-influenced:</p><ul><li><strong>Thukpa</strong> — a noodle soup that fixes any cold day</li><li><strong>Momos</strong> — steamed dumplings, veg or mutton</li><li><strong>Butter tea & chhang</strong> — salted tea and a local barley brew</li><li><strong>Tsampa</strong> — roasted barley flour, the everyday staple</li><li><strong>Seabuckthorn juice</strong> — tart, vitamin-rich and grown locally</li></ul>",
+      "extCulture": "<p>Spiti is devoutly Tibetan-Buddhist, and its monasteries are living centres of community life. Walk clockwise around stupas and prayer wheels, ask before photographing monks or shrine interiors, and dress modestly inside the gompas. If your timing aligns, the <strong>Losar</strong> (Tibetan New Year) celebrations and monastery <strong>Chaam</strong> mask dances are unforgettable.</p>",
+      "extBudget": "<p>Spiti is cheap on the ground but transport-heavy.</p><ul><li><strong>Homestays:</strong> ₹800–1,500 a night, usually with meals</li><li><strong>Meals:</strong> ₹150–300 a plate</li><li><strong>The vehicle:</strong> your biggest cost — budget for fuel and a reliable driver</li><li><strong>Daily budget:</strong> roughly ₹2,000–3,500 per person, excluding the cab</li></ul>",
+      "extFaq": "<p><strong>Is Spiti safe for first-time high-altitude travellers?</strong><br>Yes — if you acclimatise gradually (enter from the Shimla side) and watch for symptoms of altitude sickness.</p><p><strong>Do I need permits?</strong><br>Indian nationals don't; foreign nationals need an Inner Line Permit for the border stretches, easily arranged en route.</p><p><strong>Are there ATMs and mobile network?</strong><br>Limited — only BSNL/Jio postpaid works around Kaza, and ATMs are unreliable, so carry cash.</p>"
     },
     {
       "slug": "ladakh",
@@ -132,10 +154,38 @@
       "tagline": "High desert",
       "featured": true,
       "categories": [
-        "popular",
         "mountains-hills",
-        "trek"
-      ]
+        "deserts",
+        "adventure",
+        "lakes",
+        "road-trips"
+      ],
+      "heroImage": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=1800&q=85",
+      "gallery": [
+        "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=900&q=80",
+        "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80",
+        "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=900&q=80",
+        "https://images.unsplash.com/photo-1502786129293-79981df4e689?w=900&q=80"
+      ],
+      "altitude": "3,500 m+ (Leh 3,500 m)",
+      "tripLength": "7–12 days",
+      "currency": "Indian Rupee (₹)",
+      "language": "Ladakhi · Hindi · English",
+      "difficulty": "Moderate–Challenging",
+      "lead": "Moonscape passes, turquoise high-altitude lakes and Tibetan-Buddhist monasteries under an enormous sky.",
+      "overview": "<p>Ladakh is a high desert plateau of the western Himalaya — bare ochre mountains, prayer-flag passes and rivers running green and grey. Leh, its capital, sits at 3,500 m and is the gateway to a region the size of a small country.</p><p>This is big-sky, big-silence travel: gompas perched on crags, road trips over some of the highest motorable passes on earth, and lakes so blue they look unreal.</p>",
+      "secSeason": "<p>The classic window is <strong>May to September</strong>, when the Manali and Srinagar roads are open and the lakes are ice-free. September and October bring golden light and thinner crowds. Winter is snowbound but magical — the season of the <strong>Chadar</strong> frozen-river trek.</p>",
+      "secReach": "<p>Fly into <strong>Leh (IXL)</strong> — simplest, but rest the first day to acclimatise. Overland, the <strong>Srinagar–Leh</strong> and <strong>Manali–Leh</strong> highways are spectacular two-day drives, open roughly June to October.</p>",
+      "secStay": "<p>Leh has everything from backpacker guesthouses to boutique hotels. For Nubra and Pangong, expect homestays and seasonal tented camps. Local guesthouses keep you closer to Ladakhi life.</p>",
+      "secTravel": "<p>Hire a cab or rent a motorcycle (a Royal Enfield is a rite of passage). Inner Line Permits are required for Nubra, Pangong and Tso Moriri — easily arranged in Leh.</p>",
+      "secActivities": "<ul><li>Road trip to Pangong Tso and Nubra over Khardung La</li><li>Monastery-hopping — Thiksey, Hemis, Diskit, Lamayuru</li><li>River rafting on the Zanskar and Indus</li><li>Double-humped camel rides on the Hunder dunes</li><li>Winter: the Chadar trek on the frozen Zanskar</li></ul>",
+      "secLandmarks": "<ul><li><strong>Pangong Tso</strong> — the colour-shifting lake on the Tibet border</li><li><strong>Nubra Valley</strong> — dunes, monasteries and the Shyok river</li><li><strong>Thiksey Monastery</strong> — a mini-Potala at dawn</li><li><strong>Khardung La</strong> — one of the world’s highest motorable passes</li><li><strong>Magnetic Hill & Sangam</strong> — the Indus–Zanskar confluence</li></ul>",
+      "secNotes": "<p>Spend 24–48 hours acclimatising in Leh before heading higher. Stay hydrated, avoid alcohol early on, and carry strong sunscreen — UV at altitude is fierce. Only postpaid SIMs work, and not everywhere.</p>",
+      "extItinerary": "<p>A well-paced 7-day Ladakh circuit from Leh, with a vital acclimatisation day up front.</p><ul><li><strong>Day 1:</strong> Arrive Leh — rest and acclimatise</li><li><strong>Day 2:</strong> Leh monasteries — Shey, Thiksey, Hemis</li><li><strong>Day 3:</strong> Leh → Nubra Valley over Khardung La</li><li><strong>Day 4:</strong> Nubra — Hunder dunes & Diskit monastery</li><li><strong>Day 5:</strong> Nubra → Pangong Tso</li><li><strong>Day 6:</strong> Pangong → Leh</li><li><strong>Day 7:</strong> Sham Valley — Magnetic Hill, Sangam, Alchi</li></ul>",
+      "extFood": "<p>Ladakhi food is simple, filling mountain fare:</p><ul><li><strong>Skyu & chutagi</strong> — pasta-and-root-vegetable stews</li><li><strong>Momos and thukpa</strong> — the Himalayan staples</li><li><strong>Apricots</strong> — fresh, dried and as jam, everywhere in season</li><li><strong>Butter tea & chhang</strong> — salted tea and barley beer</li><li><strong>Khambir</strong> — local Ladakhi bread</li></ul>",
+      "extCulture": "<p>Ladakh blends Tibetan-Buddhist and Muslim cultures. Spin prayer wheels clockwise, remove shoes and cover up in monasteries, and ask before photographing people. Time your trip with the masked <strong>Hemis Festival</strong> (summer) or the September <strong>Ladakh Festival</strong> for music, dance and polo.</p>",
+      "extBudget": "<ul><li><strong>Guesthouses:</strong> ₹1,000–2,500 a night in Leh</li><li><strong>Motorcycle rental:</strong> ₹1,200–1,800 a day for a Royal Enfield</li><li><strong>Permits:</strong> a small per-day fee for Nubra/Pangong</li><li><strong>Daily budget:</strong> ₹2,500–4,000 per person, more if you hire a private cab</li></ul>",
+      "extFaq": "<p><strong>How do I avoid altitude sickness?</strong><br>Rest fully on day one, hydrate, skip alcohol early, and ascend gradually before tackling the high passes.</p><p><strong>Which permits do I need?</strong><br>Inner Line (Indians) or Protected Area (foreigners) permits for Nubra, Pangong and Tso Moriri — arranged in minutes in Leh.</p><p><strong>Will my phone work?</strong><br>Only postpaid SIMs work in Ladakh, and coverage thins out beyond Leh.</p>"
     },
     {
       "slug": "andaman",
@@ -149,8 +199,35 @@
         "islands",
         "beach",
         "water-sports",
-        "popular"
-      ]
+        "coral-reefs",
+        "honeymoon"
+      ],
+      "heroImage": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1800&q=85",
+      "gallery": [
+        "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=900&q=80",
+        "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=900&q=80",
+        "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=900&q=80",
+        "https://images.unsplash.com/photo-1494791368093-85217fbbf8de?w=900&q=80"
+      ],
+      "altitude": "Sea level",
+      "tripLength": "5–8 days",
+      "currency": "Indian Rupee (₹)",
+      "language": "Hindi · Bengali · Tamil · English",
+      "difficulty": "Easy",
+      "lead": "White-sand beaches, glass-clear water and some of Asia’s best coral reefs in the Bay of Bengal.",
+      "overview": "<p>The Andamans are a chain of tropical islands far out in the Bay of Bengal — closer to Myanmar than mainland India. Think powder-soft beaches, mangrove creeks and warm turquoise shallows teeming with reef life.</p><p>Havelock (Swaraj Dweep) and Neil (Shaheed Dweep) are the traveller favourites, while Port Blair holds the islands’ poignant colonial history.</p>",
+      "secSeason": "<p><strong>November to April</strong> is the sweet spot — calm seas, clear visibility for diving, and dry sunny days. The monsoon (May–September) brings rough water and ferry disruptions, though it has its own green beauty.</p>",
+      "secReach": "<p>Fly into <strong>Port Blair (IXZ)</strong> from Chennai, Kolkata, Bengaluru or Delhi. From there, fast catamaran ferries reach Havelock and Neil in 1.5–2 hours. Book ferries ahead in peak season.</p>",
+      "secStay": "<p>Havelock ranges from beach huts to luxury eco-resorts (the Radhanagar end is prettiest). Neil is quieter and cheaper. Port Blair has practical city hotels for arrival and departure nights.</p>",
+      "secTravel": "<p>Ferries link the main islands; on each island, hire a scooter or auto. Government ferries are cheapest; private catamarans are faster and more comfortable.</p>",
+      "secActivities": "<ul><li>Scuba diving and snorkelling off Havelock and Neil</li><li>Sunset at Radhanagar Beach (Beach No. 7)</li><li>Sea-walking and glass-bottom boats for non-divers</li><li>Kayaking through bioluminescent mangroves</li><li>History walk at the Cellular Jail, Port Blair</li></ul>",
+      "secLandmarks": "<ul><li><strong>Radhanagar Beach</strong> — rated among Asia’s best</li><li><strong>Elephant Beach</strong> — snorkelling and water sports</li><li><strong>Natural Bridge, Neil Island</strong></li><li><strong>Cellular Jail</strong> — and its evening light-and-sound show</li><li><strong>Ross & Smith Islands</strong> — a twin-island sandbar</li></ul>",
+      "secNotes": "<p>Carry enough cash — ATMs are limited outside Port Blair. Mobile coverage is patchy (Airtel/BSNL best). Respect tribal-reserve restrictions and reef etiquette: no touching coral, reef-safe sunscreen only.</p>",
+      "extItinerary": "<p>A relaxed 6-day island-hop covering history, beaches and reefs.</p><ul><li><strong>Day 1:</strong> Port Blair — Cellular Jail & the evening light show</li><li><strong>Day 2:</strong> Ferry to Havelock — sunset at Radhanagar</li><li><strong>Day 3:</strong> Havelock — diving or snorkelling at Elephant Beach</li><li><strong>Day 4:</strong> Neil Island — Natural Bridge & Bharatpur Beach</li><li><strong>Day 5:</strong> Back to Port Blair — Ross Island</li><li><strong>Day 6:</strong> Departure</li></ul>",
+      "extFood": "<p>It's all about the sea here:</p><ul><li><strong>Grilled & curried fish</strong> — caught that morning</li><li><strong>Coconut prawn curry</strong> — a local favourite</li><li><strong>Lobster and crab</strong> — at the beach shacks on Havelock</li><li><strong>Tropical fruit</strong> — pineapple, papaya, fresh coconut water</li><li><strong>Mainland classics</strong> — the islands' settler mix means good Bengali and South-Indian food too</li></ul>",
+      "extCulture": "<p>The Andamans are a melting pot of settlers — Bengali, Tamil, Telugu and more — with a famously easy island pace. The islands are also home to protected indigenous tribes: the Jarawa reserve is strictly off-limits, with no contact or photography permitted. Respect reef and beach rules everywhere.</p>",
+      "extBudget": "<ul><li><strong>Stays:</strong> ₹1,500–4,000 (beach huts to eco-resorts)</li><li><strong>Ferries:</strong> ₹1,000–1,500 each way between islands</li><li><strong>Scuba:</strong> ₹3,500–6,000 for a beginner dive</li><li><strong>Daily budget:</strong> ₹3,000–6,000 per person</li></ul>",
+      "extFaq": "<p><strong>Do I need to book ferries in advance?</strong><br>Yes — private catamarans to Havelock and Neil sell out in peak season, so book ahead.</p><p><strong>Is diving suitable for beginners?</strong><br>Absolutely — \"Discover Scuba\" intro dives need no certification and are very popular here.</p><p><strong>How's connectivity?</strong><br>Patchy outside Port Blair (Airtel/BSNL are best), so carry cash too.</p>"
     },
     {
       "slug": "manali",
@@ -161,10 +238,38 @@
       "tagline": "Adventure",
       "featured": true,
       "categories": [
-        "popular",
         "mountains-hills",
-        "trek"
-      ]
+        "hill-stations",
+        "snow",
+        "adventure",
+        "road-trips"
+      ],
+      "heroImage": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=1800&q=85",
+      "gallery": [
+        "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=900&q=80",
+        "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=900&q=80",
+        "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=900&q=80",
+        "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=900&q=80"
+      ],
+      "altitude": "2,050 m (Manali)",
+      "tripLength": "4–7 days",
+      "currency": "Indian Rupee (₹)",
+      "language": "Hindi · Himachali",
+      "difficulty": "Easy–Moderate",
+      "lead": "Pine-clad valleys, snow runs and riverside cafés — the Himalayas at their most easy-going.",
+      "overview": "<p>Manali and the nearby Parvati Valley (Kasol, Tosh, Malana) are Himachal’s all-season playground. Manali pairs apple orchards and cedar forests with adventure sport; Kasol is a laid-back riverside hub of cafés and trailheads.</p><p>It’s the gentle introduction to the high Himalaya — easy to reach, soft on the lungs, and endlessly scenic.</p>",
+      "secSeason": "<p>There’s no wrong time. <strong>March–June</strong> is pleasant and green; <strong>October–February</strong> brings snow and winter sport around Solang. The monsoon (July–August) is lush but landslide-prone on mountain roads.</p>",
+      "secReach": "<p>Drive or take an overnight Volvo bus from Delhi/Chandigarh (10–14 hrs). Nearest airport: <strong>Bhuntar (Kullu)</strong>, ~50 km away. Nearest railhead: Chandigarh or Joginder Nagar.</p>",
+      "secStay": "<p>Manali spans hostels to luxury resorts (Old Manali for cafés, Naggar for quiet heritage stays). Kasol, Tosh and Tirthan offer cosy riverside guesthouses.</p>",
+      "secTravel": "<p>Local buses and shared cabs cover the main routes; rent a scooter or bike for the valleys. Many travellers base in Manali and day-trip out.</p>",
+      "secActivities": "<ul><li>Snow play and skiing at Solang and Gulaba</li><li>Paragliding, Beas-river rafting and zip-lining</li><li>Treks to Kheerganga, Tosh and Chandrakhani</li><li>Café-hopping along the Parvati river in Kasol</li><li>Day trips through the Atal Tunnel to Lahaul</li></ul>",
+      "secLandmarks": "<ul><li><strong>Solang Valley</strong> — adventure-sport hub</li><li><strong>Hadimba Temple</strong> — cedar-forest shrine</li><li><strong>Atal Tunnel</strong> — gateway to Lahaul</li><li><strong>Kheerganga</strong> — hot springs at the trek’s end</li><li><strong>Naggar Castle</strong> — heritage and the Roerich gallery</li></ul>",
+      "secNotes": "<p>Mountain roads slow in monsoon and heavy snow — keep the itinerary flexible. The Atal Tunnel keeps Lahaul accessible even in winter. Respect local customs in Malana, and don’t leave litter on the trails.</p>",
+      "extItinerary": "<p>A flexible 5-day mix of Manali and the Parvati Valley.</p><ul><li><strong>Day 1:</strong> Arrive Manali — Hadimba Temple & Old Manali cafés</li><li><strong>Day 2:</strong> Solang Valley, Atal Tunnel & Sissu</li><li><strong>Day 3:</strong> Drive to Kasol, riverside evening</li><li><strong>Day 4:</strong> Kheerganga trek (or Tosh village)</li><li><strong>Day 5:</strong> Naggar Castle en route back</li></ul>",
+      "extFood": "<ul><li><strong>Siddu</strong> — a steamed Himachali bread, best with ghee</li><li><strong>Trout</strong> — fresh from mountain streams</li><li><strong>Dham</strong> — the traditional Himachali festive thali</li><li><strong>Kasol café food</strong> — Israeli plates, wood-fired pizza, big breakfasts</li><li><strong>Apple cider & local juices</strong></li></ul>",
+      "extCulture": "<p>This is Pahari (hill) culture, centred on village temples and apple orchards. The Hadimba and Manu temples are revered; in Malana, respect the village's strict customs and don't touch locals or their belongings without asking. Kullu's <strong>Dussehra</strong> is a week-long, deity-filled spectacle.</p>",
+      "extBudget": "<ul><li><strong>Hostels:</strong> ₹500–800 a bed</li><li><strong>Hotels/guesthouses:</strong> ₹1,500–4,000</li><li><strong>Activities:</strong> paragliding from ₹2,000, rafting from ₹600</li><li><strong>Daily budget:</strong> ₹1,500–3,000 per person</li></ul>",
+      "extFaq": "<p><strong>When is there snow?</strong><br>December–February around Solang and Gulaba; the Atal Tunnel keeps Lahaul reachable in winter.</p><p><strong>How do I get there?</strong><br>Overnight Volvo from Delhi/Chandigarh, or fly to Bhuntar (Kullu), ~50 km away.</p><p><strong>Is it very crowded?</strong><br>Peak season and weekends are busy — the Parvati Valley (Tosh, Tirthan) stays calmer.</p>"
     },
     {
       "slug": "kerala",
@@ -175,10 +280,38 @@
       "tagline": "Houseboat",
       "featured": true,
       "categories": [
-        "popular",
-        "water-sports",
+        "backwaters",
+        "lakes",
+        "honeymoon",
+        "wellness",
         "wildlife"
-      ]
+      ],
+      "heroImage": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1800&q=85",
+      "gallery": [
+        "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80",
+        "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=900&q=80",
+        "https://images.unsplash.com/photo-1502786129293-79981df4e689?w=900&q=80",
+        "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=900&q=80"
+      ],
+      "altitude": "Sea level",
+      "tripLength": "4–6 days",
+      "currency": "Indian Rupee (₹)",
+      "language": "Malayalam · English",
+      "difficulty": "Easy",
+      "lead": "A green labyrinth of palm-fringed canals, lakes and rice paddies, best seen from the deck of a houseboat.",
+      "overview": "<p>The Kerala backwaters are a network of brackish lagoons and canals running parallel to the Arabian Sea coast. Life here moves at the pace of the water — village ferries, coir boats, and slow sunsets over Vembanad Lake.</p><p>Alleppey (Alappuzha) and Kumarakom are the classic bases for a houseboat cruise; Kollam and Kuttanad reward those who want quieter waterways.</p>",
+      "secSeason": "<p><strong>September to March</strong> offers the best weather — green from the rains but dry overhead. The monsoon (June–August) is dramatic and ideal for Ayurveda retreats. Onam (Aug/Sep) brings the spectacular snake-boat races.</p>",
+      "secReach": "<p>Fly into <strong>Kochi (COK)</strong> — about 1.5 hrs from Alleppey. Kottayam and Alappuzha are well connected by train. Most houseboats depart from Alleppey’s Finishing Point.</p>",
+      "secStay": "<p>The headline experience is an overnight <strong>houseboat (kettuvallam)</strong>. Pair it with a lakeside homestay or heritage resort in Kumarakom for a night or two on land.</p>",
+      "secTravel": "<p>Public ferries are a cheap, scenic way to move between villages. Cabs and autos cover the towns; canoe and shikara rides reach the narrow canals houseboats can’t.</p>",
+      "secActivities": "<ul><li>Overnight houseboat cruise on Vembanad Lake</li><li>Sunrise village-canoe tour through the canals</li><li>Ayurveda massage and wellness treatments</li><li>Kathakali and Kalaripayattu performances in Kochi</li><li>Birdwatching at Kumarakom sanctuary</li></ul>",
+      "secLandmarks": "<ul><li><strong>Vembanad Lake</strong> — the heart of the backwaters</li><li><strong>Alleppey Finishing Point</strong> — houseboat harbour</li><li><strong>Kumarakom Bird Sanctuary</strong></li><li><strong>Pathiramanal Island</strong></li><li><strong>Fort Kochi</strong> — Chinese nets and colonial lanes</li></ul>",
+      "secNotes": "<p>Book houseboats through reputable operators and confirm what’s included. Carry mosquito repellent for evenings on the water. Don’t miss the karimeen (pearl-spot fish) or a traditional sadya served on a banana leaf.</p>",
+      "extItinerary": "<p>A gentle 5-day backwaters-and-coast itinerary.</p><ul><li><strong>Day 1:</strong> Kochi — Fort Kochi, Chinese nets, a Kathakali show</li><li><strong>Day 2:</strong> Transfer to Alleppey — overnight houseboat</li><li><strong>Day 3:</strong> Kumarakom — lakeside village & bird sanctuary</li><li><strong>Day 4:</strong> Ayurveda & a sunrise canoe tour</li><li><strong>Day 5:</strong> Back to Kochi</li></ul>",
+      "extFood": "<ul><li><strong>Sadya</strong> — a vegetarian feast on a banana leaf</li><li><strong>Karimeen pollichathu</strong> — pearl-spot fish grilled in banana leaf</li><li><strong>Appam with stew</strong> — lacy rice pancakes, coconut stew</li><li><strong>Puttu & kadala</strong> — steamed rice cake with black-chickpea curry</li><li><strong>Malabar parotta</strong> — flaky bread with rich curries</li></ul>",
+      "extCulture": "<p>Kerala's Malayali culture runs deep in art and ritual — the all-night <strong>Kathakali</strong> and <strong>Theyyam</strong> performances, and martial <strong>Kalaripayattu</strong>. Dress modestly at temples (some restrict non-Hindus), and time a visit with <strong>Onam</strong> (Aug/Sep) for feasts and snake-boat races.</p>",
+      "extBudget": "<ul><li><strong>Houseboats:</strong> ₹8,000–20,000 a night (shared or private)</li><li><strong>Homestays/resorts:</strong> ₹1,500–3,500</li><li><strong>Meals:</strong> ₹150–400</li><li><strong>Daily budget:</strong> ₹2,500–5,000 per person</li></ul>",
+      "extFaq": "<p><strong>Is a houseboat worth it?</strong><br>Yes — one overnight is plenty to experience it; pair it with a lakeside stay rather than two nights aboard.</p><p><strong>Best time to visit?</strong><br>September–March for dry weather; the monsoon is ideal for Ayurveda retreats.</p><p><strong>Are there good vegetarian options?</strong><br>Excellent — the sadya alone is a vegetarian highlight of India.</p>"
     },
     {
       "slug": "meghalaya",
@@ -190,9 +323,36 @@
       "featured": true,
       "categories": [
         "waterfalls",
+        "hidden-gems",
         "trek",
-        "hidden-gems"
-      ]
+        "adventure"
+      ],
+      "heroImage": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=1800&q=85",
+      "gallery": [
+        "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=900&q=80",
+        "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=900&q=80",
+        "https://images.unsplash.com/photo-1494791368093-85217fbbf8de?w=900&q=80",
+        "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=900&q=80"
+      ],
+      "altitude": "1,500 m (Shillong)",
+      "tripLength": "5–7 days",
+      "currency": "Indian Rupee (₹)",
+      "language": "Khasi · Garo · English",
+      "difficulty": "Moderate",
+      "lead": "The wettest place on earth — living root bridges, plunging waterfalls and India’s clearest river.",
+      "overview": "<p>Meghalaya, “the abode of clouds,” is a land of forested hills, limestone caves and astonishing rainfall. Over generations the Khasi people have trained the roots of rubber-fig trees into <strong>living bridges</strong> that span jungle rivers.</p><p>It’s a place of waterfalls beyond counting, of Cherrapunji and Mawsynram (the rainiest spots on the planet), and of Dawki’s river so clear the boats appear to float on air.</p>",
+      "secSeason": "<p><strong>October to May</strong> is the dry, comfortable window for trekking and clear-river views. The monsoon (June–September) is when the waterfalls roar at full power — spectacular, but trails turn slippery and leech-ridden.</p>",
+      "secReach": "<p>Fly into <strong>Guwahati (GAU)</strong>, Assam, then drive ~3 hrs to Shillong (which also has a small airport at Umroi). From Shillong, hire a cab for Cherrapunji, Dawki and Nongriat.</p>",
+      "secStay": "<p>Shillong is the main hotel hub. For the root bridges, stay in a <strong>Nongriat or Cherrapunji</strong> homestay; for Dawki/Shnongpdeng, riverside camps are the draw.</p>",
+      "secTravel": "<p>Shared sumos and hired cabs are the norm — there’s no train into the hills. Reaching Nongriat means a steep stairway trek (around 3,500 steps down and back).</p>",
+      "secActivities": "<ul><li>Trek to the Double-Decker Living Root Bridge, Nongriat</li><li>Kayaking or boating on the crystal-clear Umngot river, Dawki</li><li>Caving in Mawsmai and Arwah caves</li><li>Chasing waterfalls — Nohkalikai, Seven Sisters, Wei Sawdong</li><li>Camping at Shnongpdeng under the stars</li></ul>",
+      "secLandmarks": "<ul><li><strong>Double-Decker Root Bridge</strong>, Nongriat</li><li><strong>Nohkalikai Falls</strong> — India’s tallest plunge waterfall</li><li><strong>Dawki / Umngot River</strong></li><li><strong>Mawlynnong</strong> — “Asia’s cleanest village”</li><li><strong>Living root bridges</strong> around Cherrapunji</li></ul>",
+      "secNotes": "<p>The Nongriat trek is strenuous — wear good shoes and carry water. Carry cash; ATMs thin out beyond Shillong. Respect village rules in Mawlynnong, and pack a rain layer year-round — this is cloud country.</p>",
+      "extItinerary": "<p>A 6-day loop through Shillong, Cherrapunji and the clear-water east.</p><ul><li><strong>Day 1:</strong> Guwahati → Shillong (via Umiam Lake)</li><li><strong>Day 2:</strong> Shillong — Elephant Falls, local markets</li><li><strong>Day 3:</strong> Cherrapunji — Nohkalikai Falls & Mawsmai caves</li><li><strong>Day 4:</strong> Trek to the Double-Decker Root Bridge, Nongriat</li><li><strong>Day 5:</strong> Dawki & Mawlynnong village</li><li><strong>Day 6:</strong> Return to Guwahati</li></ul>",
+      "extFood": "<ul><li><strong>Jadoh</strong> — Khasi rice cooked with pork</li><li><strong>Dohneiiong</strong> — pork in black-sesame gravy</li><li><strong>Tungrymbai</strong> — fermented soybean dish</li><li><strong>Smoked meats</strong> — a hill speciality</li><li><strong>Pukhlein & rice beer</strong> — sweet rice fritters and local brew</li></ul>",
+      "extCulture": "<p>The Khasi and Garo are among the world's few <strong>matrilineal</strong> societies — lineage and property pass through the youngest daughter. Villages like Mawlynnong are famously clean and community-run, so follow local rules. Don't miss the <strong>Nongkrem</strong> and <strong>Wangala</strong> harvest festivals.</p>",
+      "extBudget": "<ul><li><strong>Homestays/guesthouses:</strong> ₹800–2,000</li><li><strong>Shared sumos & cabs:</strong> the main way to get around</li><li><strong>Daily budget:</strong> ₹1,800–3,500 per person</li></ul>",
+      "extFaq": "<p><strong>Monsoon or dry season?</strong><br>October–May for trekking and clear rivers; the monsoon brings the waterfalls to full roar but slick, leech-prone trails.</p><p><strong>How hard is the Nongriat trek?</strong><br>Strenuous — around 3,500 steps down and back up; good shoes and water essential.</p><p><strong>Is connectivity reliable?</strong><br>Fine in Shillong, patchy beyond — carry cash past the city.</p>"
     },
     {
       "slug": "jaisalmer",
@@ -203,9 +363,36 @@
       "tagline": "Heritage",
       "featured": true,
       "categories": [
+        "deserts",
         "heritage",
-        "popular"
-      ]
+        "forts-palaces"
+      ],
+      "heroImage": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1800&q=85",
+      "gallery": [
+        "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=900&q=80",
+        "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=900&q=80",
+        "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=900&q=80",
+        "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=900&q=80"
+      ],
+      "altitude": "Desert plains",
+      "tripLength": "5–7 days",
+      "currency": "Indian Rupee (₹)",
+      "language": "Rajasthani · Hindi · English",
+      "difficulty": "Easy",
+      "lead": "The golden desert fort and the blue city — Rajasthan’s most cinematic pairing of sand, stone and colour.",
+      "overview": "<p>Jaisalmer rises from the Thar Desert like a sandcastle — a living fort of honey-coloured stone where families still live within the ramparts. A few hours away, Jodhpur spreads beneath the mighty Mehrangarh Fort, its old town washed in indigo blue.</p><p>Together they’re the essence of desert Rajasthan: havelis, camel trails, folk music under the stars, and bazaars heavy with colour and spice.</p>",
+      "secSeason": "<p><strong>October to March</strong> is the only comfortable time — warm days, cool nights, perfect for the dunes. Summer (April–June) is brutally hot. The Jaisalmer Desert Festival (February) is a highlight.</p>",
+      "secReach": "<p>Jodhpur has the nearest major <strong>airport (JDH)</strong> and a busy railway station. Jaisalmer is reached by overnight train or a 5-hr drive from Jodhpur — the two pair naturally on one trip.</p>",
+      "secStay": "<p>Sleep inside <strong>Jaisalmer Fort</strong> in a heritage haveli, or in a luxury desert camp near the Sam dunes. In Jodhpur, choose a blue-city guesthouse with Mehrangarh views — or a palace hotel if you’re splurging.</p>",
+      "secTravel": "<p>Autos and cabs cover the cities; a hired car links Jodhpur and Jaisalmer. For the desert, camel or jeep safaris run from Sam and Khuri.</p>",
+      "secActivities": "<ul><li>Camel and jeep safari with an overnight in the Sam dunes</li><li>Explore Mehrangarh Fort and Jaswant Thada</li><li>Wander Jaisalmer’s havelis — Patwon Ki Haveli</li><li>Folk music and dance around a desert campfire</li><li>Shop the blue-city bazaars of Jodhpur</li></ul>",
+      "secLandmarks": "<ul><li><strong>Jaisalmer Fort (Sonar Quila)</strong> — the living golden fort</li><li><strong>Mehrangarh Fort</strong>, Jodhpur</li><li><strong>Patwon Ki Haveli</strong></li><li><strong>Sam Sand Dunes</strong></li><li><strong>Gadisar Lake</strong> and <strong>Jaswant Thada</strong></li></ul>",
+      "secNotes": "<p>Bargain politely in the bazaars and agree safari prices upfront. Carry sun protection and a scarf for desert dust. Nights in the dunes get surprisingly cold in winter — pack a layer.</p>",
+      "extItinerary": "<p>A 6-day desert-Rajasthan run pairing Jodhpur and Jaisalmer.</p><ul><li><strong>Day 1:</strong> Jodhpur — Mehrangarh Fort</li><li><strong>Day 2:</strong> Jodhpur — blue-city lanes & Jaswant Thada</li><li><strong>Day 3:</strong> Drive/train to Jaisalmer</li><li><strong>Day 4:</strong> Jaisalmer Fort & the havelis</li><li><strong>Day 5:</strong> Sam dunes — camel safari & overnight desert camp</li><li><strong>Day 6:</strong> Gadisar Lake, then onward</li></ul>",
+      "extFood": "<ul><li><strong>Dal baati churma</strong> — the Rajasthani signature plate</li><li><strong>Ker sangri</strong> — a tangy desert-bean-and-berry dish</li><li><strong>Gatte ki sabzi</strong> — gram-flour dumplings in curd gravy</li><li><strong>Laal maas</strong> — fiery red mutton curry</li><li><strong>Mawa kachori & makhaniya lassi</strong> — for the sweet tooth</li></ul>",
+      "extCulture": "<p>This is Rajput and Marwari heartland, rich in folk music — the <strong>Manganiyar</strong> and <strong>Langa</strong> musicians perform under the desert stars. Dress modestly, bargain with good humour, and aim for the <strong>Jaisalmer Desert Festival</strong> (February) for camel races and turban-tying contests.</p>",
+      "extBudget": "<ul><li><strong>Heritage havelis:</strong> ₹1,500–5,000</li><li><strong>Desert camps:</strong> ₹2,000–8,000 incl. safari & dinner</li><li><strong>Daily budget:</strong> ₹2,500–5,000 per person</li></ul>",
+      "extFaq": "<p><strong>When should I go?</strong><br>October–March only — summers are punishingly hot.</p><p><strong>Is the camel safari worth it?</strong><br>Yes — even a short sunset ride with an overnight camp is the highlight for most visitors.</p><p><strong>How do I travel between Jodhpur and Jaisalmer?</strong><br>An overnight train or a scenic 5-hour drive; they pair naturally on one trip.</p>"
     },
     {
       "slug": "goa",
@@ -217,9 +404,35 @@
       "featured": true,
       "categories": [
         "beach",
-        "popular",
-        "water-sports"
-      ]
+        "water-sports",
+        "honeymoon"
+      ],
+      "heroImage": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=1800&q=85",
+      "gallery": [
+        "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=900&q=80",
+        "https://images.unsplash.com/photo-1502786129293-79981df4e689?w=900&q=80",
+        "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=900&q=80",
+        "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80"
+      ],
+      "altitude": "Sea level",
+      "tripLength": "4–6 days",
+      "currency": "Indian Rupee (₹)",
+      "language": "Konkani · English · Hindi",
+      "difficulty": "Easy",
+      "lead": "The quieter, greener half of Goa — long empty beaches, swaying palms and Portuguese-era calm.",
+      "overview": "<p>Where North Goa is party and bustle, South Goa is slow mornings and long, uncrowded sand. Palolem, Agonda and Patnem curve in golden arcs; inland, whitewashed churches and spice plantations sit among the palms.</p><p>It’s the coast for travellers who want the sea, a hammock and a plate of fresh fish — without the crowds.</p>",
+      "secSeason": "<p><strong>November to February</strong> is peak season — dry, breezy and warm. March–May is hotter but quieter. The monsoon (June–September) shutters many beach shacks but turns the hinterland brilliant green.</p>",
+      "secReach": "<p>Fly into <strong>Goa (GOX/GOI)</strong>; Madgaon (Margao) is the southern railhead on the Konkan line. Cabs and rentals reach the southern beaches in under an hour.</p>",
+      "secStay": "<p>Beach huts and boutique resorts line Palolem, Agonda and Patnem. For heritage, choose a Portuguese-villa stay inland around Chandor or Cavelossim.</p>",
+      "secTravel": "<p>Rent a scooter — it’s the Goan way. Cabs and app rentals fill the gaps; the south is compact enough to explore beach by beach.</p>",
+      "secActivities": "<ul><li>Beach-hopping: Palolem, Agonda, Patnem, Butterfly</li><li>Dolphin-spotting and kayaking from Palolem</li><li>Spice-plantation tours and Goan cooking classes</li><li>Sunset silent-disco and live-music nights</li><li>Day trip to Dudhsagar Falls (in season)</li></ul>",
+      "secLandmarks": "<ul><li><strong>Palolem Beach</strong> — the south’s signature crescent</li><li><strong>Cabo de Rama Fort</strong></li><li><strong>Dudhsagar Falls</strong></li><li><strong>Old Goa churches</strong> — Basilica of Bom Jesus</li><li><strong>Cotigao Wildlife Sanctuary</strong></li></ul>",
+      "secNotes": "<p>Carry a helmet and licence for scooters — checks are common. Respect the calmer southern vibe: this isn’t a party coast. Watch for strong currents and swim between the flagged zones.</p>",
+      "extItinerary": "<p>A laid-back 5-day South Goa plan.</p><ul><li><strong>Day 1:</strong> Arrive — settle into Palolem</li><li><strong>Day 2:</strong> Beach-hop — Agonda & Patnem</li><li><strong>Day 3:</strong> Dolphin trip + Cabo de Rama fort</li><li><strong>Day 4:</strong> Spice plantation & Old Goa churches</li><li><strong>Day 5:</strong> Butterfly Beach by boat, then onward</li></ul>",
+      "extFood": "<ul><li><strong>Goan fish thali</strong> — the everyday classic</li><li><strong>Prawn balchão</strong> — tangy, spicy and pickle-like</li><li><strong>Pork vindaloo</strong> — the real Indo-Portuguese version</li><li><strong>Chicken cafreal</strong> — green, herby and grilled</li><li><strong>Bebinca & feni</strong> — layered dessert and the local spirit</li></ul>",
+      "extCulture": "<p>South Goa carries a relaxed <em>sussegad</em> rhythm and a blend of Hindu and Indo-Portuguese Catholic life — whitewashed churches, old villas and quiet feast days. Keep the southern beaches calm and litter-free; the big parties belong up north.</p>",
+      "extBudget": "<ul><li><strong>Beach huts/resorts:</strong> ₹1,000–3,500</li><li><strong>Scooter:</strong> ₹300–500 a day</li><li><strong>Daily budget:</strong> ₹1,800–3,500 per person</li></ul>",
+      "extFaq": "<p><strong>North or South Goa?</strong><br>North for nightlife and buzz; South (here) for quiet beaches and slow days.</p><p><strong>Do I need a licence for a scooter?</strong><br>Yes — carry your licence and a helmet; police checks are common.</p><p><strong>When's the best time?</strong><br>November–February for dry, breezy weather and open beach shacks.</p>"
     },
     {
       "slug": "coorg",
@@ -230,10 +443,37 @@
       "tagline": "Coffee estates",
       "featured": true,
       "categories": [
-        "mountains-hills",
-        "hidden-gems",
+        "hill-stations",
+        "tea-estates",
+        "wildlife",
         "waterfalls"
-      ]
+      ],
+      "heroImage": "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=1800&q=85",
+      "gallery": [
+        "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=900&q=80",
+        "https://images.unsplash.com/photo-1494791368093-85217fbbf8de?w=900&q=80",
+        "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=900&q=80",
+        "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=900&q=80"
+      ],
+      "altitude": "1,100 m (Madikeri)",
+      "tripLength": "3–5 days",
+      "currency": "Indian Rupee (₹)",
+      "language": "Kodava · Kannada · English",
+      "difficulty": "Easy",
+      "lead": "Misty coffee hills, spice plantations and waterfalls — the “Scotland of India” in the Western Ghats.",
+      "overview": "<p>Coorg (Kodagu) is a hill district of rolling coffee estates, cardamom forests and rivers born in the Western Ghats. The air smells of roasting beans and rain; the Kodava people are famed for their hospitality, martial heritage and distinctive cuisine.</p><p>It’s a soft, green escape — homestays on working estates, short waterfall walks, and slow mornings with the valley wrapped in mist.</p>",
+      "secSeason": "<p><strong>October to March</strong> is ideal — clear, cool and post-monsoon green. The monsoon (June–September) is lush and atmospheric, when the waterfalls run fullest. The altitude keeps it pleasant year-round.</p>",
+      "secReach": "<p>Nearest airports: <strong>Mangaluru (~135 km)</strong>, Mysuru (~120 km) and Bengaluru (~250 km). Mysuru is the closest railhead. Most travellers drive in via Madikeri.</p>",
+      "secStay": "<p>Stay on a <strong>coffee-estate homestay</strong> or plantation resort around Madikeri, Pollibetta or Virajpet — the quintessential Coorg experience. Madikeri town has more budget options.</p>",
+      "secTravel": "<p>A hired car or self-drive is best; the sights are spread across estates and valleys. Local buses connect the main towns but run infrequently.</p>",
+      "secActivities": "<ul><li>Guided coffee- and spice-plantation walks with tastings</li><li>Trek to Tadiandamol, Coorg’s highest peak</li><li>Visit Abbey and Iruppu Falls</li><li>Meet the elephants at Dubare Elephant Camp</li><li>Day trip to the Golden Temple at Namdroling</li></ul>",
+      "secLandmarks": "<ul><li><strong>Abbey Falls</strong></li><li><strong>Raja’s Seat</strong> — sunset viewpoint, Madikeri</li><li><strong>Namdroling Monastery (Golden Temple)</strong>, Bylakuppe</li><li><strong>Talacauvery</strong> — source of the Kaveri</li><li><strong>Dubare Elephant Camp</strong></li></ul>",
+      "secNotes": "<p>Roads are winding — allow extra time and avoid night driving in mist. Try Kodava specialities like pandi curry and akki roti. Leeches appear on monsoon trails, so carry salt and cover up.</p>",
+      "extItinerary": "<p>A 4-day coffee-country escape.</p><ul><li><strong>Day 1:</strong> Madikeri — Raja's Seat sunset & Abbey Falls</li><li><strong>Day 2:</strong> Plantation walk + Dubare Elephant Camp</li><li><strong>Day 3:</strong> Golden Temple (Bylakuppe) & Nisargadhama</li><li><strong>Day 4:</strong> Tadiandamol trek (or a slow estate morning)</li></ul>",
+      "extFood": "<ul><li><strong>Pandi curry</strong> — the famous Coorg pork curry</li><li><strong>Kadambuttu</strong> — steamed rice dumplings to go with it</li><li><strong>Akki roti</strong> — soft rice flatbread</li><li><strong>Bamboo-shoot curry</strong> — a Kodava speciality</li><li><strong>Estate-fresh Coorg coffee</strong></li></ul>",
+      "extCulture": "<p>The Kodava are a proud, close-knit people with a martial heritage — one of the few Indian communities permitted to carry firearms without licence, and known for ancestor worship and distinctive weddings. Homestay hospitality is the heart of Coorg; the harvest festival <strong>Puthari</strong> is the year's high point.</p>",
+      "extBudget": "<ul><li><strong>Estate homestays:</strong> ₹2,000–5,000 incl. meals</li><li><strong>Daily budget:</strong> ₹2,000–3,500 per person</li></ul>",
+      "extFaq": "<p><strong>Best time to visit?</strong><br>October–March for clear weather; the monsoon is lush and atmospheric if you don't mind rain.</p><p><strong>Are there leeches?</strong><br>Yes, on monsoon trails — carry salt and cover your ankles.</p><p><strong>How do I get there?</strong><br>Drive from Mangaluru, Mysuru or Bengaluru; there's no railway into Coorg.</p>"
     },
     {
       "slug": "sikkim",
@@ -245,9 +485,36 @@
       "featured": true,
       "categories": [
         "mountains-hills",
-        "trek",
-        "hidden-gems"
-      ]
+        "snow",
+        "lakes",
+        "spiritual"
+      ],
+      "heroImage": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=1800&q=85",
+      "gallery": [
+        "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=900&q=80",
+        "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=900&q=80",
+        "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=900&q=80",
+        "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=900&q=80"
+      ],
+      "altitude": "Up to 5,000 m+ (Gurudongmar)",
+      "tripLength": "5–7 days",
+      "currency": "Indian Rupee (₹)",
+      "language": "Nepali · Bhutia · Lepcha · English",
+      "difficulty": "Moderate–Challenging",
+      "lead": "Glacial lakes, alpine valleys and a blaze of rhododendrons beneath Himalayan snow peaks.",
+      "overview": "<p>North Sikkim is the state’s wild, high-altitude frontier — a region of sacred lakes, hot springs and the spring-blooming Yumthang “Valley of Flowers.” Roads climb past 5,000 m at Gurudongmar, one of the highest lakes in the world.</p><p>It’s permit-controlled, weather-dependent and gloriously remote — Himalayan travel at its most pristine.</p>",
+      "secSeason": "<p><strong>March to June</strong> brings the rhododendron bloom and the clearest mountain views; <strong>October–November</strong> is crisp and dry. Winter snow often closes the high roads, and the monsoon (July–September) risks landslides.</p>",
+      "secReach": "<p>Nearest airport: <strong>Pakyong (PYG)</strong> or Bagdogra. Railhead: New Jalpaiguri (NJP). From Gangtok, hired shared jeeps run to Lachen and Lachung with permits arranged by your operator.</p>",
+      "secStay": "<p>Stay in the villages of <strong>Lachen and Lachung</strong> — simple guesthouses and homestays that serve as bases for the early-morning runs to Gurudongmar and Yumthang.</p>",
+      "secTravel": "<p>Travel is by shared or hired 4x4 only, almost always as part of a permitted package. Foreigners need a Protected Area Permit; Indians need an Inner Line Permit.</p>",
+      "secActivities": "<ul><li>Dawn drive to Gurudongmar Lake</li><li>Yumthang Valley of Flowers and Zero Point</li><li>Soak at the Yumthang hot springs</li><li>Photograph Kanchenjunga and the snow peaks</li><li>Visit Lachen and Lachung monasteries</li></ul>",
+      "secLandmarks": "<ul><li><strong>Gurudongmar Lake</strong></li><li><strong>Yumthang Valley</strong> — Valley of Flowers</li><li><strong>Zero Point (Yumesamdong)</strong></li><li><strong>Lachung Monastery</strong></li><li><strong>Seven Sisters & Naga Falls</strong> en route</li></ul>",
+      "secNotes": "<p>Permits are mandatory and arranged through registered Sikkim operators — solo travel to the high lakes isn’t allowed. Acclimatise in Gangtok first; Gurudongmar’s altitude affects many visitors. Carry warm layers even in spring.</p>",
+      "extItinerary": "<p>A 6-day North Sikkim journey (run as a permitted package).</p><ul><li><strong>Day 1:</strong> NJP/Bagdogra → Gangtok</li><li><strong>Day 2:</strong> Gangtok — acclimatise, MG Marg & Rumtek</li><li><strong>Day 3:</strong> Gangtok → Lachen</li><li><strong>Day 4:</strong> Gurudongmar Lake at dawn → Lachung</li><li><strong>Day 5:</strong> Yumthang Valley & Zero Point → Gangtok</li><li><strong>Day 6:</strong> Departure</li></ul>",
+      "extFood": "<ul><li><strong>Momos & thukpa</strong> — everywhere, and excellent</li><li><strong>Gundruk & sinki</strong> — fermented greens, in soups</li><li><strong>Phagshapa</strong> — pork with radish and dried chillies</li><li><strong>Sael roti</strong> — a ring-shaped rice bread</li><li><strong>Tongba</strong> — warm millet beer, sipped through a straw</li></ul>",
+      "extCulture": "<p>Sikkim's Nepali, Bhutia and Lepcha communities give it a layered Buddhist-Hindu culture, dotted with prayer-flag-strung monasteries. It's also India's first fully organic state — respect its strict eco-rules. Festivals like <strong>Losar</strong>, <strong>Saga Dawa</strong> and <strong>Pang Lhabsol</strong> fill the calendar.</p>",
+      "extBudget": "<ul><li><strong>Package-based:</strong> ₹2,500–4,500 per day including permits, jeep and stays</li><li><strong>Village homestays:</strong> simple and warm in Lachen/Lachung</li></ul>",
+      "extFaq": "<p><strong>Do I need permits?</strong><br>Yes — North Sikkim is permit-controlled and must be booked through a registered operator; solo travel to the high lakes isn't allowed.</p><p><strong>How high is Gurudongmar?</strong><br>Over 5,000 m — acclimatise in Gangtok first and go easy.</p><p><strong>Best season?</strong><br>March–June for rhododendrons; October–November for clear skies.</p>"
     },
     {
       "slug": "munnar",
@@ -258,10 +525,37 @@
       "tagline": "Tea estates",
       "featured": true,
       "categories": [
-        "mountains-hills",
-        "popular",
-        "wildlife"
-      ]
+        "hill-stations",
+        "tea-estates",
+        "wellness",
+        "trek"
+      ],
+      "heroImage": "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=1800&q=85",
+      "gallery": [
+        "https://images.unsplash.com/photo-1502786129293-79981df4e689?w=900&q=80",
+        "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=900&q=80",
+        "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80",
+        "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=900&q=80"
+      ],
+      "altitude": "1,600 m",
+      "tripLength": "3–5 days",
+      "currency": "Indian Rupee (₹)",
+      "language": "Malayalam · Tamil · English",
+      "difficulty": "Easy",
+      "lead": "Endless emerald tea gardens rolling over the High Ranges of Kerala’s Western Ghats.",
+      "overview": "<p>Munnar is a hill station carpeted in some of the highest tea estates in the world — corrugated green hills, colonial-era plantations and cool, misty air. Once a British summer retreat, it’s now Kerala’s most photogenic upland escape.</p><p>Beyond the tea, the surrounding Western Ghats hold shola forests, waterfalls and the rare Nilgiri tahr in Eravikulam National Park.</p>",
+      "secSeason": "<p><strong>September to March</strong> is the prime window — clear, cool and green. Visit between <strong>August–October</strong> for misty drama, or time a once-in-twelve-years trip with the Neelakurinji bloom that turns the hills blue.</p>",
+      "secReach": "<p>Nearest airport: <strong>Kochi (COK)</strong>, ~110 km / 4 hrs away. Aluva and Ernakulam are the nearest railheads. The drive up through Adimali is gorgeous.</p>",
+      "secStay": "<p>Choose a <strong>tea-estate bungalow or plantation resort</strong> for the views, or a budget homestay in Munnar town. Many stays sit amid the gardens with sweeping valley vistas.</p>",
+      "secTravel": "<p>A hired cab or self-drive works best for the scattered viewpoints and estates. Autos cover the town; the roads are winding but well-surfaced.</p>",
+      "secActivities": "<ul><li>Tea-estate walks and a visit to the Tea Museum</li><li>Wildlife spotting in Eravikulam National Park</li><li>Boating on Mattupetty and Kundala lakes</li><li>Drive to Top Station for sea-of-cloud views</li><li>Trek towards Anamudi, South India’s highest peak (seasonal)</li></ul>",
+      "secLandmarks": "<ul><li><strong>Eravikulam National Park</strong> — Nilgiri tahr and Anamudi</li><li><strong>Top Station</strong> viewpoint</li><li><strong>Mattupetty Dam & Lake</strong></li><li><strong>Tea Museum</strong>, Munnar</li><li><strong>Attukal & Lakkam Waterfalls</strong></li></ul>",
+      "secNotes": "<p>Eravikulam closes during the tahr calving season (roughly February–March) — check before planning. Mornings are chilly; carry a light jacket. Book estate stays early in peak months.</p>",
+      "extItinerary": "<p>A 4-day tea-country itinerary.</p><ul><li><strong>Day 1:</strong> Kochi → Munnar (Cheeyappara Falls en route)</li><li><strong>Day 2:</strong> Eravikulam National Park & the Tea Museum</li><li><strong>Day 3:</strong> Top Station, Mattupetty Dam & Echo Point</li><li><strong>Day 4:</strong> Kolukkumalai sunrise, then return</li></ul>",
+      "extFood": "<ul><li><strong>Kerala sadya</strong> — the banana-leaf feast</li><li><strong>Kappa & meen curry</strong> — tapioca with fish curry</li><li><strong>Nadan beef fry</strong> — a Kerala hills favourite</li><li><strong>Appam with stew</strong></li><li><strong>Cardamom & estate-fresh tea</strong></li></ul>",
+      "extCulture": "<p>Munnar's character was shaped by its colonial-era tea plantations, worked by Tamil and Malayali communities whose settlements still dot the hills. Old CSI churches and quiet estate roads set the tone. <strong>Onam</strong> brings the whole region to life with feasts and flowers.</p>",
+      "extBudget": "<ul><li><strong>Estate bungalows/resorts:</strong> ₹2,500–7,000</li><li><strong>Town homestays:</strong> ₹1,200–2,500</li><li><strong>Daily budget:</strong> ₹2,000–4,000 per person</li></ul>",
+      "extFaq": "<p><strong>When are the views best?</strong><br>September–March; avoid peak monsoon if you want clear hills.</p><p><strong>Is Eravikulam always open?</strong><br>No — it closes for the tahr calving season, roughly February–March, so check ahead.</p><p><strong>What is the Neelakurinji bloom?</strong><br>A rare blue wildflower that carpets the hills once every twelve years — the next big draw worth planning around.</p>"
     },
     {
       "slug": "lakshadweep",
@@ -274,9 +568,36 @@
       "categories": [
         "islands",
         "beach",
+        "coral-reefs",
         "water-sports",
-        "hidden-gems"
-      ]
+        "honeymoon"
+      ],
+      "heroImage": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=1800&q=85",
+      "gallery": [
+        "https://images.unsplash.com/photo-1494791368093-85217fbbf8de?w=900&q=80",
+        "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=900&q=80",
+        "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=900&q=80",
+        "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=900&q=80"
+      ],
+      "altitude": "Sea level",
+      "tripLength": "4–6 days",
+      "currency": "Indian Rupee (₹)",
+      "language": "Malayalam · Jeseri · English",
+      "difficulty": "Easy",
+      "lead": "India’s quietest islands — turquoise lagoons, coral atolls and barefoot calm in the Arabian Sea.",
+      "overview": "<p>Lakshadweep is a scattering of tiny coral atolls off the Kerala coast — India’s smallest union territory and one of its least-visited. The lagoons glow an unreal turquoise, the reefs are pristine, and the pace is utterly unhurried.</p><p>Permits and limited access keep it exclusive; only a few islands such as Agatti, Bangaram, Kadmat and Minicoy open to visitors.</p>",
+      "secSeason": "<p><strong>November to April</strong> brings calm seas, clear skies and excellent diving visibility. The monsoon (May–September) makes sea travel rough and most resorts close.</p>",
+      "secReach": "<p>Fly into <strong>Agatti (AGX)</strong> from Kochi, then transfer by boat to neighbouring islands. Some packages travel by ship from Kochi. An <strong>entry permit is mandatory</strong> for every visitor.</p>",
+      "secStay": "<p>Options are limited and book out fast — resorts and government tourist huts on <strong>Agatti, Bangaram and Kadmat</strong>, plus the Samudram ship packages. Plan well ahead.</p>",
+      "secTravel": "<p>Inter-island movement is by boat, arranged through your package. There’s little independent transport — most visits run as organised tours.</p>",
+      "secActivities": "<ul><li>Scuba diving and snorkelling on untouched reefs</li><li>Kayaking and glass-bottom boat rides in the lagoons</li><li>Lazing on Bangaram’s sandbars</li><li>Visiting Minicoy’s lighthouse and tuna villages</li><li>Sunset dhoni sailing</li></ul>",
+      "secLandmarks": "<ul><li><strong>Bangaram Atoll</strong></li><li><strong>Agatti Lagoon</strong></li><li><strong>Kadmat Island</strong> — diving base</li><li><strong>Minicoy (Maliku)</strong> and its lighthouse</li><li><strong>Pitti Bird Sanctuary</strong></li></ul>",
+      "secNotes": "<p>An entry permit is required and arranged via approved operators — there’s no walk-in tourism. Alcohol is restricted (Bangaram is the exception). Pack reef-safe sunscreen and respect the strict no-coral-collection rules.</p>",
+      "extItinerary": "<p>A 5-day island package (the usual way to visit).</p><ul><li><strong>Day 1:</strong> Kochi → Agatti by air, transfer to your island</li><li><strong>Day 2:</strong> Agatti lagoon — snorkelling & diving</li><li><strong>Day 3:</strong> Day trip to Bangaram's sandbars</li><li><strong>Day 4:</strong> Kadmat — diving, kayaking, reef walks</li><li><strong>Day 5:</strong> Return via Agatti</li></ul>",
+      "extFood": "<ul><li><strong>Tuna (mas)</strong> — the island staple, in countless forms</li><li><strong>Coconut-based fish curries</strong></li><li><strong>Octopus fry</strong> — a local delicacy</li><li><strong>Mas huni-style breakfasts</strong> — shredded tuna with coconut</li><li><strong>Fresh reef fish, grilled simply</strong></li></ul>",
+      "extCulture": "<p>Lakshadweep's culture is Malayali and Muslim-majority, with its own Jeseri dialect and a gentle, unhurried rhythm. Dress modestly, note that alcohol is restricted (Bangaram is the exception), and remember tourism is permit-controlled to protect the fragile reefs.</p>",
+      "extBudget": "<ul><li><strong>Packages:</strong> ₹25,000–60,000 for 4–5 days including permits, transfers and stay</li><li><strong>Independent travel:</strong> very limited — most visits are organised tours</li></ul>",
+      "extFaq": "<p><strong>Do I need a permit?</strong><br>Yes — an entry permit is mandatory and arranged through approved operators; there's no walk-in tourism.</p><p><strong>How do I get there?</strong><br>Fly to Agatti from Kochi (limited flights), then transfer by boat; some packages sail by ship.</p><p><strong>Is alcohol available?</strong><br>Only on Bangaram Island — the inhabited islands are dry.</p>"
     }
   ],
   "highlights": [
@@ -541,16 +862,32 @@
       "onRequest": false,
       "ctaHref": "/package-detail",
       "ctaExternal": false,
-      "ctaProvider": "",
+      "ctaProvider": "Trans-Himalayan Journeys",
       "ctaUrl": "",
       "ctaLabel": "Details",
       "featured": true,
       "categories": [
         "mountains-hills",
         "trek",
-        "hidden-gems",
-        "spiritual"
-      ]
+        "spiritual",
+        "adventure"
+      ],
+      "destinationSlugs": [
+        "spiti"
+      ],
+      "overview": "<p>A premium 7-day circuit through the Spiti Valley — the cold mountain desert of monasteries, fossil villages and glacier-fed rivers. Small-group travel with an experienced trans-Himalayan crew, comfortable homestays, and a pace built around acclimatisation.</p><p>Takes in the valley's headline gompas, the high villages of Langza and Komic, and a night beside Chandratal lake.</p>",
+      "itinerary": "<ul><li><strong>Day 1:</strong> Shimla → Sangla / Chitkul</li><li><strong>Day 2:</strong> Chitkul → Nako → Tabo</li><li><strong>Day 3:</strong> Tabo → Dhankar → Kaza</li><li><strong>Day 4:</strong> Key, Kibber, Hikkim & Komic</li><li><strong>Day 5:</strong> Langza, Lalung & Demul</li><li><strong>Day 6:</strong> Kaza → Chandratal (overnight camp)</li><li><strong>Day 7:</strong> Chandratal → Manali</li></ul>",
+      "inclusions": [
+        "6 nights twin-share homestays & camp",
+        "All breakfasts and dinners",
+        "Private 4x4 with driver",
+        "Certified local mountain guide",
+        "Inner Line Permits",
+        "Oxygen support & first-aid kit"
+      ],
+      "providerInfo": "<p>Operated by Trans-Himalayan Journeys, a Spiti-based outfit specialising in high-altitude small-group travel since 2012, working directly with village homestays.</p>",
+      "duration": "6 Nights / 7 Days",
+      "providerEmail": "trips@transhimalayan.example.com"
     },
     {
       "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=80",
@@ -574,9 +911,26 @@
       "ctaLabel": "Book",
       "featured": true,
       "categories": [
-        "waterfalls",
-        "popular"
-      ]
+        "backwaters",
+        "lakes",
+        "honeymoon",
+        "wellness"
+      ],
+      "destinationSlugs": [
+        "kerala"
+      ],
+      "overview": "<p>Five slow days on the Kerala backwaters — an overnight luxury houseboat on Vembanad Lake paired with a lakeside resort, Ayurveda, and the quiet canals of Kuttanad. Booked through our verified partner KeralaLuxe.</p>",
+      "itinerary": "<ul><li><strong>Day 1:</strong> Kochi arrival — Fort Kochi & a Kathakali show</li><li><strong>Day 2:</strong> Transfer to Alleppey — board the houseboat</li><li><strong>Day 3:</strong> Kumarakom — lakeside resort & bird sanctuary</li><li><strong>Day 4:</strong> Ayurveda morning & a sunset canoe</li><li><strong>Day 5:</strong> Return to Kochi</li></ul>",
+      "inclusions": [
+        "1 night private houseboat (all meals)",
+        "2 nights lakeside resort",
+        "Airport transfers",
+        "Sunrise village canoe tour",
+        "One Ayurveda session"
+      ],
+      "providerInfo": "<p>KeralaLuxe is a licensed Kerala tour operator specialising in premium backwater and Ayurveda experiences, with its own fleet of certified houseboats.</p>",
+      "duration": "4 Nights / 5 Days",
+      "providerEmail": "bookings@keralaluxe.example.com"
     },
     {
       "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=900&q=80",
@@ -595,16 +949,32 @@
       "onRequest": false,
       "ctaHref": "/package-detail",
       "ctaExternal": false,
-      "ctaProvider": "",
+      "ctaProvider": "Indus Valley Expeditions",
       "ctaUrl": "",
       "ctaLabel": "Details",
       "featured": false,
       "categories": [
         "mountains-hills",
-        "trek",
-        "popular",
-        "spiritual"
-      ]
+        "spiritual",
+        "adventure",
+        "road-trips"
+      ],
+      "destinationSlugs": [
+        "ladakh"
+      ],
+      "overview": "<p>A nine-day cultural and high-altitude expedition across Ladakh — Leh's monasteries, the Nubra Valley over Khardung La, and the colour-shifting waters of Pangong Tso. Paced for proper acclimatisation with an anchor-partner crew.</p>",
+      "itinerary": "<ul><li><strong>Day 1:</strong> Arrive Leh — rest & acclimatise</li><li><strong>Day 2:</strong> Shey, Thiksey & Hemis monasteries</li><li><strong>Day 3:</strong> Sham Valley — Magnetic Hill, Alchi, Lamayuru</li><li><strong>Day 4:</strong> Leh → Nubra over Khardung La</li><li><strong>Day 5:</strong> Nubra — Hunder dunes & Diskit</li><li><strong>Day 6:</strong> Nubra → Pangong Tso</li><li><strong>Day 7:</strong> Pangong → Leh</li><li><strong>Day 8:</strong> Leh markets & Zanskar rafting</li><li><strong>Day 9:</strong> Departure</li></ul>",
+      "inclusions": [
+        "8 nights hotels & camps",
+        "Daily breakfast and dinner",
+        "Private vehicle with driver",
+        "Inner Line Permits",
+        "Monastery entry fees",
+        "Experienced cultural guide"
+      ],
+      "providerInfo": "<p>Indus Valley Expeditions is a Leh-based operator run by Ladakhi guides, focused on responsible, culturally immersive high-altitude travel.</p>",
+      "duration": "8 Nights / 9 Days",
+      "providerEmail": "hello@indusvalley.example.com"
     },
     {
       "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=900&q=80",
@@ -630,13 +1000,30 @@
       "categories": [
         "islands",
         "beach",
-        "water-sports"
-      ]
+        "water-sports",
+        "coral-reefs"
+      ],
+      "destinationSlugs": [
+        "andaman"
+      ],
+      "overview": "<p>Six days of island time and underwater colour on Havelock (Swaraj Dweep) — certified diving, the powder sands of Radhanagar, and a side trip to Neil Island. Booked through our verified dive partner AndamanDive.</p>",
+      "itinerary": "<ul><li><strong>Day 1:</strong> Port Blair — Cellular Jail</li><li><strong>Day 2:</strong> Ferry to Havelock — Radhanagar sunset</li><li><strong>Day 3:</strong> Two-dive day / Discover Scuba</li><li><strong>Day 4:</strong> Elephant Beach & snorkelling</li><li><strong>Day 5:</strong> Neil Island day trip</li><li><strong>Day 6:</strong> Return & departure</li></ul>",
+      "inclusions": [
+        "5 nights beach-resort stay",
+        "Daily breakfast",
+        "All inter-island ferry transfers",
+        "Two boat dives (or Discover Scuba)",
+        "Snorkelling gear",
+        "PADI-certified dive masters"
+      ],
+      "providerInfo": "<p>AndamanDive is a PADI dive centre on Havelock with over a decade of reef experience and a strong marine-conservation ethic.</p>",
+      "duration": "5 Nights / 6 Days",
+      "providerEmail": "dive@andamandive.example.com"
     },
     {
       "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=900&q=80",
-      "badgeClass": "",
-      "badgeLabel": "Quote Only",
+      "badgeClass": "tag-gold",
+      "badgeLabel": "Sponsored",
       "region": "Rajasthan · 8 days",
       "title": "Royal Rajasthan Heritage Tour",
       "description": "Jaisalmer, Jodhpur, Udaipur. Heritage hotels, private guides. Itinerary by request.",
@@ -650,14 +1037,31 @@
       "onRequest": true,
       "ctaHref": "/contact",
       "ctaExternal": false,
-      "ctaProvider": "",
+      "ctaProvider": "Marwar Heritage Travel",
       "ctaUrl": "",
       "ctaLabel": "Request quote",
       "featured": false,
       "categories": [
         "heritage",
-        "popular"
-      ]
+        "deserts",
+        "forts-palaces"
+      ],
+      "destinationSlugs": [
+        "jaisalmer"
+      ],
+      "overview": "<p>An eight-day journey through the forts, palaces and desert of royal Rajasthan — Jodhpur's mighty Mehrangarh, the golden fort of Jaisalmer, and a night under the stars in the Thar dunes. A bespoke, quote-based itinerary tailored to your dates and comfort level.</p>",
+      "itinerary": "<ul><li><strong>Day 1–2:</strong> Jodhpur — Mehrangarh & the blue city</li><li><strong>Day 3:</strong> Drive to Jaisalmer</li><li><strong>Day 4:</strong> Jaisalmer Fort & havelis</li><li><strong>Day 5:</strong> Sam dunes — camel safari & desert camp</li><li><strong>Day 6:</strong> Gadisar Lake, onward to Bikaner</li><li><strong>Day 7:</strong> Bikaner — Junagarh Fort</li><li><strong>Day 8:</strong> Departure</li></ul>",
+      "inclusions": [
+        "7 nights heritage hotels & desert camp",
+        "Daily breakfast",
+        "Private car with chauffeur",
+        "Camel safari with overnight camp",
+        "Monument entry fees",
+        "English-speaking guide"
+      ],
+      "providerInfo": "<p>Marwar Heritage Travel is a Jodhpur-based operator specialising in tailor-made heritage journeys across Rajasthan. As this is a custom itinerary, pricing is shared on request — submit a quote and the team will respond with options.</p>",
+      "duration": "7 Nights / 8 Days",
+      "providerEmail": "quotes@marwarheritage.example.com"
     },
     {
       "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=900&q=80",
@@ -682,8 +1086,25 @@
       "featured": false,
       "categories": [
         "waterfalls",
-        "hidden-gems"
-      ]
+        "hidden-gems",
+        "trek"
+      ],
+      "destinationSlugs": [
+        "meghalaya"
+      ],
+      "overview": "<p>Six days in the abode of clouds — the living root bridges of Nongriat, the crystal-clear river at Dawki, and Cherrapunji's thundering waterfalls. An active, nature-first trip booked through our verified partner NorthEastEco.</p>",
+      "itinerary": "<ul><li><strong>Day 1:</strong> Guwahati → Shillong</li><li><strong>Day 2:</strong> Shillong → Cherrapunji (Nohkalikai, caves)</li><li><strong>Day 3:</strong> Trek to the Double-Decker Root Bridge, Nongriat</li><li><strong>Day 4:</strong> Dawki & Mawlynnong</li><li><strong>Day 5:</strong> Shnongpdeng — kayaking & riverside camp</li><li><strong>Day 6:</strong> Return to Guwahati</li></ul>",
+      "inclusions": [
+        "5 nights homestays & riverside camp",
+        "Daily breakfast and dinner",
+        "Private vehicle & driver",
+        "Guided Nongriat trek",
+        "Kayaking at Shnongpdeng",
+        "Local naturalist guide"
+      ],
+      "providerInfo": "<p>NorthEastEco is a Meghalaya-based eco-travel operator working with Khasi community homestays and trained local guides.</p>",
+      "duration": "5 Nights / 6 Days",
+      "providerEmail": "hello@northeasteco.example.com"
     }
   ],
   "blog": {
@@ -1114,8 +1535,8 @@
       "lead": "Every place here has been visited, photographed, or independently verified. Filter by what you want — mountains for solitude, islands for slowness, heritage for the stories etched into stone."
     },
     "packages": {
-      "titleHtml": "Every package, <em>every verified partner</em>.",
-      "lead": "Sponsored placements are flagged. Affiliate links are flagged. Quote-on-request packages are clearly marked. You'll always know which is which."
+      "titleHtml": "Packages To Select From",
+      "lead": "Sponsored and affiliate trips from our verified partners. Pick one to continue to the provider or request a quote."
     },
     "blog": {
       "titleHtml": "The <em>blog</em>.",
@@ -1144,52 +1565,124 @@
   },
   "destCategories": [
     {
-      "label": "Popular",
-      "slug": "popular"
+      "label": "Mountains",
+      "slug": "mountains-hills",
+      "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=400&q=80"
     },
     {
-      "label": "Beach",
-      "slug": "beach"
+      "label": "Beaches",
+      "slug": "beach",
+      "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=400&q=80"
     },
     {
-      "label": "Mountains & Hills",
-      "slug": "mountains-hills"
-    },
-    {
-      "label": "Island",
-      "slug": "islands"
-    },
-    {
-      "label": "Water Sports",
-      "slug": "water-sports"
-    },
-    {
-      "label": "Trek",
-      "slug": "trek"
+      "label": "Islands",
+      "slug": "islands",
+      "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=400&q=80"
     },
     {
       "label": "Waterfalls",
-      "slug": "waterfalls"
-    },
-    {
-      "label": "Hidden Gems",
-      "slug": "hidden-gems"
+      "slug": "waterfalls",
+      "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=400&q=80"
     },
     {
       "label": "Heritage",
-      "slug": "heritage"
+      "slug": "heritage",
+      "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=400&q=80"
     },
     {
       "label": "Wildlife",
-      "slug": "wildlife"
+      "slug": "wildlife",
+      "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=400&q=80"
     },
     {
       "label": "Spiritual",
-      "slug": "spiritual"
+      "slug": "spiritual",
+      "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&q=80"
     },
     {
-      "label": "Testing Category",
-      "slug": "test"
+      "label": "Hidden Gems",
+      "slug": "hidden-gems",
+      "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=400&q=80"
+    },
+    {
+      "label": "Water Sports",
+      "slug": "water-sports",
+      "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=400&q=80"
+    },
+    {
+      "label": "Treks",
+      "slug": "trek",
+      "image": "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=400&q=80"
+    },
+    {
+      "label": "Deserts",
+      "slug": "deserts",
+      "image": "https://images.unsplash.com/photo-1502786129293-79981df4e689?w=400&q=80"
+    },
+    {
+      "label": "Backwaters",
+      "slug": "backwaters",
+      "image": "https://images.unsplash.com/photo-1494791368093-85217fbbf8de?w=400&q=80"
+    },
+    {
+      "label": "Hill Stations",
+      "slug": "hill-stations",
+      "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=400&q=80"
+    },
+    {
+      "label": "Lakes",
+      "slug": "lakes",
+      "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=400&q=80"
+    },
+    {
+      "label": "Snow",
+      "slug": "snow",
+      "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=400&q=80"
+    },
+    {
+      "label": "Adventure",
+      "slug": "adventure",
+      "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=400&q=80"
+    },
+    {
+      "label": "Pilgrimage",
+      "slug": "pilgrimage",
+      "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=400&q=80"
+    },
+    {
+      "label": "Honeymoon",
+      "slug": "honeymoon",
+      "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=400&q=80"
+    },
+    {
+      "label": "Wellness",
+      "slug": "wellness",
+      "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&q=80"
+    },
+    {
+      "label": "National Parks",
+      "slug": "national-parks",
+      "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=400&q=80"
+    },
+    {
+      "label": "Forts & Palaces",
+      "slug": "forts-palaces",
+      "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=400&q=80"
+    },
+    {
+      "label": "Road Trips",
+      "slug": "road-trips",
+      "image": "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=400&q=80"
+    },
+    {
+      "label": "Tea Estates",
+      "slug": "tea-estates",
+      "image": "https://images.unsplash.com/photo-1502786129293-79981df4e689?w=400&q=80"
+    },
+    {
+      "label": "Coral Reefs",
+      "slug": "coral-reefs",
+      "image": "https://images.unsplash.com/photo-1494791368093-85217fbbf8de?w=400&q=80"
     }
   ],
   "galleryCategories": [
@@ -1335,24 +1828,7 @@
       "expiry": ""
     }
   ],
-  "banners": [
-    {
-      "title": "Monsoon sale strip",
-      "zone": "home-top",
-      "style": "strip",
-      "text": "Monsoon escapes — up to <strong>35% off</strong> verified Kerala & Spiti packages.",
-      "image": "",
-      "ctaLabel": "See offers",
-      "href": "/packages",
-      "external": false,
-      "extProvider": "",
-      "extUrl": "",
-      "animate": true,
-      "published": true,
-      "archived": false,
-      "expiry": ""
-    }
-  ],
+  "banners": [],
   "shop": {
     "heroTitle": "License original <em>photography</em> &amp; <em>footage</em>.",
     "heroLead": "Every image and video in our archive is editor-shot or contributor-verified, available for editorial and commercial use. Browse, select, and request a custom quote — or visit our Shutterstock portfolio for instant licensing.",

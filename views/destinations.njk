@@ -54,16 +54,22 @@
     <!-- Destination grid -->
     <section class="section">
       <div class="container-wide">
-        <div class="dest-listing-grid" data-stagger>
+        <div class="featured-grid" data-stagger>
 {% for d in cards %}
-          <a href="/destination-detail?d={{ d.slug }}" class="dest-card" data-cats="{{ d.categories | join(' ') if d.categories else '' }}">
-            <div class="media"><img loading="lazy" src="{{ d.image }}" alt=""></div>
-            <div class="content">
+          <article class="feat-card">
+            <a class="feat-media" href="/destination-detail?d={{ d.slug }}" aria-label="{{ d.name | striptags }} — view details">
+              <img loading="lazy" src="{{ d.image }}" alt="{{ d.name | striptags }}">
+            </a>
+            <div class="feat-info">
               <div class="region">{{ d.region }}</div>
               <h3 class="name">{{ d.name | safe }}</h3>
               <div class="meta"><span>{{ d.season }}</span>{% if d.tagline %}<span class="dot"></span><span>{{ d.tagline }}</span>{% endif %}</div>
+              <div class="feat-actions">
+                <a class="act-details" href="/destination-detail?d={{ d.slug }}">Know More <span>→</span></a>
+                <a class="act-pkg" href="/trip?d={{ d.slug }}">Go For A Trip <span>→</span></a>
+              </div>
             </div>
-          </a>
+          </article>
 {% endfor %}
         </div>
 

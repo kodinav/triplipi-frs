@@ -37,48 +37,53 @@
 
     <section class="section">
       <div class="container-wide">
-        <!-- Filters (categories shared with Destinations) -->
+        <!-- Filter row (FR-PKG-006 — grouping by category) -->
         {% if categories and categories | length %}
         <div class="pkg-filters" data-reveal>
-          <span class="label">Filter:</span>
-          <a class="filter-chip{% if not activeCat %} is-active{% endif %}" href="/packages{% if dParam %}?d={{ dParam }}{% endif %}">All Packages</a>
-          {% for cat in categories %}
-          <a class="filter-chip{% if cat.slug == activeCat %} is-active{% endif %}" href="/packages?{% if dParam %}d={{ dParam }}&{% endif %}cat={{ cat.slug }}">{{ cat.label }} <span class="count">{{ cat.count }}</span></a>
-          {% endfor %}
+          <span class="label">Filter</span>
+          <div class="pkg-chips">
+            <a class="filter-chip{% if not activeCat %} is-active{% endif %}" href="/packages{% if dParam %}?d={{ dParam }}{% endif %}">All Packages</a>
+            {% for cat in categories %}
+            <a class="filter-chip{% if cat.slug == activeCat %} is-active{% endif %}" href="/packages?{% if dParam %}d={{ dParam }}&{% endif %}cat={{ cat.slug }}">{{ cat.label }}</a>
+            {% endfor %}
+          </div>
         </div>
         {% endif %}
 
         {% if destFilter %}
         <div class="pkg-dest-note" data-reveal>Showing packages for <strong>{{ destFilter }}</strong>. <a href="/packages">Show all packages</a></div>
         {% endif %}
-        {% if activeCat %}
-        <div class="pkg-dest-note" data-reveal>Filtered by category. <a href="/packages{% if dParam %}?d={{ dParam }}{% endif %}">Clear category</a></div>
-        {% endif %}
-        <div class="pkg-grid cols-2" data-stagger>
+
+        {% if packages and packages | length %}
+        <div class="pkg-list" data-stagger>
 {% for k in packages %}
-          <article class="pkg-card">
-            <div class="thumb">
-              <img loading="lazy" src="{{ k.image }}" alt="">
-              {% if k.badgeLabel %}<span class="tag{% if k.badgeClass %} {{ k.badgeClass }}{% endif %} badge-pos">{{ k.badgeLabel }}</span>{% endif %}
+          <article class="pkg-list-card pkg-type-{{ (k.badgeLabel or 'sponsored') | lower }}">
+            <div class="pkg-list-media">
+              <img loading="lazy" src="{{ k.image }}" alt="{{ k.title | striptags }}">
+              {% if k.badgeLabel %}<span class="pkg-type-badge">{{ k.badgeLabel | upper }}</span>{% endif %}
             </div>
-            <div class="body">
-              <div class="pkg-region">{{ k.region }}</div>
-              <h3><a href="/package-detail?p={{ k.title | slug }}">{{ k.title | safe }}</a></h3>
-              <p style="font-size: 0.9rem;">{{ k.description | safe }}</p>
-              <div class="pkg-meta">
-                {% for s in k.metaSpans %}<span>{{ s }}</span>{% endfor %}
+            <div class="pkg-list-body">
+              <h3>{{ k.title | safe }}</h3>
+              {% if k.duration %}<div class="pkg-list-dur"><span class="tick">✓</span> {{ k.duration }}</div>{% endif %}
+              <div class="pkg-list-price">
+                {% if k.priceUnit %}Starting from <strong>{{ k.price }}</strong> <small>{{ k.priceUnit }}</small>{% else %}<strong>{{ k.price }}</strong>{% endif %}
               </div>
-              <div class="pkg-foot">
-                {% if k.onRequest %}<div class="pkg-price" style="font-size: 1.1rem; font-family: var(--ff-text); font-style: italic;">{{ k.price }}</div>{% else %}<div class="pkg-price">{{ k.price }}<small>{{ k.priceUnit }}</small></div>{% endif %}
-                {% if k.ctaExternal %}<a href="{{ k.ctaHref }}" class="btn btn-sm" data-external data-provider="{{ k.ctaProvider }}" data-url="{{ k.ctaUrl }}">{{ k.ctaLabel }} <span class="arrow">→</span></a>{% else %}<a href="{{ k.ctaHref }}" class="btn btn-sm">{{ k.ctaLabel }} <span class="arrow">→</span></a>{% endif %}
-              </div>
+              {% if k.ctaExternal and k.ctaUrl %}
+              <a class="btn btn-brand pkg-explore" href="{{ k.ctaUrl }}" data-external data-provider="{{ k.ctaProvider }}" data-url="{{ k.ctaUrl }}">Explore Package <span class="arrow">→</span></a>
+              {% else %}
+              <a class="btn btn-brand pkg-explore" href="/package-quote?p={{ k.title | slug }}" data-external data-provider="{{ k.ctaProvider or (k.title | striptags) }}" data-url="/package-quote?p={{ k.title | slug }}" data-display="Secure quote request">Explore Package <span class="arrow">→</span></a>
+              {% endif %}
             </div>
           </article>
 {% endfor %}
         </div>
 
         {{ pg.nav(pagination, baseUrl) }}
-
+        {% else %}
+        <div class="pkg-empty" data-reveal>
+          <p>We are updating this section. <em>Package updates coming soon.</em></p>
+        </div>
+        {% endif %}
       </div>
     </section>
   </main>

@@ -27,6 +27,9 @@
           </a>
 
           <nav class="nav-primary" aria-label="Primary">
+            <a class="nav-link nav-home" href="/" aria-label="Home" title="Home">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+            </a>
             {% for link in settings.navLinks %}{% if link.mega and link.mega != 'none' %}
             <button class="nav-link" data-mega="mega-{{ link.mega }}" data-path="{{ link.href }}" aria-haspopup="true" aria-expanded="false">{{ link.label }}</button>
             {% else %}
@@ -49,47 +52,12 @@
       <!-- Mega menus -->
       <div class="mega-backdrop"></div>
 
-      <!-- Destination Guide — 2-column category grid + View All (FRS 5.2) -->
-      <div class="mega" id="mega-destinations">
-        <div class="mega-inner mega-cats">
-          <div class="mega-cats-head">
-            <div class="mega-title"><em>Explore</em> by category</div>
-            <div class="mega-tag">Every place is editor- or contributor-verified. Pick a category, or browse the full index.</div>
-            <a class="btn-text" href="{{ settings.megaMenus.destHeadHref or '/destinations' }}">{{ settings.megaMenus.destHeadLabel or 'View all destinations' }} <span class="arrow">→</span></a>
-          </div>
-          <div class="mega-cat-grid">
-            {% for cat in navCategories %}
-            <a href="/destinations?cat={{ cat.slug }}"><span class="cat-name">{{ cat.label }}</span><span class="cat-count">{{ cat.count }}</span></a>
-            {% endfor %}
-            <a class="mega-cat-all" href="{{ settings.megaMenus.destAllHref or '/destinations' }}">{{ settings.megaMenus.destAllLabel or 'View all categories' }} <span class="arrow">→</span></a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Go For A Trip — categories open the destination listing (Flow 2) -->
-      <div class="mega" id="mega-trip">
-        <div class="mega-inner mega-cats">
-          <div class="mega-cats-head">
-            <div class="mega-title"><em>Plan</em> a trip — pick a category</div>
-            <div class="mega-tag">Choose a category to browse its destinations, then continue to verified packages.</div>
-            <a class="btn-text" href="{{ settings.megaMenus.tripHeadHref or '/trip' }}">{{ settings.megaMenus.tripHeadLabel or 'Start the 7-step planner' }} <span class="arrow">→</span></a>
-          </div>
-          <div class="mega-cat-grid">
-            {% for cat in navCategories %}
-            <a href="/destinations?cat={{ cat.slug }}"><span class="cat-name">{{ cat.label }}</span><span class="cat-count">{{ cat.count }}</span></a>
-            {% endfor %}
-            <a class="mega-cat-all" href="{{ settings.megaMenus.tripAllHref or '/destinations' }}">{{ settings.megaMenus.tripAllLabel or 'View All Categories' }} <span class="arrow">→</span></a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Our Picks — the four curated lists (FRS 5.6) -->
-      <div class="mega" id="mega-picks">
-        <div class="mega-inner mega-cats">
-          <div class="mega-cats-head">
-            <div class="mega-title">Our <em>most cherished</em> places</div>
-            <div class="mega-tag">Hand-curated lists — the places we'd send our closest friends, ranked and reasoned.</div>
-            <a class="btn-text" href="{{ settings.megaMenus.picksHeadHref or '/picks' }}">{{ settings.megaMenus.picksHeadLabel or 'View all picks' }} <span class="arrow">→</span></a>
+      <!-- Our Picks — compact list dropdown -->
+      <div class="mega mega-list" id="mega-picks">
+        <div class="mega-list-inner">
+          <div class="mega-list-head">
+            <span class="mega-list-title">Our most cherished places</span>
+            <a class="mega-list-all" href="{{ settings.megaMenus.picksHeadHref or '/picks' }}">View all <span class="arrow">→</span></a>
           </div>
           <div class="mega-picks-list">
             {% for l in pickLists %}
@@ -139,10 +107,6 @@
         <a class="tab-item" href="/destinations" data-tab="/destinations">
           <span class="tab-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="11" r="8"/><path d="m9.5 13.5 1.2-3.8 3.8-1.2-1.2 3.8z"/></svg></span>
           <span>Explore</span>
-        </a>
-        <a class="tab-item" href="/packages" data-tab="/packages">
-          <span class="tab-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z"/><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9"/></svg></span>
-          <span>Packages</span>
         </a>
         <button class="tab-item" type="button" data-action="open-search">
           <span class="tab-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
@@ -208,7 +172,6 @@
               <ul>
                 <li><a href="/destinations">Destinations</a></li>
                 <li><a href="/trip">Go For A Trip</a></li>
-                <li><a href="/packages">Packages</a></li>
                 <li><a href="/picks">Our Picks</a></li>
                 <li><a href="/blog">Blog</a></li>
               </ul>
@@ -275,7 +238,6 @@
             <div class="search-filters">
               <button class="filter-chip is-active" data-filter="all">All Results</button>
               <button class="filter-chip" data-filter="destination">Destinations</button>
-              <button class="filter-chip" data-filter="package">Packages</button>
               <button class="filter-chip" data-filter="blog">Blog</button>
               <button class="filter-chip" data-filter="announcement">Announcements</button>
             </div>
@@ -306,28 +268,6 @@
                   <div class="type">Destination · Backwaters</div>
                   <h4>Kerala — God's Own Country</h4>
                   <p>Houseboat slow-mornings on the Vembanad, spice gardens, and the Western Ghats.</p>
-                </div>
-                <span class="arrow">→</span>
-              </a>
-            </section>
-
-            <section class="search-section">
-              <h6>Packages &amp; Trips</h6>
-              <a class="search-result" data-type="package" href="/package-detail">
-                <div class="thumb"><img loading="lazy" src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=200&q=70" alt=""></div>
-                <div>
-                  <div class="type">Package · 7 days</div>
-                  <h4>Spiti Valley Circuit — Premium Edition</h4>
-                  <p>Kaza, Key Monastery, Chandratal, Langza. Curated by Trans-Himalayan partners.</p>
-                </div>
-                <span class="arrow">→</span>
-              </a>
-              <a class="search-result" data-type="package" href="/package-detail">
-                <div class="thumb"><img loading="lazy" src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=200&q=70" alt=""></div>
-                <div>
-                  <div class="type">Package · 5 days</div>
-                  <h4>Kerala Backwater Houseboat Retreat</h4>
-                  <p>Alleppey to Kumarakom with all-inclusive luxury houseboat stays.</p>
                 </div>
                 <span class="arrow">→</span>
               </a>

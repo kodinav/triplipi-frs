@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  {% include "_seo.njk" %}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="assets/css/mobile.css">
+</head>
+<body>
+  <div data-partial="loader"></div>
+  <div data-partial="header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <nav class="crumbs">
+          <a href="/">Home</a><span>/</span>
+          <a href="/packages">Packages</a><span>/</span>
+          <span>{{ pkg.title or 'Request a quote' }}</span>
+        </nav>
+        <h1>Seek <em>your quote</em>.</h1>
+        <p class="lead">{% if pkg.title %}Your enquiry for <strong>{{ pkg.title | safe }}</strong> goes straight to <strong>{{ provider }}</strong>. They'll respond with options.{% else %}Send your enquiry to our partner — they'll respond with options.{% endif %}</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container-wide">
+        <div class="quote-wrap" data-reveal>
+          <form class="contact-form quote-form" data-form data-form-name="Package Quote — {{ provider }}" data-success-message="Inquiry sent to {{ provider }}. They'll be in touch soon.">
+            <h2 class="quote-title">Seek your quote</h2>
+
+            <!-- routing + context (hidden) -->
+            <input type="hidden" name="_form" value="Package Quote — {{ provider }}">
+            <input type="hidden" name="_to" value="{{ toEmail }}">
+            <input type="hidden" name="package" value="{{ pkg.title | striptags }}">
+            <input type="hidden" name="provider" value="{{ provider }}">
+
+            <div class="field">
+              <label>Your Name <span class="req">*</span></label>
+              <input type="text" name="name" required placeholder="John Doe">
+            </div>
+            <div class="field">
+              <label>Mobile Number <span class="req">*</span></label>
+              <input type="tel" name="mobile" required placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10">
+            </div>
+            <div class="field">
+              <label>Email <span class="req">*</span></label>
+              <input type="email" name="email" required placeholder="you@example.com">
+            </div>
+            <div class="field">
+              <label>Destination</label>
+              <input type="text" name="destination" placeholder="e.g., Bali, Kerala, Paris">
+            </div>
+            <div class="form-grid">
+              <div class="field">
+                <label>No. of Adults</label>
+                <input type="number" name="adults" min="1" value="1">
+              </div>
+              <div class="field">
+                <label>No. of Kids (under 18)</label>
+                <input type="number" name="kids" min="0" value="0">
+              </div>
+            </div>
+            <div class="field">
+              <label>Preferred Travel Date</label>
+              <input type="date" name="travelDate">
+            </div>
+            <div class="field">
+              <label>Your Current Location</label>
+              <input type="text" name="location" placeholder="e.g., Chennai, New York">
+            </div>
+
+            <button type="submit" class="btn btn-brand" style="width: 100%;">Submit Inquiry <span class="arrow">→</span></button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-partial="footer"></div>
+  <div data-partial="search"></div>
+  <div data-partial="consent"></div>
+  <div data-partial="lightbox"></div>
+
+  <script src="assets/js/partials.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

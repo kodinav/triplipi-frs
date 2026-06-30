@@ -105,6 +105,13 @@
         if (activeMega && activeMega !== target) {
           activeMega.classList.remove('is-open');
         }
+        // Anchor list-style dropdowns under their trigger button
+        if (target.classList.contains('mega-list')) {
+          const rect = trigger.getBoundingClientRect();
+          const maxLeft = window.innerWidth - target.offsetWidth - 12;
+          const left = Math.max(12, Math.min(rect.left, maxLeft));
+          target.style.left = Math.round(left) + 'px';
+        }
         target.classList.add('is-open');
         trigger.setAttribute('aria-expanded', 'true');
         backdrop && backdrop.classList.add('is-open');
@@ -284,9 +291,9 @@
     checks.forEach(c => on(c, 'change', updateAgreeState));
     updateAgreeState();
 
-    const open = (provider, url) => {
+    const open = (provider, url, display) => {
       providerNameEl.textContent = provider;
-      providerUrlEl.textContent = url;
+      providerUrlEl.textContent = display || url;
       providerIcoEl.textContent = (provider || '?').charAt(0).toUpperCase();
       checks.forEach(c => c.checked = false);
       updateAgreeState();
@@ -312,10 +319,12 @@
 
     on(agreeBtn, 'click', () => {
       if (agreeBtn.disabled) return;
-      // In production: redirect to pendingHref
-      // window.open(pendingHref, '_blank', 'noopener');
+      const href = pendingHref;
       close();
-      showToast('Redirecting to ' + (providerNameEl.textContent || 'provider') + '…');
+      if (!href || href === '#') return;
+      // External provider / affiliate site → new tab; internal (quote form) → same tab
+      if (/^https?:\/\//i.test(href)) window.open(href, '_blank', 'noopener');
+      else window.location.href = href;
     });
 
     // Delegated so links added later (AJAX-filtered grids, etc.) also work
@@ -325,7 +334,7 @@
       e.preventDefault();
       const provider = link.dataset.provider || 'External Provider';
       const url = link.dataset.url || link.getAttribute('href') || '#';
-      open(provider, url);
+      open(provider, url, link.dataset.display || '');
     });
 
     // Public API for trigger from anywhere
@@ -1009,6 +1018,39 @@
   };
 
   // ============================================================
+  // READ MORE — open the extended destination guide in place
+  // ============================================================
+  const initReadMore = () => {
+    const btn = $('[data-action="toggle-more"]');
+    const panel = $('[data-dest-more]');
+    if (!btn || !panel) return;
+    const label = $('.rm-label', btn) || btn;
+    const revealInner = () =>
+      panel.querySelectorAll('[data-reveal], [data-stagger]').forEach(e => e.classList.add('is-visible'));
+
+    on(btn, 'click', () => {
+      const opening = !panel.classList.contains('is-open');
+      if (opening) {
+        panel.classList.add('is-open');
+        revealInner();
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded', 'true');
+        label.textContent = 'Show Less';
+        // let it grow freely once the open transition finishes
+        setTimeout(() => { if (panel.classList.contains('is-open')) panel.style.maxHeight = 'none'; }, 650);
+      } else {
+        // fix the height first, then animate to 0
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+        requestAnimationFrame(() => { panel.style.maxHeight = '0px'; });
+        panel.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+        label.textContent = 'Read More About Destination';
+        btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  };
+
+  // ============================================================
   // INIT EVERYTHING
   // ============================================================
   const init = () => {
@@ -1033,6 +1075,7 @@
     initSmoothAnchors();
     initCarousel();
     initImageFallback();
+    initReadMore();
   };
 
   if (document.readyState === 'loading') {

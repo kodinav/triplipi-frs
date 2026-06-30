@@ -231,6 +231,12 @@ const SCHEMAS = [
       { name: 'secActivities', label: 'Sub-section 5 — Activities to do', type: 'textarea', rich: true },
       { name: 'secLandmarks', label: 'Sub-section 6 — Landmarks to visit', type: 'textarea', rich: true },
       { name: 'secNotes', label: 'Sub-section 7 — Any other notes', type: 'textarea', rich: true },
+      // ----- "Read More About Destination" — extra in-depth content shown when expanded -----
+      { name: 'extItinerary', label: 'Read more — Suggested itinerary', type: 'textarea', rich: true },
+      { name: 'extFood', label: 'Read more — Food & cuisine', type: 'textarea', rich: true },
+      { name: 'extCulture', label: 'Read more — Culture & festivals', type: 'textarea', rich: true },
+      { name: 'extBudget', label: 'Read more — Costs & budget', type: 'textarea', rich: true },
+      { name: 'extFaq', label: 'Read more — Traveller FAQ', type: 'textarea', rich: true },
       { name: 'gallery', label: 'Detail gallery image URLs (comma-separated)', type: 'csv', ph: 'https://… , https://…' },
     ] },
   { key: 'highlightsHead', group: 'Homepage', label: 'Section heading — Travel Highlights', type: 'object', path: 'home.highlightsHead',
@@ -308,10 +314,11 @@ const SCHEMAS = [
     fields: [
       { name: 'title', label: 'Title', ph: 'e.g. Stargazing in Spiti' },
       { name: 'region', label: 'Region · duration', ph: 'e.g. Himachal · 7 days' },
+      { name: 'duration', label: 'Duration (shown on card)', ph: 'e.g. 6 Nights / 7 Days' },
       { name: 'description', label: 'Description', type: 'textarea', richInline: true, ph: 'e.g. Kaza, Key Monastery, Chandratal lakes. All meals included.' },
       { name: 'image', label: 'Image', type: 'image' },
       { name: 'categories', label: 'Categories (same list as destinations)', type: 'multiselect', optionsFrom: 'destCategories', optionValue: 'slug', optionLabel: 'label' },
-      { name: 'badgeLabel', label: 'Badge', ph: 'Sponsored, Affiliate, Quote Only — or leave blank' },
+      { name: 'badgeLabel', label: 'Type / badge', ph: 'Sponsored or Affiliate' },
       { name: 'badgeClass', label: 'Badge style', ph: 'tag-gold, tag-affiliate — or leave blank' },
       { name: 'metaSpans', label: 'Meta chips (comma-separated)', type: 'csv', ph: 'e.g. 🏔 Premium, ⭐ 4.9, 🛏 6 nights' },
       { name: 'price', label: 'Price', ph: 'e.g. ₹42,500 — or On request' },
@@ -319,8 +326,9 @@ const SCHEMAS = [
       { name: 'ctaLabel', label: 'Button label', ph: 'e.g. Details, Book now' },
       { name: 'ctaHref', label: 'Button link', type: 'url', ph: 'e.g. package-detail.html' },
       { name: 'ctaExternal', label: 'External partner link?', type: 'bool' },
-      { name: 'ctaProvider', label: 'Partner name (if external)', ph: 'e.g. KeralaLuxe' },
-      { name: 'ctaUrl', label: 'Partner URL (if external)', type: 'url', ph: 'https://partner-website.com' },
+      { name: 'ctaProvider', label: 'Provider / partner name', ph: 'e.g. KeralaLuxe' },
+      { name: 'ctaUrl', label: 'Provider website (leave blank → opens the quote form instead)', type: 'url', ph: 'https://partner-website.com' },
+      { name: 'providerEmail', label: 'Provider email (quote form is routed here when there is no website)', ph: 'e.g. bookings@partner.com' },
       // ----- detail page (/package-detail?p=index) -----
       { name: 'destinationSlugs', label: 'Applies to destinations', type: 'multiselect', optionsFrom: 'destinations', optionValue: 'slug', optionLabel: 'name' },
       { name: 'overview', label: 'Detail — Overview', type: 'textarea', rich: true },
@@ -386,8 +394,9 @@ const SCHEMAS = [
   { key: 'destCategories', label: 'Filter categories', type: 'list', path: 'destCategories',
     itemTitle: 'label',
     fields: [
-      { name: 'label', label: 'Label shown on the pill', ph: 'e.g. Mountains & Hills' },
-      { name: 'slug', label: 'Slug (used to tag destinations)', ph: 'lowercase-with-dashes, e.g. mountains-hills' },
+      { name: 'label', label: 'Label shown on the pill / category card', ph: 'e.g. Mountains' },
+      { name: 'slug', label: 'Slug (used to tag destinations & packages)', ph: 'lowercase-with-dashes, e.g. mountains-hills' },
+      { name: 'image', label: 'Round card image (shown on the /categories page)', type: 'image' },
     ] },
 
   { key: 'galleryCategories', label: 'Gallery categories', type: 'list', path: 'galleryCategories',
@@ -615,7 +624,7 @@ const ADMIN_PAGES = [
     sections: [
       { key: 'page-destinations', hint: 'Big title and intro at the top of the page.' },
       { key: 'destinations', hint: 'The master list of destinations. Order here = order everywhere. Tick "homepage" in the Homepage tab to feature one.' },
-      { key: 'destCategories', hint: 'The filter pills above the grid. Counts are automatic — tag each destination with category slugs.' },
+      { key: 'destCategories', hint: 'The universal category taxonomy — powers the filter pills, the /categories page (add a round image per category), and destination/package tagging. Counts are automatic.' },
     ] },
   { key: 'packages', label: 'Packages', view: '/packages',
     intro: 'All travel packages. The homepage shows the first two automatically.',
@@ -895,6 +904,7 @@ const clip = (s, n) => { const t = plain(s); return t.length > n ? t.slice(0, n 
 const PAGE_TITLES = {
   '/': 'A Travel Discovery Platform',
   '/destinations': 'Destinations',
+  '/categories': 'Browse by Category',
   '/packages': 'Travel Packages',
   '/blog': 'The Journal',
   '/announcements': 'Announcements',
@@ -971,6 +981,18 @@ const PAGES = {
     const { items, pagination } = paginate(filtered, req);
     const baseUrl = catObj ? '/destinations?cat=' + encodeURIComponent(activeCat) : '/destinations';
     return { page: c().pages.destinations, cards: items, categories, activeCat, activeCatLabel: catObj ? catObj.label : '', totalAll: all.length, pagination, baseUrl, sponsorSlots: sponsorSlots('destinations', items.length) };
+  },
+  categories: () => {
+    // Circular category grid (8-up). The universal taxonomy (destCategories) —
+    // each links into the destinations index filtered by that category slug.
+    const cats = (c().destCategories || []).filter(isVisible);
+    return {
+      page: {
+        titleHtml: 'Browse by <em>category</em>.',
+        lead: 'Pick a kind of trip — mountains for solitude, beaches for slowness, heritage for the stories etched into stone. Every category opens its own curated index.',
+      },
+      categories: cats,
+    };
   },
   packages: (req) => {
     // FR-PKG-002: only show packages that lead somewhere — a provider/affiliate
@@ -1088,7 +1110,18 @@ const PAGES = {
         ...(dest.region ? { touristType: dest.region } : {}),
       },
     };
-    return { dest, related: all.filter((d) => d.slug !== dest.slug).slice(0, 4), seo };
+    // Affiliate target for the "Go For A Trip" button — opens the consent modal,
+    // then redirects to a partner site. Prefer a package that shares a category
+    // with this destination (or is tagged to it); fall back to any affiliate package.
+    const affPkgs = pub(c().packages || []).filter((p) => p.ctaExternal && (p.ctaUrl || '').trim());
+    const destCats = dest.categories || [];
+    const overlap = (p) => (p.categories || []).filter((cat) => destCats.includes(cat)).length;
+    const aff =
+      affPkgs.find((p) => (p.destinationSlugs || []).includes(dest.slug)) ||
+      affPkgs.slice().sort((a, b) => overlap(b) - overlap(a)).find((p) => overlap(p) > 0) ||
+      affPkgs[0] || null;
+    const affiliate = aff ? { provider: aff.ctaProvider || aff.title, url: aff.ctaUrl } : null;
+    return { dest, related: all.filter((d) => d.slug !== dest.slug).slice(0, 4), affiliate, seo };
   },
   'package-detail': (req) => {
     const all = c().packages || [];
@@ -1113,6 +1146,20 @@ const PAGES = {
       },
     };
     return { pkg, seo };
+  },
+  'package-quote': (req) => {
+    // "Seek your quote" contact form for a package with no provider website —
+    // routed to the package provider's email (Check Packages Tab doc, pp.7-9).
+    const all = c().packages || [];
+    const key = (req && req.query && req.query.p) || '';
+    const pkg = all.find((x) => slugify(x.title) === key) || all[parseInt(key, 10)] || {};
+    const brand = (c().settings || {}).brandName || 'Triplipi';
+    const provider = pkg.ctaProvider || pkg.title || 'our partner';
+    const toEmail = pkg.providerEmail || (c().settings || {}).contactEmail || '';
+    return {
+      pkg, provider, toEmail,
+      seo: { ...defaultSeo(req), title: 'Request a quote — ' + brand, robots: 'noindex, nofollow' },
+    };
   },
   'blog-post': (req) => {
     const all = (c().blog && c().blog.posts) || [];
