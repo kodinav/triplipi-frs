@@ -359,6 +359,7 @@ const SCHEMAS = [
       { name: 'excerpt', label: 'Excerpt', type: 'textarea', richInline: true, ph: 'One or two sentences shown under the title.' },
       { name: 'bylineSpans', label: 'Byline parts (comma-separated)', type: 'csv', ph: 'e.g. 14 min read, By Editor' },
       { name: 'image', label: 'Thumbnail', type: 'image' },
+      { name: 'destinationSlug', label: 'Related destination (for the card’s Know More / Go For A Trip)', type: 'select', optionsFrom: 'destinations', optionValue: 'slug', optionLabel: 'name' },
       // ----- detail page (/blog-post?b=index) -----
       { name: 'layout', label: 'Layout template', type: 'select', options: [
         { value: '1', label: 'Layout 1 — Centered editorial' },
@@ -387,7 +388,8 @@ const SCHEMAS = [
       { name: 'name', label: 'Name', ph: 'e.g. Ladakh' },
       { name: 'region', label: 'Region line', ph: 'e.g. North · India' },
       { name: 'image', label: 'Thumbnail', type: 'image' },
-      { name: 'href', label: 'Link', type: 'url', ph: 'e.g. packages.html or https://…' },
+      { name: 'destinationSlug', label: 'Related destination (for the card’s Know More / Go For A Trip)', type: 'select', optionsFrom: 'destinations', optionValue: 'slug', optionLabel: 'name' },
+      { name: 'href', label: 'Link (optional)', type: 'url', ph: 'e.g. packages.html or https://…' },
     ] },
 
 
@@ -942,6 +944,21 @@ app.use((req, res, next) => {
   next();
 });
 
+/* Best-matching affiliate package for a destination — shared by the destination
+   detail page and the blog cards' "Go For A Trip" consent flow. Prefer a package
+   tagged to the destination, else most category overlap, else any affiliate. */
+function bestAffiliate(dest) {
+  if (!dest) return null;
+  const affPkgs = pub(c().packages || []).filter((p) => p.ctaExternal && (p.ctaUrl || '').trim());
+  const destCats = dest.categories || [];
+  const overlap = (p) => (p.categories || []).filter((cat) => destCats.includes(cat)).length;
+  const aff =
+    affPkgs.find((p) => (p.destinationSlugs || []).includes(dest.slug)) ||
+    affPkgs.slice().sort((a, b) => overlap(b) - overlap(a)).find((p) => overlap(p) > 0) ||
+    affPkgs[0] || null;
+  return aff ? { provider: aff.ctaProvider || aff.title, url: aff.ctaUrl } : null;
+}
+
 const PAGES = {
   index: (req) => {
     const s = c().settings || {};
@@ -980,7 +997,9 @@ const PAGES = {
     const filtered = catObj ? all.filter((d) => (d.categories || []).includes(activeCat)) : all;
     const { items, pagination } = paginate(filtered, req);
     const baseUrl = catObj ? '/destinations?cat=' + encodeURIComponent(activeCat) : '/destinations';
-    return { page: c().pages.destinations, cards: items, categories, activeCat, activeCatLabel: catObj ? catObj.label : '', totalAll: all.length, pagination, baseUrl, sponsorSlots: sponsorSlots('destinations', items.length) };
+    // Each card's "Go For A Trip" opens the affiliate consent (Go For A Trip Tab doc)
+    const cards = items.map((d) => ({ ...d, affiliate: bestAffiliate(d) }));
+    return { page: c().pages.destinations, cards, categories, activeCat, activeCatLabel: catObj ? catObj.label : '', totalAll: all.length, pagination, baseUrl, sponsorSlots: sponsorSlots('destinations', items.length) };
   },
   categories: () => {
     // Circular category grid (8-up). The universal taxonomy (destCategories) —
@@ -1028,7 +1047,14 @@ const PAGES = {
   },
   blog: (req) => {
     const { items, pagination } = paginate(pub(c().blog.posts), req);
-    return { page: c().pages.blog, blog: { ...c().blog, posts: items }, pagination, baseUrl: '/blog', sponsorSlots: sponsorSlots('blog', items.length) };
+    const dests = c().destinations || [];
+    // Each blog card gets "Know More" (→ its destination) + "Go For A Trip"
+    // (→ affiliate consent), per the "Blog Tab" doc.
+    const posts = items.map((p) => {
+      const dest = dests.find((d) => d.slug === p.destinationSlug) || null;
+      return { ...p, dest: dest ? { slug: dest.slug, name: dest.name } : null, affiliate: bestAffiliate(dest) };
+    });
+    return { page: c().pages.blog, blog: { ...c().blog, posts }, pagination, baseUrl: '/blog', sponsorSlots: sponsorSlots('blog', items.length) };
   },
   announcements: (req) => {
     const { items, pagination } = paginate(resolveAnnouncements(pub(c().announcements)), req);
@@ -1061,7 +1087,14 @@ const PAGES = {
     const inList = active ? allPicks.filter((p) => p.list === active.key) : allPicks;
     const { items, pagination } = paginate(inList, req);
     const baseUrl = active ? '/picks?list=' + encodeURIComponent(active.key) : '/picks';
-    return { page: c().pages.picks, picks: items, lists, active, pagination, baseUrl };
+    // Each pick renders as a destination card with Know More + Go For A Trip
+    // (Our Picks Tab doc): resolve its destination for season/tagline + affiliate.
+    const dests = c().destinations || [];
+    const picks = items.map((p) => {
+      const dest = dests.find((d) => d.slug === p.destinationSlug) || null;
+      return { ...p, dest: dest ? { slug: dest.slug, name: dest.name, season: dest.season, tagline: dest.tagline } : null, affiliate: bestAffiliate(dest) };
+    });
+    return { page: c().pages.picks, picks, lists, active, pagination, baseUrl };
   },
   about: () => ({ page: c().pages.about, about: c().about || {}, aboutStats: c().aboutStats || [], aboutOffers: c().aboutOffers || [] }),
   contact: () => ({ page: c().pages.contact, settings: c().settings }),
@@ -1111,16 +1144,8 @@ const PAGES = {
       },
     };
     // Affiliate target for the "Go For A Trip" button — opens the consent modal,
-    // then redirects to a partner site. Prefer a package that shares a category
-    // with this destination (or is tagged to it); fall back to any affiliate package.
-    const affPkgs = pub(c().packages || []).filter((p) => p.ctaExternal && (p.ctaUrl || '').trim());
-    const destCats = dest.categories || [];
-    const overlap = (p) => (p.categories || []).filter((cat) => destCats.includes(cat)).length;
-    const aff =
-      affPkgs.find((p) => (p.destinationSlugs || []).includes(dest.slug)) ||
-      affPkgs.slice().sort((a, b) => overlap(b) - overlap(a)).find((p) => overlap(p) > 0) ||
-      affPkgs[0] || null;
-    const affiliate = aff ? { provider: aff.ctaProvider || aff.title, url: aff.ctaUrl } : null;
+    // then redirects to a partner site (see bestAffiliate).
+    const affiliate = bestAffiliate(dest);
     return { dest, related: all.filter((d) => d.slug !== dest.slug).slice(0, 4), affiliate, seo };
   },
   'package-detail': (req) => {

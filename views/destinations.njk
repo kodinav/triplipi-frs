@@ -39,18 +39,6 @@
       </div>
     </section>
 
-    <!-- Category pills -->
-    <section class="section-sm" style="padding-top: var(--s-7); padding-bottom: 0; border-bottom: 1px solid var(--c-border);">
-      <div class="container-wide">
-        <div class="category-pills" data-reveal>
-          <a class="category-pill{% if not activeCat %} is-active{% endif %}" href="/destinations">All <span class="count">{{ totalAll }}</span></a>
-          {% for cat in categories %}
-          <a class="category-pill{% if cat.slug == activeCat %} is-active{% endif %}" href="/destinations?cat={{ cat.slug }}">{{ cat.label }} <span class="count">{{ cat.count }}</span></a>
-          {% endfor %}
-        </div>
-      </div>
-    </section>
-
     <!-- Destination grid -->
     <section class="section">
       <div class="container-wide">
@@ -66,7 +54,11 @@
               <div class="meta"><span>{{ d.season }}</span>{% if d.tagline %}<span class="dot"></span><span>{{ d.tagline }}</span>{% endif %}</div>
               <div class="feat-actions">
                 <a class="act-details" href="/destination-detail?d={{ d.slug }}">Know More <span>→</span></a>
+                {% if d.affiliate %}
+                <a class="act-pkg" href="{{ d.affiliate.url }}" data-external data-provider="{{ d.affiliate.provider }}" data-url="{{ d.affiliate.url }}">Go For A Trip <span>→</span></a>
+                {% else %}
                 <a class="act-pkg" href="/trip?d={{ d.slug }}">Go For A Trip <span>→</span></a>
+                {% endif %}
               </div>
             </div>
           </article>

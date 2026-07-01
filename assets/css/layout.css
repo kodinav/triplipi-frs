@@ -380,6 +380,12 @@
   padding: var(--s-3);
 }
 .mega-list .mega-picks-list > a:hover { background: var(--c-bone-soft); }
+/* Our Picks dropdown — plain category names, highlight on hover (Our Picks Tab doc) */
+.mega-picks-simple > a { display: block; padding: var(--s-3) var(--s-4); }
+.mega-picks-simple .pl-name { font-weight: var(--fw-semi); font-size: 0.95rem; color: var(--c-text); }
+.mega-picks-simple > a:hover .pl-name { color: var(--c-terracotta); }
+.mega-trip-all { margin-top: 4px; border-top: 1px solid var(--c-border); }
+.mega-trip-all .pl-name { color: var(--c-terracotta); font-weight: var(--fw-bold); }
 
 /* Backdrop when mega open (transparent — just catches outside clicks) */
 .mega-backdrop {

@@ -65,15 +65,28 @@
           </div>
         </div>
 
-        <div class="picks-list" data-stagger>
+        <div class="featured-grid" data-stagger>
 {% for p in picks %}
-          <a href="{{ p.href }}" class="picks-row">
-            <div class="rank">{% set rank = (pagination.offset if pagination else 0) + loop.index %}{% if rank < 10 %}0{% endif %}{{ rank }}</div>
-            <div class="thumb"><img loading="lazy" src="{{ p.image }}" alt=""></div>
-            <div class="info"><div class="region">{{ p.region }}</div><h3 class="name">{{ p.name | safe }}</h3></div>
-            <div class="actions"><a class="btn btn-sm btn-ghost" href="/trip">Trip</a><a class="btn btn-sm" href="/packages">Packages</a></div>
-            <div class="arrow">→</div>
-          </a>
+          <article class="feat-card">
+            <a class="feat-media" href="{% if p.dest %}/destination-detail?d={{ p.dest.slug }}{% else %}{{ p.href or '/destinations' }}{% endif %}" aria-label="{{ p.name | striptags }}">
+              <img loading="lazy" src="{{ p.image }}" alt="{{ p.name | striptags }}">
+            </a>
+            <div class="feat-info">
+              <div class="region">{{ p.region }}</div>
+              <h3 class="name">{{ p.name | safe }}</h3>
+              {% if p.dest and (p.dest.season or p.dest.tagline) %}
+              <div class="meta">{% if p.dest.season %}<span>{{ p.dest.season }}</span>{% endif %}{% if p.dest.season and p.dest.tagline %}<span class="dot"></span>{% endif %}{% if p.dest.tagline %}<span>{{ p.dest.tagline }}</span>{% endif %}</div>
+              {% endif %}
+              <div class="feat-actions">
+                <a class="act-details" href="{% if p.dest %}/destination-detail?d={{ p.dest.slug }}{% else %}{{ p.href or '/destinations' }}{% endif %}">Know More <span>→</span></a>
+                {% if p.affiliate %}
+                <a class="act-pkg" href="{{ p.affiliate.url }}" data-external data-provider="{{ p.affiliate.provider }}" data-url="{{ p.affiliate.url }}">Go For A Trip <span>→</span></a>
+                {% else %}
+                <a class="act-pkg" href="/trip{% if p.dest %}?d={{ p.dest.slug }}{% endif %}">Go For A Trip <span>→</span></a>
+                {% endif %}
+              </div>
+            </div>
+          </article>
 {% else %}
           <p class="adm-empty">No places in this list yet.</p>
 {% endfor %}

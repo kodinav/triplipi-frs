@@ -52,6 +52,36 @@
       <!-- Mega menus -->
       <div class="mega-backdrop"></div>
 
+      <!-- Destination — category list dropdown (Destination Tab doc) -->
+      <div class="mega mega-list" id="mega-destinations">
+        <div class="mega-list-inner">
+          <div class="mega-list-head">
+            <span class="mega-list-title">Destinations — by category</span>
+          </div>
+          <div class="mega-picks-list mega-picks-simple">
+            {% for cat in navCategories %}
+            <a href="/destinations?cat={{ cat.slug }}"><span class="pl-name">{{ cat.label }}</span></a>
+            {% endfor %}
+            <a href="/categories" class="mega-trip-all"><span class="pl-name">All Destination Categories</span></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Go For A Trip — category list dropdown (Go For A Trip Tab doc) -->
+      <div class="mega mega-list" id="mega-trip">
+        <div class="mega-list-inner">
+          <div class="mega-list-head">
+            <span class="mega-list-title">Go for a trip — by category</span>
+          </div>
+          <div class="mega-picks-list mega-picks-simple">
+            {% for cat in navCategories %}
+            <a href="/destinations?cat={{ cat.slug }}"><span class="pl-name">{{ cat.label }}</span></a>
+            {% endfor %}
+            <a href="/categories" class="mega-trip-all"><span class="pl-name">All Destination Categories</span></a>
+          </div>
+        </div>
+      </div>
+
       <!-- Our Picks — compact list dropdown -->
       <div class="mega mega-list" id="mega-picks">
         <div class="mega-list-inner">
@@ -59,9 +89,9 @@
             <span class="mega-list-title">Our most cherished places</span>
             <a class="mega-list-all" href="{{ settings.megaMenus.picksHeadHref or '/picks' }}">View all <span class="arrow">→</span></a>
           </div>
-          <div class="mega-picks-list">
+          <div class="mega-picks-list mega-picks-simple">
             {% for l in pickLists %}
-            <a href="/picks?list={{ l.key }}"><span class="num">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span><span class="pl-name">{{ l.label }}</span><span class="pl-meta">{{ l.meta }}</span></a>
+            <a href="/picks?list={{ l.key }}"><span class="pl-name">{{ l.label }}</span></a>
             {% else %}
             <a href="/picks"><span class="pl-name">Browse our picks</span></a>
             {% endfor %}

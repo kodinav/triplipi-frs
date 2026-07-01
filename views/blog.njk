@@ -76,13 +76,23 @@
         <!-- Grid -->
         <div class="blog-list-grid" data-stagger>
 {% for p in blog.posts %}
-          <a class="blog-card" href="/blog-post?b={{ p.title | slug }}">
-            <div class="thumb"><img loading="lazy" src="{{ p.image }}" alt=""></div>
-            <div class="category">{{ p.category }}</div>
-            <h3>{{ p.title | safe }}</h3>
-            <p class="excerpt">{{ p.excerpt | safe }}</p>
-            <div class="byline">{% for b in p.bylineSpans %}{% if not loop.first %}<span class="sep"></span>{% endif %}<span>{{ b }}</span>{% endfor %}</div>
-          </a>
+          <article class="blog-card">
+            <a class="blog-card-link" href="/blog-post?b={{ p.title | slug }}">
+              <div class="thumb"><img loading="lazy" src="{{ p.image }}" alt=""></div>
+              <div class="category">{{ p.category }}</div>
+              <h3>{{ p.title | safe }}</h3>
+              <p class="excerpt">{{ p.excerpt | safe }}</p>
+              <div class="byline">{% for b in p.bylineSpans %}{% if not loop.first %}<span class="sep"></span>{% endif %}<span>{{ b }}</span>{% endfor %}</div>
+            </a>
+            <div class="blog-card-actions">
+              <a class="act-details" href="{% if p.dest %}/destination-detail?d={{ p.dest.slug }}{% else %}/blog-post?b={{ p.title | slug }}{% endif %}">Know More <span>→</span></a>
+              {% if p.affiliate %}
+              <a class="act-pkg" href="{{ p.affiliate.url }}" data-external data-provider="{{ p.affiliate.provider }}" data-url="{{ p.affiliate.url }}">Go For A Trip <span>→</span></a>
+              {% else %}
+              <a class="act-pkg" href="/trip{% if p.dest %}?d={{ p.dest.slug }}{% endif %}">Go For A Trip <span>→</span></a>
+              {% endif %}
+            </div>
+          </article>
 {% endfor %}
         </div>
 

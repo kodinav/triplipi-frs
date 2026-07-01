@@ -197,38 +197,6 @@
     {{ bn.zone(banners, 'home-mid') }}
 
     <!-- ============================================================
-         MEDIA WALL (FR-HOME-023..027) — films + photos, hover-play, lightbox
-         ============================================================ -->
-{% if mediaItems and mediaItems | length %}
-    <section class="section">
-      <div class="container-wide">
-        <div class="section-head" data-reveal>
-          <div>
-            <p class="overline">{{ home.mediaHead.overline if home.mediaHead else 'In Motion' }}</p>
-            <h2>{{ (home.mediaHead.titleHtml | safe) if home.mediaHead and home.mediaHead.titleHtml else 'The world, <em>in motion</em>.' }}</h2>
-          </div>
-          <a href="/gallery" class="btn-text">Full gallery <span class="arrow">→</span></a>
-        </div>
-
-        <div class="media-wall" data-stagger>
-{% for g in mediaItems %}
-          <a data-lightbox{% if g.type == 'video' %} data-type="video"{% endif %} data-src="{{ g.src }}" data-kind="{{ g.type }}"{% if g.type == 'video' and g.src %} data-hover-video{% endif %} class="gallery-tile media-tile{% if g.type == 'video' %} is-video{% endif %}">
-            {% if g.type == 'video' and g.src %}
-            <video src="{{ g.src }}" poster="{{ g.image }}" muted loop playsinline preload="metadata"></video>
-            {% else %}
-            <img loading="lazy" src="{{ g.image }}" alt="{{ g.alt }}">
-            {% endif %}
-            {% if g.type == 'video' %}<div class="play-icon">▶</div>{% endif %}
-            <div class="overlay"><span class="tag tag-plain">{{ g.label }}</span></div>
-          </a>
-{% endfor %}
-        </div>
-      </div>
-    </section>
-{% endif %}
-
-
-    <!-- ============================================================
          ASK FOR GUIDANCE (FR-HOME-010..011)
          ============================================================ -->
     <section class="section">
