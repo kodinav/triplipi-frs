@@ -857,8 +857,9 @@
   position: fixed;
   inset: 0;
   z-index: var(--z-modal);
-  background: rgba(251, 248, 243, 0.98);
-  backdrop-filter: blur(24px);
+  background: rgba(251, 248, 243, 0.38);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
   opacity: 0;
   visibility: hidden;
   transition: opacity var(--d-base) var(--ease-out),
@@ -896,17 +897,20 @@
 .search-input::placeholder { color: var(--c-stone); }
 .search-close {
   flex-shrink: 0;
-  font-family: var(--ff-text);
-  font-size: var(--fs-micro);
-  text-transform: uppercase;
-  letter-spacing: var(--ls-wider);
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  font-size: 1.1rem;
+  line-height: 1;
   color: var(--c-text);
   background: var(--c-bone);
-  padding: 8px 16px;
-  border-radius: var(--r-pill);
+  border-radius: var(--r-circle);
   border: 1px solid var(--c-border);
   cursor: pointer;
+  transition: background var(--d-fast), color var(--d-fast), border-color var(--d-fast);
 }
+.search-close:hover { background: var(--c-terracotta); color: #fff; border-color: var(--c-terracotta); }
 
 .search-body {
   flex: 1;

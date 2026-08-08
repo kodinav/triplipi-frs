@@ -77,7 +77,7 @@
           </div>
           <div>
             <p>{{ home.featuredHead.blurb | safe }}</p>
-            <a href="/destinations" class="btn-text">View all destinations <span class="arrow">→</span></a>
+            <a href="/categories" class="btn-text">View all destinations <span class="arrow">→</span></a>
           </div>
         </div>
 
@@ -95,7 +95,11 @@
               </div>
               <div class="feat-actions">
                 <a class="act-details" href="/destination-detail?d={{ d.slug }}">Know More <span>→</span></a>
-                <a class="act-pkg" href="/trip?d={{ d.slug }}">Go For A Trip <span>→</span></a>
+                {% if d.affiliate %}
+                <a class="act-pkg" href="{{ d.affiliate.url }}" data-external data-provider="{{ d.affiliate.provider }}" data-url="{{ d.affiliate.url }}">Go For A Trip <span>→</span></a>
+                {% else %}
+                <a class="act-pkg" href="/destinations?cat={{ (d.categories[0]) if d.categories else '' }}">Go For A Trip <span>→</span></a>
+                {% endif %}
               </div>
             </div>
           </article>

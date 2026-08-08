@@ -56,7 +56,7 @@
     <!-- Grid -->
     <section class="section">
       <div class="container-wide">
-        <div class="announce-grid" data-stagger>
+        <div class="announce-grid ann-grid-list" data-stagger>
 {% for a in announcements %}
           <a href="{{ a.href }}" class="ann-card" data-cat="{{ a.category }}"{% if a.external %} data-external data-provider="{{ a.extProvider }}" data-url="{{ a.extUrl }}"{% endif %}>
             <div class="ann-head">

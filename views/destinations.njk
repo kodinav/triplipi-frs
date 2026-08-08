@@ -42,7 +42,7 @@
     <!-- Destination grid -->
     <section class="section">
       <div class="container-wide">
-        <div class="featured-grid" data-stagger>
+        <div class="featured-grid feat-grid-list" data-stagger>
 {% for d in cards %}
           <article class="feat-card">
             <a class="feat-media" href="/destination-detail?d={{ d.slug }}" aria-label="{{ d.name | striptags }} — view details">
@@ -57,7 +57,7 @@
                 {% if d.affiliate %}
                 <a class="act-pkg" href="{{ d.affiliate.url }}" data-external data-provider="{{ d.affiliate.provider }}" data-url="{{ d.affiliate.url }}">Go For A Trip <span>→</span></a>
                 {% else %}
-                <a class="act-pkg" href="/trip?d={{ d.slug }}">Go For A Trip <span>→</span></a>
+                <a class="act-pkg" href="/destinations">Go For A Trip <span>→</span></a>
                 {% endif %}
               </div>
             </div>

@@ -966,7 +966,7 @@ const PAGES = {
     return {
       settings: s,
       home: c().home,
-      destinations: pub(c().destinations).filter((d) => d.featured),
+      destinations: pub(c().destinations).filter((d) => d.featured).map((d) => ({ ...d, affiliate: bestAffiliate(d) })),
       highlights: pub(c().highlights),
       announcements: resolveAnnouncements(pub(c().announcements).filter((a) => a.featured)),
       blogPosts: pub(c().blog.posts).filter((p) => p.featured),
@@ -1238,7 +1238,7 @@ app.get('/sitemap.xml', (req, res) => {
   const urls = [];
   const add = (loc, priority) => urls.push({ loc: origin + loc, priority });
   // Static / listing pages
-  ['/', '/destinations', '/packages', '/blog', '/announcements', '/gallery', '/picks', '/about', '/contact', '/trip', '/shop']
+  ['/', '/destinations', '/packages', '/blog', '/announcements', '/gallery', '/picks', '/about', '/contact', '/shop']
     .forEach((p) => add(p, p === '/' ? '1.0' : '0.8'));
   // Legal docs
   (c().legalDocs || []).forEach((d) => d.slug && add('/legal?p=' + encodeURIComponent(d.slug), '0.3'));
@@ -1256,7 +1256,11 @@ app.get('/sitemap.xml', (req, res) => {
 });
 
 app.get('/', (req, res) => res.render('index.njk', PAGES.index(req)));
+// The 7-step /trip planner is not part of the Go For A Trip flow (per client docs):
+// "Go For A Trip" is the category dropdown -> destination cards -> consent. Retire it.
+app.get('/trip', (req, res) => res.redirect(302, '/destinations'));
 for (const [name, data] of Object.entries(PAGES)) {
+  if (name === 'trip') continue;
   app.get('/' + name, (req, res) => res.render(name + '.njk', data(req)));
 }
 

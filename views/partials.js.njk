@@ -55,9 +55,6 @@
       <!-- Destination — category list dropdown (Destination Tab doc) -->
       <div class="mega mega-list" id="mega-destinations">
         <div class="mega-list-inner">
-          <div class="mega-list-head">
-            <span class="mega-list-title">Destinations — by category</span>
-          </div>
           <div class="mega-picks-list mega-picks-simple">
             {% for cat in navCategories %}
             <a href="/destinations?cat={{ cat.slug }}"><span class="pl-name">{{ cat.label }}</span></a>
@@ -70,9 +67,6 @@
       <!-- Go For A Trip — category list dropdown (Go For A Trip Tab doc) -->
       <div class="mega mega-list" id="mega-trip">
         <div class="mega-list-inner">
-          <div class="mega-list-head">
-            <span class="mega-list-title">Go for a trip — by category</span>
-          </div>
           <div class="mega-picks-list mega-picks-simple">
             {% for cat in navCategories %}
             <a href="/destinations?cat={{ cat.slug }}"><span class="pl-name">{{ cat.label }}</span></a>
@@ -171,17 +165,6 @@
       {% endif %}
       <footer class="site-footer">
         <div class="footer-inner">
-          <div class="footer-hero">
-            <div>
-              <p class="overline">Begin somewhere extraordinary</p>
-              <h2>The next chapter of your story is <em>already being written</em>.</h2>
-            </div>
-            <div>
-              <p>Plan a trip, license a photograph, or simply browse the world for a while. Our editors are here when you're ready.</p>
-              <a href="/contact" class="btn btn-brand">Start with a conversation <span class="arrow">→</span></a>
-            </div>
-          </div>
-
           <div class="footer-cols">
             <div class="footer-col footer-brand-block">
               <a href="/" class="brand">
@@ -201,7 +184,7 @@
               <h6>Explore</h6>
               <ul>
                 <li><a href="/destinations">Destinations</a></li>
-                <li><a href="/trip">Go For A Trip</a></li>
+                <li><a href="/destinations">Go For A Trip</a></li>
                 <li><a href="/picks">Our Picks</a></li>
                 <li><a href="/blog">Blog</a></li>
               </ul>
@@ -239,16 +222,7 @@
             </div>
           </div>
 
-          <div class="footer-bottom">
-            <span>{{ settings.copyright }}</span>
-            <ul>
-              <li><a href="/legal?p=privacy">Privacy</a></li>
-              <li><a href="/legal?p=terms">Terms</a></li>
-              <li><a href="/legal?p=cookies">Cookies</a></li>
-              <li><a href="/contact">Contact</a></li>
-            </ul>
-            <span>Crafted in Bareilly · Built for the curious</span>
-          </div>
+          <div class="footer-credit">Designed &amp; developed by <strong>Abhinav Saxena</strong></div>
         </div>
       </footer>
     `,
@@ -260,7 +234,7 @@
           <div class="search-input-wrap">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
             <input class="search-input" type="search" placeholder="Where to next…" autocomplete="off" spellcheck="false">
-            <button class="search-close">Close (esc)</button>
+            <button class="search-close" aria-label="Close search">✕</button>
           </div>
         </div>
         <div class="search-body">

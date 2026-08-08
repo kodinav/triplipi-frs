@@ -281,6 +281,62 @@
   .btn { min-height: 46px; }
   .btn-sm { min-height: 40px; }
   .category-pills { margin-inline: calc(-1 * var(--pad-page-x)); padding-inline: var(--pad-page-x); }
+
+
+  /* ========================================================
+     9 · FULL-LISTING PAGES — vertical list, not a carousel
+     The home rails (section 6) stay swipeable, but the
+     dedicated Destinations / Our Picks / Announcements
+     listing pages read far better as one scrollable column
+     on a phone than as a one-card-at-a-time swipe.
+     ======================================================== */
+  .featured-grid.feat-grid-list,
+  .announce-grid.ann-grid-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--s-5);
+    overflow: visible;
+    margin-inline: 0;
+    padding: 0;
+    scroll-snap-type: none;
+  }
+  .featured-grid.feat-grid-list > *,
+  .announce-grid.ann-grid-list > * {
+    flex: none;
+    max-width: none;
+    scroll-snap-align: none;
+  }
+  /* full-width cards give the two CTAs room — nudge them legible */
+  .feat-grid-list .feat-actions a { font-size: 0.74rem; }
+
+
+  /* ========================================================
+     10 · PACKAGES — stack the horizontal card sooner
+     The desktop card is image-left / body-right; on a phone
+     that squeezes the price + CTA. Stack it image-over-body
+     across the whole mobile range for a clean, tappable card.
+     ======================================================== */
+  .pkg-list { grid-template-columns: 1fr; gap: var(--s-5); }
+  .pkg-list-card { flex-direction: column; }
+  .pkg-list-media { flex-basis: auto; aspect-ratio: 16 / 10; min-height: 0; }
+  .pkg-list-body { padding: var(--s-5); }
+  .pkg-explore { align-self: stretch; justify-content: center; text-align: center; }
+
+
+  /* ========================================================
+     11 · CATEGORIES — roomier circles, readable labels
+     ======================================================== */
+  .cat-circle-grid { gap: var(--s-6) var(--s-4); }
+  .cat-circle-label { font-size: 0.82rem; }
+
+
+  /* ========================================================
+     12 · QUOTE FORM — full-width, comfortable padding
+     (.quote-form also carries .contact-form, so its inner
+     .form-grid already collapses to one column above.)
+     ======================================================== */
+  .quote-form { padding: var(--s-6); }
+  .quote-title { font-size: 1.35rem; }
 }
 
 

@@ -61,11 +61,11 @@
           </div>
           <div>
             <p style="margin-bottom: var(--s-4); max-width: 480px;">{{ active.blurb | safe if active and active.blurb else 'Curated by our editors — visited personally or independently verified.' }}</p>
-            <a href="/trip" class="btn-text">Go For A Trip <span class="arrow">→</span></a>
+            <a href="/destinations" class="btn-text">Go For A Trip <span class="arrow">→</span></a>
           </div>
         </div>
 
-        <div class="featured-grid" data-stagger>
+        <div class="featured-grid feat-grid-list" data-stagger>
 {% for p in picks %}
           <article class="feat-card">
             <a class="feat-media" href="{% if p.dest %}/destination-detail?d={{ p.dest.slug }}{% else %}{{ p.href or '/destinations' }}{% endif %}" aria-label="{{ p.name | striptags }}">
@@ -82,7 +82,7 @@
                 {% if p.affiliate %}
                 <a class="act-pkg" href="{{ p.affiliate.url }}" data-external data-provider="{{ p.affiliate.provider }}" data-url="{{ p.affiliate.url }}">Go For A Trip <span>→</span></a>
                 {% else %}
-                <a class="act-pkg" href="/trip{% if p.dest %}?d={{ p.dest.slug }}{% endif %}">Go For A Trip <span>→</span></a>
+                <a class="act-pkg" href="/destinations">Go For A Trip <span>→</span></a>
                 {% endif %}
               </div>
             </div>

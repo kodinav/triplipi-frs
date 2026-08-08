@@ -13,7 +13,7 @@
       },
       {
         "label": "Go For A Trip",
-        "href": "/trip",
+        "href": "/destinations",
         "mega": "trip"
       },
       {
@@ -117,6 +117,7 @@
       "tagline": "Monasteries",
       "featured": true,
       "categories": [
+        "popular",
         "mountains-hills",
         "spiritual",
         "snow",
@@ -159,6 +160,7 @@
       "tagline": "High desert",
       "featured": true,
       "categories": [
+        "popular",
         "mountains-hills",
         "deserts",
         "adventure",
@@ -201,6 +203,7 @@
       "tagline": "Coral reefs",
       "featured": true,
       "categories": [
+        "popular",
         "islands",
         "beach",
         "water-sports",
@@ -243,6 +246,7 @@
       "tagline": "Adventure",
       "featured": true,
       "categories": [
+        "popular",
         "mountains-hills",
         "hill-stations",
         "snow",
@@ -285,6 +289,7 @@
       "tagline": "Houseboat",
       "featured": true,
       "categories": [
+        "popular",
         "backwaters",
         "lakes",
         "honeymoon",
@@ -327,6 +332,7 @@
       "tagline": "Root bridges",
       "featured": true,
       "categories": [
+        "popular",
         "waterfalls",
         "hidden-gems",
         "trek",
@@ -368,6 +374,7 @@
       "tagline": "Heritage",
       "featured": true,
       "categories": [
+        "popular",
         "deserts",
         "heritage",
         "forts-palaces"
@@ -408,6 +415,7 @@
       "tagline": "Beaches",
       "featured": true,
       "categories": [
+        "popular",
         "beach",
         "water-sports",
         "honeymoon"
@@ -448,6 +456,7 @@
       "tagline": "Coffee estates",
       "featured": true,
       "categories": [
+        "popular",
         "hill-stations",
         "tea-estates",
         "wildlife",
@@ -489,6 +498,7 @@
       "tagline": "Snow peaks",
       "featured": true,
       "categories": [
+        "popular",
         "mountains-hills",
         "snow",
         "lakes",
@@ -530,6 +540,7 @@
       "tagline": "Tea estates",
       "featured": true,
       "categories": [
+        "popular",
         "hill-stations",
         "tea-estates",
         "wellness",
@@ -571,6 +582,7 @@
       "tagline": "Lagoons",
       "featured": true,
       "categories": [
+        "popular",
         "islands",
         "beach",
         "coral-reefs",
@@ -1596,24 +1608,44 @@
   },
   "destCategories": [
     {
-      "label": "Mountains",
-      "slug": "mountains-hills",
-      "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=400&q=80"
+      "label": "Popular",
+      "slug": "popular",
+      "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&q=80"
     },
     {
-      "label": "Beaches",
+      "label": "Beach",
       "slug": "beach",
       "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=400&q=80"
     },
     {
-      "label": "Islands",
+      "label": "Mountains & Hills",
+      "slug": "mountains-hills",
+      "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=400&q=80"
+    },
+    {
+      "label": "Island",
       "slug": "islands",
       "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=400&q=80"
+    },
+    {
+      "label": "Water sports",
+      "slug": "water-sports",
+      "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=400&q=80"
+    },
+    {
+      "label": "Trek",
+      "slug": "trek",
+      "image": "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=400&q=80"
     },
     {
       "label": "Waterfalls",
       "slug": "waterfalls",
       "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=400&q=80"
+    },
+    {
+      "label": "Hidden Gems",
+      "slug": "hidden-gems",
+      "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=400&q=80"
     },
     {
       "label": "Heritage",
@@ -1629,21 +1661,6 @@
       "label": "Spiritual",
       "slug": "spiritual",
       "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&q=80"
-    },
-    {
-      "label": "Hidden Gems",
-      "slug": "hidden-gems",
-      "image": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=400&q=80"
-    },
-    {
-      "label": "Water Sports",
-      "slug": "water-sports",
-      "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=400&q=80"
-    },
-    {
-      "label": "Treks",
-      "slug": "trek",
-      "image": "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=400&q=80"
     },
     {
       "label": "Deserts",

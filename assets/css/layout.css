@@ -592,6 +592,16 @@
   font-size: var(--fs-small);
   color: rgba(245, 239, 230, 0.55);
 }
+.footer-credit {
+  text-align: center;
+  margin-top: var(--s-5);
+  padding-top: var(--s-5);
+  border-top: 1px solid rgba(245,239,230,0.12);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-wide);
+  color: rgba(245, 239, 230, 0.5);
+}
+.footer-credit strong { color: rgba(245, 239, 230, 0.8); font-weight: var(--fw-semi); }
 .footer-bottom ul {
   display: flex;
   gap: var(--s-6);

@@ -37,19 +37,6 @@
 
     <section class="section">
       <div class="container-wide">
-        <!-- Filter row (FR-PKG-006 — grouping by category) -->
-        {% if categories and categories | length %}
-        <div class="pkg-filters" data-reveal>
-          <span class="label">Filter</span>
-          <div class="pkg-chips">
-            <a class="filter-chip{% if not activeCat %} is-active{% endif %}" href="/packages{% if dParam %}?d={{ dParam }}{% endif %}">All Packages</a>
-            {% for cat in categories %}
-            <a class="filter-chip{% if cat.slug == activeCat %} is-active{% endif %}" href="/packages?{% if dParam %}d={{ dParam }}&{% endif %}cat={{ cat.slug }}">{{ cat.label }}</a>
-            {% endfor %}
-          </div>
-        </div>
-        {% endif %}
-
         {% if destFilter %}
         <div class="pkg-dest-note" data-reveal>Showing packages for <strong>{{ destFilter }}</strong>. <a href="/packages">Show all packages</a></div>
         {% endif %}
