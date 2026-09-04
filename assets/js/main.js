@@ -1025,12 +1025,18 @@
     const panel = $('[data-dest-more]');
     if (!btn || !panel) return;
     const label = $('.rm-label', btn) || btn;
+    // the row holding both buttons (Read More + Go For A Trip) — it follows
+    // the extended guide while open, so the CTAs always sit at the bottom
+    const ctaRow = btn.closest('.dest-foot-cta');
     const revealInner = () =>
       panel.querySelectorAll('[data-reveal], [data-stagger]').forEach(e => e.classList.add('is-visible'));
 
     on(btn, 'click', () => {
       const opening = !panel.classList.contains('is-open');
       if (opening) {
+        // move the buttons below the panel first: it is still 0px tall, so
+        // they stay put visually and get pushed down as the guide expands
+        if (ctaRow) panel.after(ctaRow);
         panel.classList.add('is-open');
         revealInner();
         panel.style.maxHeight = panel.scrollHeight + 'px';
@@ -1045,7 +1051,13 @@
         panel.classList.remove('is-open');
         btn.setAttribute('aria-expanded', 'false');
         label.textContent = 'Read More About Destination';
-        btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // once collapsed, put the buttons back above the (now empty) panel —
+        // same spot on screen, so there is no jump — then bring them into view
+        setTimeout(() => {
+          if (panel.classList.contains('is-open')) return;
+          if (ctaRow) panel.before(ctaRow);
+          btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 650);
       }
     });
   };

@@ -149,6 +149,22 @@
   align-items: center;
   gap: var(--s-3);
 }
+/* Header CTA ("Shop now") — deliberately quiet: a plain outlined box with
+   the label in it, no brand fill, no gold sweep, no lift. It should read
+   as a utility link, not compete with the page's real calls to action. */
+.nav-utils .btn-brand {
+  --btn-bg: transparent;
+  --btn-fg: var(--c-charcoal);
+  --btn-border: var(--c-border);
+}
+.nav-utils .btn-brand::before { display: none; }
+.nav-utils .btn-brand:hover {
+  color: var(--c-ink);
+  border-color: var(--c-ink);
+  background: var(--c-bone-soft);
+  transform: none;
+  box-shadow: none;
+}
 .icon-btn {
   width: 40px; height: 40px;
   display: grid; place-items: center;

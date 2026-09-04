@@ -873,6 +873,8 @@
   display: flex;
   align-items: center;
   padding: var(--s-6) var(--pad-page-x);
+  /* reserve room on the right so the input never runs under the close button */
+  padding-right: calc(var(--pad-page-x) + 56px);
   border-bottom: 1px solid var(--c-border);
 }
 .search-input-wrap {
@@ -895,8 +897,13 @@
   font-style: italic;
 }
 .search-input::placeholder { color: var(--c-stone); }
+/* Close sits in the overlay's top-right corner, where a dialog's close
+   button is expected — not at the end of the input where "enter" would be. */
 .search-close {
-  flex-shrink: 0;
+  position: absolute;
+  top: var(--s-6);
+  right: var(--pad-page-x);
+  z-index: 2;
   display: grid;
   place-items: center;
   width: 42px;
