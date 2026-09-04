@@ -682,6 +682,10 @@
   // ============================================================
   const initForms = () => {
     $$('form[data-form]').forEach(form => {
+      $$('input[type=checkbox][required]', form).forEach(c => on(c, 'change', () => {
+        const wrap = c.closest('.check');
+        if (wrap && c.checked) wrap.classList.remove('is-error');
+      }));
       on(form, 'submit', (e) => {
         e.preventDefault();
         // Validate required fields
@@ -690,14 +694,15 @@
         let unticked = false;
         required.forEach(f => {
           const empty = f.type === 'checkbox' ? !f.checked : !f.value.trim();
-          if (empty) {
-            f.style.borderColor = 'var(--c-ember)';
-            if (f.type === 'checkbox') { f.style.outline = '2px solid var(--c-ember)'; unticked = true; }
-            ok = false;
+          if (f.type === 'checkbox') {
+            // the native box is hidden by .check — flag the drawn .box via its label instead
+            const wrap = f.closest('.check');
+            if (wrap) wrap.classList.toggle('is-error', empty);
+            if (empty) unticked = true;
           } else {
-            f.style.borderColor = '';
-            f.style.outline = '';
+            f.style.borderColor = empty ? 'var(--c-ember)' : '';
           }
+          if (empty) ok = false;
         });
         if (!ok) {
           showToast(unticked ? 'Please agree to the policy to continue' : 'Please complete required fields');

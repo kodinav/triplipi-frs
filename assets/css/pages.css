@@ -1859,7 +1859,6 @@
 }
 /* general vs partner mode swaps a label + dropdown; the inactive pair must stay out of layout */
 .contact-form [hidden] { display: none !important; }
-.contact-form .consent-field a:hover { color: var(--c-terracotta); }
 .contact-info {
   background: var(--c-bone);
   padding: var(--s-9);
@@ -2678,10 +2677,18 @@
   font-size: 0.92rem;
   color: var(--c-text);
 }
-.contact-form .field .check input[type="checkbox"] {
-  width: auto;
-  margin-top: 4px;
+/* consent line: a .field label, but it is running text, not an uppercase field caption */
+.contact-form .consent-field .check {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+  font-size: var(--fs-small);
+  color: var(--c-text-muted);
+  line-height: 1.55;
 }
+.contact-form .consent-field .check a { color: var(--c-gold-deep); text-decoration: underline; }
+.contact-form .consent-field .check .req { margin-left: 2px; }
+.contact-form .check.is-error .box { border-color: var(--c-ember); box-shadow: 0 0 0 3px rgba(208, 85, 39, 0.18); }
 
 
 /* ============================================================

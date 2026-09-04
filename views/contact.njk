@@ -88,10 +88,12 @@
               <label>Your message</label>
               <textarea name="message" rows="6" placeholder="Tell us what you're thinking about — even a half-formed idea is enough to start a conversation."></textarea>
             </div>
-            <div class="field consent-field" style="font-size: var(--fs-small); color: var(--c-text-muted); display: flex; gap: var(--s-3); align-items: flex-start;">
-              <label class="check" style="display: flex; gap: var(--s-2); cursor: pointer;">
-                <input type="checkbox" name="consent" value="Agreed" required style="margin-top: 4px;">
-                <span>I have read and agree to the <a href="/legal?p=privacy" style="color: var(--c-gold-deep); text-decoration: underline;">privacy policy</a> and <a href="/legal?p=terms" style="color: var(--c-gold-deep); text-decoration: underline;">terms &amp; conditions</a>, and consent to my submission being stored so we can respond. <span class="req">*</span></span>
+            <div class="field consent-field">
+              {# .check hides the native input and draws the tick on the .box span that must follow it #}
+              <label class="check">
+                <input type="checkbox" name="consent" value="Agreed" required>
+                <span class="box" aria-hidden="true"></span>
+                <span>I have read and agree to the <a href="/legal?p=privacy">privacy policy</a> and <a href="/legal?p=terms">terms &amp; conditions</a>, and consent to my submission being stored so we can respond. <span class="req">*</span></span>
               </label>
             </div>
             <input type="hidden" name="_form" value="Contact">
