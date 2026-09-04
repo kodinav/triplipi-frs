@@ -113,7 +113,13 @@
               <p style="font-size: var(--fs-micro); color: var(--c-text-muted); margin-top: var(--s-4); text-align: center;">Affiliate disclosure shown on next screen</p>
               {% endif %}
               <hr class="rule" style="margin-block: var(--s-5);">
-              <a href="/contact" class="btn btn-ghost" style="width: 100%;">Request custom quote</a>
+              {# Always goes through the External Redirect Notice first: then straight to
+                 the provider's site, or to the quote form when the package has no URL. #}
+              {% if pkg.ctaExternal and pkg.ctaUrl %}
+              <a href="{{ pkg.ctaUrl }}" class="btn btn-ghost" style="width: 100%;" data-external data-provider="{{ pkg.ctaProvider }}" data-url="{{ pkg.ctaUrl }}">Request custom quote</a>
+              {% else %}
+              <a href="/package-quote?p={{ pkg.title | slug }}" class="btn btn-ghost" style="width: 100%;" data-external data-provider="{{ pkg.ctaProvider or (pkg.title | striptags) }}" data-url="/package-quote?p={{ pkg.title | slug }}" data-display="Secure quote request">Request custom quote</a>
+              {% endif %}
             </div>
           </aside>
 

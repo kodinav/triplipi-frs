@@ -28,7 +28,7 @@
 
           <nav class="nav-primary" aria-label="Primary">
             <a class="nav-link nav-home" href="/" aria-label="Home" title="Home">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 10v8.5A2.5 2.5 0 0 0 8 21h8a2.5 2.5 0 0 0 2.5-2.5V10"/><path d="M9 21v-7a3 3 0 0 1 6 0v7"/><circle cx="12.9" cy="17.6" r=".8" fill="currentColor" stroke="none"/></svg>
             </a>
             {% for link in settings.navLinks %}{% if link.mega and link.mega != 'none' %}
             <button class="nav-link" data-mega="mega-{{ link.mega }}" data-path="{{ link.href }}" aria-haspopup="true" aria-expanded="false">{{ link.label }}</button>
@@ -125,7 +125,7 @@
       <!-- App-style bottom tab bar (mobile only; hidden ≥769px via mobile.css) -->
       <nav class="mobile-tabbar" aria-label="Quick navigation">
         <a class="tab-item" href="/" data-tab="/">
-          <span class="tab-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg></span>
+          <span class="tab-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 10v8.5A2.5 2.5 0 0 0 8 21h8a2.5 2.5 0 0 0 2.5-2.5V10"/><path d="M9 21v-7a3 3 0 0 1 6 0v7"/><circle cx="12.9" cy="17.6" r=".8" fill="currentColor" stroke="none"/></svg></span>
           <span>Home</span>
         </a>
         <a class="tab-item" href="/destinations" data-tab="/destinations">
