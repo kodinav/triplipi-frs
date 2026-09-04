@@ -37,34 +37,14 @@
 
     <section class="section">
       <div class="container-wide">
-        <div class="contact-layout" data-reveal>
+        <div class="contact-layout" id="partner" data-reveal>
 
-          <!-- Channels sidebar -->
+          <!-- Channels sidebar — email is the single point of contact -->
           <aside>
             <div class="channel">
               <div class="lbl">Email</div>
               <a class="val" href="mailto:{{ settings.contactEmail }}">{{ settings.contactEmail }}</a>
-              <div class="hint">For general inquiries, trip planning, and editorial queries.</div>
-            </div>
-            <div class="channel">
-              <div class="lbl">Phone</div>
-              <a class="val" href="tel:+919876543210">+91 98765 43210</a>
-              <div class="hint">Mon to Fri · 10am – 6pm IST</div>
-            </div>
-            <div class="channel">
-              <div class="lbl">Partnerships</div>
-              <a class="val" href="mailto:partners@Triplipi.example">partners@Triplipi.example</a>
-              <div class="hint" id="partner">For verified provider applications, affiliate enquiries, and licensing.</div>
-            </div>
-            <div class="channel">
-              <div class="lbl">Editorial &amp; Press</div>
-              <a class="val" href="mailto:press@Triplipi.example">press@Triplipi.example</a>
-              <div class="hint">Story pitches, interview requests, and review copies.</div>
-            </div>
-            <div class="channel">
-              <div class="lbl">Studio Address</div>
-              <div class="val" style="font-size: 1.1rem; line-height: 1.4;">Civil Lines<br>Bareilly, Uttar Pradesh<br>India · 243001</div>
-              <div class="hint">By appointment only.</div>
+              <div class="hint">For trip planning, package enquiries, partnerships, licensing, and editorial queries.</div>
             </div>
           </aside>
 
@@ -84,8 +64,10 @@
                 <input type="tel" name="phone" required placeholder="+91 ..." pattern="[0-9+\-\s]+">
               </div>
               <div class="field">
-                <label>I'm writing about</label>
-                <select name="subject">
+                {# Same form for everyone; /contact#partner swaps this dropdown for partner packages (main.js) #}
+                <label data-mode="general">I'm writing about</label>
+                <label data-mode="partner" hidden>Partner package</label>
+                <select name="subject" data-mode="general">
                   <option>Planning a trip</option>
                   <option>Package enquiry</option>
                   <option>Photography licensing</option>
@@ -93,21 +75,28 @@
                   <option>Editorial / press</option>
                   <option>Something else</option>
                 </select>
+                <select name="subject" data-mode="partner" hidden disabled>
+                  <option>Enquiring pricing</option>
+                  <option>Silver package</option>
+                  <option>Gold package</option>
+                  <option>Platinum package</option>
+                  <option>Custom partnership</option>
+                </select>
               </div>
             </div>
             <div class="field">
               <label>Your message</label>
               <textarea name="message" rows="6" placeholder="Tell us what you're thinking about — even a half-formed idea is enough to start a conversation."></textarea>
             </div>
-            <div class="field" style="font-size: var(--fs-small); color: var(--c-text-muted); display: flex; gap: var(--s-3); align-items: flex-start;">
+            <div class="field consent-field" style="font-size: var(--fs-small); color: var(--c-text-muted); display: flex; gap: var(--s-3); align-items: flex-start;">
               <label class="check" style="display: flex; gap: var(--s-2); cursor: pointer;">
-                <input type="checkbox" style="margin-top: 4px;">
-                <span>I agree to Triplipi's <a href="/legal?p=privacy" style="color: var(--c-gold-deep); text-decoration: underline;">privacy policy</a> and consent to my submission being stored for the purpose of responding.</span>
+                <input type="checkbox" name="consent" value="Agreed" required style="margin-top: 4px;">
+                <span>I have read and agree to the <a href="/legal?p=privacy" style="color: var(--c-gold-deep); text-decoration: underline;">privacy policy</a> and <a href="/legal?p=terms" style="color: var(--c-gold-deep); text-decoration: underline;">terms &amp; conditions</a>, and consent to my submission being stored so we can respond. <span class="req">*</span></span>
               </label>
             </div>
-            <div style="display: flex; gap: var(--s-3); align-items: center;">
+            <input type="hidden" name="_form" value="Contact">
+            <div>
               <button type="submit" class="btn btn-brand">Send the letter <span class="arrow">→</span></button>
-              <span style="font-size: var(--fs-small); color: var(--c-text-muted); font-family: var(--ff-display); font-style: italic;">— or just call us.</span>
             </div>
           </form>
 

@@ -18,8 +18,33 @@ function ensureFile() {
   }
 }
 
+/* A code deploy can introduce a new default legal document (e.g. the compliance
+   page). Existing sites already have their own content.json, so append any
+   default doc whose slug they have never had — once. Slugs are remembered in
+   `_seededLegal`, so a doc the admin later deletes is not resurrected. */
+function mergeNewLegalDocs(content) {
+  if (!fs.existsSync(DEFAULT_FILE)) return false;
+  let defaults;
+  try { defaults = JSON.parse(fs.readFileSync(DEFAULT_FILE, 'utf8')); } catch (e) { return false; }
+  const live = Array.isArray(content.legalDocs) ? content.legalDocs : (content.legalDocs = []);
+  const seeded = new Set(content._seededLegal || []);
+  const have = new Set(live.map((d) => d.slug));
+  let changed = false;
+  (defaults.legalDocs || []).forEach((d) => {
+    if (!d.slug || seeded.has(d.slug)) return;
+    if (!have.has(d.slug)) { live.push(d); changed = true; }
+    seeded.add(d.slug); changed = true;
+  });
+  if (changed) content._seededLegal = [...seeded];
+  return changed;
+}
+
 function load() {
-  if (!cache) { ensureFile(); cache = JSON.parse(fs.readFileSync(FILE, 'utf8')); }
+  if (!cache) {
+    ensureFile();
+    cache = JSON.parse(fs.readFileSync(FILE, 'utf8'));
+    if (mergeNewLegalDocs(cache)) save();
+  }
   return cache;
 }
 

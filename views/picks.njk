@@ -59,10 +59,6 @@
             <p class="overline">{{ active.label if active else 'Our Picks' }}</p>
             <h2>{{ active.heading | safe if active and active.heading else 'The places we’d send our <em>closest friends</em>.' }}</h2>
           </div>
-          <div>
-            <p style="margin-bottom: var(--s-4); max-width: 480px;">{{ active.blurb | safe if active and active.blurb else 'Curated by our editors — visited personally or independently verified.' }}</p>
-            <a href="/destinations" class="btn-text">Go For A Trip <span class="arrow">→</span></a>
-          </div>
         </div>
 
         <div class="featured-grid feat-grid-list" data-stagger>
@@ -98,8 +94,7 @@
         <div style="text-align: center; margin-top: var(--s-10); padding-top: var(--s-10); border-top: 1px solid var(--c-border);" data-reveal>
           <p class="overline center">Methodology</p>
           <h3 style="font-family: var(--ff-display); font-weight: var(--fw-light); font-size: 1.8rem; margin-bottom: var(--s-4);">How we <em>rank</em> these.</h3>
-          <p style="max-width: 540px; margin: 0 auto var(--s-5);">Each list is curated by our editors — visited personally or independently verified within the last 18 months. Rankings consider season-window, accessibility, cultural depth, and how well a place rewards slow travel.</p>
-          <a href="/about#methodology" class="btn btn-ghost">Read our editorial standards <span class="arrow">→</span></a>
+          <p style="max-width: 540px; margin: 0 auto;">Each list is curated by our editors — visited personally or independently verified within the last 18 months. Rankings consider season-window, accessibility, cultural depth, and how well a place rewards slow travel.</p>
         </div>
       </div>
     </section>

@@ -225,6 +225,8 @@
   .footer-col a { font-size: 0.875rem; }
   .footer-bottom { gap: var(--s-3); }
   .footer-bottom ul { gap: var(--s-4) var(--s-5); }
+  .footer-bottom-bar { grid-template-columns: 1fr; gap: var(--s-2); }
+  .footer-bottom-bar > * { text-align: center; }
 
   /* contact: stack each channel's label / value / hint vertically */
   .channel { flex-direction: column; align-items: flex-start; gap: 4px; }

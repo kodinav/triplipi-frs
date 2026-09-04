@@ -687,16 +687,20 @@
         // Validate required fields
         const required = $$('[required]', form);
         let ok = true;
+        let unticked = false;
         required.forEach(f => {
-          if (!f.value.trim()) {
+          const empty = f.type === 'checkbox' ? !f.checked : !f.value.trim();
+          if (empty) {
             f.style.borderColor = 'var(--c-ember)';
+            if (f.type === 'checkbox') { f.style.outline = '2px solid var(--c-ember)'; unticked = true; }
             ok = false;
           } else {
             f.style.borderColor = '';
+            f.style.outline = '';
           }
         });
         if (!ok) {
-          showToast('Please complete required fields');
+          showToast(unticked ? 'Please agree to the policy to continue' : 'Please complete required fields');
           return;
         }
         // Real submission → /submit (stored in admin Inbox + emailed if SMTP set)
@@ -1018,6 +1022,27 @@
   };
 
   // ============================================================
+  // CONTACT — one page for everyone. /contact#partner ("Become a partner")
+  // keeps the same page but swaps the subject dropdown for partner packages.
+  // ============================================================
+  const initContactMode = () => {
+    const form = $('form.contact-form');
+    if (!form) return;
+    const formName = $('input[name="_form"]', form);
+    const apply = () => {
+      const partner = location.hash === '#partner';
+      $$('[data-mode]', form).forEach(el => {
+        const active = el.dataset.mode === (partner ? 'partner' : 'general');
+        el.hidden = !active;
+        if (el.tagName === 'SELECT') el.disabled = !active;   // only the visible dropdown submits
+      });
+      if (formName) formName.value = partner ? 'Partner application' : 'Contact';
+    };
+    apply();
+    on(window, 'hashchange', apply);
+  };
+
+  // ============================================================
   // READ MORE — open the extended destination guide in place
   // ============================================================
   const initReadMore = () => {
@@ -1072,6 +1097,7 @@
     initActiveNav();
     initMobileNav();
     initSearch();
+    initContactMode();
     initConsentModal();
     initLightbox();
     initReveals();

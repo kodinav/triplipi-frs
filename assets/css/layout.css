@@ -608,8 +608,12 @@
   font-size: var(--fs-small);
   color: rgba(245, 239, 230, 0.55);
 }
-.footer-credit {
-  text-align: center;
+/* Bottom bar — copyright (left) · ownership (centre) · credit (right) */
+.footer-bottom-bar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--s-4);
   margin-top: var(--s-5);
   padding-top: var(--s-5);
   border-top: 1px solid rgba(245,239,230,0.12);
@@ -617,7 +621,9 @@
   letter-spacing: var(--ls-wide);
   color: rgba(245, 239, 230, 0.5);
 }
-.footer-credit strong { color: rgba(245, 239, 230, 0.8); font-weight: var(--fw-semi); }
+.footer-bottom-bar > :nth-child(2) { text-align: center; }
+.footer-bottom-bar > :last-child { text-align: right; }
+.footer-bottom-bar strong { color: rgba(245, 239, 230, 0.8); font-weight: var(--fw-semi); }
 .footer-bottom ul {
   display: flex;
   gap: var(--s-6);
