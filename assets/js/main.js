@@ -73,12 +73,17 @@
   // Mark the nav tab matching the current page (FRS active-underline)
   const initActiveNav = () => {
     const path = (window.location.pathname.replace(/\/+$/, '') || '/');
+    // Several links can share a path ("Destination" and "Go For A Trip" both
+    // lead to /destinations) — underline only the first, best match.
+    let best = null, bestLen = 0;
     $$('.nav-link').forEach((l) => {
       const href = l.getAttribute('href') || l.dataset.path || '';
       const p = href.replace(/\/+$/, '');
       if (!p) return;
-      if (p === path || (p !== '' && p !== '/' && path.indexOf(p) === 0)) l.classList.add('is-active');
+      const hit = p === path || (p !== '/' && path.indexOf(p) === 0);
+      if (hit && p.length > bestLen) { best = l; bestLen = p.length; }
     });
+    if (best) best.classList.add('is-active');
   };
 
   const initMegaMenu = () => {
@@ -105,6 +110,8 @@
         if (activeMega && activeMega !== target) {
           activeMega.classList.remove('is-open');
         }
+        // moving straight from one trigger to the next: only the hovered one may look open
+        triggers.forEach(t => { if (t !== trigger) t.setAttribute('aria-expanded', 'false'); });
         // Anchor list-style dropdowns under their trigger button
         if (target.classList.contains('mega-list')) {
           const rect = trigger.getBoundingClientRect();
