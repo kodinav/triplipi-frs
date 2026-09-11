@@ -1025,12 +1025,17 @@ const PAGES = {
       const tagged = all.filter((p) => (p.destinationSlugs || []).includes(q.d));
       if (tagged.length) { all = tagged; destFilter = (c().destinations.find((x) => x.slug === q.d) || {}).name || q.d; }
     }
-    // category filter (?cat=) — pills drawn from the destination categories
-    const categories = (c().destCategories || []).map((cat) => ({
-      ...cat, count: allPkgs.filter((p) => (p.categories || []).includes(cat.slug)).length,
-    })).filter((cat) => cat.count > 0);
-    const activeCat = q.cat || '';
-    const catObj = categories.find((x) => x.slug === activeCat) || null;
+    // Category rail (?cat=) — the same visible taxonomy as /categories, counted
+    // against whatever ?d= left. Only categories holding a package get a tile,
+    // but a link to an empty one filters to nothing and says so, instead of
+    // silently falling back to every package.
+    const allCats = pub(c().destCategories).map((cat) => ({
+      ...cat, count: all.filter((p) => (p.categories || []).includes(cat.slug)).length,
+    }));
+    const categories = allCats.filter((cat) => cat.count > 0);
+    const catObj = allCats.find((x) => x.slug === q.cat) || null;
+    const activeCat = catObj ? catObj.slug : '';
+    const totalAll = all.length;
     if (catObj) all = all.filter((p) => (p.categories || []).includes(activeCat));
     const { items, pagination } = paginate(all, req);
     // preserve active filters across pagination
@@ -1041,7 +1046,8 @@ const PAGES = {
     return {
       page: c().pages.packages, packages: items, pagination, baseUrl,
       sponsorSlots: sponsorSlots('packages', items.length),
-      destFilter, categories, activeCat, dParam: q.d || '',
+      destFilter, categories, activeCat, activeCatLabel: catObj ? catObj.label : '',
+      totalAll, dParam: q.d || '',
     };
   },
   blog: (req) => {

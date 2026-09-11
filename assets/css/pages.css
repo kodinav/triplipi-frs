@@ -1014,43 +1014,63 @@
 .pkg-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
 @media (max-width: 1024px) { .pkg-grid.cols-2 { grid-template-columns: 1fr; } }
 
-.pkg-filters {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--s-4);
-  margin-bottom: var(--s-7);
-  padding-bottom: var(--s-6);
+/* Category rail (FR-PKG-006) — the /categories round tiles, compact, each
+   linking to /packages?cat=…#packages. The active tile gets a terracotta
+   ring; clicks land on the rail rather than back under the page hero. */
+#packages { scroll-margin-top: calc(var(--header-h) + var(--s-4)); }
+.pkg-cats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: var(--s-6) var(--s-3);
+  margin-bottom: var(--s-8);
+  padding-bottom: var(--s-7);
   border-bottom: 1px solid var(--c-border);
 }
-.pkg-filters .label {
-  flex-shrink: 0;
-  font-size: var(--fs-micro);
-  text-transform: uppercase;
-  letter-spacing: var(--ls-wider);
-  font-weight: var(--fw-semi);
-  color: var(--c-text-muted);
-  padding-top: 11px;          /* line up with the first row of chips */
-}
-.pkg-chips {
+.pkg-cat {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  color: var(--c-text);
 }
-.pkg-filters .filter-chip { line-height: 1.1; }
-/* Active chip uses the site accent (was a clashing blue) */
-.pkg-filters .filter-chip.is-active {
-  background: var(--c-terracotta);
-  border-color: var(--c-terracotta);
-  color: #fff;
+.pkg-cat-img {
+  width: 84px;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--r-circle);
+  overflow: hidden;
+  background: var(--c-bone-soft);
+  box-shadow: 0 8px 18px rgba(35, 31, 32, 0.12);
+  transition: transform var(--d-base) var(--ease-out),
+              box-shadow var(--d-base) var(--ease-out);
 }
-.pkg-filters .filter-chip:hover:not(.is-active) {
-  border-color: var(--c-terracotta);
+.pkg-cat-img img {
+  width: 100%; height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform var(--d-cinema) var(--ease-out);
+}
+.pkg-cat-all { display: grid; place-items: center; background: var(--c-cream); color: var(--c-terracotta); }
+.pkg-cat-all svg { width: 32px; height: 32px; }
+.pkg-cat-label { font-weight: var(--fw-semi); font-size: 0.88rem; line-height: 1.2; color: var(--c-charcoal); }
+.pkg-cat-count { font-size: var(--fs-micro); color: var(--c-text-muted); }
+.pkg-cat:hover .pkg-cat-img { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(35, 31, 32, 0.2); }
+.pkg-cat:hover .pkg-cat-img img { transform: scale(1.06); }
+.pkg-cat:hover .pkg-cat-label { color: var(--c-terracotta); }
+.pkg-cat:focus-visible { outline: none; }
+.pkg-cat:focus-visible .pkg-cat-img { box-shadow: 0 0 0 3px #fff, 0 0 0 5px #34689D; }
+/* after :hover so the ring survives hovering the active tile */
+.pkg-cat.is-active .pkg-cat-img { box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--c-terracotta); }
+.pkg-cat.is-active .pkg-cat-label { color: var(--c-terracotta); }
+
+.pkg-empty-all {
+  display: inline-flex;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
   color: var(--c-terracotta);
+  font-weight: var(--fw-semi);
 }
-@media (max-width: 560px) {
-  .pkg-filters { flex-direction: column; gap: var(--s-3); }
-  .pkg-filters .label { padding-top: 0; }
-}
+.pkg-empty-all:hover { color: var(--c-terracotta-deep); }
 
 /* Notice shown when packages are filtered by ?d= destination */
 .pkg-dest-note {

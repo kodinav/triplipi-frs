@@ -29,14 +29,37 @@
   <main>
     <section class="page-hero">
       <div class="page-hero-inner">
-        <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Packages</span></nav>
+        <nav class="crumbs"><a href="/">Home</a><span>/</span>{% if activeCatLabel %}<a href="/packages">Packages</a><span>/</span><span>{{ activeCatLabel }}</span>{% else %}<span>Packages</span>{% endif %}</nav>
         <h1>{{ page.titleHtml | safe }}</h1>
         <p class="lead">{{ page.lead | safe }}</p>
       </div>
     </section>
 
     <section class="section">
-      <div class="container-wide">
+      <div class="container-wide" id="packages">
+        {# Category rail (FR-PKG-006) — the /categories taxonomy as round tiles.
+           Links carry #packages so a click lands on the rail, not the hero.
+           No data-reveal: its leftover clip-path: inset(0) cuts off the
+           active ring, and navigation shouldn't fade in after every click. #}
+        {% if categories and categories | length %}
+        <nav class="pkg-cats" aria-label="Package categories">
+          <a class="pkg-cat{% if not activeCat %} is-active{% endif %}" href="/packages{% if dParam %}?d={{ dParam | urlencode }}{% endif %}#packages"{% if not activeCat %} aria-current="page"{% endif %}>
+            <span class="pkg-cat-img pkg-cat-all" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg>
+            </span>
+            <span class="pkg-cat-label">All</span>
+            <span class="pkg-cat-count">{{ totalAll }}</span>
+          </a>
+          {% for cat in categories %}
+          <a class="pkg-cat{% if cat.slug == activeCat %} is-active{% endif %}" href="/packages?{% if dParam %}d={{ dParam | urlencode }}&{% endif %}cat={{ cat.slug }}#packages"{% if cat.slug == activeCat %} aria-current="page"{% endif %}>
+            <span class="pkg-cat-img"><img loading="lazy" src="{{ cat.image }}" alt=""></span>
+            <span class="pkg-cat-label">{{ cat.label }}</span>
+            <span class="pkg-cat-count">{{ cat.count }}</span>
+          </a>
+          {% endfor %}
+        </nav>
+        {% endif %}
+
         {% if destFilter %}
         <div class="pkg-dest-note" data-reveal>Showing packages for <strong>{{ destFilter }}</strong>. <a href="/packages">Show all packages</a></div>
         {% endif %}
@@ -68,7 +91,12 @@
         {{ pg.nav(pagination, baseUrl) }}
         {% else %}
         <div class="pkg-empty" data-reveal>
+          {% if activeCat %}
+          <p>No packages in {{ activeCatLabel }} <em>yet.</em></p>
+          <a class="pkg-empty-all" href="/packages{% if dParam %}?d={{ dParam | urlencode }}{% endif %}#packages">Show all packages <span class="arrow">→</span></a>
+          {% else %}
           <p>We are updating this section. <em>Package updates coming soon.</em></p>
+          {% endif %}
         </div>
         {% endif %}
       </div>

@@ -1055,6 +1055,19 @@
   };
 
   // ============================================================
+  // PACKAGES CATEGORY RAIL — on phones the rail is one swipeable row, so
+  // after picking a category bring its (now active) tile into view instead
+  // of leaving the row parked back at "All".
+  // ============================================================
+  const initPkgCatRail = () => {
+    const rail = $('.pkg-cats');
+    const active = rail && $('.pkg-cat.is-active', rail);
+    if (!active || rail.scrollWidth <= rail.clientWidth) return;
+    const offset = active.getBoundingClientRect().left - rail.getBoundingClientRect().left;
+    rail.scrollLeft += offset - (rail.clientWidth - active.offsetWidth) / 2;
+  };
+
+  // ============================================================
   // READ MORE — open the extended destination guide in place
   // ============================================================
   const initReadMore = () => {
@@ -1110,6 +1123,7 @@
     initMobileNav();
     initSearch();
     initContactMode();
+    initPkgCatRail();
     initConsentModal();
     initLightbox();
     initReveals();

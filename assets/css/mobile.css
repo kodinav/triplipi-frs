@@ -319,6 +319,24 @@
   .pkg-list-media { flex-basis: auto; aspect-ratio: 16 / 10; min-height: 0; }
   .pkg-list-body { padding: var(--s-5); }
   .pkg-explore { align-self: stretch; justify-content: center; text-align: center; }
+  /* category rail: one swipeable row instead of a tall wall of circles.
+     Padding keeps the active ring and hover lift inside the scroll box,
+     which clips on both axes once overflow-x is set. */
+  .pkg-cats {
+    display: flex;
+    gap: var(--s-3);
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding: 8px 6px var(--s-5);
+    margin-bottom: var(--s-6);
+    scrollbar-width: none;
+  }
+  .pkg-cats::-webkit-scrollbar { display: none; }
+  .pkg-cat { flex: 0 0 76px; scroll-snap-align: start; }
+  .pkg-cat-img { width: 64px; }
+  .pkg-cat-all svg { width: 26px; height: 26px; }
+  .pkg-cat-label { font-size: 0.78rem; }
+  #packages { scroll-margin-top: calc(var(--header-h-mobile) + var(--s-3)); }
 
 
   /* ========================================================
