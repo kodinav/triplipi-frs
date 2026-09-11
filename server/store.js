@@ -39,11 +39,57 @@ function mergeNewLegalDocs(content) {
   return changed;
 }
 
+/* One-time content migrations for changes a code deploy can't make by itself
+   (the live content.json is never re-seeded). Each id runs once and is
+   remembered in `_migrations`, so an admin's later edits are never undone. */
+const MIGRATIONS = [
+  {
+    // Client "Travel Tips Tab" doc: the Gallery tab is renamed Travel Tips.
+    id: 'travel-tips',
+    run(content, defaults) {
+      const nav = content.settings && Array.isArray(content.settings.navLinks) ? content.settings.navLinks : null;
+      if (nav) {
+        const gallery = nav.find((l) => String(l.href || '').replace(/\/+$/, '') === '/gallery');
+        if (gallery) Object.assign(gallery, { label: 'Travel Tips', href: '/travel-tips', mega: 'none' });
+        else if (!nav.some((l) => l.href === '/travel-tips')) {
+          const at = nav.findIndex((l) => l.href === '/about');
+          nav.splice(at < 0 ? nav.length : at, 0, { label: 'Travel Tips', href: '/travel-tips', mega: 'none' });
+        }
+      }
+      content.pages = content.pages || {};
+      if (!content.pages['travel-tips']) content.pages['travel-tips'] = (defaults.pages || {})['travel-tips'] || {};
+      if (!Array.isArray(content.travelTips)) content.travelTips = defaults.travelTips || [];
+      // Gallery remnants that would otherwise point at a page that no longer exists
+      (content.aboutOffers || []).forEach((o) => {
+        if (o.linkHref !== '/gallery') return;
+        o.linkHref = '/blog';
+        if (o.linkLabel === 'Visit the gallery') o.linkLabel = 'Read the blog';
+      });
+      (content.announcements || []).forEach((a) => {
+        if (a.href === '/gallery' || a.section === 'gallery') a.archived = true;   // kept in admin, hidden on site
+      });
+    },
+  },
+];
+
+function runMigrations(content) {
+  const done = new Set(content._migrations || []);
+  const pending = MIGRATIONS.filter((m) => !done.has(m.id));
+  if (!pending.length) return false;
+  let defaults = {};
+  try { defaults = JSON.parse(fs.readFileSync(DEFAULT_FILE, 'utf8')); } catch (e) { /* run with no defaults */ }
+  pending.forEach((m) => { m.run(content, defaults); done.add(m.id); });
+  content._migrations = [...done];
+  return true;
+}
+
 function load() {
   if (!cache) {
     ensureFile();
     cache = JSON.parse(fs.readFileSync(FILE, 'utf8'));
-    if (mergeNewLegalDocs(cache)) save();
+    const legal = mergeNewLegalDocs(cache);
+    const migrated = runMigrations(cache);
+    if (legal || migrated) save();
   }
   return cache;
 }

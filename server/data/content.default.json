@@ -27,8 +27,8 @@
         "mega": "picks"
       },
       {
-        "label": "Gallery",
-        "href": "/gallery",
+        "label": "Travel Tips",
+        "href": "/travel-tips",
         "mega": "none"
       },
       {
@@ -774,7 +774,8 @@
       "title": "Twelve new films added to the gallery",
       "excerpt": "Drone footage from Spiti, Sikkim, and the Andaman reef — now viewable in 4K.",
       "linkLabel": "View gallery",
-      "featured": false
+      "featured": false,
+      "archived": true
     },
     {
       "href": "/picks",
@@ -1410,6 +1411,78 @@
       "alt": ""
     }
   ],
+  "travelTips": [
+    {
+      "title": "How to Plan a Trip",
+      "image": "https://images.unsplash.com/photo-1497302347632-904729bc24aa?w=1600&q=80",
+      "imageAlt": "A map, notebook and pencil laid out for planning a trip",
+      "body": "<p><strong>Start with the season, not the place.</strong> The same destination can be a different trip from one month to the next — Ladakh is at its best from roughly June to September, the Kerala backwaters are calmest after the monsoon, and Rajasthan is most comfortable from October to March. Choose your travel window first, then shortlist the places that shine in it.</p><p><strong>Set a budget with room to breathe.</strong> Add up transport, stays, food and entry fees, then keep 10–15% aside for what no itinerary predicts: a missed connection, a day of rain, a guide worth hiring.</p><p><strong>Plan fewer stops and stay longer.</strong> Every change of base costs half a day of packing and transit. Two or three bases with day trips usually beat a new hotel every night, and they leave space for the places you only discover once you arrive.</p><p><strong>Book the bottlenecks early; keep the rest flexible.</strong> Long-distance trains, flights and peak-season stays sell out first, and some regions — parts of Sikkim and Arunachal Pradesh, for example — need permits arranged in advance. Leave meals and most activities open.</p>",
+      "link1Label": "Compare flights, trains and hotels",
+      "link1Url": "https://bookings.example.com",
+      "link2Label": "Get a free trip-planning checklist",
+      "link2Url": "https://planner.example.com"
+    },
+    {
+      "title": "What to Pack for a Trip",
+      "image": "https://images.unsplash.com/photo-1495745190033-64f95ea0d02f?w=1600&q=80",
+      "imageAlt": "A backpack, flip-flops, shorts and swimwear laid out on sand, ready to pack",
+      "body": "<p><strong>Pack for the weather you'll actually get.</strong> Check the forecast for every stop, not just the first. Mountains swing from warm afternoons to near-freezing nights, and coastal humidity makes cotton slow to dry — layers handle both better than bulk.</p><p><strong>Build a capsule, not a wardrobe.</strong> Choose clothes in a few colours that all work together, plan to re-wear, and allow for laundry. Carry something that covers shoulders and knees for temples, gurdwaras and mosques.</p><p><strong>Keep essentials within reach.</strong> Your day bag should hold ID, medicines, a charger, a water bottle and a change of clothes, so a delayed checked bag is an inconvenience rather than a crisis.</p><p><strong>Leave room on the way out.</strong> Packing cubes keep things findable, and a bag that isn't full on departure means you won't be choosing between a handloom shawl and your shoes on the way home.</p>",
+      "link1Label": "Shop packing cubes and travel bags",
+      "link1Url": "https://travelgear.example.com",
+      "link2Label": "Download a printable packing list",
+      "link2Url": "https://packinglist.example.com"
+    },
+    {
+      "title": "Tech & Gear for a Trip",
+      "image": "https://images.unsplash.com/photo-1414408718521-f6f6198e9917?w=1600&q=80",
+      "imageAlt": "Travel essentials laid out flat: camera, phone, tablet, sunglasses and a bag",
+      "body": "<p><strong>Plan your power first.</strong> A 10,000–20,000 mAh power bank, a multi-port charger and a spare cable cover most trips. Power banks belong in your cabin bag — airlines don't allow them in checked luggage. India uses Type C, D and M sockets, so visitors should pack a universal adapter.</p><p><strong>Make your phone work offline.</strong> Download maps, translation packs, tickets and boarding passes before you lose signal. In the mountains and on long rail journeys, connectivity can disappear for hours at a time.</p><p><strong>Protect what you carry.</strong> Back up photos whenever you're on Wi-Fi, switch on device-location tracking, and use a padded sleeve or dry bag for cameras around water, sand and dust.</p><p><strong>Bring only the gear you'll use.</strong> A phone with a good camera is enough for most travellers. If you do carry a dedicated camera, one versatile lens and a light tripod usually earn their weight; the rest can stay home.</p>",
+      "link1Label": "Shop power banks and travel adapters",
+      "link1Url": "https://gadgets.example.com",
+      "link2Label": "Compare travel SIM and eSIM plans",
+      "link2Url": "https://esim.example.com"
+    },
+    {
+      "title": "Travel Safety Tips",
+      "image": "https://images.unsplash.com/photo-1715645978910-3fb741bcdffd?w=1600&q=80",
+      "imageAlt": "A traveller with a backpack walking along a busy city street",
+      "body": "<p><strong>Share your plans.</strong> Leave your itinerary and stay details with someone at home and check in at agreed times, especially before treks, long drives or trips into areas with patchy signal.</p><p><strong>Keep valuables spread out.</strong> Split cash and cards between your wallet, your day bag and your room, carry a photocopy of your ID, and keep the originals secure. Use lockers where your stay offers them.</p><p><strong>Choose transport carefully.</strong> Use registered taxis, app-based cabs or prepaid airport counters, agree the fare before you set off, and avoid arriving somewhere unfamiliar late at night when you can.</p><p><strong>Know who to call.</strong> In India, 112 is the single emergency number for police, fire and ambulance. Save it with your stay's phone number — and, if you're visiting from abroad, your embassy or consulate.</p>",
+      "link1Label": "Find verified local guides",
+      "link1Url": "https://guides.example.com",
+      "link2Label": "Book airport transfers with a trusted partner",
+      "link2Url": "https://transfers.example.com"
+    },
+    {
+      "title": "Safety & Insurance",
+      "image": "https://images.unsplash.com/photo-1600091474842-83bb9c05a723?w=1600&q=80",
+      "imageAlt": "A first aid kit with medicines and a stethoscope",
+      "body": "<p><strong>Buy cover when you book, not when you leave.</strong> Cancellation benefits usually apply only to events that happen after you've bought the policy, so the earlier you buy it, the more of your trip it protects.</p><p><strong>Read what's actually covered.</strong> Check the medical limits, emergency evacuation, trip cancellation and lost or delayed baggage. Adventure activities such as high-altitude trekking, scuba diving and rafting are often excluded unless you add them.</p><p><strong>Carry a small medical kit.</strong> Keep prescription medicines in their original packaging with a copy of the prescription, plus basics like oral rehydration salts, antiseptic, plasters and motion-sickness tablets. At altitude, give yourself time to acclimatise.</p><p><strong>Keep your policy within reach.</strong> Save the policy number and the insurer's 24-hour helpline on your phone and on paper. If you need treatment, call them first where you can — many claims depend on it.</p>",
+      "link1Label": "Compare travel insurance plans",
+      "link1Url": "https://insurance.example.com",
+      "link2Label": "Add adventure-sports cover",
+      "link2Url": "https://adventurecover.example.com"
+    },
+    {
+      "title": "Visa & Passports Tips",
+      "image": "https://images.unsplash.com/photo-1655722725332-9925c96dd627?w=1600&q=80",
+      "imageAlt": "A passport open to pages of visa stamps",
+      "body": "<p><strong>Check your passport's validity first.</strong> Many countries require it to be valid for at least six months beyond your return date, with blank pages for entry stamps. Renewals can take weeks, so check before you book anything.</p><p><strong>Confirm the visa you need — including in transit.</strong> Requirements depend on your nationality and your route, and even a layover can call for a transit visa. Always check the destination's official government or embassy website rather than forums.</p><p><strong>Apply early and keep copies.</strong> Where an e-visa is available it's usually the quickest route, but still leave time. Keep digital and paper copies of your passport, visa and bookings, stored separately from the originals.</p><p><strong>Match your documents exactly.</strong> The name on your tickets, visa and bookings should match your passport exactly. A small mismatch can mean being refused boarding.</p>",
+      "link1Label": "Get help with your visa application",
+      "link1Url": "https://visaservices.example.com",
+      "link2Label": "Book passport photos and document services",
+      "link2Url": "https://documents.example.com"
+    },
+    {
+      "title": "How to Work Remotely and Travel",
+      "image": "https://images.unsplash.com/photo-1536300099515-6c61b290b654?w=1600&q=80",
+      "imageAlt": "Working on a laptop at a café table by the window",
+      "body": "<p><strong>Test the connection before you commit.</strong> Ask your stay for a recent speed test, read reviews that mention Wi-Fi, and keep a mobile data plan as backup. Coworking spaces in cities and popular hubs such as Goa and Rishikesh make a reliable fallback.</p><p><strong>Slow down.</strong> Staying a week or more in one place makes work predictable, and long-stay rates are often cheaper per night. Save the travel days for weekends.</p><p><strong>Protect your working hours.</strong> Agree core hours that overlap with your team's time zone, block travel time in your calendar, and keep one dependable setup — a laptop stand and good headphones go a long way.</p><p><strong>Sort the admin before you go.</strong> Check your employer's policy on working from another location and whether your visa permits remote work — tourist visas often don't. Use a VPN on public networks and keep your work backed up.</p>",
+      "link1Label": "Find stays with verified fast Wi-Fi",
+      "link1Url": "https://workstays.example.com",
+      "link2Label": "Book a coworking day pass",
+      "link2Url": "https://cowork.example.com"
+    }
+  ],
   "picks": [
     {
       "href": "/destination-detail",
@@ -1592,6 +1665,10 @@
     "gallery": {
       "titleHtml": "A visual <em>archive</em>.",
       "lead": "Photographs and footage from the road — fifty videos and fifty images, taken by our editors and trusted contributors. Hover to preview. Click for the full-screen view."
+    },
+    "travel-tips": {
+      "titleHtml": "Travel <em>Tips</em>",
+      "lead": "Practical advice for every stage of a journey — planning and packing, staying safe, sorting your paperwork, and working on the road."
     },
     "picks": {
       "titleHtml": "Four lists. Twenty places each. <em>One careful index</em>.",
@@ -2122,8 +2199,8 @@
     {
       "title": "Original photography & writing",
       "body": "<p>A growing archive of editor-shot photography and long-form travel writing — available for licensing through our Shop, and free to read on the Blog. We would rather publish less and mean more.</p>",
-      "linkLabel": "Visit the gallery",
-      "linkHref": "/gallery"
+      "linkLabel": "Read the blog",
+      "linkHref": "/blog"
     }
   ]
 }

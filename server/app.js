@@ -165,8 +165,8 @@ const SCHEMAS = [
   { key: 'nav', group: 'Navbar', label: 'Header navigation links', type: 'list', path: 'settings.navLinks',
     itemTitle: 'label',
     fields: [
-      { name: 'label', label: 'Label', ph: 'e.g. Gallery' },
-      { name: 'href', label: 'Link', type: 'url', ph: 'e.g. /gallery or https://…' },
+      { name: 'label', label: 'Label', ph: 'e.g. Travel Tips' },
+      { name: 'href', label: 'Link', type: 'url', ph: 'e.g. /travel-tips or https://…' },
       { name: 'mega', label: 'Dropdown menu', type: 'select', options: [
         { value: 'none', label: 'No dropdown — plain link' },
         { value: 'destinations', label: 'Opens the Destination categories dropdown' },
@@ -297,7 +297,7 @@ const SCHEMAS = [
         { value: 'picks', label: 'Our Picks' },
         { value: 'packages', label: 'Check Packages' },
         { value: 'shop', label: 'Shop' },
-        { value: 'gallery', label: 'Gallery' },
+        { value: 'travel-tips', label: 'Travel Tips' },
         { value: 'blog', label: 'A blog post' },
         { value: 'external', label: 'External / affiliate website (consent-gated)' },
         { value: 'url', label: 'Any internal URL' },
@@ -488,7 +488,6 @@ const SCHEMAS = [
       { name: 'linkLabel', label: 'Secondary button label (optional)', ph: 'e.g. View packages — leave blank for none' },
       { name: 'linkUrl', label: 'Secondary button link (optional)', type: 'url', ph: 'e.g. packages.html' },
       { name: 'pages', label: 'Show on pages', type: 'multiselect', options: [
-        { value: 'gallery', label: 'Gallery' },
         { value: 'packages', label: 'Packages' },
         { value: 'blog', label: 'Blog' },
         { value: 'destinations', label: 'Destinations' },
@@ -535,6 +534,20 @@ const SCHEMAS = [
       { name: 'inFooter', label: 'Show in footer “Company” column?', type: 'bool' },
     ] },
 
+  /* ----- Travel Tips (formerly the Gallery tab — client "Travel Tips Tab" doc) ----- */
+  { key: 'travelTips', label: 'Travel tip sections', type: 'list', path: 'travelTips',
+    itemTitle: 'title',
+    fields: [
+      { name: 'title', label: 'Section name', ph: 'e.g. How to Plan a Trip' },
+      { name: 'image', label: 'Representational image (one per section)', type: 'image' },
+      { name: 'imageAlt', label: 'Image description (for screen readers)', ph: 'e.g. A map and notebook laid out for trip planning' },
+      { name: 'body', label: 'Text content', type: 'textarea', rich: true },
+      { name: 'link1Label', label: 'Affiliate / sponsor link 1 — text', ph: 'e.g. Compare flights and hotels' },
+      { name: 'link1Url', label: 'Affiliate / sponsor link 1 — URL', type: 'url', ph: 'https://partner-website.com' },
+      { name: 'link2Label', label: 'Affiliate / sponsor link 2 — text', ph: 'e.g. Download a trip-planning checklist' },
+      { name: 'link2Url', label: 'Affiliate / sponsor link 2 — URL', type: 'url', ph: 'https://partner-website.com' },
+    ] },
+
   /* ----- About page sections (FR-PAGES-001) ----- */
   { key: 'about', group: 'About', label: 'About — story, mission & CTA', type: 'object', path: 'about',
     fields: [
@@ -579,11 +592,9 @@ const SCHEMAS = [
     path: 'blog.posts', itemTitle: 'title' },
   { key: 'pick-packages', label: 'Pick packages for the homepage', type: 'picker',
     path: 'packages', itemTitle: 'title' },
-  { key: 'pick-gallery', label: 'Pick media for the homepage wall', type: 'picker',
-    path: 'galleryItems', itemTitle: 'label' },
 
   /* ----- Page heroes ----- */
-  ...['destinations', 'packages', 'blog', 'announcements', 'gallery', 'picks', 'about', 'contact'].map((p) => ({
+  ...['destinations', 'packages', 'blog', 'announcements', 'travel-tips', 'picks', 'about', 'contact'].map((p) => ({
     key: 'page-' + p,
     group: 'Page Titles',
     label: 'Page title & intro',
@@ -616,8 +627,6 @@ const ADMIN_PAGES = [
       { key: 'pick-blogPosts', hint: 'Tick which blog posts appear on the homepage.' },
       { key: 'packagesHead', hint: 'Heading row of the packages strip.' },
       { key: 'pick-packages', hint: 'Tick which packages appear on the homepage.' },
-      { key: 'mediaHead', hint: 'Heading row of the media wall (photos & films).' },
-      { key: 'pick-gallery', hint: 'Tick which gallery tiles appear on the homepage media wall (films auto-play on hover).' },
       { key: 'ask', hint: 'The cream contact block near the bottom.' },
     ] },
   { key: 'destinations', label: 'Destinations', view: '/destinations',
@@ -647,12 +656,11 @@ const ADMIN_PAGES = [
       { key: 'page-announcements', hint: 'Big title and intro at the top of the page.' },
       { key: 'announcements', hint: 'Every announcement card.' },
     ] },
-  { key: 'gallery', label: 'Gallery', view: '/gallery',
-    intro: 'Photo and video tiles in the masonry grid.',
+  { key: 'travel-tips', label: 'Travel Tips', view: '/travel-tips',
+    intro: 'The Travel Tips page — one block per topic, shown top to bottom in this order.',
     sections: [
-      { key: 'page-gallery', hint: 'Big title and intro at the top of the page.' },
-      { key: 'galleryItems', hint: 'Every tile. Pick a category from the dropdown; type "Film / video" shows a play button.' },
-      { key: 'galleryCategories', hint: 'The filter chips above the grid. Counts are automatic.' },
+      { key: 'page-travel-tips', hint: 'Big title and intro at the top of the page.' },
+      { key: 'travelTips', hint: 'Each topic: its name, one image, the text, and up to two affiliate/sponsor links. The links open in a new tab with no consent prompt.' },
     ] },
   { key: 'trip', label: 'Go For A Trip', view: '/trip',
     intro: 'The trip-planning funnel. The category tiles are built automatically from your destination categories — edit the page copy here.',
@@ -801,7 +809,7 @@ function contentStats() {
     ['Packages', d.packages],
     ['Blog posts', d.blog && d.blog.posts],
     ['Announcements', d.announcements],
-    ['Gallery', d.galleryItems],
+    ['Travel tips', d.travelTips],
     ['Our Picks', d.picks],
     ['Shop media', d.shopItems],
     ['Promo banners', d.banners],
@@ -833,7 +841,7 @@ function resolveAnnouncements(list) {
       case 'picks': href = '/picks'; break;
       case 'packages': href = t ? '/packages?d=' + encodeURIComponent(t) : '/packages'; break;
       case 'shop': href = '/shop'; break;
-      case 'gallery': href = '/gallery'; break;
+      case 'travel-tips': href = '/travel-tips'; break;
       case 'blog': href = '/blog-post?b=' + encodeURIComponent(t); break;
       case 'external': href = a.extUrl || a.href || '#'; break;
       case 'url': if (t) href = t; break;
@@ -863,7 +871,9 @@ function searchIndex() {
   pub(d.announcements).forEach((x) => out.push({ type: 'Announcement', title: x.title, desc: x.date || x.excerpt, url: x.href || '/announcements' }));
   pub(d.picks).forEach((x) => out.push({ type: 'Pick', title: x.name, desc: x.region, url: x.href || '/picks' }));
   (d.legalDocs || []).forEach((x) => out.push({ type: 'Page', title: x.crumb, desc: 'Legal', url: '/legal?p=' + x.slug }));
-  ['About', 'Contact', 'Gallery', 'Shop'].forEach((p) => out.push({ type: 'Page', title: p, desc: '', url: '/' + p.toLowerCase() }));
+  [['About', '/about'], ['Contact', '/contact'], ['Travel Tips', '/travel-tips'], ['Shop', '/shop']]
+    .forEach(([title, url]) => out.push({ type: 'Page', title, desc: '', url }));
+  pub(d.travelTips).forEach((x) => out.push({ type: 'Travel tip', title: x.title, desc: clip(x.body, 120), url: '/travel-tips#' + slugify(x.title) }));
   return out;
 }
 function runSearch(q) {
@@ -909,7 +919,7 @@ const PAGE_TITLES = {
   '/packages': 'Travel Packages',
   '/blog': 'The Journal',
   '/announcements': 'Announcements',
-  '/gallery': 'Gallery',
+  '/travel-tips': 'Travel Tips',
   '/picks': 'Our Picks',
   '/about': 'About Us',
   '/contact': 'Contact',
@@ -970,7 +980,6 @@ const PAGES = {
       announcements: resolveAnnouncements(pub(c().announcements).filter((a) => a.featured)),
       blogPosts: pub(c().blog.posts).filter((p) => p.featured),
       packages: pub(c().packages).filter((p) => p.featured),
-      mediaItems: pub(c().galleryItems).filter((g) => g.featured).slice(0, 100),
       seo: {
         ...defaultSeo(req),
         title: brand + ' — A Travel Discovery Platform',
@@ -1065,21 +1074,12 @@ const PAGES = {
     const { items, pagination } = paginate(resolveAnnouncements(pub(c().announcements)), req);
     return { page: c().pages.announcements, announcements: items, pagination, baseUrl: '/announcements' };
   },
-  gallery: (req) => {
-    const all = pub(c().galleryItems);
-    const categories = (c().galleryCategories || []).map((cat) => ({
-      ...cat,
-      count: all.filter((g) => g.category === cat.slug).length,
-    }));
-    const { items, pagination } = paginate(all, req);
-    return {
-      page: c().pages.gallery, items, categories, pagination, baseUrl: '/gallery', sponsorSlots: sponsorSlots('gallery', items.length),
-      typeCounts: {
-        image: all.filter((g) => g.type === 'image').length,
-        video: all.filter((g) => g.type === 'video').length,
-      },
-    };
-  },
+  // Travel Tips (formerly Gallery): every topic stacked in admin order, each with
+  // an anchor id so search results and deep links can land on it.
+  'travel-tips': () => ({
+    page: c().pages['travel-tips'] || {},
+    tips: pub(c().travelTips).map((t) => ({ ...t, anchor: slugify(t.title) })),
+  }),
   picks: (req) => {
     const allPicks = pub(c().picks);
     const lists = (c().pickLists || []).map((l) => ({
@@ -1243,7 +1243,7 @@ app.get('/sitemap.xml', (req, res) => {
   const urls = [];
   const add = (loc, priority) => urls.push({ loc: origin + loc, priority });
   // Static / listing pages
-  ['/', '/destinations', '/packages', '/blog', '/announcements', '/gallery', '/picks', '/about', '/contact', '/shop']
+  ['/', '/destinations', '/packages', '/blog', '/announcements', '/travel-tips', '/picks', '/about', '/contact', '/shop']
     .forEach((p) => add(p, p === '/' ? '1.0' : '0.8'));
   // Legal docs
   (c().legalDocs || []).forEach((d) => d.slug && add('/legal?p=' + encodeURIComponent(d.slug), '0.3'));
@@ -1264,6 +1264,8 @@ app.get('/', (req, res) => res.render('index.njk', PAGES.index(req)));
 // The 7-step /trip planner is not part of the Go For A Trip flow (per client docs):
 // "Go For A Trip" is the category dropdown -> destination cards -> consent. Retire it.
 app.get('/trip', (req, res) => res.redirect(302, '/destinations'));
+// The Gallery tab became Travel Tips (client doc) — keep old links and bookmarks working.
+app.get('/gallery', (req, res) => res.redirect(301, '/travel-tips'));
 for (const [name, data] of Object.entries(PAGES)) {
   if (name === 'trip') continue;
   app.get('/' + name, (req, res) => res.render(name + '.njk', data(req)));

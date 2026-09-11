@@ -100,7 +100,7 @@
         {% set offers = aboutOffers if aboutOffers and aboutOffers | length else [
           {'title':'A curated destination index','body':'Four hundred and fifty destinations — every one editor-verified or contributor-verified within the last 18 months. Organised across 100 careful categories. Every page includes seven sub-sections covering everything from season to landmarks, with original photography.','linkLabel':'Browse destinations','linkHref':'/destinations'},
           {'title':'Verified partner network','body':'180+ vetted package providers, hotel partners, and affiliate platforms — every one personally evaluated. We disclose our commercial position on every link, every time, with consent-gated redirects so you always know what\'s happening before it happens.','linkLabel':'View packages','linkHref':'/packages'},
-          {'title':'Original photography & writing','body':'A growing archive of editor-shot photography and long-form travel writing. Available for licensing through our Shop, and free to read on our Blog. We take our photographs seriously, and we\'d rather publish less and mean more.','linkLabel':'Visit the gallery','linkHref':'/gallery'}
+          {'title':'Original photography & writing','body':'A growing archive of editor-shot photography and long-form travel writing. Available for licensing through our Shop, and free to read on our Blog. We take our photographs seriously, and we\'d rather publish less and mean more.','linkLabel':'Read the blog','linkHref':'/blog'}
         ] %}
         <div class="offers-grid" data-stagger>
           {% for o in offers %}
