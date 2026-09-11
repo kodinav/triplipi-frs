@@ -211,6 +211,10 @@
             <h2>{{ home.ask.titleHtml | safe }}</h2>
             <p>{{ home.ask.body | safe }}</p>
             <div class="actions">
+              {# Two ways in: the everyday enquiry, and the partner application
+                 (/contact#partner swaps the contact form's subject dropdown). #}
+              <a href="/contact" class="btn btn-ghost">General enquiry</a>
+              <a href="/contact#partner" class="btn btn-ghost">Become a partner</a>
               <a href="mailto:{{ home.ask.email }}" class="btn btn-ghost">{{ home.ask.email }}</a>
             </div>
           </div>

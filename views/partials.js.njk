@@ -32,6 +32,10 @@
             </a>
             {% for link in settings.navLinks %}{% if link.mega and link.mega != 'none' %}
             <button class="nav-link" data-mega="mega-{{ link.mega }}" data-path="{{ link.href }}" aria-haspopup="true" aria-expanded="false">{{ link.label }}</button>
+            {% elif link.href == '/contact' %}
+            {# Contact is keyed off its href, not link.mega, so it works against
+               live content.json without an admin edit. #}
+            <button class="nav-link" data-mega="mega-contact" data-path="/contact" aria-haspopup="true" aria-expanded="false">{{ link.label }}</button>
             {% else %}
             <a class="nav-link" href="{{ link.href }}">{{ link.label }}</a>
             {% endif %}{% endfor %}
@@ -93,6 +97,16 @@
         </div>
       </div>
 
+      <!-- Contact — general enquiry vs. partner application -->
+      <div class="mega mega-list" id="mega-contact">
+        <div class="mega-list-inner">
+          <div class="mega-picks-list mega-picks-simple">
+            <a href="/contact"><span class="pl-name">General enquiry</span></a>
+            <a href="/contact#partner"><span class="pl-name">Become a partner</span></a>
+          </div>
+        </div>
+      </div>
+
       <!-- Mobile drawer (same links as the header bar) -->
       <nav class="mobile-nav" aria-label="Mobile navigation">
         <div class="mobile-nav-inner">
@@ -108,6 +122,12 @@
           <div class="mobile-nav-sub">
             {% for l in pickLists %}<a href="/picks?list={{ l.key }}">{{ l.label }}</a>
             {% endfor %}<a href="{{ link.href }}">View all picks →</a>
+          </div>
+          {% elif link.href == '/contact' %}
+          <button class="mobile-nav-link" data-sub="" aria-expanded="false">{{ link.label }} <span class="arrow">+</span></button>
+          <div class="mobile-nav-sub">
+            <a href="/contact">General enquiry</a>
+            <a href="/contact#partner">Become a partner</a>
           </div>
           {% else %}
           <a href="{{ link.href }}" class="mobile-nav-link">{{ link.label }} <span class="arrow">→</span></a>
@@ -194,7 +214,6 @@
               <h6>Media</h6>
               <ul>
                 <li><a href="/gallery">Gallery</a></li>
-                <li><a href="/shop">License Photography</a></li>
                 <li><a href="/shop#shutterstock">Shutterstock Portfolio</a></li>
                 <li><a href="/announcements">Announcements</a></li>
               </ul>
