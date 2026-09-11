@@ -1148,10 +1148,7 @@ const PAGES = {
         ...(dest.region ? { touristType: dest.region } : {}),
       },
     };
-    // Affiliate target for the "Go For A Trip" button — opens the consent modal,
-    // then redirects to a partner site (see bestAffiliate).
-    const affiliate = bestAffiliate(dest);
-    return { dest, related: all.filter((d) => d.slug !== dest.slug).slice(0, 4), affiliate, seo };
+    return { dest, related: all.filter((d) => d.slug !== dest.slug).slice(0, 4), seo };
   },
   'package-detail': (req) => {
     const all = c().packages || [];

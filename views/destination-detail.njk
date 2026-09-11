@@ -121,11 +121,8 @@
               {% else %}
               <a href="/packages?d={{ dest.slug }}" class="btn btn-outline btn-lg">Read More About Destination</a>
               {% endif %}
-              {% if affiliate %}
-              <a href="{{ affiliate.url }}" class="btn btn-brand btn-lg" data-external data-provider="{{ affiliate.provider }}" data-url="{{ affiliate.url }}">Go For A Trip <span class="arrow">→</span></a>
-              {% else %}
-              <a href="/destinations" class="btn btn-brand btn-lg">Go For A Trip <span class="arrow">→</span></a>
-              {% endif %}
+              {# Opens this destination's packages directly — no partner redirect or consent card #}
+              <a href="/packages?d={{ dest.slug }}" class="btn btn-brand btn-lg">Check Packages <span class="arrow">→</span></a>
             </div>
 
             {# Extended guide — extra in-depth content, revealed below by "Read More About Destination" #}
