@@ -552,52 +552,47 @@
 @media (max-width: 640px) { .blog-strip { grid-template-columns: 1fr; } }
 
 
-/* ---------- ASK FOR GUIDANCE (Home contact CTA) ---------- */
+/* ---------- ASK FOR GUIDANCE (Home contact CTA) ----------
+   One centred band: copy + the two CTAs into /contact. The inline
+   enquiry form that used to sit beside this was retired. */
 .ask-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--s-12);
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
   padding: var(--s-12);
   background: var(--c-cream);
   border-radius: var(--r-2xl);
   position: relative;
   overflow: hidden;
 }
+/* Now that the copy is centred, the star bleeds off the right edge —
+   clear of the text instead of clipping the headline. */
 .ask-section::before {
   content: "✦";
   position: absolute;
-  top: -40px; right: 80px;
-  font-size: 320px;
+  top: 50%; right: -90px;
+  transform: translateY(-50%);
+  font-size: 340px;
   font-family: var(--ff-display);
   color: var(--c-brown);
   opacity: 0.08;
   line-height: 1;
   pointer-events: none;
 }
-.ask-section h2 { margin-bottom: var(--s-5); }
+.ask-section h2 { margin-bottom: var(--s-5); max-width: 20ch; }
 .ask-section h2 em { color: var(--c-brown); }
-.ask-section .actions { display: flex; gap: var(--s-4); flex-wrap: wrap; margin-top: var(--s-6); }
-.ask-form { display: grid; gap: var(--s-4); }
-.ask-form input,
-.ask-form textarea {
-  font-family: var(--ff-text);
-  font-size: 1rem;
-  padding: 14px 16px;
-  background: var(--c-surface);
-  border: 1px solid var(--c-border);
-  border-radius: var(--r-md);
-  width: 100%;
-  color: var(--c-ink);
-}
-.ask-form input:focus,
-.ask-form textarea:focus {
-  border-color: var(--c-gold);
-  box-shadow: 0 0 0 4px rgba(208, 85, 39, 0.15);
+.ask-section .ask-body { max-width: 56ch; }
+.ask-section .actions {
+  display: flex;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: var(--s-7);
 }
 
 @media (max-width: 900px) {
-  .ask-section { grid-template-columns: 1fr; padding: var(--s-9); gap: var(--s-7); }
+  .ask-section { padding: var(--s-9); }
 }
 
 

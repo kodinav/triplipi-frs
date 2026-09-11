@@ -193,18 +193,14 @@
   /* ========================================================
      7 · STACKED SECTIONS — announcements, ask form, footer
      ======================================================== */
-  /* ask for guidance: thinner panel padding so the form gets real width
-     (was 48px all round -> ~274px usable); full-width controls */
-  .ask-section { padding: var(--s-6); gap: var(--s-6); border-radius: var(--r-xl); }
+  /* ask for guidance: thinner panel padding, CTAs stacked full-width */
+  .ask-section { padding: var(--s-6); border-radius: var(--r-xl); }
+  /* the star has no clear margin to sit in at this width — keep it faint
+     and mostly off-canvas so it never sits behind the copy */
+  .ask-section::before { font-size: 200px; right: -70px; opacity: 0.05; }
   .ask-section h2 { margin-bottom: var(--s-3); }
-  .ask-section .actions { margin-top: var(--s-5); }
+  .ask-section .actions { margin-top: var(--s-5); width: 100%; }
   .ask-section .actions .btn { width: 100%; justify-content: center; }
-  .ask-form { gap: var(--s-3); }
-  .ask-form .form-row { grid-template-columns: 1fr; gap: var(--s-3); }
-  .ask-form input,
-  .ask-form textarea { font-size: 0.95rem; text-overflow: ellipsis; }
-  .ask-form .btn,
-  .ask-form button[type="submit"] { width: 100%; justify-content: center; }
 
   /* footer: compact 2-up link columns, brand full-width, tighter rhythm
      (was collapsing to one ~1930px-tall single column) */

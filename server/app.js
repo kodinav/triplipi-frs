@@ -277,7 +277,6 @@ const SCHEMAS = [
       { name: 'overline', label: 'Overline' , ph: 'Small label above the heading, e.g. Travel Highlights' },
       { name: 'titleHtml', label: 'Heading (HTML)', type: 'textarea', richInline: true, ph: 'e.g. Stories from the <em>field</em>.' },
       { name: 'body', label: 'Body text', type: 'textarea', richInline: true, ph: 'A short paragraph inviting visitors to write in.' },
-      { name: 'email', label: 'Email address', ph: 'e.g. hello@triplipi.com' },
     ] },
 
   /* ----- Collections ----- */

@@ -205,28 +205,17 @@
          ============================================================ -->
     <section class="section">
       <div class="container-wide">
+        {# One centred band, two ways in. The inline form used to sit here;
+           /contact now owns every enquiry, and /contact#partner swaps its
+           subject dropdown for the partner packages. #}
         <div class="ask-section" data-reveal>
-          <div>
-            <p class="overline">{{ home.ask.overline }}</p>
-            <h2>{{ home.ask.titleHtml | safe }}</h2>
-            <p>{{ home.ask.body | safe }}</p>
-            <div class="actions">
-              {# Two ways in: the everyday enquiry, and the partner application
-                 (/contact#partner swaps the contact form's subject dropdown). #}
-              <a href="/contact" class="btn btn-ghost">General enquiry</a>
-              <a href="/contact#partner" class="btn btn-ghost">Become a partner</a>
-              <a href="mailto:{{ home.ask.email }}" class="btn btn-ghost">{{ home.ask.email }}</a>
-            </div>
+          <p class="overline center">{{ home.ask.overline }}</p>
+          <h2>{{ home.ask.titleHtml | safe }}</h2>
+          <p class="ask-body">{{ home.ask.body | safe }}</p>
+          <div class="actions">
+            <a href="/contact" class="btn btn-brand">General enquiry <span class="arrow">→</span></a>
+            <a href="/contact#partner" class="btn btn-ghost">Become a partner <span class="arrow">→</span></a>
           </div>
-          <form class="ask-form" data-form data-form-name="Ask for Guidance" data-success-message="Thank you. We'll be in touch within one working day.">
-            <div class="form-row">
-              <input type="text" name="name" placeholder="Your name" required>
-              <input type="email" name="email" placeholder="Email address" required>
-            </div>
-            <input type="text" name="subject" placeholder="Where are you dreaming about?">
-            <textarea name="message" rows="4" placeholder="Tell us a little — destination, dates if you have them, the kind of pace you're after…" required></textarea>
-            <button type="submit" class="btn btn-brand">Send the message <span class="arrow">→</span></button>
-          </form>
         </div>
       </div>
     </section>
