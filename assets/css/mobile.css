@@ -348,7 +348,8 @@
   /* travel tips: tighter rhythm, a taller image crop that reads on a phone */
   .tip { padding-block: var(--s-8); scroll-margin-top: calc(var(--header-h-mobile) + var(--s-3)); }
   .tip-title { font-size: var(--fs-h4); margin-bottom: var(--s-5); }
-  .tip-media { aspect-ratio: 4 / 3; border-radius: var(--r-md); margin-bottom: var(--s-5); }
+  .tip-grid { gap: var(--s-5); }
+  .tip-media { aspect-ratio: 4 / 3; border-radius: var(--r-md); }
 
 
   /* ========================================================

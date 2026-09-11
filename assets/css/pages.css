@@ -3117,15 +3117,29 @@ a.page-btn:hover {
   color: var(--c-ink);
   margin: 0 0 var(--s-6);
 }
+/* Wide screens use the full container: image left, text and links right,
+   with the image stretching to the height of the text beside it. */
+.tip-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--s-10);
+  align-items: stretch;
+}
+.tip-grid.no-media { grid-template-columns: minmax(0, 1fr); }
 .tip-media {
-  margin: 0 0 var(--s-7);
-  aspect-ratio: 16 / 9;
+  position: relative;
+  margin: 0;
+  min-height: 340px;
   border-radius: var(--r-lg);
   overflow: hidden;
   background: var(--c-bone-soft);
 }
-.tip-media img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.tip-media img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+.tip-content { min-width: 0; }
 .tip-body.legal-content { max-width: none; }
+/* the site's paragraph measure (~634px) left the text short of its column;
+   let it run the full width the client asked for */
+.tip-body.legal-content p, .tip-body.legal-content li { max-width: none; }
 .tip-links {
   list-style: none;
   display: grid;
@@ -3147,6 +3161,11 @@ a.page-btn:hover {
 .tip-links a:hover { color: var(--c-terracotta-deep); }
 .tip-links .arrow { display: inline-block; transition: transform var(--d-fast) var(--ease-out); }
 .tip-links a:hover .arrow { transform: translate(2px, -2px); }
+/* Tablets and below: stack in the doc's order — name, image, text, links */
+@media (max-width: 900px) {
+  .tip-grid { grid-template-columns: minmax(0, 1fr); gap: var(--s-6); }
+  .tip-media { min-height: 0; aspect-ratio: 16 / 9; }
+}
 
 
 /* ============================================================

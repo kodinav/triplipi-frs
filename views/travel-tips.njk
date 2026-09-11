@@ -36,22 +36,28 @@
     </section>
 
     <section class="section">
-      <div class="container-narrow">
+      <div class="container-wide">
         {# One block per topic, top to bottom ("Travel Tips Tab" doc): section name,
            one representational image, the text, then up to two affiliate/sponsor
-           links. The doc rules out the redirect prompt card, so these are plain
-           new-tab links — never data-external. #}
+           links. Wide screens put the image and text side by side across the full
+           page width; smaller screens stack them in the doc's order. The doc rules
+           out the redirect prompt card, so the links are plain new-tab links —
+           never data-external. #}
 {% for t in tips %}
         <article class="tip" id="{{ t.anchor }}" data-reveal>
           <h2 class="tip-title">{{ t.title }}</h2>
-          {% if t.image %}<figure class="tip-media"><img loading="lazy" src="{{ t.image }}" alt="{{ t.imageAlt or t.title }}"></figure>{% endif %}
-          <div class="tip-body rich-body legal-content">{{ t.body | safe }}</div>
-          {% if (t.link1Label and t.link1Url) or (t.link2Label and t.link2Url) %}
-          <ul class="tip-links">
-            {% if t.link1Label and t.link1Url %}<li><a href="{{ t.link1Url }}" target="_blank" rel="sponsored noopener">{{ t.link1Label }} <span class="arrow" aria-hidden="true">↗</span></a></li>{% endif %}
-            {% if t.link2Label and t.link2Url %}<li><a href="{{ t.link2Url }}" target="_blank" rel="sponsored noopener">{{ t.link2Label }} <span class="arrow" aria-hidden="true">↗</span></a></li>{% endif %}
-          </ul>
-          {% endif %}
+          <div class="tip-grid{% if not t.image %} no-media{% endif %}">
+            {% if t.image %}<figure class="tip-media"><img loading="lazy" src="{{ t.image }}" alt="{{ t.imageAlt or t.title }}"></figure>{% endif %}
+            <div class="tip-content">
+              <div class="tip-body rich-body legal-content">{{ t.body | safe }}</div>
+              {% if (t.link1Label and t.link1Url) or (t.link2Label and t.link2Url) %}
+              <ul class="tip-links">
+                {% if t.link1Label and t.link1Url %}<li><a href="{{ t.link1Url }}" target="_blank" rel="sponsored noopener">{{ t.link1Label }} <span class="arrow" aria-hidden="true">↗</span></a></li>{% endif %}
+                {% if t.link2Label and t.link2Url %}<li><a href="{{ t.link2Url }}" target="_blank" rel="sponsored noopener">{{ t.link2Label }} <span class="arrow" aria-hidden="true">↗</span></a></li>{% endif %}
+              </ul>
+              {% endif %}
+            </div>
+          </div>
         </article>
 {% else %}
         <div class="pkg-empty" data-reveal><p>Travel tips are on their way. <em>Check back soon.</em></p></div>
