@@ -75,11 +75,7 @@
               {% endif %}
               <div class="feat-actions">
                 <a class="act-details" href="{% if p.dest %}/destination-detail?d={{ p.dest.slug }}{% else %}{{ p.href or '/destinations' }}{% endif %}">Know More <span>→</span></a>
-                {% if p.affiliate %}
-                <a class="act-pkg" href="{{ p.affiliate.url }}" data-external data-provider="{{ p.affiliate.provider }}" data-url="{{ p.affiliate.url }}">Go For A Trip <span>→</span></a>
-                {% else %}
-                <a class="act-pkg" href="/destinations">Go For A Trip <span>→</span></a>
-                {% endif %}
+                <a class="act-pkg" href="/packages{% if p.dest %}?d={{ p.dest.slug }}{% endif %}">Check Packages <span>→</span></a>
               </div>
             </div>
           </article>

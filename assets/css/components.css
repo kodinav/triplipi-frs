@@ -334,7 +334,7 @@
 }
 .blog-card .byline .sep { width: 24px; height: 1px; background: var(--c-stone); }
 
-/* Blog card link + Know More / Go For A Trip actions (Blog Tab doc) */
+/* Blog card link + Know More / Check Packages actions (Blog Tab doc) */
 .blog-card-link { display: flex; flex-direction: column; flex: 1; color: inherit; text-decoration: none; }
 .blog-card-actions {
   margin-top: var(--s-4);

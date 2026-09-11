@@ -62,6 +62,8 @@
 
         {% if destFilter %}
         <div class="pkg-dest-note" data-reveal>Showing packages for <strong>{{ destFilter }}</strong>. <a href="/packages">Show all packages</a></div>
+        {% elif destEmpty %}
+        <div class="pkg-dest-note" data-reveal>No packages for <strong>{{ destEmpty }}</strong> yet — showing all packages instead.</div>
         {% endif %}
 
         {% if packages and packages | length %}

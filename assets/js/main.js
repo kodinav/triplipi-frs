@@ -73,8 +73,8 @@
   // Mark the nav tab matching the current page (FRS active-underline)
   const initActiveNav = () => {
     const path = (window.location.pathname.replace(/\/+$/, '') || '/');
-    // Several links can share a path ("Destination" and "Go For A Trip" both
-    // lead to /destinations) — underline only the first, best match.
+    // Several links can share a path (a tab and a dropdown trigger can both lead
+    // to /destinations) — underline only the first, best match.
     let best = null, bestLen = 0;
     $$('.nav-link').forEach((l) => {
       const href = l.getAttribute('href') || l.dataset.path || '';
@@ -1075,7 +1075,7 @@
     const panel = $('[data-dest-more]');
     if (!btn || !panel) return;
     const label = $('.rm-label', btn) || btn;
-    // the row holding both buttons (Read More + Go For A Trip) — it follows
+    // the row holding both buttons (Read More + Check Packages) — it follows
     // the extended guide while open, so the CTAs always sit at the bottom
     const ctaRow = btn.closest('.dest-foot-cta');
     const revealInner = () =>

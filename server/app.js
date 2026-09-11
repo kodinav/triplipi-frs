@@ -170,7 +170,6 @@ const SCHEMAS = [
       { name: 'mega', label: 'Dropdown menu', type: 'select', options: [
         { value: 'none', label: 'No dropdown — plain link' },
         { value: 'destinations', label: 'Opens the Destination categories dropdown' },
-        { value: 'trip', label: 'Opens the Go For A Trip dropdown' },
         { value: 'picks', label: 'Opens the Our Picks dropdown' },
       ] },
     ] },
@@ -180,10 +179,6 @@ const SCHEMAS = [
       { name: 'destHeadHref', label: 'Destination Guide — top link', type: 'url', ph: '/destinations' },
       { name: 'destAllLabel', label: 'Destination Guide — bottom “View all categories” label', ph: 'View all categories' },
       { name: 'destAllHref', label: 'Destination Guide — bottom “View all categories” link', type: 'url', ph: '/destinations' },
-      { name: 'tripHeadLabel', label: 'Go For A Trip — top link label', ph: 'Start the 7-step planner' },
-      { name: 'tripHeadHref', label: 'Go For A Trip — top link', type: 'url', ph: '/trip' },
-      { name: 'tripAllLabel', label: 'Go For A Trip — bottom “View all categories” label', ph: 'View All Categories' },
-      { name: 'tripAllHref', label: 'Go For A Trip — bottom “View all categories” link', type: 'url', ph: '/destinations' },
       { name: 'picksHeadLabel', label: 'Our Picks — top link label', ph: 'View all picks' },
       { name: 'picksHeadHref', label: 'Our Picks — top link', type: 'url', ph: '/picks' },
     ] },
@@ -293,7 +288,6 @@ const SCHEMAS = [
       // ----- where this announcement links (FR-HOME-013B/C) -----
       { name: 'section', label: 'Links to section', type: 'select', options: [
         { value: 'destination', label: 'A destination page' },
-        { value: 'trip', label: 'Go For A Trip' },
         { value: 'picks', label: 'Our Picks' },
         { value: 'packages', label: 'Check Packages' },
         { value: 'shop', label: 'Shop' },
@@ -358,7 +352,7 @@ const SCHEMAS = [
       { name: 'excerpt', label: 'Excerpt', type: 'textarea', richInline: true, ph: 'One or two sentences shown under the title.' },
       { name: 'bylineSpans', label: 'Byline parts (comma-separated)', type: 'csv', ph: 'e.g. 14 min read, By Editor' },
       { name: 'image', label: 'Thumbnail', type: 'image' },
-      { name: 'destinationSlug', label: 'Related destination (for the card’s Know More / Go For A Trip)', type: 'select', optionsFrom: 'destinations', optionValue: 'slug', optionLabel: 'name' },
+      { name: 'destinationSlug', label: 'Related destination (for the card’s Know More / Check Packages)', type: 'select', optionsFrom: 'destinations', optionValue: 'slug', optionLabel: 'name' },
       // ----- detail page (/blog-post?b=index) -----
       { name: 'layout', label: 'Layout template', type: 'select', options: [
         { value: '1', label: 'Layout 1 — Centered editorial' },
@@ -387,7 +381,7 @@ const SCHEMAS = [
       { name: 'name', label: 'Name', ph: 'e.g. Ladakh' },
       { name: 'region', label: 'Region line', ph: 'e.g. North · India' },
       { name: 'image', label: 'Thumbnail', type: 'image' },
-      { name: 'destinationSlug', label: 'Related destination (for the card’s Know More / Go For A Trip)', type: 'select', optionsFrom: 'destinations', optionValue: 'slug', optionLabel: 'name' },
+      { name: 'destinationSlug', label: 'Related destination (for the card’s Know More / Check Packages)', type: 'select', optionsFrom: 'destinations', optionValue: 'slug', optionLabel: 'name' },
       { name: 'href', label: 'Link (optional)', type: 'url', ph: 'e.g. packages.html or https://…' },
     ] },
 
@@ -405,15 +399,6 @@ const SCHEMAS = [
     fields: [
       { name: 'label', label: 'Label shown on the filter chip', ph: 'e.g. Mountains' },
       { name: 'slug', label: 'Slug (used to tag gallery items)', ph: 'lowercase-with-dashes, e.g. mountains' },
-    ] },
-
-  /* ----- Go For A Trip: page copy (the funnel itself is data-driven) ----- */
-  { key: 'trip', group: 'Trip', label: 'Go For A Trip — page copy', type: 'object', path: 'trip',
-    fields: [
-      { name: 'heroTitle', label: 'Hero heading (HTML, <em> = accent)', type: 'textarea', richInline: true, ph: 'e.g. Plan your next escape in <em>seven careful steps</em>.' },
-      { name: 'heroLead', label: 'Hero intro', type: 'textarea', richInline: true },
-      { name: 'step1Title', label: 'Step 1 — heading (HTML)', type: 'textarea', richInline: true, ph: 'e.g. What kind of trip <em>are you after</em>?' },
-      { name: 'step1Body', label: 'Step 1 — intro', type: 'textarea', richInline: true },
     ] },
 
   /* ----- Our Picks: the four ranked lists ----- */
@@ -662,11 +647,6 @@ const ADMIN_PAGES = [
       { key: 'page-travel-tips', hint: 'Big title and intro at the top of the page.' },
       { key: 'travelTips', hint: 'Each topic: its name, one image, the text, and up to two affiliate/sponsor links. The links open in a new tab with no consent prompt.' },
     ] },
-  { key: 'trip', label: 'Go For A Trip', view: '/trip',
-    intro: 'The trip-planning funnel. The category tiles are built automatically from your destination categories — edit the page copy here.',
-    sections: [
-      { key: 'trip', hint: 'Hero heading/intro and the Step 1 heading. The category tiles below pull from Destinations automatically.' },
-    ] },
   { key: 'picks', label: 'Our Picks', view: '/picks',
     intro: 'Four ranked lists, shown as tabs. Each pick is tagged to a list; rank numbers come from the order within that list.',
     sections: [
@@ -837,7 +817,7 @@ function resolveAnnouncements(list) {
     const t = (a.target || '').trim();
     switch (a.section) {
       case 'destination': href = '/destination-detail?d=' + encodeURIComponent(t); break;
-      case 'trip': href = t ? '/trip?d=' + encodeURIComponent(t) : '/trip'; break;
+      case 'trip': href = t ? '/packages?d=' + encodeURIComponent(t) : '/packages'; break;   // legacy "Go For A Trip" links
       case 'picks': href = '/picks'; break;
       case 'packages': href = t ? '/packages?d=' + encodeURIComponent(t) : '/packages'; break;
       case 'shop': href = '/shop'; break;
@@ -923,7 +903,6 @@ const PAGE_TITLES = {
   '/picks': 'Our Picks',
   '/about': 'About Us',
   '/contact': 'Contact',
-  '/trip': 'Go For A Trip',
   '/shop': 'Shop',
   '/legal': 'Legal',
   '/search': 'Search',
@@ -953,21 +932,6 @@ app.use((req, res, next) => {
   next();
 });
 
-/* Best-matching affiliate package for a destination — shared by the destination
-   detail page and the blog cards' "Go For A Trip" consent flow. Prefer a package
-   tagged to the destination, else most category overlap, else any affiliate. */
-function bestAffiliate(dest) {
-  if (!dest) return null;
-  const affPkgs = pub(c().packages || []).filter((p) => p.ctaExternal && (p.ctaUrl || '').trim());
-  const destCats = dest.categories || [];
-  const overlap = (p) => (p.categories || []).filter((cat) => destCats.includes(cat)).length;
-  const aff =
-    affPkgs.find((p) => (p.destinationSlugs || []).includes(dest.slug)) ||
-    affPkgs.slice().sort((a, b) => overlap(b) - overlap(a)).find((p) => overlap(p) > 0) ||
-    affPkgs[0] || null;
-  return aff ? { provider: aff.ctaProvider || aff.title, url: aff.ctaUrl } : null;
-}
-
 const PAGES = {
   index: (req) => {
     const s = c().settings || {};
@@ -975,7 +939,7 @@ const PAGES = {
     return {
       settings: s,
       home: c().home,
-      destinations: pub(c().destinations).filter((d) => d.featured).map((d) => ({ ...d, affiliate: bestAffiliate(d) })),
+      destinations: pub(c().destinations).filter((d) => d.featured),
       highlights: pub(c().highlights),
       announcements: resolveAnnouncements(pub(c().announcements).filter((a) => a.featured)),
       blogPosts: pub(c().blog.posts).filter((p) => p.featured),
@@ -1005,8 +969,8 @@ const PAGES = {
     const filtered = catObj ? all.filter((d) => (d.categories || []).includes(activeCat)) : all;
     const { items, pagination } = paginate(filtered, req);
     const baseUrl = catObj ? '/destinations?cat=' + encodeURIComponent(activeCat) : '/destinations';
-    // Each card's "Go For A Trip" opens the affiliate consent (Go For A Trip Tab doc)
-    const cards = items.map((d) => ({ ...d, affiliate: bestAffiliate(d) }));
+    // Each card: Know More (→ the destination) + Check Packages (→ its packages)
+    const cards = items;
     return { page: c().pages.destinations, cards, categories, activeCat, activeCatLabel: catObj ? catObj.label : '', totalAll: all.length, pagination, baseUrl, sponsorSlots: sponsorSlots('destinations', items.length) };
   },
   categories: () => {
@@ -1028,11 +992,14 @@ const PAGES = {
     const allPkgs = pub(c().packages).filter(hasLink);
     let all = allPkgs;
     const q = (req && req.query) || {};
-    // destination funnel filter (?d=) — keep as-is
-    let destFilter = null;
+    // destination filter (?d=) — every "Check Packages" button lands here. A known
+    // destination with no packages of its own says so, then lists everything.
+    let destFilter = null, destEmpty = null;
     if (q.d) {
       const tagged = all.filter((p) => (p.destinationSlugs || []).includes(q.d));
-      if (tagged.length) { all = tagged; destFilter = (c().destinations.find((x) => x.slug === q.d) || {}).name || q.d; }
+      const destName = ((c().destinations || []).find((x) => x.slug === q.d) || {}).name;
+      if (tagged.length) { all = tagged; destFilter = destName || q.d; }
+      else if (destName) destEmpty = destName;
     }
     // Category rail (?cat=) — the same visible taxonomy as /categories, counted
     // against whatever ?d= left. Only categories holding a package get a tile,
@@ -1055,18 +1022,18 @@ const PAGES = {
     return {
       page: c().pages.packages, packages: items, pagination, baseUrl,
       sponsorSlots: sponsorSlots('packages', items.length),
-      destFilter, categories, activeCat, activeCatLabel: catObj ? catObj.label : '',
+      destFilter, destEmpty, categories, activeCat, activeCatLabel: catObj ? catObj.label : '',
       totalAll, dParam: q.d || '',
     };
   },
   blog: (req) => {
     const { items, pagination } = paginate(pub(c().blog.posts), req);
     const dests = c().destinations || [];
-    // Each blog card gets "Know More" (→ its destination) + "Go For A Trip"
-    // (→ affiliate consent), per the "Blog Tab" doc.
+    // Each blog card gets "Know More" (→ its destination) + "Check Packages"
+    // (→ that destination's packages).
     const posts = items.map((p) => {
       const dest = dests.find((d) => d.slug === p.destinationSlug) || null;
-      return { ...p, dest: dest ? { slug: dest.slug, name: dest.name } : null, affiliate: bestAffiliate(dest) };
+      return { ...p, dest: dest ? { slug: dest.slug, name: dest.name } : null };
     });
     return { page: c().pages.blog, blog: { ...c().blog, posts }, pagination, baseUrl: '/blog', sponsorSlots: sponsorSlots('blog', items.length) };
   },
@@ -1092,12 +1059,12 @@ const PAGES = {
     const inList = active ? allPicks.filter((p) => p.list === active.key) : allPicks;
     const { items, pagination } = paginate(inList, req);
     const baseUrl = active ? '/picks?list=' + encodeURIComponent(active.key) : '/picks';
-    // Each pick renders as a destination card with Know More + Go For A Trip
-    // (Our Picks Tab doc): resolve its destination for season/tagline + affiliate.
+    // Each pick renders as a destination card with Know More + Check Packages
+    // (Our Picks Tab doc): resolve its destination for season/tagline and the packages link.
     const dests = c().destinations || [];
     const picks = items.map((p) => {
       const dest = dests.find((d) => d.slug === p.destinationSlug) || null;
-      return { ...p, dest: dest ? { slug: dest.slug, name: dest.name, season: dest.season, tagline: dest.tagline } : null, affiliate: bestAffiliate(dest) };
+      return { ...p, dest: dest ? { slug: dest.slug, name: dest.name, season: dest.season, tagline: dest.tagline } : null };
     });
     return { page: c().pages.picks, picks, lists, active, pagination, baseUrl };
   },
@@ -1215,7 +1182,9 @@ const PAGES = {
         publisher: { '@type': 'Organization', name: brand },
       },
     };
-    return { post, related, seo };
+    // The closing "Check Packages" button opens the post's destination packages
+    const dest = (c().destinations || []).find((d) => d.slug === post.destinationSlug) || null;
+    return { post, related, seo, dest: dest ? { slug: dest.slug, name: dest.name } : null };
   },
   search: (req) => {
     const q = (req && req.query && req.query.q) || '';
@@ -1258,9 +1227,9 @@ app.get('/sitemap.xml', (req, res) => {
 });
 
 app.get('/', (req, res) => res.render('index.njk', PAGES.index(req)));
-// The 7-step /trip planner is not part of the Go For A Trip flow (per client docs):
-// "Go For A Trip" is the category dropdown -> destination cards -> consent. Retire it.
-app.get('/trip', (req, res) => res.redirect(302, '/destinations'));
+// The old /trip planner is retired and "Go For A Trip" is now "Check Packages":
+// send legacy links to the packages list, keeping a destination filter if given.
+app.get('/trip', (req, res) => res.redirect(302, '/packages' + (req.query.d ? '?d=' + encodeURIComponent(req.query.d) : '')));
 // The Gallery tab became Travel Tips (client doc) — keep old links and bookmarks working.
 app.get('/gallery', (req, res) => res.redirect(301, '/travel-tips'));
 for (const [name, data] of Object.entries(PAGES)) {

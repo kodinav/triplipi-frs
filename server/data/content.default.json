@@ -12,11 +12,6 @@
         "mega": "destinations"
       },
       {
-        "label": "Go For A Trip",
-        "href": "/destinations",
-        "mega": "trip"
-      },
-      {
         "label": "Check Packages",
         "href": "/packages",
         "mega": "none"

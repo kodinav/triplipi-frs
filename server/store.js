@@ -70,6 +70,21 @@ const MIGRATIONS = [
       });
     },
   },
+  {
+    // "Go For A Trip" is now "Check Packages" everywhere. The header already has a
+    // Check Packages tab and the Go For A Trip dropdown duplicated Destination's,
+    // so its tab is dropped rather than renamed into a second Check Packages —
+    // unless the site has no Check Packages tab, in which case it becomes one.
+    id: 'check-packages',
+    run(content) {
+      const nav = content.settings && content.settings.navLinks;
+      if (!Array.isArray(nav)) return;
+      const isTrip = (l) => l.mega === 'trip' || String(l.label || '').trim().toLowerCase() === 'go for a trip';
+      const hasPackages = nav.some((l) => !isTrip(l) && String(l.href || '').replace(/\/+$/, '') === '/packages');
+      if (hasPackages) content.settings.navLinks = nav.filter((l) => !isTrip(l));
+      else nav.filter(isTrip).forEach((l) => Object.assign(l, { label: 'Check Packages', href: '/packages', mega: 'none' }));
+    },
+  },
 ];
 
 function runMigrations(content) {

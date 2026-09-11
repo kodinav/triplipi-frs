@@ -62,11 +62,10 @@
         <div class="article-cta" data-reveal>
           <div>
             <h4>Inspired to go?</h4>
-            <p>Plan a trip or see verified packages.</p>
+            <p>See verified packages{% if dest %} for {{ dest.name }}{% endif %}.</p>
           </div>
           <div class="article-cta-actions">
-            <a href="/destinations" class="btn btn-brand">Go For A Trip <span class="arrow">→</span></a>
-            <a href="/packages" class="btn btn-ghost">Check Packages <span class="arrow">→</span></a>
+            <a href="/packages{% if dest %}?d={{ dest.slug }}{% endif %}" class="btn btn-brand">Check Packages <span class="arrow">→</span></a>
           </div>
         </div>
       </div>
