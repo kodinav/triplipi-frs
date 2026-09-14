@@ -68,6 +68,18 @@
         </div>
       </div>
 
+      <!-- Go For A Trip — category list dropdown (Go For A Trip Tab doc) -->
+      <div class="mega mega-list" id="mega-trip">
+        <div class="mega-list-inner">
+          <div class="mega-picks-list mega-picks-simple">
+            {% for cat in navCategories %}
+            <a href="/destinations?cat={{ cat.slug }}"><span class="pl-name">{{ cat.label }}</span></a>
+            {% endfor %}
+            <a href="/categories" class="mega-trip-all"><span class="pl-name">All Destination Categories</span></a>
+          </div>
+        </div>
+      </div>
+
       <!-- Our Picks — compact list dropdown -->
       <div class="mega mega-list" id="mega-picks">
         <div class="mega-list-inner">
@@ -99,7 +111,7 @@
       <nav class="mobile-nav" aria-label="Mobile navigation">
         <div class="mobile-nav-inner">
           {% for link in settings.navLinks %}
-          {% if link.mega == 'destinations' %}
+          {% if link.mega == 'destinations' or link.mega == 'trip' %}
           <button class="mobile-nav-link" data-sub="" aria-expanded="false">{{ link.label }} <span class="arrow">+</span></button>
           <div class="mobile-nav-sub">
             {% for cat in navCategories %}<a href="/destinations?cat={{ cat.slug }}">{{ cat.label }}</a>

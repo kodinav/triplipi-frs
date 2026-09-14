@@ -170,6 +170,7 @@ const SCHEMAS = [
       { name: 'mega', label: 'Dropdown menu', type: 'select', options: [
         { value: 'none', label: 'No dropdown — plain link' },
         { value: 'destinations', label: 'Opens the Destination categories dropdown' },
+        { value: 'trip', label: 'Opens the Go For A Trip dropdown' },
         { value: 'picks', label: 'Opens the Our Picks dropdown' },
       ] },
     ] },

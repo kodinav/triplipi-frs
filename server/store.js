@@ -71,18 +71,19 @@ const MIGRATIONS = [
     },
   },
   {
-    // "Go For A Trip" is now "Check Packages" everywhere. The header already has a
-    // Check Packages tab and the Go For A Trip dropdown duplicated Destination's,
-    // so its tab is dropped rather than renamed into a second Check Packages —
-    // unless the site has no Check Packages tab, in which case it becomes one.
-    id: 'check-packages',
+    // The Go For A Trip header tab is back (the earlier 'check-packages' migration
+    // had dropped it). Put it where it was — after Destination, ahead of Check
+    // Packages — unless the site already has one.
+    id: 'restore-go-for-a-trip',
     run(content) {
       const nav = content.settings && content.settings.navLinks;
       if (!Array.isArray(nav)) return;
       const isTrip = (l) => l.mega === 'trip' || String(l.label || '').trim().toLowerCase() === 'go for a trip';
-      const hasPackages = nav.some((l) => !isTrip(l) && String(l.href || '').replace(/\/+$/, '') === '/packages');
-      if (hasPackages) content.settings.navLinks = nav.filter((l) => !isTrip(l));
-      else nav.filter(isTrip).forEach((l) => Object.assign(l, { label: 'Check Packages', href: '/packages', mega: 'none' }));
+      if (nav.some(isTrip)) return;
+      const dest = nav.findIndex((l) => l.mega === 'destinations');
+      const pkgs = nav.findIndex((l) => String(l.href || '').replace(/\/+$/, '') === '/packages');
+      const at = dest >= 0 ? dest + 1 : pkgs >= 0 ? pkgs : 0;
+      nav.splice(at, 0, { label: 'Go For A Trip', href: '/destinations', mega: 'trip' });
     },
   },
 ];
