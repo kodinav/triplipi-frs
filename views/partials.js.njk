@@ -80,14 +80,19 @@
         </div>
       </div>
 
-      <!-- Our Picks — the top 10 picked places, then View all picks -->
+      <!-- Our Picks — compact list dropdown -->
       <div class="mega mega-list" id="mega-picks">
         <div class="mega-list-inner">
+          <div class="mega-list-head">
+            <span class="mega-list-title">Our most cherished places</span>
+            <a class="mega-list-all" href="{{ settings.megaMenus.picksHeadHref or '/picks' }}">View all <span class="arrow">→</span></a>
+          </div>
           <div class="mega-picks-list mega-picks-simple">
-            {% for p in navPicks %}
-            <a href="{{ p.href }}"><span class="pl-name">{{ p.label | safe }}</span></a>
+            {% for l in pickLists %}
+            <a href="/picks?list={{ l.key }}"><span class="pl-name">{{ l.label }}</span></a>
+            {% else %}
+            <a href="/picks"><span class="pl-name">Browse our picks</span></a>
             {% endfor %}
-            <a href="{{ settings.megaMenus.picksHeadHref or '/picks' }}" class="mega-trip-all"><span class="pl-name">{{ settings.megaMenus.picksHeadLabel or 'View all picks' }}</span></a>
           </div>
         </div>
       </div>
@@ -115,7 +120,7 @@
           {% elif link.mega == 'picks' %}
           <button class="mobile-nav-link" data-sub="" aria-expanded="false">{{ link.label }} <span class="arrow">+</span></button>
           <div class="mobile-nav-sub">
-            {% for p in navPicks %}<a href="{{ p.href }}">{{ p.label | safe }}</a>
+            {% for l in pickLists %}<a href="/picks?list={{ l.key }}">{{ l.label }}</a>
             {% endfor %}<a href="{{ link.href }}">View all picks →</a>
           </div>
           {% elif link.href == '/contact' %}
