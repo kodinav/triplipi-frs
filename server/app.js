@@ -180,8 +180,8 @@ const SCHEMAS = [
       { name: 'destHeadHref', label: 'Destination Guide — top link', type: 'url', ph: '/destinations' },
       { name: 'destAllLabel', label: 'Destination Guide — bottom “View all categories” label', ph: 'View all categories' },
       { name: 'destAllHref', label: 'Destination Guide — bottom “View all categories” link', type: 'url', ph: '/destinations' },
-      { name: 'picksHeadLabel', label: 'Our Picks — top link label', ph: 'View all picks' },
-      { name: 'picksHeadHref', label: 'Our Picks — top link', type: 'url', ph: '/picks' },
+      { name: 'picksHeadLabel', label: 'Our Picks — last link label', ph: 'View all picks' },
+      { name: 'picksHeadHref', label: 'Our Picks — last link', type: 'url', ph: '/picks' },
     ] },
 
   /* ----- Homepage ----- */
@@ -718,12 +718,24 @@ app.get('/assets/js/partials.js', (req, res) => {
   const zones = bannersByZone();
   const siteTop = (zones['site-top'] || []).map(resolveB);
   const siteBottom = (zones['site-bottom'] || []).map(resolveB);
-  // Mega-menu categories: real destination categories (with counts), up to 8
+  // Destination (and Go For A Trip) dropdown: the first 10 categories holding a
+  // destination, then the "All Destination Categories" link — 11 rows.
   const dests = pub(store.get('destinations') || []);
   const navCategories = (store.get('destCategories') || [])
     .map((cat) => ({ slug: cat.slug, label: cat.label, count: dests.filter((d) => (d.categories || []).includes(cat.slug)).length }))
     .filter((cat) => cat.count > 0)
-    .slice(0, 8);
+    .slice(0, 10);
+  // Our Picks dropdown: the first 10 picks in admin order, each opening its
+  // destination like the /picks cards do, then "View all picks" — 11 rows.
+  // Names are stored as HTML (e.g. "Manali &amp; Kasol"): drop tags, and escape
+  // what would end the partials.js template literal.
+  const navPicks = pub(store.get('picks') || []).slice(0, 10).map((p) => {
+    const dest = dests.find((d) => d.slug === p.destinationSlug);
+    return {
+      label: String(p.name || '').replace(/<[^>]*>/g, '').replace(/`/g, '&#96;').replace(/\$\{/g, '&#36;{'),
+      href: dest ? '/destination-detail?d=' + encodeURIComponent(dest.slug) : (p.href || '/picks'),
+    };
+  });
   res.render('partials.js.njk', {
     settings: store.get('settings'),
     legalDocs: store.get('legalDocs') || [],
@@ -731,7 +743,7 @@ app.get('/assets/js/partials.js', (req, res) => {
     siteTopBanners: siteTop,
     siteBottomBanners: siteBottom,
     navCategories,
-    pickLists: store.get('pickLists') || [],
+    navPicks,
   });
 });
 app.use('/assets', express.static(path.join(ROOT, 'assets')));
