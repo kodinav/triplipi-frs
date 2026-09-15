@@ -27,18 +27,18 @@
   <div data-partial="header"></div>
 
   <main>
-    <section class="page-hero">
-      <div class="page-hero-inner">
-        <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Our Picks</span></nav>
-        <h1>{{ page.titleHtml | safe }}</h1>
-        <p class="lead">{{ page.lead | safe }}</p>
-      </div>
-    </section>
-
-    <!-- List selector -->
-{% if lists and lists | length %}
-    <section class="section-sm" style="padding-top: var(--s-6); padding-bottom: var(--s-4);">
+        <!-- Masthead + list selector -->
+    <section class="section-sm section-masthead" style="padding-bottom: var(--s-4);">
       <div class="container-wide">
+
+        <div class="page-masthead">
+          <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Our Picks</span></nav>
+          <div class="page-masthead-row">
+            <h1>{{ page.titleHtml | safe }}</h1>
+            <p class="lead">{{ page.lead | safe }}</p>
+          </div>
+        </div>
+{% if lists and lists | length %}
         <div class="picks-tabs" data-reveal>
 {% for l in lists %}
           <a class="picks-tab{% if active and l.key == active.key %} is-active{% endif %}" href="/picks?list={{ l.key }}">
@@ -48,9 +48,9 @@
           </a>
 {% endfor %}
         </div>
+{% endif %}
       </div>
     </section>
-{% endif %}
 
     <section class="section" style="padding-top: var(--s-5);">
       <div class="container-wide">

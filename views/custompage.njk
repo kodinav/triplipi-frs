@@ -34,18 +34,23 @@
         {% if page.deck %}<p class="lead">{{ page.deck | safe }}</p>{% endif %}
       </div>
     </section>
-    {% else %}
-    <section class="page-hero">
-      <div class="page-hero-inner">
-        <nav class="crumbs"><a href="/">Home</a><span>/</span><span>{{ page.crumb or page.navLabel }}</span></nav>
-        <h1>{{ page.title | safe }}</h1>
-        {% if page.deck %}<p class="lead">{{ page.deck | safe }}</p>{% endif %}
-      </div>
-    </section>
     {% endif %}
 
-    <section class="section">
+    <section class="section section-masthead">
       <div class="container-narrow">
+
+        {# With a hero image the title lives up there; without one, the masthead
+           carries the crumbs and title at the top of this card. #}
+        {% if not page.heroImage %}
+        <div class="page-masthead">
+          <nav class="crumbs"><a href="/">Home</a><span>/</span><span>{{ page.crumb or page.navLabel }}</span></nav>
+          <div class="page-masthead-row">
+            <h1>{{ page.title | safe }}</h1>
+            {% if page.deck %}<p class="lead">{{ page.deck | safe }}</p>{% endif %}
+          </div>
+        </div>
+        {% endif %}
+
         <article class="rich-body legal-content" data-reveal>{{ page.body | safe }}</article>
       </div>
     </section>

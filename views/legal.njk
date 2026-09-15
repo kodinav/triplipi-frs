@@ -27,16 +27,17 @@
   <div data-partial="header"></div>
 
   <main>
-    <section class="page-hero">
-      <div class="page-hero-inner">
-        <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Legal</span><span>/</span><span>{{ doc.crumb }}</span></nav>
-        <h1>{{ doc.title | safe }}</h1>
-        <p class="lead">{{ doc.deck | safe }}</p>
-      </div>
-    </section>
-
-    <section class="section">
+        <section class="section section-masthead">
       <div class="container-wide">
+
+        <div class="page-masthead">
+          <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Legal</span><span>/</span><span>{{ doc.crumb }}</span></nav>
+          <div class="page-masthead-row">
+            <h1>{{ doc.title | safe }}</h1>
+            <p class="lead">{{ doc.deck | safe }}</p>
+          </div>
+        </div>
+
         <div class="legal-layout" data-reveal>
 
           <!-- Sidebar nav -->

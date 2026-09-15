@@ -28,17 +28,18 @@
 
   <main>
     <!-- Page hero -->
-    <section class="page-hero">
-      <div class="page-hero-inner">
-        {{ bc.bar(crumbs) }}
-        <h1>{{ page.titleHtml | safe }}</h1>
-        <p class="lead">{{ page.lead | safe }}</p>
-      </div>
-    </section>
-
-    <!-- Destination grid -->
-    <section class="section">
+        <!-- Destination grid -->
+    <section class="section section-masthead">
       <div class="container-wide">
+
+        <div class="page-masthead">
+          {{ bc.bar(crumbs) }}
+          <div class="page-masthead-row">
+            <h1>{{ page.titleHtml | safe }}</h1>
+            <p class="lead">{{ page.lead | safe }}</p>
+          </div>
+        </div>
+
         <div class="featured-grid feat-grid-list" data-stagger>
 {% for d in cards %}
           <article class="feat-card">

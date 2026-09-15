@@ -27,17 +27,18 @@
   <div data-partial="header"></div>
 
   <main>
-    <section class="page-hero">
-      <div class="page-hero-inner">
-        <nav class="crumbs"><a href="/">Home</a><span>/</span><span>About</span></nav>
-        <h1>{{ page.titleHtml | safe }}</h1>
-        <p class="lead">{{ page.lead | safe }}</p>
-      </div>
-    </section>
-
-    <!-- Introduction / owner story -->
-    <section class="section">
+        <!-- Introduction / owner story -->
+    <section class="section section-masthead">
       <div class="container-wide">
+
+        <div class="page-masthead">
+          <nav class="crumbs"><a href="/">Home</a><span>/</span><span>About</span></nav>
+          <div class="page-masthead-row">
+            <h1>{{ page.titleHtml | safe }}</h1>
+            <p class="lead">{{ page.lead | safe }}</p>
+          </div>
+        </div>
+
         <div class="about-intro" data-reveal>
           <div class="about-portrait">
             <img loading="lazy" src="{{ about.storyImage or 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1200&q=85' }}" alt="Editor portrait">

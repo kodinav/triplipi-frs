@@ -27,16 +27,17 @@
   <div data-partial="header"></div>
 
   <main>
-    <section class="page-hero">
-      <div class="page-hero-inner">
-        <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Travel Tips</span></nav>
-        <h1>{{ (page.titleHtml or 'Travel <em>Tips</em>') | safe }}</h1>
-        {% if page.lead %}<p class="lead">{{ page.lead | safe }}</p>{% endif %}
-      </div>
-    </section>
-
-    <section class="section">
+        <section class="section section-masthead">
       <div class="container-wide">
+
+        <div class="page-masthead">
+          <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Travel Tips</span></nav>
+          <div class="page-masthead-row">
+            <h1>{{ (page.titleHtml or 'Travel <em>Tips</em>') | safe }}</h1>
+            {% if page.lead %}<p class="lead">{{ page.lead | safe }}</p>{% endif %}
+          </div>
+        </div>
+
         {# One block per topic, top to bottom ("Travel Tips Tab" doc): section name,
            one representational image, the text, then up to two affiliate/sponsor
            links. Wide screens put the image and text side by side across the full

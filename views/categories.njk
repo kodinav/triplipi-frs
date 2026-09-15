@@ -26,16 +26,17 @@
   <div data-partial="header"></div>
 
   <main>
-    <section class="page-hero">
-      <div class="page-hero-inner">
-        <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Categories</span></nav>
-        <h1>{{ page.titleHtml | safe }}</h1>
-        <p class="lead">{{ page.lead | safe }}</p>
-      </div>
-    </section>
-
-    <section class="section">
+        <section class="section section-masthead">
       <div class="container-wide">
+
+        <div class="page-masthead">
+          <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Categories</span></nav>
+          <div class="page-masthead-row">
+            <h1>{{ page.titleHtml | safe }}</h1>
+            <p class="lead">{{ page.lead | safe }}</p>
+          </div>
+        </div>
+
         <div class="cat-circle-grid" data-stagger>
 {% for cat in categories %}
           <a class="cat-circle" href="/destinations?cat={{ cat.slug }}&amp;from=categories" aria-label="{{ cat.label }}">

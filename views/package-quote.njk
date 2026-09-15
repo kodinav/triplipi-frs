@@ -25,20 +25,21 @@
   <div data-partial="header"></div>
 
   <main>
-    <section class="page-hero">
-      <div class="page-hero-inner">
-        <nav class="crumbs">
+        <section class="section section-masthead">
+      <div class="container-wide">
+
+        <div class="page-masthead">
+          <nav class="crumbs">
           <a href="/">Home</a><span>/</span>
           <a href="/packages">Packages</a><span>/</span>
           <span>{{ pkg.title or 'Request a quote' }}</span>
         </nav>
-        <h1>Seek <em>your quote</em>.</h1>
-        <p class="lead">{% if pkg.title %}Your enquiry for <strong>{{ pkg.title | safe }}</strong> goes straight to <strong>{{ provider }}</strong>. They'll respond with options.{% else %}Send your enquiry to our partner — they'll respond with options.{% endif %}</p>
-      </div>
-    </section>
+          <div class="page-masthead-row">
+            <h1>Seek <em>your quote</em>.</h1>
+            <p class="lead">{% if pkg.title %}Your enquiry for <strong>{{ pkg.title | safe }}</strong> goes straight to <strong>{{ provider }}</strong>. They'll respond with options.{% else %}Send your enquiry to our partner — they'll respond with options.{% endif %}</p>
+          </div>
+        </div>
 
-    <section class="section">
-      <div class="container-wide">
         <div class="quote-wrap" data-reveal>
           <form class="contact-form quote-form" data-form data-form-name="Package Quote — {{ provider }}" data-success-message="Inquiry sent to {{ provider }}. They'll be in touch soon.">
             <h2 class="quote-title">Seek your quote</h2>

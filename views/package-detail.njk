@@ -25,20 +25,21 @@
   <div data-partial="header"></div>
 
   <main>
-    <section class="page-hero">
-      <div class="page-hero-inner">
-        {{ bc.bar(crumbs) }}
-        <div style="display: flex; gap: var(--s-3); margin-bottom: var(--s-4); flex-wrap: wrap;">
+        <section class="section section-masthead">
+      <div class="container-wide">
+
+        <div class="page-masthead">
+          {{ bc.bar(crumbs) }}
+          <div style="display: flex; gap: var(--s-3); margin-bottom: var(--s-4); flex-wrap: wrap;">
           {% if pkg.badgeLabel %}<span class="tag{% if pkg.badgeClass %} {{ pkg.badgeClass }}{% endif %}">{{ pkg.badgeLabel }}</span>{% endif %}
           {% if pkg.region %}<span class="tag tag-outline">{{ pkg.region }}</span>{% endif %}
+          </div>
+          <div class="page-masthead-row">
+            <h1>{{ pkg.title | safe }}</h1>
+            {% if pkg.description %}<p class="lead">{{ pkg.description | safe }}</p>{% endif %}
+          </div>
         </div>
-        <h1>{{ pkg.title | safe }}</h1>
-        {% if pkg.description %}<p class="lead">{{ pkg.description | safe }}</p>{% endif %}
-      </div>
-    </section>
 
-    <section class="section">
-      <div class="container-wide">
         <div class="pkg-detail">
 
           <article>

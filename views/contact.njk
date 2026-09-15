@@ -27,16 +27,17 @@
   <div data-partial="header"></div>
 
   <main>
-    <section class="page-hero">
-      <div class="page-hero-inner">
-        <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Contact</span></nav>
-        <h1>{{ page.titleHtml | safe }}</h1>
-        <p class="lead">{{ page.lead | safe }}</p>
-      </div>
-    </section>
-
-    <section class="section">
+        <section class="section section-masthead">
       <div class="container-wide">
+
+        <div class="page-masthead">
+          <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Contact</span></nav>
+          <div class="page-masthead-row">
+            <h1>{{ page.titleHtml | safe }}</h1>
+            <p class="lead">{{ page.lead | safe }}</p>
+          </div>
+        </div>
+
         <div class="contact-layout" id="partner" data-reveal>
 
           <!-- Channels sidebar — email is the single point of contact -->

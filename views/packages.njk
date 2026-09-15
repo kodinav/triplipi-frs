@@ -27,16 +27,17 @@
   <div data-partial="header"></div>
 
   <main>
-    <section class="page-hero">
-      <div class="page-hero-inner">
-        {{ bc.bar(crumbs) }}
-        <h1>{{ page.titleHtml | safe }}</h1>
-        <p class="lead">{{ page.lead | safe }}</p>
-      </div>
-    </section>
-
-    <section class="section">
+        <section class="section section-masthead">
       <div class="container-wide" id="packages">
+
+        <div class="page-masthead">
+          {{ bc.bar(crumbs) }}
+          <div class="page-masthead-row">
+            <h1>{{ page.titleHtml | safe }}</h1>
+            <p class="lead">{{ page.lead | safe }}</p>
+          </div>
+        </div>
+
         {# Category rail (FR-PKG-006) — the /categories taxonomy as round tiles.
            Links carry #packages so a click lands on the rail, not the hero.
            No data-reveal: its leftover clip-path: inset(0) cuts off the

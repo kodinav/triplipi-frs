@@ -27,17 +27,18 @@
   <div data-partial="header"></div>
 
   <main>
-    <section class="page-hero">
-      <div class="page-hero-inner">
-        <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Announcements</span></nav>
-        <h1>{{ page.titleHtml | safe }}</h1>
-        <p class="lead">{{ page.lead | safe }}</p>
-      </div>
-    </section>
-
-    <!-- Filter -->
-    <section class="section-sm" style="padding-top: var(--s-6); padding-bottom: var(--s-4); border-bottom: 1px solid var(--c-border);">
+        <!-- Filter -->
+    <section class="section-sm section-masthead" style="padding-bottom: var(--s-4); border-bottom: 1px solid var(--c-border);">
       <div class="container-wide">
+
+        <div class="page-masthead">
+          <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Announcements</span></nav>
+          <div class="page-masthead-row">
+            <h1>{{ page.titleHtml | safe }}</h1>
+            <p class="lead">{{ page.lead | safe }}</p>
+          </div>
+        </div>
+
         <div class="gallery-filter" data-reveal>
           <span style="font-size: var(--fs-micro); letter-spacing: var(--ls-wider); text-transform: uppercase; color: var(--c-text-muted); margin-right: var(--s-2);">Filter by</span>
           <button class="filter-chip is-active" data-filter="all">All</button>
