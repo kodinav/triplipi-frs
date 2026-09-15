@@ -1,4 +1,4 @@
-{% import "_pagination.njk" as pg %}{% import "_sponsor.njk" as sp %}<!doctype html>
+{% import "_crumbs.njk" as bc %}{% import "_pagination.njk" as pg %}{% import "_sponsor.njk" as sp %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -30,10 +30,7 @@
     <!-- Page hero -->
     <section class="page-hero">
       <div class="page-hero-inner">
-        <nav class="crumbs" aria-label="Breadcrumb">
-          <a href="/">Home</a><span>/</span>
-          {% if activeCatLabel %}<a href="/destinations">Destinations</a><span>/</span><span>{{ activeCatLabel }}</span>{% else %}<span>Destinations</span>{% endif %}
-        </nav>
+        {{ bc.bar(crumbs) }}
         <h1>{{ page.titleHtml | safe }}</h1>
         <p class="lead">{{ page.lead | safe }}</p>
       </div>
@@ -45,7 +42,7 @@
         <div class="featured-grid feat-grid-list" data-stagger>
 {% for d in cards %}
           <article class="feat-card">
-            <a class="feat-media" href="/destination-detail?d={{ d.slug }}" aria-label="{{ d.name | striptags }} — view details">
+            <a class="feat-media" href="/destination-detail?d={{ d.slug }}{{ trail }}" aria-label="{{ d.name | striptags }} — view details">
               <img loading="lazy" src="{{ d.image }}" alt="{{ d.name | striptags }}">
             </a>
             <div class="feat-info">
@@ -53,7 +50,7 @@
               <h3 class="name">{{ d.name | safe }}</h3>
               <div class="meta"><span>{{ d.season }}</span>{% if d.tagline %}<span class="dot"></span><span>{{ d.tagline }}</span>{% endif %}</div>
               <div class="feat-actions">
-                <a class="act-details" href="/destination-detail?d={{ d.slug }}">Know More <span>→</span></a>
+                <a class="act-details" href="/destination-detail?d={{ d.slug }}{{ trail }}">Know More <span>→</span></a>
                 <a class="act-pkg" href="/packages?d={{ d.slug }}">Check Packages <span>→</span></a>
               </div>
             </div>

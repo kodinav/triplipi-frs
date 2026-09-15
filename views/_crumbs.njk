@@ -1,0 +1,10 @@
+{# The "link bar". Every crumb but the last is a link back to that step, and the
+   trail is rebuilt from the URL, so Back retraces the same path. #}
+{% macro bar(items, style) %}
+<nav class="crumbs" aria-label="Breadcrumb"{% if style %} style="{{ style }}"{% endif %}>
+  {%- for cr in items -%}
+    {%- if not loop.first %}<span>/</span>{% endif -%}
+    {%- if cr.href %}<a href="{{ cr.href }}">{{ cr.label }}</a>{% else %}<span>{{ cr.label }}</span>{% endif -%}
+  {%- endfor -%}
+</nav>
+{% endmacro %}

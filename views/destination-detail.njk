@@ -1,4 +1,4 @@
-<!doctype html>
+{% import "_crumbs.njk" as bc %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -30,11 +30,7 @@
         <img loading="lazy" src="{{ dest.heroImage or dest.image }}" alt="{{ dest.name }} landscape">
       </div>
       <div class="page-hero-inner">
-        <nav class="crumbs">
-          <a href="/">Home</a><span>/</span>
-          <a href="/destinations">Destinations</a><span>/</span>
-          <span>{{ dest.name }}</span>
-        </nav>
+        {{ bc.bar(crumbs) }}
         <h1>{{ dest.name }}{% if dest.tagline %} — <em>{{ dest.tagline | lower }}</em>{% endif %}.</h1>
         {% if dest.lead %}<p class="lead">{{ dest.lead | safe }}</p>{% endif %}
 

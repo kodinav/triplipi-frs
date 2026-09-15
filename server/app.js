@@ -582,7 +582,7 @@ const SCHEMAS = [
     path: 'packages', itemTitle: 'title' },
 
   /* ----- Page heroes ----- */
-  ...['destinations', 'packages', 'blog', 'announcements', 'travel-tips', 'picks', 'about', 'contact'].map((p) => ({
+  ...['destinations', 'packages', 'blog', 'announcements', 'travel-tips', 'gallery', 'picks', 'about', 'contact'].map((p) => ({
     key: 'page-' + p,
     group: 'Page Titles',
     label: 'Page title & intro',
@@ -947,6 +947,42 @@ app.use((req, res, next) => {
   next();
 });
 
+/* ---------- breadcrumbs (the "link bar") ----------
+   The trail a visitor clicked travels in the URL: ?cat= keeps the category step
+   and ?from= remembers which tab they came in through. Going forward, coming
+   Back and opening a shared link therefore all show the same trail, instead of
+   collapsing to "Destination". */
+const CRUMB_SOURCES = {
+  destinations: { label: 'Destination', href: '/destinations' },
+  categories: { label: 'Categories', href: '/categories' },
+  picks: { label: 'Our Picks', href: '/picks' },
+  blog: { label: 'Blog', href: '/blog' },
+  packages: { label: 'Check Packages', href: '/packages' },
+};
+/* Home / <where they came in> / <category, if any>. `base` is the section to
+   name when no ?from= was given; `catHref` is where the category step points. */
+function crumbTrail(q, { base = 'destinations', catHref = '/destinations?cat=' } = {}) {
+  const from = String((q && q.from) || '');
+  const cat = String((q && q.cat) || '');
+  const out = [{ label: 'Home', href: '/' }, { ...(CRUMB_SOURCES[from] || CRUMB_SOURCES[base]) }];
+  const catObj = cat ? (c().destCategories || []).find((x) => x.slug === cat) : null;
+  if (catObj) out.push({ label: catObj.label, href: catHref + encodeURIComponent(cat) + (from ? '&from=' + encodeURIComponent(from) : '') });
+  return out;
+}
+/* The page you are on is the last crumb, and is not a link. */
+function endTrail(crumbs, label) {
+  if (label) crumbs.push({ label });
+  else if (crumbs.length) delete crumbs[crumbs.length - 1].href;
+  return crumbs;
+}
+/* Carry the trail onto a child link: "&cat=hidden-gems&from=categories" */
+function trailQS(q) {
+  const parts = [];
+  if (q && q.cat) parts.push('cat=' + encodeURIComponent(q.cat));
+  if (q && q.from) parts.push('from=' + encodeURIComponent(q.from));
+  return parts.length ? '&' + parts.join('&') : '';
+}
+
 const PAGES = {
   index: (req) => {
     const s = c().settings || {};
@@ -986,7 +1022,9 @@ const PAGES = {
     const baseUrl = catObj ? '/destinations?cat=' + encodeURIComponent(activeCat) : '/destinations';
     // Each card: Know More (→ the destination) + Check Packages (→ its packages)
     const cards = items;
-    return { page: c().pages.destinations, cards, categories, activeCat, activeCatLabel: catObj ? catObj.label : '', totalAll: all.length, pagination, baseUrl, sponsorSlots: sponsorSlots('destinations', items.length) };
+    const q = (req && req.query) || {};
+    return { page: c().pages.destinations, cards, categories, activeCat, activeCatLabel: catObj ? catObj.label : '', totalAll: all.length, pagination, baseUrl, sponsorSlots: sponsorSlots('destinations', items.length),
+      crumbs: endTrail(crumbTrail(q)), trail: trailQS(q) };
   },
   categories: () => {
     // Circular category grid (8-up). The universal taxonomy (destCategories) —
@@ -1034,11 +1072,14 @@ const PAGES = {
     if (q.d) qs.push('d=' + encodeURIComponent(q.d));
     if (catObj) qs.push('cat=' + encodeURIComponent(activeCat));
     const baseUrl = '/packages' + (qs.length ? '?' + qs.join('&') : '');
+    // Home / Check Packages / <destination, if filtered> / <category, if picked>
+    const crumbs = crumbTrail(q, { base: 'packages', catHref: '/packages?cat=' });
+    if (destFilter || destEmpty) crumbs.splice(2, 0, { label: destFilter || destEmpty, href: '/packages?d=' + encodeURIComponent(q.d) });
     return {
       page: c().pages.packages, packages: items, pagination, baseUrl,
       sponsorSlots: sponsorSlots('packages', items.length),
       destFilter, destEmpty, categories, activeCat, activeCatLabel: catObj ? catObj.label : '',
-      totalAll, dParam: q.d || '',
+      totalAll, dParam: q.d || '', crumbs: endTrail(crumbs), trail: trailQS(q),
     };
   },
   blog: (req) => {
@@ -1145,7 +1186,8 @@ const PAGES = {
         ...(dest.region ? { touristType: dest.region } : {}),
       },
     };
-    return { dest, related: all.filter((d) => d.slug !== dest.slug).slice(0, 4), seo };
+    return { dest, related: all.filter((d) => d.slug !== dest.slug).slice(0, 4), seo,
+      crumbs: endTrail(crumbTrail((req && req.query) || {}), dest.name) };
   },
   'package-detail': (req) => {
     const all = c().packages || [];

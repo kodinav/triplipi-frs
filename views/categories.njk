@@ -38,7 +38,7 @@
       <div class="container-wide">
         <div class="cat-circle-grid" data-stagger>
 {% for cat in categories %}
-          <a class="cat-circle" href="/destinations?cat={{ cat.slug }}" aria-label="{{ cat.label }}">
+          <a class="cat-circle" href="/destinations?cat={{ cat.slug }}&amp;from=categories" aria-label="{{ cat.label }}">
             <span class="cat-circle-img">
               <img loading="lazy" src="{{ cat.image }}" alt="{{ cat.label }}">
             </span>

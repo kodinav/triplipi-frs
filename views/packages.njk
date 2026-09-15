@@ -1,4 +1,4 @@
-{% import "_pagination.njk" as pg %}{% import "_sponsor.njk" as sp %}<!doctype html>
+{% import "_crumbs.njk" as bc %}{% import "_pagination.njk" as pg %}{% import "_sponsor.njk" as sp %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -29,7 +29,7 @@
   <main>
     <section class="page-hero">
       <div class="page-hero-inner">
-        <nav class="crumbs"><a href="/">Home</a><span>/</span>{% if activeCatLabel %}<a href="/packages">Packages</a><span>/</span><span>{{ activeCatLabel }}</span>{% else %}<span>Packages</span>{% endif %}</nav>
+        {{ bc.bar(crumbs) }}
         <h1>{{ page.titleHtml | safe }}</h1>
         <p class="lead">{{ page.lead | safe }}</p>
       </div>

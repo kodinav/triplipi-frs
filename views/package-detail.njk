@@ -1,4 +1,4 @@
-<!doctype html>
+{% import "_crumbs.njk" as bc %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -27,11 +27,7 @@
   <main>
     <section class="page-hero">
       <div class="page-hero-inner">
-        <nav class="crumbs">
-          <a href="/">Home</a><span>/</span>
-          <a href="/packages">Packages</a><span>/</span>
-          <span>{{ pkg.title }}</span>
-        </nav>
+        {{ bc.bar(crumbs) }}
         <div style="display: flex; gap: var(--s-3); margin-bottom: var(--s-4); flex-wrap: wrap;">
           {% if pkg.badgeLabel %}<span class="tag{% if pkg.badgeClass %} {{ pkg.badgeClass }}{% endif %}">{{ pkg.badgeLabel }}</span>{% endif %}
           {% if pkg.region %}<span class="tag tag-outline">{{ pkg.region }}</span>{% endif %}
