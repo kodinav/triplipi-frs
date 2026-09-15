@@ -217,12 +217,14 @@
   color: var(--c-ink);
   font-weight: var(--fw-medium);
 }
+/* "Explore" — the search bar's submit button (a word, not an icon) */
 .hero-search .btn {
-  padding: 0;
-  width: 42px;
+  padding: 0 var(--s-5);
+  min-width: 42px;
   height: 42px;
-  border-radius: 50%;
+  border-radius: var(--r-pill);
   flex-shrink: 0;
+  white-space: nowrap;
 }
 .hero-search .btn svg { width: 20px; height: 20px; }
 
