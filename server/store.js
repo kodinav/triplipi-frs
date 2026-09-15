@@ -100,6 +100,19 @@ const MIGRATIONS = [
       content.settings.navLinks = kept;
     },
   },
+  {
+    // Two FAQs existed: the legal doc at /legal?p=faq and a custom page at
+    // /p/faqs that duplicated it and held the footer's FAQs link. Keep the
+    // legal one, show it in the footer, and retire the copy (kept in admin).
+    id: 'single-faq',
+    run(content) {
+      const faq = (content.legalDocs || []).find((d) => d.slug === 'faq');
+      if (faq) faq.inFooter = true;
+      (content.customPages || []).forEach((p) => {
+        if (p.slug === 'faqs') Object.assign(p, { inFooter: false, published: false });
+      });
+    },
+  },
 ];
 
 function runMigrations(content) {

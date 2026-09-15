@@ -1311,6 +1311,9 @@ for (const [name, data] of Object.entries(PAGES)) {
 }
 
 /* Dynamic custom pages (FR-PAGES-010 / FR-OTHER-004) — /p/:slug */
+// The /p/faqs custom page duplicated the FAQ legal doc and is retired — send
+// its old links (it was in the footer) to the one FAQ that remains.
+app.get('/p/faqs', (req, res) => res.redirect(301, '/legal?p=faq'));
 app.get('/p/:slug', (req, res) => {
   const page = pub(c().customPages).find((p) => p.slug === req.params.slug);
   if (!page) return res.status(404).render('404.njk', {});
