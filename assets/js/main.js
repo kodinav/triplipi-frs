@@ -77,11 +77,14 @@
     // to /destinations) — underline only the first, best match.
     let best = null, bestLen = 0;
     $$('.nav-link').forEach((l) => {
-      const href = l.getAttribute('href') || l.dataset.path || '';
-      const p = href.replace(/\/+$/, '');
-      if (!p) return;
-      const hit = p === path || (p !== '/' && path.indexOf(p) === 0);
-      if (hit && p.length > bestLen) { best = l; bestLen = p.length; }
+      // data-paths lets one tab stand for several pages (Resources)
+      const list = (l.dataset.paths || l.getAttribute('href') || l.dataset.path || '').split(',');
+      list.forEach((href) => {
+        const p = href.trim().replace(/\/+$/, '');
+        if (!p) return;
+        const hit = p === path || (p !== '/' && path.indexOf(p) === 0);
+        if (hit && p.length > bestLen) { best = l; bestLen = p.length; }
+      });
     });
     if (best) best.classList.add('is-active');
   };

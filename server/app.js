@@ -170,8 +170,8 @@ const SCHEMAS = [
       { name: 'mega', label: 'Dropdown menu', type: 'select', options: [
         { value: 'none', label: 'No dropdown — plain link' },
         { value: 'destinations', label: 'Opens the Destination categories dropdown' },
-        { value: 'trip', label: 'Opens the Go For A Trip dropdown' },
         { value: 'picks', label: 'Opens the Our Picks dropdown' },
+        { value: 'resources', label: 'Opens the Resources dropdown' },
       ] },
     ] },
   { key: 'megaMenus', group: 'Navbar', label: 'Dropdown menu links (“View all …”)', type: 'object', path: 'settings.megaMenus',
@@ -741,7 +741,8 @@ app.get('/assets/js/partials.js', (req, res) => {
     siteTopBanners: siteTop,
     siteBottomBanners: siteBottom,
     navCategories,
-    pickLists: store.get('pickLists') || [],
+    // Our Picks dropdown: up to 10 lists, then "View all" (FR: 10 + 1 rows)
+    pickLists: (store.get('pickLists') || []).slice(0, 10),
   });
 });
 app.use('/assets', express.static(path.join(ROOT, 'assets')));

@@ -71,19 +71,33 @@ const MIGRATIONS = [
     },
   },
   {
-    // The Go For A Trip header tab is back (the earlier 'check-packages' migration
-    // had dropped it). Put it where it was — after Destination, ahead of Check
-    // Packages — unless the site already has one.
-    id: 'restore-go-for-a-trip',
+    // Header menu rebuilt to the client's order: Destination, Find Trip Deals,
+    // Our Picks, Check Packages, Resources, Contact. "Go For A Trip" becomes
+    // "Find Trip Deals" — no dropdown, straight to /categories (where "All
+    // Destination Categories" already went) — and the five reading pages move
+    // into the new Resources dropdown instead of sitting in the bar.
+    id: 'resources-nav',
     run(content) {
       const nav = content.settings && content.settings.navLinks;
       if (!Array.isArray(nav)) return;
-      const isTrip = (l) => l.mega === 'trip' || String(l.label || '').trim().toLowerCase() === 'go for a trip';
-      if (nav.some(isTrip)) return;
-      const dest = nav.findIndex((l) => l.mega === 'destinations');
-      const pkgs = nav.findIndex((l) => String(l.href || '').replace(/\/+$/, '') === '/packages');
-      const at = dest >= 0 ? dest + 1 : pkgs >= 0 ? pkgs : 0;
-      nav.splice(at, 0, { label: 'Go For A Trip', href: '/destinations', mega: 'trip' });
+      const at = (l) => String(l.href || '').replace(/\/+$/, '');
+      const trip = nav.find((l) => l.mega === 'trip' || /^go for a trip$/i.test(String(l.label || '').trim()));
+      if (trip) Object.assign(trip, { label: 'Find Trip Deals', href: '/categories', mega: 'none' });
+      else if (!nav.some((l) => at(l) === '/categories')) {
+        const i = nav.findIndex((l) => l.mega === 'destinations');
+        nav.splice(i < 0 ? 0 : i + 1, 0, { label: 'Find Trip Deals', href: '/categories', mega: 'none' });
+      }
+      const inResources = ['/announcements', '/travel-tips', '/gallery', '/blog', '/about'];
+      const kept = nav.filter((l) => !inResources.includes(at(l)));
+      if (!kept.some((l) => l.mega === 'resources')) kept.push({ label: 'Resources', href: '/travel-tips', mega: 'resources' });
+      // fixed order; anything the admin added stays, in its own order, at the end
+      const order = ['/destinations', '/categories', '/picks', '/packages', 'resources', '/contact'];
+      const rank = (l) => {
+        const i = order.indexOf(l.mega === 'resources' ? 'resources' : at(l));
+        return i < 0 ? order.length : i;
+      };
+      kept.sort((a, b) => rank(a) - rank(b));
+      content.settings.navLinks = kept;
     },
   },
 ];

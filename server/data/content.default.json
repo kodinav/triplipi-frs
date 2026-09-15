@@ -12,13 +12,8 @@
         "mega": "destinations"
       },
       {
-        "label": "Go For A Trip",
-        "href": "/destinations",
-        "mega": "trip"
-      },
-      {
-        "label": "Check Packages",
-        "href": "/packages",
+        "label": "Find Trip Deals",
+        "href": "/categories",
         "mega": "none"
       },
       {
@@ -27,24 +22,14 @@
         "mega": "picks"
       },
       {
-        "label": "Travel Tips",
+        "label": "Check Packages",
+        "href": "/packages",
+        "mega": "none"
+      },
+      {
+        "label": "Resources",
         "href": "/travel-tips",
-        "mega": "none"
-      },
-      {
-        "label": "About",
-        "href": "/about",
-        "mega": "none"
-      },
-      {
-        "label": "Announcements",
-        "href": "/announcements",
-        "mega": "none"
-      },
-      {
-        "label": "Blog",
-        "href": "/blog",
-        "mega": "none"
+        "mega": "resources"
       },
       {
         "label": "Contact",

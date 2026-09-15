@@ -400,9 +400,9 @@
 /* Our Picks dropdown — plain category names, highlight on hover (Our Picks Tab doc) */
 .mega-picks-simple > a { display: block; padding: var(--s-3) var(--s-4); }
 .mega-picks-simple .pl-name { font-weight: var(--fw-semi); font-size: 0.95rem; color: var(--c-text); }
-/* Destination / Go For A Trip hold 10 categories + a closing link: slimmer rows so all 11 fit */
+/* Destination and Our Picks hold up to 10 names + a closing link: slimmer rows so all 11 fit */
 #mega-destinations .mega-picks-simple > a,
-#mega-trip .mega-picks-simple > a { padding: var(--s-2) var(--s-4); line-height: 1.4; }
+#mega-picks .mega-picks-simple > a { padding: var(--s-2) var(--s-4); line-height: 1.4; }
 .mega-picks-simple > a:hover .pl-name { color: var(--c-terracotta); }
 .mega-trip-all { margin-top: 4px; border-top: 1px solid var(--c-border); }
 .mega-trip-all .pl-name { color: var(--c-terracotta); font-weight: var(--fw-bold); }
