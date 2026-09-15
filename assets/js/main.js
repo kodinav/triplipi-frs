@@ -1063,11 +1063,41 @@
   // of leaving the row parked back at "All".
   // ============================================================
   const initPkgCatRail = () => {
+    const wrap = $('.pkg-cats-wrap');
     const rail = $('.pkg-cats');
-    const active = rail && $('.pkg-cat.is-active', rail);
-    if (!active || rail.scrollWidth <= rail.clientWidth) return;
-    const offset = active.getBoundingClientRect().left - rail.getBoundingClientRect().left;
-    rail.scrollLeft += offset - (rail.clientWidth - active.offsetWidth) / 2;
+    if (!rail) return;
+    const prev = wrap && $('.rail-prev', wrap);
+    const next = wrap && $('.rail-next', wrap);
+
+    // Arrows and edge fades appear only while there is somewhere to scroll to.
+    const sync = () => {
+      const max = rail.scrollWidth - rail.clientWidth;
+      const canPrev = rail.scrollLeft > 8;      // ignore the rail's own start padding
+      const canNext = rail.scrollLeft < max - 8;
+      if (wrap) {
+        wrap.classList.toggle('can-prev', canPrev);
+        wrap.classList.toggle('can-next', canNext);
+      }
+      if (prev) prev.hidden = !canPrev;
+      if (next) next.hidden = !canNext;
+    };
+    const page = (dir) => rail.scrollBy({ left: dir * Math.max(rail.clientWidth * 0.8, 200), behavior: 'smooth' });
+    if (prev) prev.addEventListener('click', () => page(-1));
+    if (next) next.addEventListener('click', () => page(1));
+    rail.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+
+    // After picking a category, bring its (now active) tile into view instead
+    // of leaving the row parked back at "All".
+    const active = $('.pkg-cat.is-active', rail);
+    if (active && rail.scrollWidth > rail.clientWidth) {
+      const offset = active.getBoundingClientRect().left - rail.getBoundingClientRect().left;
+      const prevBehavior = rail.style.scrollBehavior;
+      rail.style.scrollBehavior = 'auto';   // land there, don't animate on load
+      rail.scrollLeft += offset - (rail.clientWidth - active.offsetWidth) / 2;
+      rail.style.scrollBehavior = prevBehavior;
+    }
+    sync();
   };
 
   // ============================================================
