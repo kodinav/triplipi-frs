@@ -1169,7 +1169,10 @@ const PAGES = {
         ...(pkg.price ? { offers: { '@type': 'Offer', price: String(pkg.price).replace(/[^0-9.]/g, ''), priceCurrency: pkg.priceCurrency || 'INR', availability: 'https://schema.org/InStock' } } : {}),
       },
     };
-    return { pkg, seo };
+    // "Check Packages" at the bottom of the sidebar opens this destination's packages
+    const dest = (c().destinations || []).find((d) => (pkg.destinationSlugs || []).includes(d.slug)) || null;
+    return { pkg, dest: dest ? { slug: dest.slug, name: dest.name } : null, seo,
+      crumbs: endTrail(crumbTrail((req && req.query) || {}, { base: 'packages', catHref: '/packages?cat=' }), plain(pkg.title)) };
   },
   'package-quote': (req) => {
     // "Seek your quote" contact form for a package with no provider website —

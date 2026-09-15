@@ -60,7 +60,7 @@
             <div class="pkg-tab-pane" data-pane="overview" data-reveal>
               <h2 style="margin-bottom: var(--s-5); font-family: var(--ff-display); font-weight: 700; font-size: 2rem; letter-spacing:-0.02em;">About <em>this trip</em>.</h2>
               {% if pkg.overview %}<div class="rich-body">{{ pkg.overview | safe }}</div>
-              {% else %}<p>{{ pkg.description | safe }}</p><p>Full itinerary and inclusions for this package are available on request — use the “Request custom quote” button or continue to the provider.</p>{% endif %}
+              {% else %}<p>{{ pkg.description | safe }}</p><p>Full itinerary and inclusions for this package are available on request — see the other packages for this destination, or continue to the provider.</p>{% endif %}
             </div>
 
             {% if pkg.itinerary %}
@@ -113,13 +113,9 @@
               <p style="font-size: var(--fs-micro); color: var(--c-text-muted); margin-top: var(--s-4); text-align: center;">Affiliate disclosure shown on next screen</p>
               {% endif %}
               <hr class="rule" style="margin-block: var(--s-5);">
-              {# Always goes through the External Redirect Notice first: then straight to
-                 the provider's site, or to the quote form when the package has no URL. #}
-              {% if pkg.ctaExternal and pkg.ctaUrl %}
-              <a href="{{ pkg.ctaUrl }}" class="btn btn-ghost" style="width: 100%;" data-external data-provider="{{ pkg.ctaProvider }}" data-url="{{ pkg.ctaUrl }}">Request custom quote</a>
-              {% else %}
-              <a href="/package-quote?p={{ pkg.title | slug }}" class="btn btn-ghost" style="width: 100%;" data-external data-provider="{{ pkg.ctaProvider or (pkg.title | striptags) }}" data-url="/package-quote?p={{ pkg.title | slug }}" data-display="Secure quote request">Request custom quote</a>
-              {% endif %}
+              {# Same move as every other Check Packages button: straight to this
+                 destination's packages, with no consent card or quote form. #}
+              <a href="/packages{% if dest %}?d={{ dest.slug }}{% endif %}" class="btn btn-ghost" style="width: 100%;">Check Packages <span class="arrow">→</span></a>
             </div>
           </aside>
 
