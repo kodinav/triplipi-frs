@@ -201,43 +201,6 @@ img, video {
 }
 
 
-/* ---------- SCROLL DOWN INDICATOR ---------- */
-.scroll-indicator {
-  position: absolute;
-  bottom: var(--s-7);
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--s-3);
-  color: var(--c-bone);
-  font-size: var(--fs-micro);
-  text-transform: uppercase;
-  letter-spacing: var(--ls-widest);
-  z-index: 3;
-  animation: fadeUp 1s var(--ease-cinema) 1.5s both;
-}
-.scroll-indicator-line {
-  width: 1px;
-  height: 60px;
-  background: linear-gradient(to bottom, transparent, var(--c-bone));
-  position: relative;
-  overflow: hidden;
-}
-.scroll-indicator-line::after {
-  content: "";
-  position: absolute;
-  top: -60px; left: 0;
-  width: 100%; height: 60px;
-  background: linear-gradient(to bottom, var(--c-gold), transparent);
-  animation: scrollLine 2.5s ease-in-out infinite;
-}
-@keyframes scrollLine {
-  to { top: 100%; }
-}
-
-
 /* ---------- LOADER (page transitions) ---------- */
 .page-loader {
   position: fixed;

@@ -46,8 +46,6 @@
             {% for d in legalDocs %}
             <a href="/legal?p={{ d.slug }}"{% if d.slug == doc.slug %} class="is-active"{% endif %}>{{ d.navLabel }}</a>
             {% endfor %}
-            <hr class="rule" style="margin-block: var(--s-5);">
-            <p style="font-size: var(--fs-micro); color: var(--c-text-muted); line-height: 1.6;">Last updated: 1 March 2026.<br>Document version 2.4.</p>
           </aside>
 
           <!-- Content -->
