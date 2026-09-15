@@ -62,10 +62,11 @@
   --a-blue-20:    rgba(52, 104, 157, 0.20);
 
   /* ---------- TYPOGRAPHY ---------- */
-  /* Two-family system: Playfair Display (editorial headlines) + Manrope (text UI) */
-  --ff-display:   "Playfair Display", Georgia, serif;
-  --ff-text:      "Manrope", "Helvetica Neue", Arial, sans-serif;
-  --ff-mono:      "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+  /* Two-family system: Open Sans Condensed (headlines) + Lato (text UI) */
+  /* Open Sans Condensed for display, Lato for everything you read */
+  --ff-display:   "Open Sans Condensed", "Open Sans", "Arial Narrow", sans-serif;
+  --ff-text:      "Lato", "Helvetica Neue", Arial, sans-serif;
+  --ff-mono:      "Lato", "Helvetica Neue", Arial, sans-serif;
 
   /* Fluid type scale — clamp(min, fluid, max) */
   --fs-overline:  0.75rem;                              /* 12px */
