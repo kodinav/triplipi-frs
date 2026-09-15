@@ -293,6 +293,7 @@ const SCHEMAS = [
         { value: 'packages', label: 'Check Packages' },
         { value: 'shop', label: 'Shop' },
         { value: 'travel-tips', label: 'Travel Tips' },
+        { value: 'gallery', label: 'Gallery' },
         { value: 'blog', label: 'A blog post' },
         { value: 'external', label: 'External / affiliate website (consent-gated)' },
         { value: 'url', label: 'Any internal URL' },
@@ -474,6 +475,7 @@ const SCHEMAS = [
       { name: 'linkLabel', label: 'Secondary button label (optional)', ph: 'e.g. View packages — leave blank for none' },
       { name: 'linkUrl', label: 'Secondary button link (optional)', type: 'url', ph: 'e.g. packages.html' },
       { name: 'pages', label: 'Show on pages', type: 'multiselect', options: [
+        { value: 'gallery', label: 'Gallery' },
         { value: 'packages', label: 'Packages' },
         { value: 'blog', label: 'Blog' },
         { value: 'destinations', label: 'Destinations' },
@@ -642,6 +644,13 @@ const ADMIN_PAGES = [
       { key: 'page-announcements', hint: 'Big title and intro at the top of the page.' },
       { key: 'announcements', hint: 'Every announcement card.' },
     ] },
+  { key: 'gallery', label: 'Gallery', view: '/gallery',
+    intro: 'Photo and video tiles in the masonry grid.',
+    sections: [
+      { key: 'page-gallery', hint: 'Big title and intro at the top of the page.' },
+      { key: 'galleryItems', hint: 'Every tile. Pick a category from the dropdown; type "Film / video" shows a play button.' },
+      { key: 'galleryCategories', hint: 'The filter chips above the grid. Counts are automatic.' },
+    ] },
   { key: 'travel-tips', label: 'Travel Tips', view: '/travel-tips',
     intro: 'The Travel Tips page — one block per topic, shown top to bottom in this order.',
     sections: [
@@ -792,6 +801,7 @@ function contentStats() {
     ['Blog posts', d.blog && d.blog.posts],
     ['Announcements', d.announcements],
     ['Travel tips', d.travelTips],
+    ['Gallery', d.galleryItems],
     ['Our Picks', d.picks],
     ['Shop media', d.shopItems],
     ['Promo banners', d.banners],
@@ -824,6 +834,7 @@ function resolveAnnouncements(list) {
       case 'packages': href = t ? '/packages?d=' + encodeURIComponent(t) : '/packages'; break;
       case 'shop': href = '/shop'; break;
       case 'travel-tips': href = '/travel-tips'; break;
+      case 'gallery': href = '/gallery'; break;
       case 'blog': href = '/blog-post?b=' + encodeURIComponent(t); break;
       case 'external': href = a.extUrl || a.href || '#'; break;
       case 'url': if (t) href = t; break;
@@ -853,7 +864,7 @@ function searchIndex() {
   pub(d.announcements).forEach((x) => out.push({ type: 'Announcement', title: x.title, desc: x.date || x.excerpt, url: x.href || '/announcements' }));
   pub(d.picks).forEach((x) => out.push({ type: 'Pick', title: x.name, desc: x.region, url: x.href || '/picks' }));
   (d.legalDocs || []).forEach((x) => out.push({ type: 'Page', title: x.crumb, desc: 'Legal', url: '/legal?p=' + x.slug }));
-  [['About', '/about'], ['Contact', '/contact'], ['Travel Tips', '/travel-tips'], ['Shop', '/shop']]
+  [['About', '/about'], ['Contact', '/contact'], ['Travel Tips', '/travel-tips'], ['Gallery', '/gallery'], ['Shop', '/shop']]
     .forEach(([title, url]) => out.push({ type: 'Page', title, desc: '', url }));
   pub(d.travelTips).forEach((x) => out.push({ type: 'Travel tip', title: x.title, desc: clip(x.body, 120), url: '/travel-tips#' + slugify(x.title) }));
   return out;
@@ -902,6 +913,7 @@ const PAGE_TITLES = {
   '/blog': 'The Journal',
   '/announcements': 'Announcements',
   '/travel-tips': 'Travel Tips',
+  '/gallery': 'Gallery',
   '/picks': 'Our Picks',
   '/about': 'About Us',
   '/contact': 'Contact',
@@ -1042,6 +1054,21 @@ const PAGES = {
   announcements: (req) => {
     const { items, pagination } = paginate(resolveAnnouncements(pub(c().announcements)), req);
     return { page: c().pages.announcements, announcements: items, pagination, baseUrl: '/announcements' };
+  },
+  gallery: (req) => {
+    const all = pub(c().galleryItems);
+    const categories = (c().galleryCategories || []).map((cat) => ({
+      ...cat,
+      count: all.filter((g) => g.category === cat.slug).length,
+    }));
+    const { items, pagination } = paginate(all, req);
+    return {
+      page: c().pages.gallery, items, categories, pagination, baseUrl: '/gallery', sponsorSlots: sponsorSlots('gallery', items.length),
+      typeCounts: {
+        image: all.filter((g) => g.type === 'image').length,
+        video: all.filter((g) => g.type === 'video').length,
+      },
+    };
   },
   // Travel Tips (formerly Gallery): every topic stacked in admin order, each with
   // an anchor id so search results and deep links can land on it.
@@ -1211,7 +1238,7 @@ app.get('/sitemap.xml', (req, res) => {
   const urls = [];
   const add = (loc, priority) => urls.push({ loc: origin + loc, priority });
   // Static / listing pages
-  ['/', '/destinations', '/packages', '/blog', '/announcements', '/travel-tips', '/picks', '/about', '/contact', '/shop']
+  ['/', '/destinations', '/packages', '/blog', '/announcements', '/travel-tips', '/gallery', '/picks', '/about', '/contact', '/shop']
     .forEach((p) => add(p, p === '/' ? '1.0' : '0.8'));
   // Legal docs
   (c().legalDocs || []).forEach((d) => d.slug && add('/legal?p=' + encodeURIComponent(d.slug), '0.3'));
@@ -1232,8 +1259,6 @@ app.get('/', (req, res) => res.render('index.njk', PAGES.index(req)));
 // The old /trip planner is retired and "Go For A Trip" is now "Check Packages":
 // send legacy links to the packages list, keeping a destination filter if given.
 app.get('/trip', (req, res) => res.redirect(302, '/packages' + (req.query.d ? '?d=' + encodeURIComponent(req.query.d) : '')));
-// The Gallery tab became Travel Tips (client doc) — keep old links and bookmarks working.
-app.get('/gallery', (req, res) => res.redirect(301, '/travel-tips'));
 for (const [name, data] of Object.entries(PAGES)) {
   if (name === 'trip') continue;
   app.get('/' + name, (req, res) => res.render(name + '.njk', data(req)));
