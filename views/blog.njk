@@ -27,16 +27,18 @@
   <div data-partial="header"></div>
 
   <main>
-    <section class="page-hero">
-      <div class="page-hero-inner">
-        <nav class="crumbs"><a href="/">Home</a><span>/</span><span>Blog</span></nav>
-        <h1>{{ page.titleHtml | safe }}</h1>
-        <p class="lead">{{ page.lead | safe }}</p>
-      </div>
-    </section>
-
-    <section class="section" style="padding-top: 0;">
+    {# No tall hero card here: the masthead sits inside the first content card so
+       the stories themselves start on the first screen. #}
+    <section class="section section-masthead">
       <div class="container-wide">
+
+        <div class="page-masthead">
+          <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>Blog</span></nav>
+          <div class="page-masthead-row">
+            <h1>{{ page.titleHtml | safe }}</h1>
+            {% if page.lead %}<p class="lead">{{ page.lead | safe }}</p>{% endif %}
+          </div>
+        </div>
 
         <!-- Featured story + side strip -->
         <div class="blog-landing-head" data-reveal>

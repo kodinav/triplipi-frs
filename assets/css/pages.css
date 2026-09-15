@@ -746,6 +746,52 @@
 }
 
 
+/* ---------- SLIM MASTHEAD ----------
+   Used instead of the tall .page-hero card (Blog): crumbs, title and intro in
+   one band at the top of the first content card, so the page's own content is
+   on screen without scrolling. */
+.section-masthead { padding-top: clamp(28px, 3vw, 44px); }
+.page-masthead {
+  padding-bottom: var(--s-6);
+  margin-bottom: var(--s-8);
+  border-bottom: 1px solid var(--c-border);
+}
+.page-masthead .crumbs {
+  display: flex;
+  gap: var(--s-3);
+  font-size: var(--fs-micro);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wider);
+  color: var(--c-text-muted);
+  margin-bottom: var(--s-4);
+}
+.page-masthead .crumbs a:hover { color: var(--c-gold-deep); }
+.page-masthead-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 46ch);
+  gap: var(--s-4) var(--s-9);
+  align-items: end;
+}
+.page-masthead h1 {
+  font-family: var(--ff-display);
+  font-size: clamp(2.4rem, 1.4vw + 2rem, 3.6rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.page-masthead h1 em { font-style: italic; color: var(--c-gold-deep); }
+.page-masthead p.lead {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--c-text-muted);
+}
+@media (max-width: 860px) {
+  .page-masthead-row { grid-template-columns: 1fr; align-items: start; }
+  .page-masthead { margin-bottom: var(--s-7); }
+}
+
 /* Categories pills (destination listing) */
 .category-pills {
   display: flex;
