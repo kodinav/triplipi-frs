@@ -4,25 +4,54 @@
 {% block content %}
   <header class="adm-head">
     <div>
-      <div class="adm-kicker">{{ schema.label }}</div>
-      <h1>{{ 'Edit item' if index !== null else 'Add item' }}</h1>
+      <div class="adm-kicker"><a href="{{ backUrl }}">{{ schema.label }}</a> › {{ 'Edit' if index !== null else 'New' }}</div>
+      <h1>{{ 'Edit this item' if index !== null else 'Add a new item' }}</h1>
+      <p class="adm-sub">Fill in what you know — you can come back and finish it later. Nothing shows on the site until the status below says <em>Published</em>.</p>
     </div>
-    <a class="adm-btn ghost" href="{{ backUrl }}">← Back</a>
+    <a class="adm-btn ghost" href="{{ backUrl }}">← Back to the list</a>
   </header>
 
-  <form class="adm-form" method="post" action="/admin/section/{{ schema.key }}/save" enctype="multipart/form-data">
+  <form class="adm-form adm-item-form" method="post" action="/admin/section/{{ schema.key }}/save" enctype="multipart/form-data">
     <input type="hidden" name="_index" value="{{ index if index !== null else '' }}">
-    {% for f in schema.fields %}
-      {{ m.field(f, item[f.name]) }}
-    {% endfor %}
+    <input type="hidden" name="_back" value="{{ backUrl }}">
 
-    <fieldset class="adm-status">
-      <legend>Status &amp; scheduling</legend>
-      <label class="adm-check"><input type="checkbox" name="_published" {% if item.published !== false %}checked{% endif %}> Published (visible on the site)</label>
-      <label class="adm-check"><input type="checkbox" name="_archived" {% if item.archived %}checked{% endif %}> Archived (hidden from the site, kept here)</label>
-      <label>Auto-expire on (optional) <input type="date" name="_expiry" value="{{ item.expiry }}"></label>
-    </fieldset>
+    <section class="adm-panel">
+      <h2 class="adm-panel-title">Details</h2>
+      {% for f in schema.fields %}
+        {{ m.field(f, item[f.name]) }}
+      {% endfor %}
+    </section>
 
-    <button class="adm-btn primary" type="submit">Save item</button>
+    <section class="adm-panel">
+      <h2 class="adm-panel-title">Status &amp; scheduling</h2>
+      <p class="adm-note">Published shows it on the site. Hidden and Archived both take it off the site and keep it here, so nothing is lost.</p>
+      <div class="adm-status-choices">
+        <label class="adm-radio">
+          <input type="radio" name="_status" value="live" {% if item.archived !== true and item.published !== false %}checked{% endif %}>
+          <span><strong>Published</strong><small>Visible to visitors</small></span>
+        </label>
+        <label class="adm-radio">
+          <input type="radio" name="_status" value="hidden" {% if item.archived !== true and item.published === false %}checked{% endif %}>
+          <span><strong>Hidden</strong><small>Saved as a draft, not on the site</small></span>
+        </label>
+        <label class="adm-radio">
+          <input type="radio" name="_status" value="archived" {% if item.archived === true %}checked{% endif %}>
+          <span><strong>Archived</strong><small>Filed away, restore any time</small></span>
+        </label>
+      </div>
+      <label class="adm-expiry">Take off the site automatically on (optional)
+        <input type="date" name="_expiry" value="{{ item.expiry }}">
+        <small>On this date the item archives itself. Leave blank to keep it up.</small>
+      </label>
+    </section>
+
+    <div class="adm-formbar is-sticky">
+      <button class="adm-btn primary" type="submit">{{ 'Save changes' if index !== null else 'Add item' }}</button>
+      <a class="adm-btn ghost" href="{{ backUrl }}">Cancel</a>
+      {% if index !== null %}
+        <span class="adm-formbar-spacer"></span>
+        <span class="adm-formbar-note">Item #{{ index + 1 }}</span>
+      {% endif %}
+    </div>
   </form>
 {% endblock %}

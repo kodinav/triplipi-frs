@@ -5,16 +5,18 @@
 {% block content %}
   <header class="adm-head">
     <div>
-      <div class="adm-kicker">{{ 'Site' if page.isSettings else 'Page' }}</div>
+      <div class="adm-kicker">{{ 'Settings' if page.group == 'settings' else 'Page' }}</div>
       <h1>{{ page.label }}</h1>
       <p class="adm-sub">{{ page.intro }}</p>
     </div>
-    <a class="adm-btn ghost" href="{{ page.view }}" target="_blank">View page ↗</a>
+    <a class="adm-btn ghost" href="{{ page.view }}" target="_blank" rel="noopener">View page ↗</a>
   </header>
+
+  <p class="adm-note">Sections are listed in the order they appear on the page. Open one to edit it — every save goes live immediately.</p>
 
   <div class="adm-sections">
     {% for sec in sections %}
-      <details class="adm-sec" id="sec-{{ sec.schema.key }}" {% if loop.first and sections | length <= 3 %}open{% endif %}>
+      <details class="adm-sec" id="sec-{{ sec.schema.key }}" {% if sections | length <= 3 %}open{% endif %}>
         <summary>
           <span class="num">{{ loop.index }}</span>
           <span class="sec-title">
@@ -22,13 +24,18 @@
             <small>{{ sec.hint }}</small>
           </span>
           <span class="sec-meta">
-            {% if sec.schema.type == 'list' %}{{ sec.value | length }} items{% elif sec.schema.type == 'picker' %}{{ (sec.value | selectattr('featured') | list) | length }} of {{ sec.value | length }} picked{% else %}Edit{% endif %}
-            <span class="chev">▾</span>
+            {% if sec.schema.type == 'list' %}
+              {{ sec.live }} live{% if sec.value | length != sec.live %} · {{ sec.value | length }} total{% endif %}
+            {% elif sec.schema.type == 'picker' %}
+              {{ (sec.value | selectattr('featured') | list) | length }} of {{ sec.value | length }} picked
+            {% else %}Edit{% endif %}
+            <span class="chev" aria-hidden="true">▾</span>
           </span>
         </summary>
 
         {% if sec.schema.type == 'picker' %}
           <form class="adm-picker" method="post" action="/admin/section/{{ sec.schema.key }}">
+            <p class="adm-note">Tick the ones to show on the homepage.</p>
             {% for item in sec.value %}
               <label class="pick-row">
                 <input type="checkbox" name="pick_{{ loop.index0 }}" {% if item.featured %}checked{% endif %}>
@@ -40,41 +47,64 @@
             {% endfor %}
             <button class="adm-btn primary" type="submit">Save selection</button>
           </form>
+
         {% elif sec.schema.type == 'object' %}
           <form class="adm-form inline" method="post" action="/admin/section/{{ sec.schema.key }}" enctype="multipart/form-data">
             {% for f in sec.schema.fields %}
               {{ m.field(f, sec.value[f.name]) }}
             {% endfor %}
-            <button class="adm-btn primary" type="submit">Save</button>
+            <div class="adm-formbar">
+              <button class="adm-btn primary" type="submit">Save changes</button>
+            </div>
           </form>
+
         {% else %}
-          <div class="adm-list inline" data-sortable data-key="{{ sec.schema.key }}">
-            {% for item in sec.value %}
-              <div class="adm-row" data-idx="{{ loop.index0 }}" draggable="true">
-                <span class="drag-handle" title="Drag to reorder" aria-hidden="true">⠿</span>
-                {% if item.image %}<img loading="lazy" class="thumb" src="{{ item.image }}" alt="">{% endif %}
-                <div class="title">
-                  <strong>{{ item[sec.schema.itemTitle] | striptags | truncate(60) | safe }}</strong>
-                  <small><span class="row-num">#{{ loop.index }}</span>{% if item.featured %} · <span class="on-home">★ on homepage</span>{% endif %}{% if item.archived %} · <span class="badge-arch">archived</span>{% elif item.published == false %} · <span class="badge-arch">hidden</span>{% endif %}</small>
+          {# list: a short preview here, the full list (search, filters, paging) on its own page #}
+          <div class="adm-sec-body">
+            <div class="adm-sec-actions">
+              <a class="adm-btn primary" href="/admin/section/{{ sec.schema.key }}/new">+ Add item</a>
+              <a class="adm-btn" href="/admin/collection/{{ sec.schema.key }}">Open full list ({{ sec.value | length }}) →</a>
+              {% if sec.limit %}<span class="adm-cap {% if sec.value | length > sec.limit %}is-over{% endif %}">Agreed limit {{ sec.limit }}</span>{% endif %}
+            </div>
+
+            <div class="adm-list inline" data-sortable data-key="{{ sec.schema.key }}">
+              {% for item in sec.preview %}
+                <div class="adm-row" data-idx="{{ loop.index0 }}" draggable="true">
+                  <span class="drag-handle" title="Drag to reorder" aria-hidden="true">⠿</span>
+                  {% if item.image %}<img loading="lazy" class="thumb" src="{{ item.image }}" alt="">{% endif %}
+                  <div class="title">
+                    <strong>{{ item[sec.schema.itemTitle] | striptags | truncate(58) | safe }}</strong>
+                    <small>
+                      <span class="row-num">#{{ loop.index }}</span>
+                      {% if item.archived %}<span class="chip chip-archived">archived</span>
+                      {% elif item.published == false %}<span class="chip chip-hidden">hidden</span>
+                      {% else %}<span class="chip chip-live">live</span>{% endif %}
+                      {% if item.featured %}<span class="chip chip-home">on homepage</span>{% endif %}
+                    </small>
+                  </div>
+                  <div class="row-actions">
+                    <a class="adm-btn sm" href="/admin/section/{{ sec.schema.key }}/{{ loop.index0 }}/edit">Edit</a>
+                    <form method="post" action="/admin/section/{{ sec.schema.key }}/{{ loop.index0 }}/delete"
+                          onsubmit="return confirm('Delete this item for good? Archive it instead if you may want it back.');">
+                      <button class="adm-btn sm danger" type="submit">Delete</button>
+                    </form>
+                  </div>
                 </div>
-                <div class="row-actions">
-                  <a class="adm-btn sm" href="/admin/section/{{ sec.schema.key }}/{{ loop.index0 }}/edit">Edit</a>
-                  <form method="post" action="/admin/section/{{ sec.schema.key }}/{{ loop.index0 }}/delete"
-                        onsubmit="return confirm('Delete this item?');">
-                    <button class="adm-btn sm danger" type="submit">Delete</button>
-                  </form>
-                </div>
-              </div>
-            {% else %}
-              <p class="adm-empty">No items yet.</p>
-            {% endfor %}
-            <a class="adm-btn primary" style="justify-self:start;" href="/admin/section/{{ sec.schema.key }}/new">+ Add item</a>
+              {% else %}
+                <p class="adm-empty">No items yet.</p>
+              {% endfor %}
+            </div>
+
+            {% if sec.value | length > sec.preview | length %}
+              <p class="adm-note">Showing the first {{ sec.preview | length }} of {{ sec.value | length }}.
+                <a href="/admin/collection/{{ sec.schema.key }}">See all, search and filter →</a></p>
+            {% endif %}
           </div>
         {% endif %}
       </details>
     {% endfor %}
 
-    {% if page.isSettings %}
+    {% if page.group == 'settings' and page.key == 'site' %}
       <details class="adm-sec" id="sec-password">
         <summary>
           <span class="num">{{ sections | length + 1 }}</span>
@@ -82,12 +112,12 @@
             <strong>Admin password</strong>
             <small>Change the password used to sign in to this panel.</small>
           </span>
-          <span class="sec-meta">Edit <span class="chev">▾</span></span>
+          <span class="sec-meta">Edit <span class="chev" aria-hidden="true">▾</span></span>
         </summary>
         <form class="adm-form inline" method="post" action="/admin/password">
           <label>Current password <input type="password" name="current" placeholder="The password you use now" required></label>
-          <label>New password (min 8 chars) <input type="password" name="next" minlength="8" placeholder="At least 8 characters" required></label>
-          <button class="adm-btn primary" type="submit">Change password</button>
+          <label>New password (at least 8 characters) <input type="password" name="next" minlength="8" placeholder="At least 8 characters" required></label>
+          <div class="adm-formbar"><button class="adm-btn primary" type="submit">Change password</button></div>
         </form>
       </details>
     {% endif %}

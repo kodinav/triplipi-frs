@@ -51,29 +51,69 @@ app.use((req, res, next) => {
   if (req.method === 'GET' && !req.path.startsWith('/admin') && !req.path.startsWith('/assets')
       && !req.path.includes('.') && (req.headers.accept || '').includes('text/html')) {
     _analytics.total += 1;
-    _analytics.pages[req.path] = (_analytics.pages[req.path] || 0) + 1;
+    // detail pages live behind one path (/blog-post?b=…), so keep the item key
+    // or every post would be counted as a single "page"
+    const item = req.query && (req.query.d || req.query.b || req.query.p);
+    const key = item ? req.path + '?' + String(item).slice(0, 80) : req.path;
+    _analytics.pages[key] = (_analytics.pages[key] || 0) + 1;
     const day = new Date().toISOString().slice(0, 10);
     _analytics.days[day] = (_analytics.days[day] || 0) + 1;
     _analyticsDirty = true;
   }
   next();
 });
+/* Turn a counted URL into something an owner recognises. */
+const PAGE_LABELS = {
+  '/': 'Home', '/destinations': 'Destinations', '/categories': 'Categories',
+  '/packages': 'Check Packages', '/picks': 'Our Picks', '/blog': 'Blog',
+  '/travel-tips': 'Travel Tips', '/gallery': 'Gallery', '/announcements': 'Announcements',
+  '/about': 'About', '/contact': 'Contact', '/shop': 'Shop', '/legal': 'Legal', '/search': 'Search',
+};
+function prettyPage(url) {
+  const [path, key] = url.split('?');
+  const d = store.content;
+  const find = (arr, match, title) => { const hit = (arr || []).find(match); return hit ? plain(hit[title]) || hit[title] : null; };
+  if (key) {
+    if (path === '/destination-detail') return { label: find(d.destinations, (x) => x.slug === key, 'name') || key, kind: 'Destination' };
+    if (path === '/blog-post') return { label: find((d.blog || {}).posts, (x) => slugify(plain(x.title)) === key, 'title') || key, kind: 'Blog post' };
+    if (path === '/package-detail') return { label: find(d.packages, (x) => slugify(plain(x.title)) === key, 'title') || key, kind: 'Package' };
+    if (path === '/legal') return { label: find(d.legalDocs, (x) => x.slug === key, 'crumb') || key, kind: 'Legal page' };
+  }
+  return { label: PAGE_LABELS[path] || path, kind: 'Page' };
+}
 function analyticsSummary() {
   const a = _analytics;
   const top = Object.entries(a.pages).sort((x, y) => y[1] - x[1]).slice(0, 10)
-    .map(([path, views]) => ({ path, views }));
+    .map(([url, views]) => ({ url, views, ...prettyPage(url) }));
   const today = new Date().toISOString().slice(0, 10);
-  return { total: a.total, top, today: a.days[today] || 0, days: a.days };
+  const days = Object.entries(a.days).sort((x, y) => (x[0] < y[0] ? -1 : 1)).slice(-14)
+    .map(([day, views]) => ({ day, views }));
+  const peak = days.reduce((m, x) => Math.max(m, x.views), 0) || 1;
+  return { total: a.total, top, today: a.days[today] || 0, days, peak };
 }
 
 /* ---------- external link health checker (D7 / FR-OTHER) ---------- */
-async function checkLinks() {
+let _linkReport = { at: null, running: false, results: [] };
+/* Every external URL the site can send a visitor to, with the item it belongs
+   to so a broken one can be found and fixed in the CMS. */
+function externalLinks() {
   const d = store.content;
-  const urls = new Set();
-  (d.sponsored || []).forEach((s) => { if (s.linkUrl) urls.add(s.linkUrl); });
-  (d.packages || []).forEach((p) => { if (p.ctaExternal && p.ctaUrl) urls.add(p.ctaUrl); });
-  (d.announcements || []).forEach((a) => { if (a.external && a.extUrl) urls.add(a.extUrl); });
-  const list = [...urls];
+  const urls = new Map();   // url -> "Where it lives"
+  const add = (url, where) => { const u = String(url || '').trim(); if (/^https?:\/\//i.test(u) && !urls.has(u)) urls.set(u, where); };
+  (d.sponsored || []).forEach((s) => add(s.linkUrl, 'Sponsored · ' + (s.title || 'untitled')));
+  (d.packages || []).forEach((p) => { if (p.ctaExternal) add(p.ctaUrl, 'Package · ' + (plain(p.title) || 'untitled')); });
+  (d.announcements || []).forEach((a) => { if (a.external || a.section === 'external') add(a.extUrl || a.target, 'Announcement · ' + (plain(a.title) || 'untitled')); });
+  (d.travelTips || []).forEach((t) => {
+    add(t.link1Url, 'Travel tip · ' + (t.title || 'untitled'));
+    add(t.link2Url, 'Travel tip · ' + (t.title || 'untitled'));
+  });
+  (d.banners || []).forEach((b) => add(b.extUrl || b.href, 'Banner · ' + (plain(b.text) || 'untitled')));
+  add((d.shop || {}).shutterstockUrl, 'Shop · Shutterstock portfolio');
+  return urls;
+}
+async function checkLinks() {
+  const urls = externalLinks();
+  const list = [...urls.keys()];
   const results = await Promise.all(list.map(async (url) => {
     try {
       const ctrl = new AbortController();
@@ -81,11 +121,20 @@ async function checkLinks() {
       let r = await fetch(url, { method: 'HEAD', redirect: 'follow', signal: ctrl.signal });
       if (r.status >= 400) r = await fetch(url, { method: 'GET', redirect: 'follow', signal: ctrl.signal });
       clearTimeout(t);
-      return { url, status: r.status, ok: r.status < 400 };
-    } catch (e) { return { url, status: 0, ok: false, error: e.name }; }
+      return { url, where: urls.get(url), status: r.status, ok: r.status < 400 };
+    } catch (e) { return { url, where: urls.get(url), status: 0, ok: false, error: e.name }; }
   }));
+  results.sort((a, b) => Number(a.ok) - Number(b.ok));   // broken first
+  _linkReport = { at: new Date().toISOString(), running: false, results };
   return results;
 }
+/* D7 — links are checked on their own, not only when someone presses the
+   button, so the dashboard can flag a dead partner URL the day it dies. */
+const LINK_SCAN_EVERY = 6 * 60 * 60 * 1000;
+const scanLinks = () => { if (!_linkReport.running) { _linkReport.running = true; checkLinks().catch(() => { _linkReport.running = false; }); } };
+setInterval(scanLinks, LINK_SCAN_EVERY);
+setTimeout(scanLinks, 20000);
+const brokenLinks = () => _linkReport.results.filter((r) => !r.ok);
 
 /* ---------- uploads (admin images) ---------- */
 const UPLOAD_DIR = path.join(ROOT, 'assets', 'uploads');
@@ -101,8 +150,12 @@ const upload = multer({
     },
   }),
   limits: { fileSize: 15 * 1024 * 1024 },   // 15 MB
+  // images, video and documents (FR-OTHER-006: "upload content, pages,
+  // documents, videos, and images")
   fileFilter: (req, file, cb) =>
-    cb(null, /^(image|video)\//.test(file.mimetype)),
+    cb(null, /^(image|video|audio)\//.test(file.mimetype)
+      || /^application\/(pdf|msword|vnd\.|rtf)/.test(file.mimetype)
+      || /^text\/(plain|csv)/.test(file.mimetype)),
 });
 /* For each 'image' field, an uploaded file (named <field>__file) wins over the URL input */
 function applyUploads(schema, req, values) {
@@ -156,7 +209,10 @@ const SCHEMAS = [
       { name: 'brandName', label: 'Brand name', ph: 'e.g. Triplipi' },
       { name: 'headerCtaLabel', label: 'Header button label', ph: 'e.g. Shop now' },
       { name: 'headerCtaHref', label: 'Header button link', type: 'url', ph: 'e.g. shop.html' },
-      { name: 'contactEmail', label: 'Contact email', ph: 'e.g. hello@triplipi.com' },
+      { name: 'contactEmail', label: 'Contact email (shown on the site, and where forms go by default)', ph: 'e.g. hello@triplipi.com' },
+      { name: 'formEmailContact', label: 'Send Contact form to (optional)', ph: 'Leave blank to use the contact email' },
+      { name: 'formEmailPartner', label: 'Send partner applications to (optional)', ph: 'Leave blank to use the contact email' },
+      { name: 'formEmailGuidance', label: 'Send “Ask for guidance” to (optional)', ph: 'Leave blank to use the contact email' },
       { name: 'copyright', label: 'Copyright line', ph: 'e.g. © 2026 Triplipi. All rights reserved.' },
       { name: 'siteUrl', label: 'Public website address (for SEO)', type: 'url', ph: 'e.g. https://triplipi.com' },
       { name: 'metaDescription', label: 'Default search-engine description', type: 'textarea', ph: 'One or two sentences describing the site, used when a page has none.' },
@@ -201,7 +257,7 @@ const SCHEMAS = [
       { name: 'titleHtml', label: 'Heading (HTML)', type: 'textarea', richInline: true, ph: 'e.g. Stories from the <em>field</em>.' },
       { name: 'blurb', label: 'Side blurb', type: 'textarea', richInline: true, ph: 'Short text shown beside the heading.' },
     ] },
-  { key: 'destinations', group: 'Homepage', label: 'Destination cards (12)', type: 'list', path: 'destinations',
+  { key: 'destinations', group: 'Homepage', label: 'Destinations', type: 'list', path: 'destinations',
     itemTitle: 'name',
     fields: [
       { name: 'name', label: 'Name', ph: 'e.g. Ladakh' },
@@ -240,7 +296,7 @@ const SCHEMAS = [
       { name: 'overline', label: 'Overline' , ph: 'Small label above the heading, e.g. Travel Highlights' },
       { name: 'titleHtml', label: 'Heading (HTML)', type: 'textarea', richInline: true, ph: 'e.g. Stories from the <em>field</em>.' },
     ] },
-  { key: 'highlights', group: 'Homepage', label: 'Highlight cards (12)', type: 'list', path: 'highlights',
+  { key: 'highlights', group: 'Homepage', label: 'Travel highlight cards', type: 'list', path: 'highlights',
     itemTitle: 'title',
     fields: [
       { name: 'title', label: 'Title', ph: 'e.g. Stargazing in Spiti' },
@@ -289,6 +345,7 @@ const SCHEMAS = [
       // ----- where this announcement links (FR-HOME-013B/C) -----
       { name: 'section', label: 'Links to section', type: 'select', options: [
         { value: 'destination', label: 'A destination page' },
+        { value: 'trip', label: 'Find Trip Deals (all categories)' },
         { value: 'picks', label: 'Our Picks' },
         { value: 'packages', label: 'Check Packages' },
         { value: 'shop', label: 'Shop' },
@@ -338,7 +395,7 @@ const SCHEMAS = [
       { name: 'byline', label: 'Byline', ph: 'e.g. By Editor · 14 min read · 8 May 2026' },
       { name: 'image', label: 'Image', type: 'image' },
     ] },
-  { key: 'blogSide', group: 'Content', label: 'Side stories (4)', type: 'list', path: 'blog.side',
+  { key: 'blogSide', group: 'Content', label: 'Side stories', type: 'list', path: 'blog.side',
     itemTitle: 'title',
     fields: [
       { name: 'title', label: 'Title', ph: 'e.g. Stargazing in Spiti' },
@@ -601,7 +658,7 @@ const schemaByKey = Object.fromEntries(SCHEMAS.map((s) => [s.key, s]));
    sections listed in the order they appear on screen.
    ============================================================ */
 const ADMIN_PAGES = [
-  { key: 'homepage', label: 'Homepage', view: '/',
+  { key: 'homepage', group: 'pages', label: 'Homepage', view: '/',
     intro: 'Every section of the landing page, top to bottom.',
     sections: [
       { key: 'hero', hint: 'The full-screen banner at the very top.' },
@@ -617,20 +674,20 @@ const ADMIN_PAGES = [
       { key: 'pick-packages', hint: 'Tick which packages appear on the homepage.' },
       { key: 'ask', hint: 'The cream contact block near the bottom.' },
     ] },
-  { key: 'destinations', label: 'Destinations', view: '/destinations',
+  { key: 'destinations', group: 'content', label: 'Destinations', view: '/destinations',
     intro: 'The destinations index page.',
     sections: [
       { key: 'page-destinations', hint: 'Big title and intro at the top of the page.' },
       { key: 'destinations', hint: 'The master list of destinations. Order here = order everywhere. Tick "homepage" in the Homepage tab to feature one.' },
       { key: 'destCategories', hint: 'The universal category taxonomy — powers the filter pills, the /categories page (add a round image per category), and destination/package tagging. Counts are automatic.' },
     ] },
-  { key: 'packages', label: 'Packages', view: '/packages',
+  { key: 'packages', group: 'content', label: 'Packages', view: '/packages',
     intro: 'All travel packages. The homepage shows the first two automatically.',
     sections: [
       { key: 'page-packages', hint: 'Big title and intro at the top of the page.' },
       { key: 'packages', hint: 'Every package card — pricing, badges, partner links.' },
     ] },
-  { key: 'blog', label: 'Blog', view: '/blog',
+  { key: 'blog', group: 'content', label: 'Blog', view: '/blog',
     intro: 'The blog landing page. The homepage strip shows the first three posts.',
     sections: [
       { key: 'page-blog', hint: 'Big title and intro at the top of the page.' },
@@ -638,39 +695,39 @@ const ADMIN_PAGES = [
       { key: 'blogSide', hint: 'The 4 small stories beside the featured one.' },
       { key: 'blogPosts', hint: 'The main grid of posts.' },
     ] },
-  { key: 'announcements', label: 'Announcements', view: '/announcements',
+  { key: 'announcements', group: 'content', label: 'Announcements', view: '/announcements',
     intro: 'All announcements. The homepage shows the 4 newest automatically.',
     sections: [
       { key: 'page-announcements', hint: 'Big title and intro at the top of the page.' },
       { key: 'announcements', hint: 'Every announcement card.' },
     ] },
-  { key: 'gallery', label: 'Gallery', view: '/gallery',
+  { key: 'gallery', group: 'content', label: 'Gallery', view: '/gallery',
     intro: 'Photo and video tiles in the masonry grid.',
     sections: [
       { key: 'page-gallery', hint: 'Big title and intro at the top of the page.' },
       { key: 'galleryItems', hint: 'Every tile. Pick a category from the dropdown; type "Film / video" shows a play button.' },
       { key: 'galleryCategories', hint: 'The filter chips above the grid. Counts are automatic.' },
     ] },
-  { key: 'travel-tips', label: 'Travel Tips', view: '/travel-tips',
+  { key: 'travel-tips', group: 'content', label: 'Travel Tips', view: '/travel-tips',
     intro: 'The Travel Tips page — one block per topic, shown top to bottom in this order.',
     sections: [
       { key: 'page-travel-tips', hint: 'Big title and intro at the top of the page.' },
       { key: 'travelTips', hint: 'Each topic: its name, one image, the text, and up to two affiliate/sponsor links. The links open in a new tab with no consent prompt.' },
     ] },
-  { key: 'picks', label: 'Our Picks', view: '/picks',
+  { key: 'picks', group: 'content', label: 'Our Picks', view: '/picks',
     intro: 'Four ranked lists, shown as tabs. Each pick is tagged to a list; rank numbers come from the order within that list.',
     sections: [
       { key: 'page-picks', hint: 'Big title and intro at the top of the page.' },
       { key: 'pickLists', hint: 'The tabs across the top — each is one ranked list. Order here sets the tab order; the first tab opens by default.' },
       { key: 'picks', hint: 'Every ranked place. Set "Which list" so it shows under the right tab; order within each list sets its rank.' },
     ] },
-  { key: 'shop', label: 'Shop', view: '/shop',
+  { key: 'shop', group: 'content', label: 'Shop', view: '/shop',
     intro: 'The photography & footage licensing page — media tiles, Shutterstock link, and the quote form.',
     sections: [
       { key: 'shop', hint: 'Page headings, the two tab labels, your Shutterstock URL, the bottom strip, and where quote requests are emailed.' },
       { key: 'shopItems', hint: 'Every licensable image/video. Each becomes a selectable tile; visitors add items and request a quote — which lands in Messages (and is emailed if SMTP is set).' },
     ] },
-  { key: 'about', label: 'About', view: '/about',
+  { key: 'about', group: 'pages', label: 'About', view: '/about',
     intro: 'The About page — hero, owner story, mission, what you offer, and the contact CTA.',
     sections: [
       { key: 'page-about', hint: 'Hero title and intro at the top of the page.' },
@@ -678,36 +735,61 @@ const ADMIN_PAGES = [
       { key: 'aboutStats', hint: 'The number tiles in the Mission section (e.g. 450 destinations).' },
       { key: 'aboutOffers', hint: 'The “what we offer” cards (the three things you do).' },
     ] },
-  { key: 'contact', label: 'Contact', view: '/contact',
+  { key: 'contact', group: 'pages', label: 'Contact', view: '/contact',
     intro: 'Title and intro of the Contact page.',
     sections: [{ key: 'page-contact', hint: 'Big title and intro at the top of the page.' }] },
-  { key: 'legal', label: 'Legal Pages', view: '/legal',
+  { key: 'legal', group: 'pages', label: 'Legal Pages', view: '/legal',
     intro: 'The legal documents shown at /legal and linked in the footer "Legal" column. Edit each one’s full content here.',
     sections: [
       { key: 'legalDocs', hint: 'Each document’s heading, intro and full body. “Show in footer” controls the footer Legal column; reorder to set the footer + sidebar order.' },
     ] },
-  { key: 'banners', label: 'Promo Banners', view: '/',
+  /* FR-HOME-015..017, FR-DEST-019 — the paid placements. The schema existed but
+     had no page in the panel, so nobody could manage them. */
+  { key: 'sponsored', group: 'money', label: 'Sponsored & affiliate', view: '/',
+    intro: 'Paid placements: sponsored packages, partner cards and affiliate links, and the pages each one appears on. Every outbound link shows the consent notice before it leaves your site.',
+    sections: [
+      { key: 'sponsored', hint: 'One card per paid placement. Pick the pages it should appear on, give it a partner name (shown in the consent notice) and either a link or a phone number.' },
+    ] },
+  { key: 'banners', group: 'money', label: 'Promo Banners', view: '/',
     intro: 'Promotional banners and animation strips placed in fixed zones across the site. Use Status to schedule or hide each one.',
     sections: [
       { key: 'banners', hint: 'Pick a zone (site-wide top bar, or below/mid the homepage). Slim strips show text + a button; wide banners show your image. External links open the consent modal.' },
     ] },
-  { key: 'pages', label: 'Custom Pages', view: '/',
+  { key: 'pages', group: 'pages', label: 'Custom Pages', view: '/',
     intro: 'Build standalone pages (Careers, Press, FAQs…) that live at /p/your-slug. Optionally link them in the footer.',
     sections: [
       { key: 'customPages', hint: 'Each page has a heading, intro, optional hero image and a full rich-text body. “Show in footer” adds it to the footer Company column.' },
     ] },
-  { key: 'navbar', label: 'Navbar', view: '/', isSettings: true,
+  { key: 'navbar', group: 'settings', label: 'Navbar', view: '/', isSettings: true,
     intro: 'The links in the header navigation bar. Drag the handle to reorder, edit a label or link, or add a new one. A link can optionally open one of the built-in dropdown menus.',
     sections: [
       { key: 'nav', hint: 'Each header link: its label, where it points, and (optionally) which dropdown it opens. Drag ⠿ to reorder; “+ Add item” for a new link.' },
       { key: 'megaMenus', hint: 'The “View all …” links inside the dropdown menus — their text and where they go.' },
     ] },
-  { key: 'site', label: 'Site Settings', view: '/', isSettings: true,
+  { key: 'site', group: 'settings', label: 'Site Settings', view: '/', isSettings: true,
     intro: 'Brand, header button, footer and admin security.',
     sections: [
       { key: 'settings', hint: 'Brand name, header button, contact email, copyright.' },
     ] },
 ];
+/* FRS §6 System Capacity Summary — shown beside each list so the admin knows
+   the agreed ceiling. Not enforced as a hard block; the panel warns instead. */
+const CAPACITY = {
+  destinations: 450,
+  destCategories: 100,
+  packages: null,          // unlimited (FR-PKG-006)
+  announcements: null,     // master list unlimited (FR-HOME-013A)
+  picks: 80,               // 4 lists x 20 (FR-PICKS-002)
+  pickLists: 10,
+  galleryItems: 100,       // 50 videos + 50 images (FR-GAL-001)
+  shopItems: 100,          // 50 + 50 (FR-SHOP-001)
+  travelTips: null,
+  sponsored: 20,           // on Home (FR-HOME-015)
+  banners: null,
+  customPages: null,
+  legalDocs: null,
+};
+
 const adminPageByKey = Object.fromEntries(ADMIN_PAGES.map((p) => [p.key, p]));
 const pageOfSection = {};
 for (const p of ADMIN_PAGES) for (const s of p.sections) pageOfSection[s.key] = p.key;
@@ -792,6 +874,52 @@ function isVisible(item) {
 }
 const pub = (arr) => (arr || []).filter(isVisible);
 
+/* ---------- item lifecycle (FR-OTHER-005: add, edit, publish, hide, unhide,
+   activate, deactivate, archive, delete) ----------
+   Three stored flags carry every state: `published` (false = hidden),
+   `archived` (true = out of public view but kept), and `expiry` (a date that
+   archives the item by itself). statusOf() collapses them into one word for
+   the admin UI. */
+function statusOf(item) {
+  if (!item || typeof item !== 'object') return 'live';
+  if (item.archived === true) return 'archived';
+  if (item.published === false) return 'hidden';
+  if (item.expiry) {
+    const d = new Date(item.expiry);
+    if (!Number.isNaN(d.getTime())) return d.getTime() < Date.now() ? 'expired' : 'scheduled';
+  }
+  return 'live';
+}
+/* Every collection the admin can manage, as [label, array] — one list feeds the
+   dashboard counts, the expiry sweep and the link checker. */
+function allCollections() {
+  const d = c();
+  return [
+    ['Destinations', d.destinations], ['Packages', d.packages],
+    ['Blog posts', d.blog && d.blog.posts], ['Announcements', d.announcements],
+    ['Travel tips', d.travelTips], ['Gallery', d.galleryItems], ['Our Picks', d.picks],
+    ['Shop media', d.shopItems], ['Promo banners', d.banners],
+    ['Sponsored placements', d.sponsored], ['Custom pages', d.customPages],
+    ['Categories', d.destCategories], ['Legal pages', d.legalDocs],
+  ];
+}
+/* FR-OTHER-003A — an item past its expiry date archives itself. Runs on boot,
+   hourly, and whenever the admin opens a page, so the panel never shows an
+   expired item as live. */
+function sweepExpired() {
+  const now = Date.now();
+  let changed = 0;
+  allCollections().forEach(([, arr]) => (arr || []).forEach((item) => {
+    if (!item || item.archived === true || !item.expiry) return;
+    const d = new Date(item.expiry);
+    if (!Number.isNaN(d.getTime()) && d.getTime() < now) { item.archived = true; item.autoArchived = true; changed += 1; }
+  }));
+  if (changed) store.save();
+  return changed;
+}
+setInterval(sweepExpired, 60 * 60 * 1000);
+setTimeout(sweepExpired, 3000);
+
 /* Content status overview for the admin dashboard (FR-OTHER-010):
    per-collection counts of live / archived / hidden / scheduled items. */
 function contentStats() {
@@ -830,7 +958,7 @@ function resolveAnnouncements(list) {
     const t = (a.target || '').trim();
     switch (a.section) {
       case 'destination': href = '/destination-detail?d=' + encodeURIComponent(t); break;
-      case 'trip': href = t ? '/packages?d=' + encodeURIComponent(t) : '/packages'; break;   // legacy "Go For A Trip" links
+      case 'trip': href = t ? '/destinations?cat=' + encodeURIComponent(t) + '&from=categories' : '/categories'; break;   // Find Trip Deals
       case 'picks': href = '/picks'; break;
       case 'packages': href = t ? '/packages?d=' + encodeURIComponent(t) : '/packages'; break;
       case 'shop': href = '/shop'; break;
@@ -1359,8 +1487,14 @@ app.post('/submit', upload.none(), (req, res) => {
   list.unshift(entry);
   writeSubmissions(list);
 
-  /* email the owner if SMTP is configured (otherwise it's saved to the admin Inbox) */
-  const to = body._to || store.get('settings').contactEmail;
+  /* FR-EMAIL-003 — each form can go to its own address: the form may carry an
+     explicit _to (package provider, shop quote), otherwise Site settings routes
+     it by name, otherwise the site contact email. */
+  const st = store.get('settings') || {};
+  const routed = /partner/i.test(formName) ? st.formEmailPartner
+    : /guidance/i.test(formName) ? st.formEmailGuidance
+    : /contact/i.test(formName) ? st.formEmailContact : '';
+  const to = body._to || routed || st.contactEmail;
   if (mailer && to) {
     const lines = Object.entries(fields).map(([k, v]) => `${k}: ${v}`).join('\n');
     mailer.sendMail({
@@ -1412,13 +1546,26 @@ app.post('/admin/logout', requireAuth, (req, res) => {
 });
 
 /* Dashboard — one card per page of the site + analytics */
-app.get('/admin', requireAuth, (req, res) =>
+app.get('/admin', requireAuth, (req, res) => {
+  sweepExpired();
+  const content = contentStats();
+  const broken = brokenLinks();
+  const soon = [];
+  const in14 = Date.now() + 14 * 24 * 60 * 60 * 1000;
+  allCollections().forEach(([label, arr]) => (arr || []).forEach((item) => {
+    if (!item || item.archived || !item.expiry) return;
+    const t = new Date(item.expiry).getTime();
+    if (!Number.isNaN(t) && t > Date.now() && t < in14) soon.push({ label, title: plain(item.title || item.name || item.label) || 'Untitled', on: item.expiry });
+  }));
   res.render('admin/dashboard.njk', {
     ...adminCtx(null), saved: req.query.saved,
     stats: analyticsSummary(),
-    content: contentStats(),
+    content,
     inboxCount: readSubmissions().filter((s) => !s.read).length,
-  }));
+    broken, linkScanAt: _linkReport.at, expiringSoon: soon.slice(0, 6),
+    capacity: CAPACITY, schemas: SCHEMAS.filter((x) => x.type === 'list'),
+  });
+});
 
 /* Messages inbox — form submissions */
 app.get('/admin/inbox', requireAuth, (req, res) => {
@@ -1437,20 +1584,71 @@ app.post('/admin/inbox/read', requireAuth, (req, res) => {
 
 /* Link health check — scans all external URLs, flags broken ones */
 app.get('/admin/links', requireAuth, async (req, res) => {
-  const checked = req.query.run ? await checkLinks() : null;
-  res.render('admin/links.njk', { ...adminCtx('links'), checked });
+  if (req.query.run) await checkLinks();
+  const at = _linkReport.at;
+  res.render('admin/links.njk', {
+    ...adminCtx('links'),
+    results: _linkReport.results,
+    brokenCount: brokenLinks().length,
+    checkedAt: at ? new Date(at).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' }) : null,
+  });
 });
 
 /* Page hub — all sections of one page, in on-screen order, editable inline */
 app.get('/admin/page/:pkey', requireAuth, (req, res) => {
   const page = adminPageByKey[req.params.pkey];
   if (!page) return res.status(404).send('Unknown page');
-  const sections = page.sections.map((s) => ({
-    schema: resolveSchema(schemaByKey[s.key]),
-    hint: s.hint,
-    value: store.get(schemaByKey[s.key].path),
-  }));
+  sweepExpired();
+  const sections = page.sections.map((s) => {
+    const schema = schemaByKey[s.key];
+    const value = store.get(schema.path);
+    const arr = Array.isArray(value) ? value : [];
+    return {
+      schema: resolveSchema(schema),
+      hint: s.hint,
+      value,
+      // the hub shows a short preview; the full list lives at /admin/collection
+      preview: arr.slice(0, 6),
+      live: arr.filter((x) => statusOf(x) === 'live' || statusOf(x) === 'scheduled').length,
+      limit: CAPACITY[schema.key] || null,
+    };
+  });
   res.render('admin/page.njk', { ...adminCtx(page.key), page, sections, saved: req.query.saved });
+});
+
+/* One collection, in full: search, status filter and paging, so a list of 450
+   destinations stays usable (FR-DEST-008). The page hub shows a preview and
+   sends the admin here for the whole list. */
+const ADMIN_PER_PAGE = 25;
+app.get('/admin/collection/:key', requireAuth, (req, res) => {
+  const schema = schemaByKey[req.params.key];
+  if (!schema || schema.type !== 'list') return res.redirect('/admin');
+  sweepExpired();
+  const all = (store.get(schema.path) || []).map((item, idx) => ({ item, idx, status: statusOf(item) }));
+  const q = String(req.query.q || '').trim().toLowerCase();
+  const status = String(req.query.status || 'all');
+  let rows = all;
+  if (status !== 'all') rows = rows.filter((r) => (status === 'live' ? r.status === 'live' || r.status === 'scheduled' : r.status === status));
+  if (q) rows = rows.filter((r) => JSON.stringify(r.item).toLowerCase().includes(q));
+  const page = Math.max(1, parseInt(req.query.page || '1', 10) || 1);
+  const pages = Math.max(1, Math.ceil(rows.length / ADMIN_PER_PAGE));
+  const slice = rows.slice((Math.min(page, pages) - 1) * ADMIN_PER_PAGE, Math.min(page, pages) * ADMIN_PER_PAGE);
+  const counts = {
+    all: all.length,
+    live: all.filter((r) => r.status === 'live' || r.status === 'scheduled').length,
+    hidden: all.filter((r) => r.status === 'hidden').length,
+    archived: all.filter((r) => r.status === 'archived').length,
+  };
+  res.render('admin/collection.njk', {
+    ...adminCtx(pageOfSection[schema.key]), schema: resolveSchema(schema),
+    // NB: not `pages` — that name is the sidebar's list of admin pages
+    rows: slice, counts, q, status, page: Math.min(page, pages), pageCount: pages, total: rows.length,
+    // the exact list the admin is looking at, so Edit/Add/actions can come back to it
+    listUrl: '/admin/collection/' + schema.key + '?q=' + encodeURIComponent(q)
+      + '&status=' + encodeURIComponent(status) + '&page=' + Math.min(page, pages),
+    limit: CAPACITY[schema.key] || null, saved: req.query.saved,
+    home: adminPageByKey[pageOfSection[schema.key]] || null,
+  });
 });
 
 /* legacy section URLs → jump to the right page hub */
@@ -1474,11 +1672,18 @@ app.post('/admin/section/:key', requireAuth, upload.any(), (req, res) => {
   res.redirect(backTo(schema.key, true));
 });
 
+/* Where "Back" and "Save" return to: the list the admin came from (with its
+   search and filters intact), never an arbitrary URL. */
+const safeBack = (req, schema) => {
+  const from = String((req.query && req.query.from) || '');
+  return /^\/admin\/[A-Za-z0-9/_?=&%.-]*$/.test(from) ? from : backTo(schema.key);
+};
+
 /* list item editors */
 app.get('/admin/section/:key/new', requireAuth, (req, res) => {
   const schema = schemaByKey[req.params.key];
   res.render('admin/item.njk', {
-    ...adminCtx(pageOfSection[schema.key]), schema: resolveSchema(schema), item: {}, index: null, backUrl: backTo(schema.key),
+    ...adminCtx(pageOfSection[schema.key]), schema: resolveSchema(schema), item: {}, index: null, backUrl: safeBack(req, schema),
   });
 });
 app.get('/admin/section/:key/:idx/edit', requireAuth, (req, res) => {
@@ -1486,7 +1691,7 @@ app.get('/admin/section/:key/:idx/edit', requireAuth, (req, res) => {
   const items = store.get(schema.path) || [];
   const idx = parseInt(req.params.idx, 10);
   res.render('admin/item.njk', {
-    ...adminCtx(pageOfSection[schema.key]), schema: resolveSchema(schema), item: items[idx] || {}, index: idx, backUrl: backTo(schema.key),
+    ...adminCtx(pageOfSection[schema.key]), schema: resolveSchema(schema), item: items[idx] || {}, index: idx, backUrl: safeBack(req, schema),
   });
 });
 app.post('/admin/section/:key/save', requireAuth, upload.any(), (req, res) => {
@@ -1495,15 +1700,19 @@ app.post('/admin/section/:key/save', requireAuth, upload.any(), (req, res) => {
   const item = {};
   for (const f of schema.fields) item[f.name] = castField(f, req.body[f.name]);
   applyUploads(schema, req, item);
-  // universal status fields (publish / archive / auto-expire)
-  item.published = req.body._published === 'on';
-  item.archived = req.body._archived === 'on';
+  // one status word from the form (FR-OTHER-005), stored as the two flags the
+  // site reads, plus the optional self-archiving date (FR-OTHER-003A)
+  const st = req.body._status || (req.body._published === 'on' ? 'live' : 'hidden');
+  item.published = st !== 'hidden';
+  item.archived = st === 'archived';
   item.expiry = (req.body._expiry || '').trim();
+  if (st !== 'archived') item.autoArchived = false;
   const idx = req.body._index === '' ? null : parseInt(req.body._index, 10);
   if (idx === null || Number.isNaN(idx)) items.push(item);
   else items[idx] = { ...items[idx], ...item };
   store.set(schema.path, items);
-  res.redirect(backTo(schema.key, true));
+  // back to wherever the admin came from (the full list keeps its filters)
+  res.redirect(req.body._back || backTo(schema.key, true));
 });
 /* Drag-to-reorder: body.order is the new sequence of the items' current
    indices (a permutation of 0..n-1). Rebuilds the array in that order. */
@@ -1526,6 +1735,38 @@ app.post('/admin/section/:key/:idx/delete', requireAuth, (req, res) => {
   items.splice(parseInt(req.params.idx, 10), 1);
   store.set(schema.path, items);
   res.redirect(backTo(schema.key, true));
+});
+/* FR-OTHER-005 — publish / hide / archive / restore without opening the item.
+   One route, one word: live, hidden or archived. */
+app.post('/admin/section/:key/:idx/status', requireAuth, (req, res) => {
+  const schema = schemaByKey[req.params.key];
+  const items = store.get(schema.path) || [];
+  const item = items[parseInt(req.params.idx, 10)];
+  if (item) {
+    const to = String(req.body.to || 'live');
+    Object.assign(item, {
+      published: to !== 'hidden',
+      archived: to === 'archived',
+    });
+    if (to !== 'archived') delete item.autoArchived;
+    store.set(schema.path, items);
+  }
+  res.redirect(req.body._back || backTo(schema.key));
+});
+/* Copying an item is the quickest way to add the next one (FR-OTHER-005 "add") */
+app.post('/admin/section/:key/:idx/duplicate', requireAuth, (req, res) => {
+  const schema = schemaByKey[req.params.key];
+  const items = store.get(schema.path) || [];
+  const i = parseInt(req.params.idx, 10);
+  if (items[i]) {
+    const copy = JSON.parse(JSON.stringify(items[i]));
+    const t = schema.itemTitle;
+    if (t && typeof copy[t] === 'string') copy[t] = copy[t] + ' (copy)';
+    Object.assign(copy, { published: false, archived: false, featured: false });
+    items.splice(i + 1, 0, copy);
+    store.set(schema.path, items);
+  }
+  res.redirect(req.body._back || backTo(schema.key));
 });
 app.post('/admin/section/:key/:idx/move', requireAuth, (req, res) => {
   const schema = schemaByKey[req.params.key];

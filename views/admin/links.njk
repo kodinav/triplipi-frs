@@ -3,28 +3,37 @@
 {% block content %}
   <header class="adm-head">
     <div>
-      <div class="adm-kicker">Tools</div>
+      <div class="adm-kicker">Money &amp; partners</div>
       <h1>Link health</h1>
-      <p class="adm-sub">Checks every external link (sponsored posts, packages, announcements) and flags broken ones.</p>
+      <p class="adm-sub">Every link that sends a visitor off your site — partner packages, affiliate links, sponsored placements, travel-tip links — is checked on its own every few hours. Broken ones are listed first.</p>
     </div>
-    <a class="adm-btn primary" href="/admin/links?run=1">Run check now</a>
+    <a class="adm-btn primary" href="/admin/links?run=1">Check again now</a>
   </header>
 
-  {% if not checked %}
-    <p class="adm-empty">Click “Run check now” to scan all external links. Large lists may take a few seconds.</p>
-  {% elif not checked | length %}
-    <p class="adm-empty">No external links found to check.</p>
+  {% if checkedAt %}
+    <p class="adm-note">Last checked {{ checkedAt }}. {{ results | length }} link{{ '' if results | length == 1 else 's' }} checked, <strong>{{ brokenCount }}</strong> broken.</p>
   {% else %}
+    <p class="adm-note">The first automatic check runs shortly after the site starts. You can also run one now.</p>
+  {% endif %}
+
+  {% if results | length %}
     <div class="adm-list">
-      {% for c in checked %}
-        <div class="adm-row">
-          <div class="title" style="flex:1;">
-            <strong style="color: {{ '#256225' if c.ok else '#b3261e' }};">{{ '✓ OK' if c.ok else '✗ Broken' }} {% if c.status %}· {{ c.status }}{% endif %}</strong>
-            <small style="word-break: break-all;">{{ c.url }}</small>
+      {% for c in results %}
+        <article class="adm-row">
+          <span class="chip {{ 'chip-live' if c.ok else 'chip-broken' }}">{{ 'Working' if c.ok else 'Broken' }}</span>
+          <div class="title">
+            <strong>{{ c.where or 'External link' }}</strong>
+            <small class="link-url">{{ c.url }}{% if c.status %} · HTTP {{ c.status }}{% elif c.error %} · no answer{% endif %}</small>
           </div>
-          <a class="adm-btn sm" href="{{ c.url }}" target="_blank" rel="noopener">Open ↗</a>
-        </div>
+          <div class="row-actions">
+            <a class="adm-btn sm" href="{{ c.url }}" target="_blank" rel="noopener">Open ↗</a>
+          </div>
+        </article>
       {% endfor %}
     </div>
+  {% elif checkedAt %}
+    <p class="adm-empty">No external links found to check yet.</p>
   {% endif %}
+
+  <p class="adm-note adm-foot-note">A broken link usually means the partner changed or removed the page. Open the item in its list and update the URL, or hide the item until you have a new one.</p>
 {% endblock %}

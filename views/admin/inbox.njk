@@ -3,7 +3,7 @@
 {% block content %}
   <header class="adm-head">
     <div>
-      <div class="adm-kicker">Tools</div>
+      <div class="adm-kicker">Inbox</div>
       <h1>Messages</h1>
       <p class="adm-sub">Every contact, guidance, and quote-request submission. {% if smtp %}Email delivery is on.{% else %}Email is not configured — submissions are stored here only (set SMTP_* env vars to also email them).{% endif %}</p>
     </div>
@@ -19,7 +19,7 @@
       {% for s in submissions %}
         <div class="adm-row" style="align-items: flex-start;">
           <div class="title" style="flex:1;">
-            <strong>{{ s.form }}{% if not s.read %} <span class="on-home">● new</span>{% endif %}</strong>
+            <strong>{{ s.form }}{% if not s.read %} <span class="chip chip-home">new</span>{% endif %}</strong>
             <small>{{ s.at }}</small>
             <div style="margin-top:8px; display:grid; gap:3px; font-size:0.86rem; font-weight:500; color:#5a514e;">
               {% for k, v in s.fields %}<div><strong style="color:var(--ink);">{{ k }}:</strong> {{ v }}</div>{% endfor %}

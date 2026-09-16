@@ -53,8 +53,8 @@
         <div class="img-inputs">
           <input type="text" name="{{ f.name }}" value="{{ v }}" placeholder="Paste an image URL, e.g. https://images.unsplash.com/…">
           <span class="img-or">or upload from your computer</span>
-          <input type="file" name="{{ f.name }}__file" accept="image/*,video/*">
-          <small class="img-note">Choosing a file overrides the URL. Max 15&nbsp;MB.</small>
+          <input type="file" name="{{ f.name }}__file" accept="image/*,video/*,application/pdf,.doc,.docx,.csv,.txt">
+          <small class="img-note">Choosing a file overrides the URL. Images, video, PDFs and documents up to 15&nbsp;MB.</small>
         </div>
       </div>
     </div>

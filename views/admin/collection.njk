@@ -1,0 +1,107 @@
+{% extends "admin/layout.njk" %}
+{% block title %}{{ schema.label }}{% endblock %}
+{% set pageView = home.view if home else '/' %}
+{% macro qlink(key, q, status, page) %}/admin/collection/{{ key }}?q={{ q | urlencode }}&status={{ status }}&page={{ page }}{% endmacro %}
+{% macro act(key, idx, to, label, back) %}
+  <form method="post" action="/admin/section/{{ key }}/{{ idx }}/status" class="inline-act">
+    <input type="hidden" name="to" value="{{ to }}">
+    <input type="hidden" name="_back" value="{{ back }}">
+    <button class="adm-btn sm ghost" type="submit">{{ label }}</button>
+  </form>
+{% endmacro %}
+{% block content %}
+  <header class="adm-head">
+    <div>
+      <div class="adm-kicker">
+        {% if home %}<a href="/admin/page/{{ home.key }}">{{ home.label }}</a> ›{% endif %} List
+      </div>
+      <h1>{{ schema.label }}</h1>
+      <p class="adm-sub">
+        {{ counts.all }} item{{ '' if counts.all == 1 else 's' }} in total.
+        {% if limit %}<span class="adm-cap {% if counts.all > limit %}is-over{% endif %}">Agreed limit: {{ limit }}{% if counts.all > limit %} — you are over it{% endif %}</span>{% endif %}
+      </p>
+    </div>
+    <a class="adm-btn primary" href="/admin/section/{{ schema.key }}/new?from={{ listUrl | urlencode }}">+ Add new</a>
+  </header>
+
+  <div class="adm-toolbar">
+    <form class="adm-search" method="get" action="/admin/collection/{{ schema.key }}" role="search">
+      <input type="hidden" name="status" value="{{ status }}">
+      <input type="search" name="q" value="{{ q }}" placeholder="Search this list…" aria-label="Search {{ schema.label }}">
+      <button class="adm-btn sm" type="submit">Search</button>
+      {% if q %}<a class="adm-btn sm ghost" href="/admin/collection/{{ schema.key }}?status={{ status }}">Clear</a>{% endif %}
+    </form>
+
+    <div class="adm-tabs" role="tablist">
+      <a class="tab {% if status == 'all' %}is-active{% endif %}" href="{{ qlink(schema.key, q, 'all', 1) }}">All <span>{{ counts.all }}</span></a>
+      <a class="tab {% if status == 'live' %}is-active{% endif %}" href="{{ qlink(schema.key, q, 'live', 1) }}">Live <span>{{ counts.live }}</span></a>
+      <a class="tab {% if status == 'hidden' %}is-active{% endif %}" href="{{ qlink(schema.key, q, 'hidden', 1) }}">Hidden <span>{{ counts.hidden }}</span></a>
+      <a class="tab {% if status == 'archived' %}is-active{% endif %}" href="{{ qlink(schema.key, q, 'archived', 1) }}">Archived <span>{{ counts.archived }}</span></a>
+    </div>
+  </div>
+
+  {% if rows | length %}
+    <div class="adm-list">
+      {% for r in rows %}
+        <article class="adm-row">
+          {% if r.item.image %}<img loading="lazy" class="thumb" src="{{ r.item.image }}" alt="">{% else %}<span class="thumb thumb-empty" aria-hidden="true">▤</span>{% endif %}
+          <div class="title">
+            <strong>{{ r.item[schema.itemTitle] | striptags | truncate(70) | safe or 'Untitled' }}</strong>
+            <small>
+              <span class="chip chip-{{ r.status }}">{{ r.status }}</span>
+              {% if r.item.featured %}<span class="chip chip-home">on homepage</span>{% endif %}
+              {% if r.item.expiry %}<span class="chip chip-date">expires {{ r.item.expiry }}</span>{% endif %}
+              {% if r.item.autoArchived %}<span class="chip chip-auto">archived automatically</span>{% endif %}
+            </small>
+          </div>
+          <div class="row-actions">
+            <a class="adm-btn sm" href="/admin/section/{{ schema.key }}/{{ r.idx }}/edit?from={{ listUrl | urlencode }}">Edit</a>
+
+            {% if r.status == 'archived' %}
+              {{ act(schema.key, r.idx, 'live', 'Restore', listUrl) }}
+            {% elif r.status == 'hidden' %}
+              {{ act(schema.key, r.idx, 'live', 'Publish', listUrl) }}
+              {{ act(schema.key, r.idx, 'archived', 'Archive', listUrl) }}
+            {% else %}
+              {{ act(schema.key, r.idx, 'hidden', 'Hide', listUrl) }}
+              {{ act(schema.key, r.idx, 'archived', 'Archive', listUrl) }}
+            {% endif %}
+
+            <details class="adm-more">
+              <summary aria-label="More actions">⋯</summary>
+              <div class="adm-more-menu">
+                <form method="post" action="/admin/section/{{ schema.key }}/{{ r.idx }}/duplicate">
+                  <input type="hidden" name="_back" value="{{ listUrl }}">
+                  <button type="submit">Duplicate</button>
+                </form>
+                <form method="post" action="/admin/section/{{ schema.key }}/{{ r.idx }}/delete"
+                      onsubmit="return confirm('Delete “{{ r.item[schema.itemTitle] | striptags | truncate(40) }}” for good? Archive it instead if you may want it back.');">
+                  <button type="submit" class="is-danger">Delete for good</button>
+                </form>
+              </div>
+            </details>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    {% if pageCount > 1 %}
+      <nav class="adm-pager" aria-label="Pages">
+        {% if page > 1 %}<a class="adm-btn sm" href="{{ qlink(schema.key, q, status, page - 1) }}">← Previous</a>{% endif %}
+        <span class="adm-pager-at">Page {{ page }} of {{ pageCount }} · {{ total }} shown</span>
+        {% if page < pageCount %}<a class="adm-btn sm" href="{{ qlink(schema.key, q, status, page + 1) }}">Next →</a>{% endif %}
+      </nav>
+    {% endif %}
+  {% else %}
+    <p class="adm-empty">
+      {% if q %}Nothing matches “{{ q }}”. <a href="/admin/collection/{{ schema.key }}?status={{ status }}">Clear the search</a>.
+      {% elif status != 'all' %}Nothing is {{ status }} right now.
+      {% else %}No items yet. <a href="/admin/section/{{ schema.key }}/new?from={{ listUrl | urlencode }}">Add the first one</a>.{% endif %}
+    </p>
+  {% endif %}
+
+  <p class="adm-note adm-foot-note">
+    <strong>Hide</strong> takes an item off the site but keeps it here. <strong>Archive</strong> does the same and files it away — both are reversible.
+    <strong>Delete</strong> cannot be undone. An item with an expiry date archives itself on that date.
+  </p>
+{% endblock %}

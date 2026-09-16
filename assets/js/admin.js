@@ -273,4 +273,33 @@
     colorWrap.appendChild(color);
     toolbar.appendChild(colorWrap);
   });
+
+  /* ---------- mobile navigation drawer ---------- */
+  document.querySelectorAll('[data-action="toggle-nav"]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const open = document.body.classList.toggle('nav-open');
+      const btn = document.querySelector('.adm-menu-btn');
+      if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      const scrim = document.querySelector('.adm-side-scrim');
+      if (scrim) scrim.hidden = !open;
+    });
+  });
+
+  /* ---------- row "⋯" menus: only one open, and Escape closes it ---------- */
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('details.adm-more[open]').forEach((d) => {
+      if (!d.contains(e.target)) d.open = false;
+    });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') document.querySelectorAll('details.adm-more[open]').forEach((d) => { d.open = false; });
+  });
+
+  /* ---------- leaving a half-filled form ---------- */
+  document.querySelectorAll('form.adm-item-form').forEach((form) => {
+    let dirty = false;
+    form.addEventListener('input', () => { dirty = true; });
+    form.addEventListener('submit', () => { dirty = false; });
+    window.addEventListener('beforeunload', (e) => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+  });
 })();

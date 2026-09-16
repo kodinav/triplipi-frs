@@ -10,37 +10,95 @@
   <link rel="stylesheet" href="/assets/css/admin.css">
 </head>
 <body class="admin">
-  <aside class="adm-side">
-    <a class="adm-brand" href="/admin">
+  <a class="adm-skip" href="#adm-main">Skip to content</a>
+
+  <header class="adm-topbar">
+    <button class="adm-menu-btn" type="button" data-action="toggle-nav" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="adm-brand" href="/admin"><span class="mark">T</span> Triplipi <small>CMS</small></a>
+    <a class="adm-topbar-view" href="/" target="_blank" rel="noopener">View site ↗</a>
+  </header>
+
+  <aside class="adm-side" id="adm-side">
+    <a class="adm-brand adm-brand-side" href="/admin">
       <span class="mark">T</span>
       <span>Triplipi <small>CMS</small></span>
     </a>
-    <nav>
-      <div class="adm-group">Pages</div>
+
+    <nav aria-label="Admin sections">
+      <a href="/admin" class="adm-nav-link {% if not active %}is-active{% endif %}">
+        <span class="i" aria-hidden="true">◧</span> Dashboard
+      </a>
+
+      <div class="adm-group">Content</div>
       {% for p in pages %}
-        {% if not p.isSettings %}
-          <a href="/admin/page/{{ p.key }}" class="{% if active == p.key %}is-active{% endif %}">{{ p.label }}</a>
+        {% if p.group == 'content' %}
+          <a href="/admin/page/{{ p.key }}" class="adm-nav-link {% if active == p.key %}is-active{% endif %}">
+            <span class="i" aria-hidden="true">▤</span> {{ p.label }}
+          </a>
         {% endif %}
       {% endfor %}
-      <div class="adm-group">Tools</div>
-      <a href="/admin/inbox" class="{% if active == 'inbox' %}is-active{% endif %}">Messages</a>
-      <a href="/admin/links" class="{% if active == 'links' %}is-active{% endif %}">Link health</a>
-      <div class="adm-group">Site</div>
+
+      <div class="adm-group">Pages</div>
       {% for p in pages %}
-        {% if p.isSettings %}
-          <a href="/admin/page/{{ p.key }}" class="{% if active == p.key %}is-active{% endif %}">{{ p.label }}</a>
+        {% if p.group == 'pages' %}
+          <a href="/admin/page/{{ p.key }}" class="adm-nav-link {% if active == p.key %}is-active{% endif %}">
+            <span class="i" aria-hidden="true">▤</span> {{ p.label }}
+          </a>
+        {% endif %}
+      {% endfor %}
+
+      <div class="adm-group">Money &amp; partners</div>
+      {% for p in pages %}
+        {% if p.group == 'money' %}
+          <a href="/admin/page/{{ p.key }}" class="adm-nav-link {% if active == p.key %}is-active{% endif %}">
+            <span class="i" aria-hidden="true">◈</span> {{ p.label }}
+          </a>
+        {% endif %}
+      {% endfor %}
+      <a href="/admin/links" class="adm-nav-link {% if active == 'links' %}is-active{% endif %}">
+        <span class="i" aria-hidden="true">⚯</span> Link health
+      </a>
+
+      <div class="adm-group">Inbox &amp; settings</div>
+      <a href="/admin/inbox" class="adm-nav-link {% if active == 'inbox' %}is-active{% endif %}">
+        <span class="i" aria-hidden="true">✉</span> Messages
+      </a>
+      {% for p in pages %}
+        {% if p.group == 'settings' %}
+          <a href="/admin/page/{{ p.key }}" class="adm-nav-link {% if active == p.key %}is-active{% endif %}">
+            <span class="i" aria-hidden="true">⚙</span> {{ p.label }}
+          </a>
         {% endif %}
       {% endfor %}
     </nav>
+
     <div class="adm-side-foot">
-      <a href="/" target="_blank" class="adm-view-site">View site ↗</a>
+      <a href="/" target="_blank" rel="noopener" class="adm-view-site">View site ↗</a>
       <form method="post" action="/admin/logout"><button type="submit">Log out</button></form>
     </div>
   </aside>
-  <main class="adm-main">
-    {% if saved == '1' %}<div class="adm-toast">✓ Saved — the site is updated. <a href="{{ pageView or '/' }}" target="_blank">See it live ↗</a></div>{% endif %}
+  <div class="adm-side-scrim" data-action="toggle-nav" hidden></div>
+
+  <main class="adm-main" id="adm-main">
+    {% if saved == '1' %}
+      <div class="adm-toast" role="status">
+        <strong>Saved.</strong> The change is live on the site.
+        <a href="{{ pageView or '/' }}" target="_blank" rel="noopener">See it ↗</a>
+      </div>
+    {% elif saved == '0' %}
+      <div class="adm-toast is-bad" role="status"><strong>Not saved.</strong> Please check the form and try again.</div>
+    {% endif %}
+    {% if defaultPass %}
+      <div class="adm-toast is-warn" role="status">
+        <strong>Change your password.</strong> This panel is still using the default one.
+        <a href="/admin/page/site#sec-password">Change it now →</a>
+      </div>
+    {% endif %}
     {% block content %}{% endblock %}
   </main>
+
   <script src="/assets/js/admin.js"></script>
 </body>
 </html>
