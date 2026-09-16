@@ -395,6 +395,17 @@
   .crumbs a::after { content: ""; position: absolute; inset: -5px -6px; }
   .shop-tile .select-btn { width: 40px; height: 40px; }
 
+  /* image hero: the desktop scrim fades out by mid-height, which on a phone
+     leaves the meta strip (Best season / Region / Altitude) sitting on bright
+     sky or sand. Carry the darkness further up. */
+  .page-hero.has-image .page-hero-bg::after {
+    background: linear-gradient(to top,
+      var(--a-ink-90) 0%,
+      rgba(35, 31, 32, 0.66) 45%,
+      rgba(35, 31, 32, 0.35) 75%,
+      rgba(35, 31, 32, 0.18) 100%);
+  }
+
   /* story hero: trim the deep desktop padding so the image is not preceded
      by half a screen of white */
   .article-hero { padding-block: var(--s-6) var(--s-5); }
