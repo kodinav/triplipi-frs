@@ -2377,7 +2377,8 @@
 /* Picks tabs */
 .picks-tabs {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* All + one tab per list, however many lists the admin keeps */
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
   gap: var(--s-3);
   padding: var(--s-5);
   background: var(--c-bone);
@@ -2403,6 +2404,9 @@
   color: var(--c-gold-deep);
   line-height: 1;
 }
+.picks-all-note { margin-top: var(--s-3); color: var(--c-text-muted); }
+.picks-tab-all .num { display: flex; align-items: center; color: var(--c-terracotta); }
+.picks-tab-all .num svg { width: 22px; height: 22px; }
 .picks-tab .name {
   font-family: var(--ff-display);
   font-size: 1.05rem;
@@ -2425,12 +2429,7 @@
   border-color: var(--c-gold);
   box-shadow: var(--shadow-sm);
 }
-@media (max-width: 900px) {
-  .picks-tabs { grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 600px) {
-  .picks-tabs { grid-template-columns: 1fr; }
-}
+/* auto-fit above handles narrow screens: two tabs per row on a phone */
 
 /* Shop tab switcher */
 .shop-tab-switcher {

@@ -1123,13 +1123,13 @@ const PAGES = {
     const lists = (c().pickLists || []).map((l) => ({
       ...l, count: allPicks.filter((p) => p.list === l.key).length,
     }));
-    // active list: ?list= if valid, else the first list
+    // active list: ?list= when it names a real list; anything else — no param,
+    // ?list=all, a stale key — is the All tab, every pick in one grid.
     const reqList = (req && req.query && req.query.list) || '';
-    const active = lists.find((l) => l.key === reqList) || lists[0] || null;
-    // picks in this list; if there are no lists defined yet, fall back to all picks
+    const active = reqList && reqList !== 'all' ? lists.find((l) => l.key === reqList) || null : null;
     const inList = active ? allPicks.filter((p) => p.list === active.key) : allPicks;
     const { items, pagination } = paginate(inList, req);
-    const baseUrl = active ? '/picks?list=' + encodeURIComponent(active.key) : '/picks';
+    const baseUrl = active ? '/picks?list=' + encodeURIComponent(active.key) : '/picks?list=all';
     // Each pick renders as a destination card with Know More + Check Packages
     // (Our Picks Tab doc): resolve its destination for season/tagline and the packages link.
     const dests = c().destinations || [];
@@ -1137,7 +1137,7 @@ const PAGES = {
       const dest = dests.find((d) => d.slug === p.destinationSlug) || null;
       return { ...p, dest: dest ? { slug: dest.slug, name: dest.name, season: dest.season, tagline: dest.tagline } : null };
     });
-    return { page: c().pages.picks, picks, lists, active, pagination, baseUrl };
+    return { page: c().pages.picks, picks, lists, active, totalAll: allPicks.length, pagination, baseUrl };
   },
   about: () => ({ page: c().pages.about, about: c().about || {}, aboutStats: c().aboutStats || [], aboutOffers: c().aboutOffers || [] }),
   contact: () => ({ page: c().pages.contact, settings: c().settings }),

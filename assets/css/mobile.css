@@ -318,6 +318,11 @@
   .pkg-list-media { flex-basis: auto; aspect-ratio: 16 / 10; min-height: 0; }
   .pkg-list-body { padding: var(--s-5); }
   .pkg-explore { align-self: stretch; justify-content: center; text-align: center; }
+  /* picks tabs: two-up instead of one tall column per list */
+  .picks-tabs { padding: var(--s-3); gap: var(--s-2); }
+  .picks-tab { padding: var(--s-4) var(--s-3); }
+  .picks-tab .name { font-size: 0.95rem; }
+
   /* same one-row rail as desktop, just smaller tiles */
   .pkg-cats-wrap { margin-bottom: var(--s-6); padding-bottom: var(--s-5); }
   .pkg-cats { padding: 8px 6px 0; }

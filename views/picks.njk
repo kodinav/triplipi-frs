@@ -40,6 +40,13 @@
         </div>
 {% if lists and lists | length %}
         <div class="picks-tabs" data-reveal>
+          <a class="picks-tab picks-tab-all{% if not active %} is-active{% endif %}" href="/picks?list=all"{% if not active %} aria-current="page"{% endif %}>
+            <span class="num" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg>
+            </span>
+            <span class="name">All</span>
+            <span class="meta">{{ totalAll }} places</span>
+          </a>
 {% for l in lists %}
           <a class="picks-tab{% if active and l.key == active.key %} is-active{% endif %}" href="/picks?list={{ l.key }}">
             <span class="num">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
@@ -56,8 +63,9 @@
       <div class="container-wide">
         <div class="section-head" data-reveal>
           <div>
-            <p class="overline">{{ active.label if active else 'Our Picks' }}</p>
-            <h2>{{ active.heading | safe if active and active.heading else 'The places we’d send our <em>closest friends</em>.' }}</h2>
+            <p class="overline">{{ active.label if active else 'All picks' }}</p>
+            <h2>{{ (active.heading if active and active.heading else 'Every list, <em>all in one place</em>.') | safe }}</h2>
+            {% if not active %}<p class="picks-all-note">{{ totalAll }} places across {{ lists | length }} lists — or pick a list above.</p>{% endif %}
           </div>
         </div>
 
