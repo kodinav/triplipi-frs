@@ -2214,7 +2214,9 @@
 
 /* Article hero - deck text */
 .article-hero { padding-block: var(--s-12) var(--s-9); }
-.article-hero-inner { max-width: 760px; margin: 0 auto; text-align: center; position: relative; z-index: 2; padding-inline: var(--s-5); color: var(--c-bone); }
+/* The hero sits on the white section card, so its text is ink, not bone —
+   these were cream-on-cream (crumbs, deck, byline all but invisible). */
+.article-hero-inner { max-width: 760px; margin: 0 auto; text-align: center; position: relative; z-index: 2; padding-inline: var(--s-5); color: var(--c-text); }
 .article-hero .article-category {
   display: inline-block;
   font-family: var(--ff-mono);
@@ -2233,7 +2235,7 @@
   font-style: italic;
   font-weight: var(--fw-light);
   line-height: 1.55;
-  color: rgba(245, 239, 230, 0.88);
+  color: var(--c-text-muted);
   margin-block: var(--s-5) var(--s-7);
   max-width: 600px;
   margin-inline: auto;
@@ -2242,10 +2244,10 @@
 .article-byline .avatar {
   width: 48px; height: 48px; border-radius: 50%;
   background: linear-gradient(135deg, var(--c-gold) 0%, var(--c-ember) 100%);
-  border: 2px solid rgba(245, 239, 230, 0.3);
+  border: 2px solid rgba(35, 31, 32, 0.12);
 }
-.article-byline .name { font-family: var(--ff-display); font-style: italic; font-size: 1.05rem; color: var(--c-bone); }
-.article-byline .meta { font-size: var(--fs-micro); color: rgba(245, 239, 230, 0.6); text-transform: uppercase; letter-spacing: var(--ls-wider); }
+.article-byline .name { font-family: var(--ff-display); font-style: italic; font-size: 1.05rem; color: var(--c-ink); }
+.article-byline .meta { font-size: var(--fs-micro); color: var(--c-text-muted); text-transform: uppercase; letter-spacing: var(--ls-wider); }
 
 /* Article figure bleed and grid */
 .article-figure {

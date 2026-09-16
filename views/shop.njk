@@ -69,7 +69,8 @@
                   <h4>{{ it.title }}</h4>
                   <p>{{ it.spec }}</p>
                 </div>
-                <button class="select-btn" type="button" aria-label="Add to selection">+</button>
+                {# the + / ✓ glyph is drawn by .select-btn::before; a literal one here rendered twice #}
+                <button class="select-btn" type="button" aria-label="Add to selection"></button>
               </article>
 {% else %}
               <p class="adm-empty" style="grid-column:1/-1;">No media has been added to the shop yet.</p>
