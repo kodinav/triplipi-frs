@@ -420,6 +420,9 @@
   };
 
 
+  // Phone-sized viewport: a few behaviours differ (see each use).
+  const mqSmall = window.matchMedia('(max-width: 768px)');
+
   // ============================================================
   // INTERSECTION REVEAL — animates [data-reveal] when visible
   // ============================================================
@@ -436,7 +439,14 @@
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -80px 0px' });
+      // A phone stacks cards into a grid thousands of pixels tall, and 12% of
+      // that is never on screen — the items stayed invisible until a scroll
+      // nudged them, leaving a blank page on arrival. On small screens watch
+      // for any sliver instead; the observer then fires at load for whatever
+      // is already in view.
+    }, mqSmall.matches
+      ? { threshold: 0, rootMargin: '0px 0px -40px 0px' }
+      : { threshold: 0.12, rootMargin: '0px 0px -80px 0px' });
 
     $$('[data-reveal], [data-stagger]').forEach(el => io.observe(el));
   };
@@ -832,6 +842,7 @@
   const initParallax = () => {
     const items = $$('[data-parallax]');
     if (!items.length) return;
+    if (mqSmall.matches) return;   // phones: skip the per-frame transform, scroll stays smooth
     let ticking = false;
     const update = () => {
       const vh = window.innerHeight;

@@ -354,6 +354,65 @@
      ======================================================== */
   .quote-form { padding: var(--s-6); }
   .quote-title { font-size: 1.35rem; }
+
+  /* ========================================================
+     14 · PACKAGE DETAIL — collapse the desktop two-column layout
+     ======================================================== */
+  /* Grid items are min-width:auto by default, so the tab row (uppercase,
+     letterspaced, three or four tabs) forced the column to 488px on a 334px
+     card and the card clipped image, tabs and body text alike. */
+  .pkg-detail {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-7);
+    margin-top: var(--s-7);
+  }
+  .pkg-detail > * { min-width: 0; }
+  .pkg-tabs {
+    overflow-x: auto;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .pkg-tabs::-webkit-scrollbar { display: none; }
+  .pkg-tab { flex: 0 0 auto; white-space: nowrap; padding: var(--s-3) var(--s-4); }
+  .pkg-tab-pane { padding-block: var(--s-6); }
+  .pkg-summary-card { position: static; }
+
+  /* ========================================================
+     15 · TOUCH COMFORT — bigger hit areas, same layout
+     ======================================================== */
+  /* The card links are 18px tall text. Rather than grow them (and every
+     listing page with them), extend the tappable box past the text. Gaps are
+     widened first so neighbouring hit areas never overlap. */
+  .feat-card .feat-actions { gap: var(--s-5); }
+  .blog-card-actions { gap: var(--s-5); }
+  .feat-card .feat-actions a,
+  .blog-card-actions a,
+  .footer-col a,
+  .crumbs a { position: relative; }
+  .feat-card .feat-actions a::after,
+  .blog-card-actions a::after { content: ""; position: absolute; inset: -8px -6px; }
+  .footer-col a::after,
+  .crumbs a::after { content: ""; position: absolute; inset: -5px -6px; }
+  .shop-tile .select-btn { width: 40px; height: 40px; }
+
+  /* story hero: trim the deep desktop padding so the image is not preceded
+     by half a screen of white */
+  .article-hero { padding-block: var(--s-6) var(--s-5); }
+  .article-hero-inner { padding-inline: var(--s-4); }
+
+  /* search overlay: on a phone the frosted page behind showed through the
+     results and the last rows ran under the tab bar */
+  .search-overlay { background: rgba(251, 248, 243, 0.98); }
+  .search-overlay-header { padding: var(--s-5) var(--pad-page-x); padding-right: calc(var(--pad-page-x) + 52px); }
+  .search-close { top: var(--s-4); width: 40px; height: 40px; }
+  .search-body { padding-top: var(--s-6); padding-bottom: calc(72px + var(--s-7)); }
+
+  /* swipes stay inside their rail instead of dragging the page */
+  .pkg-cats,
+  .featured-grid,
+  .blog-strip,
+  .pkg-grid.cols-2,
+  .picks-row { overscroll-behavior-x: contain; }
 }
 
 
@@ -361,5 +420,5 @@
 @media (max-width: 400px) {
   .featured-grid > *,
   .blog-strip > * { flex-basis: 86%; max-width: 86%; }
-  .tab-item { font-size: 0.5625rem; }
+  .tab-item { font-size: 0.625rem; }   /* 10px: 9px was unreadable */
 }
