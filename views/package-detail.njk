@@ -72,7 +72,7 @@
               <h2 style="margin-bottom: var(--s-5);">What's <em>included</em>.</h2>
               <div class="dest-feature-list">
                 {% for inc in pkg.inclusions %}
-                <div class="dest-feature"><div class="ico">✓</div><div><h5>{{ inc }}</h5></div></div>
+                <div class="dest-feature"><div class="ico">✓</div><div><h3 class="h5-like">{{ inc }}</h3></div></div>
                 {% endfor %}
               </div>
             </div>
@@ -83,7 +83,7 @@
               <h2 style="margin-bottom: var(--s-5);">About the <em>provider</em>.</h2>
               <div class="sponsored-block">
                 <span class="tag tag-sponsored badge-pos">Verified Partner</span>
-                <h4 style="font-family: var(--ff-display); font-weight: 700; font-size: 1.5rem; margin-bottom: var(--s-3);">{{ pkg.ctaProvider or 'Our partner' }}</h4>
+                <h3 style="font-family: var(--ff-display); font-weight: 700; font-size: 1.5rem; margin-bottom: var(--s-3);">{{ pkg.ctaProvider or 'Our partner' }}</h3>
                 {% if pkg.providerInfo %}<div class="rich-body" style="margin-bottom: var(--s-4);">{{ pkg.providerInfo | safe }}</div>{% endif %}
                 {% if pkg.ctaExternal and pkg.ctaUrl %}<a href="#" class="btn-text" data-external data-provider="{{ pkg.ctaProvider }}" data-url="{{ pkg.ctaUrl }}">Visit operator website <span class="arrow">→</span></a>{% endif %}
               </div>

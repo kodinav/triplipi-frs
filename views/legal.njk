@@ -42,7 +42,7 @@
 
           <!-- Sidebar nav -->
           <aside class="legal-nav">
-            <h6>Legal documents</h6>
+            <h2 class="legal-nav-title">Legal documents</h2>
             {% for d in legalDocs %}
             <a href="/legal?p={{ d.slug }}"{% if d.slug == doc.slug %} class="is-active"{% endif %}>{{ d.navLabel }}</a>
             {% endfor %}

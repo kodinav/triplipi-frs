@@ -563,7 +563,7 @@
   gap: var(--s-8);
   padding-bottom: var(--s-9);
 }
-.footer-col h6 {
+.footer-col-title {
   font-family: var(--ff-text);
   font-size: var(--fs-micro);
   text-transform: uppercase;

@@ -66,9 +66,9 @@
               </div>
               <div class="field">
                 {# Same form for everyone; /contact#partner swaps this dropdown for partner packages (main.js) #}
-                <label data-mode="general">I'm writing about</label>
-                <label data-mode="partner" hidden>Partner package</label>
-                <select name="subject" data-mode="general">
+                <label data-mode="general" for="subject-general">I'm writing about</label>
+                <label data-mode="partner" for="subject-partner" hidden>Partner package</label>
+                <select name="subject" id="subject-general" aria-label="I'm writing about" data-mode="general">
                   <option>Planning a trip</option>
                   <option>Package enquiry</option>
                   <option>Photography licensing</option>
@@ -76,7 +76,7 @@
                   <option>Editorial / press</option>
                   <option>Something else</option>
                 </select>
-                <select name="subject" data-mode="partner" hidden disabled>
+                <select name="subject" id="subject-partner" aria-label="Partner package" data-mode="partner" hidden disabled>
                   <option>Enquiring pricing</option>
                   <option>Silver package</option>
                   <option>Gold package</option>

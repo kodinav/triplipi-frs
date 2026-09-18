@@ -215,7 +215,7 @@
   }
   .footer-brand-block { grid-column: 1 / -1; }
   .footer-brand-block p { max-width: 48ch; }
-  .footer-col h6 { margin-bottom: var(--s-3); }
+  .footer-col-title { margin-bottom: var(--s-3); }
   .footer-col ul { gap: var(--s-2); }
   .footer-col a { font-size: 0.875rem; }
   .footer-bottom { gap: var(--s-3); }

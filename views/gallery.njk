@@ -54,9 +54,10 @@
     <!-- Masonry grid -->
     <section class="section" style="padding-top: var(--s-7);">
       <div class="container-wide">
+        <h2 class="visually-hidden">Gallery</h2>
         <div class="masonry" data-stagger>
 {% for g in items %}
-          <a data-lightbox{% if g.type == 'video' %} data-type="video"{% endif %} data-src="{{ g.src }}" data-cat="{{ g.category }}" data-kind="{{ g.type }}"{% if g.type == 'video' and g.src %} data-hover-video{% endif %} class="gallery-tile{% if g.type == 'video' %} is-video{% endif %}">
+          <a data-lightbox{% if g.type == 'video' %} data-type="video"{% endif %} data-src="{{ g.src }}" data-cat="{{ g.category }}" data-kind="{{ g.type }}"{% if g.type == 'video' and g.src %} data-hover-video{% endif %} class="gallery-tile{% if g.type == 'video' %} is-video{% endif %}" aria-label="{{ g.label or g.alt or 'Open media' }}{% if g.type == 'video' %} (film){% endif %}">
             {% if g.type == 'video' and g.src %}
             <video src="{{ g.src }}" poster="{{ g.image }}" muted loop playsinline preload="metadata"></video>
 {% else %}

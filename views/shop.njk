@@ -59,14 +59,15 @@
 
           <!-- Media grid -->
           <div>
-            <div class="shop-grid">
+            <h2 class="visually-hidden">Media for licensing</h2>
+        <div class="shop-grid">
 {% for it in items %}
               <article class="shop-tile" data-serial="{{ it.serial or ('AET-' + (loop.index)) }}" data-media-type="{{ (it.badge or 'Media') ~ (' · ' + it.spec if it.spec else '') }}">
                 <div class="serial">{{ ((pagination.offset if pagination else 0) + loop.index) | pad3 }}</div>
                 <span class="type-badge">{{ it.badge or ('Video · 4K' if it.type == 'video' else 'Photograph') }}</span>
                 <img loading="lazy" src="{{ it.image }}" alt="{{ it.title | striptags }}" srcset="{{ it.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async">
                 <div class="info">
-                  <h4>{{ it.title }}</h4>
+                  <h3 class="h4-like">{{ it.title }}</h3>
                   <p>{{ it.spec }}</p>
                 </div>
                 {# the + / ✓ glyph is drawn by .select-btn::before; a literal one here rendered twice #}
@@ -102,7 +103,7 @@
 
             <!-- Quote form (expands on click) -->
             <form class="quote-form" data-quote-to="{{ shop.quoteEmail or settings.contactEmail }}">
-              <h5>Tell us about the use</h5>
+              <h4 class="h5-like">Tell us about the use</h4>
               <input type="text" name="name" placeholder="Your name *" required>
               <input type="email" name="email" placeholder="Email *" required>
               <input type="tel" name="phone" placeholder="Phone *" required>

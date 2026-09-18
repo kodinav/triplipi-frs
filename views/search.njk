@@ -73,7 +73,7 @@
             <a class="search-result" data-type="{{ r.type | lower }}" href="{{ r.url }}">
               <div>
                 <div class="type">{{ r.type }}{% if r.desc %} · {{ r.desc | striptags }}{% endif %}</div>
-                <h4>{{ r.title | safe }}</h4>
+                <h2 class="h4-like">{{ r.title | safe }}</h2>
               </div>
               <span class="arrow">→</span>
             </a>

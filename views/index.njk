@@ -152,7 +152,7 @@
               <span class="tag{% if a.tagClass %} {{ a.tagClass }}{% endif %}">{{ a.tagLabel }}</span>
               <span class="ann-date">{{ a.date }}</span>
             </div>
-            <h4>{{ a.title | safe }}</h4>
+            <h3 class="h4-like">{{ a.title | safe }}</h3>
             <p class="ann-excerpt">{{ a.excerpt | safe }}</p>
             <a class="ann-link" href="{{ a.href }}">{{ a.linkLabel }} <span class="arrow">→</span></a>
           </article>

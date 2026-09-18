@@ -1079,17 +1079,23 @@ function resolveAnnouncements(list) {
     let href = a.href || '/announcements';
     const t = (a.target || '').trim();
     switch (a.section) {
-      case 'destination': href = '/destination-detail?d=' + encodeURIComponent(t); break;
+      // an unset target must not produce a bare /detail URL — that lands on
+      // whichever item happens to be first (FR-HOME-013B)
+      case 'destination': href = t ? '/destination-detail?d=' + encodeURIComponent(t) : '/destinations'; break;
       case 'trip': href = t ? '/destinations?cat=' + encodeURIComponent(t) + '&from=categories' : '/categories'; break;   // Find Trip Deals
       case 'picks': href = '/picks'; break;
       case 'packages': href = t ? '/packages?d=' + encodeURIComponent(t) : '/packages'; break;
       case 'shop': href = '/shop'; break;
       case 'travel-tips': href = '/travel-tips'; break;
       case 'gallery': href = '/gallery'; break;
-      case 'blog': href = '/blog-post?b=' + encodeURIComponent(t); break;
+      case 'blog': href = t ? '/blog-post?b=' + encodeURIComponent(t) : '/blog'; break;
       case 'external': href = a.extUrl || a.href || '#'; break;
       case 'url': if (t) href = t; break;
       default: break;
+    }
+    // the same guard for hrefs typed straight into the CMS
+    if (/^\/(destination-detail|blog-post|package-detail|package-quote)\/?$/.test(href)) {
+      href = { '/destination-detail': '/destinations', '/blog-post': '/blog' }[href.replace(/\/$/, '')] || '/packages';
     }
     return { ...a, href };
   });

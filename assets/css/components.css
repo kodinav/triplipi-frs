@@ -779,6 +779,15 @@
   border-radius: 50%;
 }
 
+.modal-sub {
+  font-family: var(--ff-text);
+  font-size: var(--fs-micro);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wider);
+  color: var(--c-text-muted);
+  font-weight: var(--fw-semi);
+  margin-bottom: 4px;
+}
 .modal-title {
   font-family: var(--ff-display);
   font-size: 1.875rem;
@@ -971,7 +980,7 @@
 }
 
 .search-section { margin-bottom: var(--s-9); }
-.search-section h6 {
+.search-section h6, .search-section-title {
   font-size: var(--fs-micro);
   text-transform: uppercase;
   letter-spacing: var(--ls-widest);
@@ -1033,7 +1042,7 @@
   font-weight: var(--fw-semi);
   margin-bottom: 4px;
 }
-.search-result h4 {
+.search-result h4, .search-result h3 {
   font-size: 1.125rem;
   font-weight: var(--fw-light);
   margin-bottom: 4px;
@@ -1156,3 +1165,9 @@
   display: grid; place-items: center;
   font-weight: bold;
 }
+
+
+/* Promoted for heading order (FR-OTHER-014): these card titles read as h3 but
+   keep the size they had as h4. */
+h2.h4-like, h3.h4-like { font-size: var(--fs-h4, 1.2rem); font-weight: var(--fw-semi); line-height: 1.3; }
+h3.h5-like, h4.h5-like { font-size: 1rem; font-weight: var(--fw-semi); line-height: 1.35; }

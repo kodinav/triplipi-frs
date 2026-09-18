@@ -2571,7 +2571,7 @@
   top: 100px;
   align-self: start;
 }
-.legal-nav h6 {
+.legal-nav h6, .legal-nav-title {
   font-family: var(--ff-mono);
   font-size: var(--fs-micro);
   text-transform: uppercase;

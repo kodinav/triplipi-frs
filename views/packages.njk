@@ -76,6 +76,7 @@
         {% endif %}
 
         {% if packages and packages | length %}
+        <h2 class="visually-hidden">Packages</h2>
         <div class="pkg-list" data-stagger>
 {% for k in packages %}
           <article class="pkg-list-card pkg-type-{{ (k.badgeLabel or 'sponsored') | lower }}">
