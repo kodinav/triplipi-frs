@@ -121,7 +121,7 @@
           <button class="mobile-nav-link" data-sub="" aria-expanded="false">{{ link.label }} <span class="arrow">+</span></button>
           <div class="mobile-nav-sub">
             {% for l in pickLists %}<a href="/picks?list={{ l.key }}">{{ l.label }}</a>
-            {% endfor %}<a href="{{ link.href }}">View all picks →</a>
+            {% endfor %}<a href="{{ settings.megaMenus.picksHeadHref or link.href }}">{{ settings.megaMenus.picksHeadLabel or 'View all' }} →</a>
           </div>
           {% elif link.mega == 'resources' %}
           <button class="mobile-nav-link" data-sub="" aria-expanded="false">{{ link.label }} <span class="arrow">+</span></button>

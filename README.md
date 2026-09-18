@@ -40,8 +40,9 @@ digest** (season, getting there, stay, getting around, what to do, places of
 note, good to know); Read More and package CTAs; 450 destinations and 100
 categories with many-to-many mapping; 20 videos + 20 images per destination;
 20 ad slots per page; unlimited sponsored placements per destination; unified
-blog with four layouts, a travel-story section, in-post photos and films, and
-four ad slots.
+blog with four layouts, a dedicated **travel story & experience** section, in-post
+photos and films, sponsored placements inside posts, Find Trip Deals + Check
+Packages prompts on the listing and every post, and four ad slots.
 
 ### Go For A Trip (FR-TRIP)
 The seven steps, as wired today: `/trip` → categories → destination digests for
@@ -64,8 +65,9 @@ routed to the owner, and the Shutterstock link.
 Contact (phone mandatory, email shown); About in four sections; eleven legal /
 compliance pages, each editable, plus new ones on demand; standalone
 Announcements page reached from the menu only; universal embedded links, all
-consent-gated; keyword search (partial and exact) across every content type with
-filters; per-form email routing.
+consent-gated; keyword search (partial by default, exact phrase on request or
+by quoting the words) across every content type with filters; per-form email
+routing.
 
 ### Other features (FR-OTHER)
 Responsive to any screen; CMS with full CRUD; archiving and auto-expiry;
@@ -92,6 +94,24 @@ unread messages, broken partner links, items expiring within 14 days, and
 anything hidden.
 
 Default sign-in is `admin` / `triplipi2026` — the panel nags until it is changed.
+
+## Email delivery
+
+Every form (Contact, Ask for Guidance, Shop quote, package enquiry) is saved to
+**Admin → Inbox** the moment it is sent. To also have it emailed, set the SMTP
+variables from `.env.example` in the host's environment (Hostinger: hPanel →
+Node.js app → Environment variables). Each form can go to its own address —
+Site settings holds the three routing addresses, each package and sponsored
+placement has its own provider email, and the Shop has its quote address. The
+dashboard shows a warning until SMTP is configured. SPF and DKIM records for
+the sending domain are set at the DNS provider (assumption A5).
+
+## Images
+
+Lazy loading and responsive `srcset` are on every card. Uploaded JPEG, PNG and
+WebP files are resized to at most 1600px wide and compressed on upload when the
+optional `sharp` package installs cleanly; otherwise the original is kept.
+Uploads are served with a 30-day cache.
 
 ## Switching ads on
 

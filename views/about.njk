@@ -109,7 +109,7 @@
             <div class="num">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</div>
             <h3>{{ o.title | safe }}</h3>
             <div class="rich-body">{{ o.body | safe }}</div>
-            {% if o.linkLabel %}<a href="{{ o.linkHref or '#' }}" class="btn-text">{{ o.linkLabel }} <span class="arrow">→</span></a>{% endif %}
+            {% if o.linkLabel %}<a href="{{ o.linkHref or '#' }}" class="btn-text"{% if o.external %} data-external data-provider="{{ o.extProvider }}" data-url="{{ o.extUrl }}"{% endif %}>{{ o.linkLabel }} <span class="arrow">→</span></a>{% endif %}
           </div>
           {% endfor %}
         </div>

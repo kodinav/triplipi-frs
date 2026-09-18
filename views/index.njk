@@ -116,7 +116,7 @@
 
         <div class="float-grid" data-reveal>
 {% for h in highlights %}
-          <a href="{{ h.href or '/destinations' }}" class="float-card">
+          <a href="{{ h.href or '/destinations' }}" class="float-card"{% if h.external %} data-external data-provider="{{ h.extProvider }}" data-url="{{ h.extUrl }}"{% endif %}>
             <img loading="lazy" src="{{ h.image }}" alt="{{ h.title }}, {{ h.place }}" srcset="{{ h.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async">
             <div class="float-card-label">
               <span class="day">{{ h.kicker }}</span>
@@ -216,6 +216,10 @@
             <a href="/contact" class="btn btn-brand">General enquiry <span class="arrow">→</span></a>
             <a href="/contact#partner" class="btn btn-ghost">Become a partner <span class="arrow">→</span></a>
           </div>
+          {% if settings.contactEmail %}
+          {# FR-HOME-010 — the owner's address, visible and clickable, beside the form route #}
+          <p class="ask-email">Or write to us directly: <a href="mailto:{{ settings.contactEmail }}">{{ settings.contactEmail }}</a></p>
+          {% endif %}
         </div>
       </div>
     </section>

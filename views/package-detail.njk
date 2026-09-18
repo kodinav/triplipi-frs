@@ -108,6 +108,10 @@
               {% if pkg.ctaExternal and pkg.ctaUrl %}
               <a href="#" class="btn btn-brand" data-external data-provider="{{ pkg.ctaProvider }}" data-url="{{ pkg.ctaUrl }}" style="width: 100%;">Check Out Further <span class="arrow">→</span></a>
               <p style="font-size: var(--fs-micro); color: var(--c-text-muted); margin-top: var(--s-4); text-align: center;">Affiliate disclosure shown on next screen</p>
+              {% else %}
+              {# FR-CONSENT-007 — no provider website: the same consent card, then the enquiry form routed to the provider #}
+              <a href="/package-quote?p={{ pkg.title | slug }}" class="btn btn-brand" data-external data-provider="{{ pkg.ctaProvider or 'the package provider' }}" data-url="/package-quote?p={{ pkg.title | slug }}" data-display="Enquiry form — your details go to the provider" style="width: 100%;">Check Out Further <span class="arrow">→</span></a>
+              <p style="font-size: var(--fs-micro); color: var(--c-text-muted); margin-top: var(--s-4); text-align: center;">This provider takes enquiries by form — consent notice shown on next screen</p>
               {% endif %}
               <hr class="rule" style="margin-block: var(--s-5);">
               {# Same move as every other Check Packages button: straight to this

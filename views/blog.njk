@@ -87,12 +87,13 @@
               <div class="byline">{% for b in p.bylineSpans %}{% if not loop.first %}<span class="sep"></span>{% endif %}<span>{{ b }}</span>{% endfor %}</div>
             </a>
             <div class="blog-card-actions">
-              <a class="act-details" href="{% if p.dest %}/destination-detail?d={{ p.dest.slug }}&amp;from=blog          {{ ad.unit(adSlots[loop.index0], ads, "ad-span-all") }}
-{% else %}/blog-post?b={{ p.title | slug }}{% endif %}">Know More <span>→</span></a>
+              <a class="act-details" href="{% if p.dest %}/destination-detail?d={{ p.dest.slug }}&amp;from=blog{% else %}/blog-post?b={{ p.title | slug }}{% endif %}">Know More <span>→</span></a>
+              <a class="act-trip" href="{% if p.dest and p.dest.cat %}/destinations?cat={{ p.dest.cat }}&amp;from=categories{% else %}/categories{% endif %}">Find Trip Deals <span>→</span></a>
               <a class="act-pkg" href="/packages{% if p.dest %}?d={{ p.dest.slug }}{% endif %}">Check Packages <span>→</span></a>
             </div>
           </article>
           {{ sp.banner(sponsorSlots[loop.index0], "sp-span-all") }}
+          {{ ad.unit(adSlots[loop.index0], ads, "ad-span-all") }}
 {% endfor %}
         </div>
 

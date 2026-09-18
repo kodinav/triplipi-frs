@@ -390,6 +390,8 @@
 .feat-card .feat-actions a:hover { gap: 9px; }
 .feat-card .feat-actions .act-details { color: var(--c-terracotta); }
 .feat-card .feat-actions .act-details:hover { color: var(--c-terracotta-deep); }
+.feat-card .feat-actions .act-trip { color: var(--c-text-muted); }
+.feat-card .feat-actions .act-trip:hover { color: var(--c-ink); }
 .feat-card .feat-actions .act-pkg { color: var(--c-blue); }
 .feat-card .feat-actions .act-pkg:hover { color: var(--c-blue-deep); }
 
@@ -585,6 +587,8 @@
 .ask-section h2 { margin-bottom: var(--s-5); max-width: 20ch; }
 .ask-section h2 em { color: var(--c-brown); }
 .ask-section .ask-body { max-width: 56ch; }
+.ask-section .ask-email { margin-top: var(--s-4); font-size: var(--fs-small); color: var(--c-text-muted); }
+.ask-section .ask-email a { color: var(--c-terracotta); text-decoration: underline; text-underline-offset: 3px; }
 .ask-section .actions {
   display: flex;
   gap: var(--s-4);
@@ -2522,6 +2526,9 @@
 
 /* Page search form (on search results page) */
 .page-search-form { margin-top: var(--s-6); max-width: 640px; }
+.page-search-mode { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-5); margin-top: var(--s-3); font-size: var(--fs-small); color: var(--c-text-muted); }
+.page-search-mode label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.page-search-mode small { opacity: .7; }
 .page-search-input {
   display: flex;
   align-items: center;
@@ -3376,3 +3383,8 @@ a.page-btn:hover {
   text-align: center; margin-bottom: var(--s-2);
 }
 .quote-form .form-grid { grid-template-columns: 1fr 1fr; gap: var(--s-4); margin: 0; }
+
+/* Blog post — travel story section (FR-BLOG-003) and in-post sponsors (FR-BLOG-008) */
+.article-story { margin-top: var(--s-8); padding-top: var(--s-6); border-top: 1px solid var(--c-border); }
+.article-story h2 { margin-bottom: var(--s-4); }
+.article-sponsors { display: grid; gap: var(--s-4); margin-top: var(--s-6); }

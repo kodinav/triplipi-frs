@@ -37,6 +37,8 @@ env.addFilter('slug', slugify);
 /* FR-OTHER-011 — image optimisation. The photography is served from Unsplash's
    CDN, which resizes on the fly, so every card can ask for the width it
    actually paints instead of a full-size file. Anything else is left alone. */
+/* host name of a URL — the consent card names the provider with it */
+env.addFilter('host', (url) => { try { return new URL(String(url)).hostname.replace(/^www\./, ''); } catch (e) { return 'External website'; } });
 env.addFilter('srcset', (url) => {
   const u = String(url || '');
   if (!/^https?:\/\/images\.unsplash\.com\//.test(u)) return '';
@@ -185,8 +187,25 @@ const upload = multer({
       || /^application\/(pdf|msword|vnd\.|rtf)/.test(file.mimetype)
       || /^text\/(plain|csv)/.test(file.mimetype)),
 });
+/* FR-OTHER-011 — shrink and compress raster uploads in place: at most 1600px
+   wide, quality 80. `sharp` is an optional dependency; if it isn't installed
+   the original file is kept as uploaded. */
+let sharp = null;
+try { sharp = require('sharp'); } catch (e) { /* optional */ }
+async function optimiseUpload(file) {
+  if (!sharp || !/^image\/(jpeg|png|webp)$/.test(file.mimetype)) return;
+  const src = file.path; const tmp = src + '.opt';
+  try {
+    const img = sharp(src).rotate().resize({ width: 1600, withoutEnlargement: true });
+    if (file.mimetype === 'image/png') await img.png({ compressionLevel: 9, palette: true }).toFile(tmp);
+    else if (file.mimetype === 'image/webp') await img.webp({ quality: 80 }).toFile(tmp);
+    else await img.jpeg({ quality: 80, mozjpeg: true }).toFile(tmp);
+    if (fs.statSync(tmp).size < fs.statSync(src).size) fs.renameSync(tmp, src); else fs.unlinkSync(tmp);
+  } catch (e) { try { fs.unlinkSync(tmp); } catch (e2) { /* nothing to clean */ } }
+}
 /* For each 'image' field, an uploaded file (named <field>__file) wins over the URL input */
 function applyUploads(schema, req, values) {
+  (req.files || []).forEach((f) => { optimiseUpload(f); });   // async; the URL is valid either way
   const files = Object.fromEntries((req.files || []).map((f) => [f.fieldname, f]));
   for (const f of schema.fields) {
     if (f.type !== 'image') continue;
@@ -461,6 +480,7 @@ const SCHEMAS = [
       { name: 'heroImage', label: 'Hero image (optional — falls back to thumbnail)', type: 'image' },
       { name: 'deck', label: 'Deck / standfirst', type: 'textarea', richInline: true, ph: 'The italic intro under the headline.' },
       { name: 'body', label: 'Article body', type: 'textarea', rich: true },
+      { name: 'story', label: 'Travel story & experience', type: 'textarea', rich: true, hint: 'The personal part — what the trip was actually like. Shown as its own section under the article, in every layout.' },
       { name: 'metaTitle', label: 'Search-engine title (optional)', ph: 'Leave blank to use the name above' },
       { name: 'metaDescription', label: 'Search-engine description (optional)', type: 'textarea', ph: 'One or two sentences shown in Google results.' },
       { name: 'gallery', label: 'Photos & films in this post (comma-separated URLs — .mp4/.webm play as video)', type: 'csv', ph: 'https://… , https://….mp4' },
@@ -581,6 +601,7 @@ const SCHEMAS = [
         { value: 'packages', label: 'Check Packages' },
         { value: 'picks', label: 'Our Picks' },
         { value: 'blog', label: 'Blog' },
+        { value: 'blogpost', label: 'Inside a blog post (up to 4)' },
         { value: 'gallery', label: 'Gallery' },
         { value: 'shop', label: 'Shop' },
       ] },
@@ -916,6 +937,7 @@ app.get('/assets/js/partials.js', (req, res) => {
     pickLists: (store.get('pickLists') || []).slice(0, 10),
   });
 });
+app.use('/assets/uploads', express.static(UPLOAD_DIR, { maxAge: '30d', immutable: true }));   // timestamped names never change
 app.use('/assets', express.static(path.join(ROOT, 'assets')));
 
 const c = () => store.content;
@@ -1104,6 +1126,24 @@ function contentStats() {
 
 /* Resolve an announcement's destination link from its section + target
    (FR-HOME-013B/C). Returns the list with each item's `href` set. */
+/* A link typed into the CMS that points off-site is treated as external —
+   consent card, provider name from its host — whether or not the editor
+   remembered the "external" switch (FR-LINK-003). */
+function markExternal(item, hrefKey) {
+  const href = item && item[hrefKey];
+  if (!item || item.external || !/^https?:\/\//i.test(String(href || ''))) return item;
+  let host = 'External website';
+  try { host = new URL(href).hostname.replace(/^www\./, ''); } catch (e) { /* keep default */ }
+  return { ...item, external: true, extUrl: href, extProvider: item.extProvider || host };
+}
+
+/* Newest first — the FRS asks for the "latest" announcements. Dates are typed
+   free-form in the CMS ("12 May 2026"); an unreadable one keeps its list order. */
+function newestFirst(list) {
+  return (list || []).map((a, i) => ({ a, i, t: Date.parse(a && a.date) }))
+    .sort((x, y) => (Number.isNaN(y.t) ? -Infinity : y.t) - (Number.isNaN(x.t) ? -Infinity : x.t) || x.i - y.i)
+    .map((x) => x.a);
+}
 function resolveAnnouncements(list) {
   return (list || []).map((a) => {
     let href = a.href || '/announcements';
@@ -1127,7 +1167,7 @@ function resolveAnnouncements(list) {
     if (/^\/(destination-detail|blog-post|package-detail|package-quote)\/?$/.test(href)) {
       href = { '/destination-detail': '/destinations', '/blog-post': '/blog' }[href.replace(/\/$/, '')] || '/packages';
     }
-    return { ...a, href };
+    return markExternal({ ...a, href }, 'href');
   });
 }
 
@@ -1136,7 +1176,7 @@ function bannersByZone() {
   const out = {};
   pub(c().banners).forEach((b) => {
     const zone = b.zone || 'home-top';
-    (out[zone] = out[zone] || []).push(b);
+    (out[zone] = out[zone] || []).push(markExternal(b, 'href'));
   });
   return out;
 }
@@ -1156,12 +1196,19 @@ function searchIndex() {
   pub(d.travelTips).forEach((x) => out.push({ type: 'Travel tip', title: x.title, desc: clip(x.body, 120), url: '/travel-tips#' + slugify(x.title) }));
   return out;
 }
-function runSearch(q) {
-  const query = String(q || '').trim().toLowerCase();
+function runSearch(q, mode) {
+  let query = String(q || '').trim().toLowerCase();
+  // "…" around the words means an exact match, as does mode=exact
+  let exact = mode === 'exact';
+  if (/^".+"$/.test(query)) { exact = true; query = query.slice(1, -1).trim(); }
   if (!query) return [];
+  const wordRe = exact ? new RegExp('(^|[^a-z0-9])' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '([^a-z0-9]|$)', 'i') : null;
   return searchIndex()
-    .filter((it) => (it.title + ' ' + (it.desc || '')).toLowerCase().includes(query))
-    .sort((a, b) => (a.title.toLowerCase() === query ? 0 : 1) - (b.title.toLowerCase() === query ? 0 : 1));
+    .filter((it) => {
+      const hay = plain(it.title) + ' ' + plain(it.desc || '');
+      return exact ? wordRe.test(hay) : hay.toLowerCase().includes(query);
+    })
+    .sort((a, b) => (plain(a.title).toLowerCase() === query ? 0 : 1) - (plain(b.title).toLowerCase() === query ? 0 : 1));
 }
 
 /* Clean URLs: /page is canonical; legacy /page.html 301-redirects to it */
@@ -1287,9 +1334,9 @@ const PAGES = {
         ...h,
         href: h.destinationSlug ? '/destination-detail?d=' + encodeURIComponent(h.destinationSlug)
           : (h.href || '/destinations'),
-      })),
+      })).map((h) => markExternal(h, 'href')),
       // FR-HOME-012: the twenty latest, drawn from the master list
-      announcements: resolveAnnouncements(capped(pub(c().announcements).filter((a) => a.featured), LIMITS.homeAnnouncements)),
+      announcements: resolveAnnouncements(capped(newestFirst(pub(c().announcements).filter((a) => a.featured)), LIMITS.homeAnnouncements)),
       blogPosts: pub(c().blog.posts).filter((p) => p.featured),
       seo: {
         ...defaultSeo(req),
@@ -1395,7 +1442,7 @@ const PAGES = {
     // (→ that destination's packages).
     const posts = items.map((p) => {
       const dest = dests.find((d) => d.slug === p.destinationSlug) || null;
-      return { ...p, dest: dest ? { slug: dest.slug, name: dest.name } : null };
+      return { ...p, dest: dest ? { slug: dest.slug, name: dest.name, cat: (dest.categories || [])[0] || '' } : null };
     });
     const feature = { ...(c().blog.feature || {}) };
     feature.href = postHref(feature.postTitle);
@@ -1403,7 +1450,7 @@ const PAGES = {
     return { page: c().pages.blog, blog: { ...c().blog, posts, feature, side }, adSlots: adSlots('blog', items.length), pagination, baseUrl: '/blog', sponsorSlots: sponsorSlots('blog', items.length) };
   },
   announcements: (req) => {
-    const { items, pagination } = paginate(resolveAnnouncements(pub(c().announcements)), req);
+    const { items, pagination } = paginate(resolveAnnouncements(newestFirst(pub(c().announcements))), req);
     return { page: c().pages.announcements, announcements: items, pagination, baseUrl: '/announcements' };
   },
   gallery: (req) => {
@@ -1446,13 +1493,13 @@ const PAGES = {
     const dests = c().destinations || [];
     const picks = items.map((p) => {
       const dest = dests.find((d) => d.slug === p.destinationSlug) || null;
-      return { ...p, dest: dest ? { slug: dest.slug, name: dest.name, season: dest.season, tagline: dest.tagline } : null };
+      return { ...p, dest: dest ? { slug: dest.slug, name: dest.name, season: dest.season, tagline: dest.tagline, cat: (dest.categories || [])[0] || '' } : null };
     });
     return { page: c().pages.picks, picks, lists, active, totalAll: allPicks.length, pagination, baseUrl,
       sponsorSlots: sponsorSlots('picks', items.length, LIMITS.picksSponsored),   // FR-PICKS-005
       adSlots: adSlots('picks', items.length) };
   },
-  about: () => ({ page: c().pages.about, about: c().about || {}, aboutStats: c().aboutStats || [], aboutOffers: c().aboutOffers || [] }),
+  about: () => ({ page: c().pages.about, about: c().about || {}, aboutStats: c().aboutStats || [], aboutOffers: (c().aboutOffers || []).map((o) => markExternal(o, 'linkHref')) }),
   contact: () => ({ page: c().pages.contact, settings: c().settings }),
   legal: (req) => {
     const docs = c().legalDocs || [];
@@ -1599,13 +1646,16 @@ const PAGES = {
     return {
       post: postOut, related, seo,
       pageAds: adUnits('blogpost'),   // FR-BLOG-006: up to 4 ad slots per post
-      dest: dest ? { slug: dest.slug, name: dest.name } : null,
+      dest: dest ? { slug: dest.slug, name: dest.name, cat: (dest.categories || [])[0] || '' } : null,
+      // FR-BLOG-008 — sponsored packages / affiliate placements inside a post
+      sponsors: Object.values(sponsorSlots('blogpost', 1, 4)),
     };
   },
   search: (req) => {
     const q = (req && req.query && req.query.q) || '';
-    const results = runSearch(q);
-    return { q, results, count: results.length, seo: { ...defaultSeo(req), robots: 'noindex, follow' } };
+    const mode = (req && req.query && req.query.mode) === 'exact' ? 'exact' : 'partial';
+    const results = runSearch(q, mode);
+    return { q, mode, results, count: results.length, seo: { ...defaultSeo(req), robots: 'noindex, follow' } };
   },
 };
 
@@ -1717,7 +1767,11 @@ app.post('/submit', upload.none(), (req, res) => {
   const routed = /partner/i.test(formName) ? st.formEmailPartner
     : /guidance/i.test(formName) ? st.formEmailGuidance
     : /contact/i.test(formName) ? st.formEmailContact : '';
-  const to = body._to || routed || st.contactEmail;
+  const known = new Set([st.contactEmail, st.formEmailContact, st.formEmailPartner, st.formEmailGuidance, (c().shop || {}).quoteEmail]
+    .concat((c().packages || []).map((p) => p.providerEmail), (c().sponsored || []).map((p) => p.providerEmail))
+    .filter(Boolean).map((e) => String(e).trim().toLowerCase()));
+  const asked = String(body._to || '').trim().toLowerCase();
+  const to = (asked && known.has(asked) ? asked : '') || routed || st.contactEmail;
   if (mailer && to) {
     const lines = Object.entries(fields).map(([k, v]) => `${k}: ${v}`).join('\n');
     mailer.sendMail({
@@ -1786,6 +1840,7 @@ app.get('/admin', requireAuth, (req, res) => {
     content,
     inboxCount: readSubmissions().filter((s) => !s.read).length,
     broken, linkScanAt: _linkReport.at, expiringSoon: soon.slice(0, 6),
+    mailConfigured: !!mailer,
     capacity: CAPACITY, schemas: SCHEMAS.filter((x) => x.type === 'list'),
   });
 });

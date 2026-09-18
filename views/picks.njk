@@ -72,9 +72,7 @@
         <div class="featured-grid feat-grid-list" data-stagger>
 {% for p in picks %}
           <article class="feat-card">
-            <a class="feat-media" href="{% if p.dest %}/destination-detail?d={{ p.dest.slug }}&amp;from=picks          {{ sp.banner(sponsorSlots[loop.index0], "sp-span-all") }}
-          {{ ad.unit(adSlots[loop.index0], ads, "ad-span-all") }}
-{% else %}{{ p.href or '/destinations' }}{% endif %}" aria-label="{{ p.name | striptags }}">
+            <a class="feat-media" href="{% if p.dest %}/destination-detail?d={{ p.dest.slug }}&amp;from=picks{% else %}{{ p.href or '/destinations' }}{% endif %}" aria-label="{{ p.name | striptags }}">
               <img loading="lazy" src="{{ p.image }}" alt="{{ p.name | striptags }}" srcset="{{ p.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async">
             </a>
             <div class="feat-info">
@@ -85,10 +83,13 @@
               {% endif %}
               <div class="feat-actions">
                 <a class="act-details" href="{% if p.dest %}/destination-detail?d={{ p.dest.slug }}&amp;from=picks{% else %}{{ p.href or '/destinations' }}{% endif %}">Know More <span>→</span></a>
+                <a class="act-trip" href="{% if p.dest and p.dest.cat %}/destinations?cat={{ p.dest.cat }}&amp;from=categories{% else %}/categories{% endif %}">Find Trip Deals <span>→</span></a>
                 <a class="act-pkg" href="/packages{% if p.dest %}?d={{ p.dest.slug }}{% endif %}">Check Packages <span>→</span></a>
               </div>
             </div>
           </article>
+          {{ sp.banner(sponsorSlots[loop.index0], "sp-span-all") }}
+          {{ ad.unit(adSlots[loop.index0], ads, "ad-span-all") }}
 {% else %}
           <p class="adm-empty">No places in this list yet.</p>
 {% endfor %}

@@ -53,8 +53,8 @@
               <div class="tip-body rich-body legal-content">{{ t.body | safe }}</div>
               {% if (t.link1Label and t.link1Url) or (t.link2Label and t.link2Url) %}
               <ul class="tip-links">
-                {% if t.link1Label and t.link1Url %}<li><a href="{{ t.link1Url }}" target="_blank" rel="sponsored noopener">{{ t.link1Label }} <span class="arrow" aria-hidden="true">↗</span></a></li>{% endif %}
-                {% if t.link2Label and t.link2Url %}<li><a href="{{ t.link2Url }}" target="_blank" rel="sponsored noopener">{{ t.link2Label }} <span class="arrow" aria-hidden="true">↗</span></a></li>{% endif %}
+                {% if t.link1Label and t.link1Url %}<li><a href="{{ t.link1Url }}" rel="sponsored" data-external data-provider="{{ t.link1Url | host }}" data-url="{{ t.link1Url }}">{{ t.link1Label }} <span class="arrow" aria-hidden="true">↗</span></a></li>{% endif %}
+                {% if t.link2Label and t.link2Url %}<li><a href="{{ t.link2Url }}" rel="sponsored" data-external data-provider="{{ t.link2Url | host }}" data-url="{{ t.link2Url }}">{{ t.link2Label }} <span class="arrow" aria-hidden="true">↗</span></a></li>{% endif %}
               </ul>
               {% endif %}
             </div>

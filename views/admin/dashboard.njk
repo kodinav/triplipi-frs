@@ -24,6 +24,13 @@
         <span class="l">Broken partner link{{ '' if broken | length == 1 else 's' }}</span>
         <span class="go">{% if linkScanAt %}Checked automatically{% else %}Run the first check{% endif %} →</span>
       </a>
+      {% if not mailConfigured %}
+      <a class="attn is-warn" href="/admin/inbox">
+        <span class="n">!</span>
+        <span class="l">Email delivery is not set up</span>
+        <span class="go">Forms are saved to the Inbox only — see README → Email →</span>
+      </a>
+      {% endif %}
       <div class="attn {% if expiringSoon | length %}is-warn{% endif %}">
         <span class="n">{{ expiringSoon | length }}</span>
         <span class="l">Expiring in 14 days</span>

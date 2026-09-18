@@ -39,6 +39,11 @@
             <input type="search" name="q" value="{{ q }}" placeholder="Search…" autofocus>
             <button class="btn btn-sm" type="submit">Search</button>
           </div>
+          {# FR-SEARCH-002/003 — partial match by default; exact phrase on request #}
+          <div class="page-search-mode">
+            <label><input type="radio" name="mode" value="partial" {% if mode != 'exact' %}checked{% endif %}> Contains the words <small>(“bal” finds Bali)</small></label>
+            <label><input type="radio" name="mode" value="exact" {% if mode == 'exact' %}checked{% endif %}> Exact phrase</label>
+          </div>
         </form>
       </div>
     </section>
