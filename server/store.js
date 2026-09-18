@@ -113,6 +113,20 @@ const MIGRATIONS = [
       });
     },
   },
+  {
+    // Announcements gets its own tab in the bar (it was only inside Resources),
+    // and the FAQ moves from the footer's Legal column into Explore.
+    id: 'announcements-tab-faq-explore',
+    run(content) {
+      const nav = content.settings && content.settings.navLinks;
+      if (Array.isArray(nav) && !nav.some((l) => String(l.href || '').replace(/\/+$/, '') === '/announcements')) {
+        const at = nav.findIndex((l) => String(l.href || '').replace(/\/+$/, '') === '/packages');
+        nav.splice(at < 0 ? nav.length : at + 1, 0, { label: 'Announcements', href: '/announcements', mega: 'none' });
+      }
+      const faq = (content.legalDocs || []).find((d) => d.slug === 'faq');
+      if (faq) faq.inFooter = false;   // it is listed under Explore now
+    },
+  },
 ];
 
 function runMigrations(content) {

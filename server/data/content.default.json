@@ -27,6 +27,11 @@
         "mega": "none"
       },
       {
+        "label": "Announcements",
+        "href": "/announcements",
+        "mega": "none"
+      },
+      {
         "label": "Resources",
         "href": "/travel-tips",
         "mega": "resources"

@@ -25,31 +25,31 @@
   <div data-partial="header"></div>
 
   <main class="article article--l{{ post.layout or '1' }}">
-    <section class="article-hero">
-      {% if post.heroImage or post.image %}
-      <div class="article-hero-img" data-parallax="-0.06">
-        <img src="{{ post.heroImage or post.image }}" alt="" loading="eager" srcset="{{ post.heroImage or post.image | srcset }}" sizes="100vw" decoding="async" fetchpriority="high">
-      </div>
-      {% endif %}
-      <div class="article-hero-inner">
-        <nav class="crumbs" style="justify-content: center;">
-          <a href="/">Home</a><span>/</span><a href="/blog">Blog</a><span>/</span><span>Story</span>
-        </nav>
-        {% if post.category %}<div class="article-category">{{ post.category }}</div>{% endif %}
-        <h1>{{ post.title | safe }}</h1>
-        {% if post.deck or post.excerpt %}<p class="article-deck">{{ post.deck | safe if post.deck else post.excerpt | safe }}</p>{% endif %}
-        <div class="article-byline">
-          <div class="avatar"></div>
-          <div>
-            <div class="name">{{ post.bylineSpans[1] if post.bylineSpans and post.bylineSpans | length > 1 else 'By Editor' }}</div>
-            <div class="meta">{{ post.bylineSpans | join(' · ') if post.bylineSpans else '' }}</div>
+    {# The story opens on the first screen: the masthead (crumbs, title, deck,
+       byline) sits at the top of the article card, with the hero picture under
+       it — no separate full-height hero to scroll past. #}
+    <article class="section section-masthead">
+      <div class="container-reading">
+        <div class="page-masthead article-masthead">
+          <nav class="crumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a><span>/</span><a href="/blog">Blog</a><span>/</span><span>{{ post.category or 'Story' }}</span>
+          </nav>
+          <h1>{{ post.title | safe }}</h1>
+          {% if post.deck or post.excerpt %}<p class="article-deck">{{ post.deck | safe if post.deck else post.excerpt | safe }}</p>{% endif %}
+          <div class="article-byline">
+            <div class="avatar"></div>
+            <div>
+              <div class="name">{{ post.bylineSpans[1] if post.bylineSpans and post.bylineSpans | length > 1 else 'By Editor' }}</div>
+              <div class="meta">{{ post.bylineSpans | join(' · ') if post.bylineSpans else '' }}</div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <article class="section">
-      <div class="container-reading">
+        {% if post.heroImage or post.image %}
+        <div class="article-hero-img" data-reveal>
+          <img src="{{ post.heroImage or post.image }}" alt="" loading="eager" srcset="{{ post.heroImage or post.image | srcset }}" sizes="(max-width: 1024px) 100vw, 900px" decoding="async" fetchpriority="high">
+        </div>
+        {% endif %}
         {% if post.body %}
         <div class="article-body rich-body" data-reveal>{{ post.body | safe }}</div>
 

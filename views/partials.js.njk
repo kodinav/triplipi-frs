@@ -31,7 +31,7 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 10v8.5A2.5 2.5 0 0 0 8 21h8a2.5 2.5 0 0 0 2.5-2.5V10"/><path d="M9 21v-7a3 3 0 0 1 6 0v7"/><circle cx="12.9" cy="17.6" r=".8" fill="currentColor" stroke="none"/></svg>
             </a>
             {% for link in settings.navLinks %}{% if link.mega and link.mega != 'none' %}
-            <button class="nav-link" data-mega="mega-{{ link.mega }}" data-path="{{ link.href }}"{% if link.mega == 'resources' %} data-paths="/announcements,/travel-tips,/gallery,/blog,/about"{% endif %} aria-haspopup="true" aria-expanded="false">{{ link.label }}</button>
+            <button class="nav-link" data-mega="mega-{{ link.mega }}" data-path="{{ link.href }}"{% if link.mega == 'resources' %} data-paths="/travel-tips,/gallery,/blog,/about"{% endif %} aria-haspopup="true" aria-expanded="false">{{ link.label }}</button>
             {% elif link.href == '/contact' %}
             {# Contact is keyed off its href, not link.mega, so it works against
                live content.json without an admin edit. #}
@@ -89,7 +89,6 @@
       <div class="mega mega-list" id="mega-resources">
         <div class="mega-list-inner">
           <div class="mega-picks-list mega-picks-simple">
-            <a href="/announcements"><span class="pl-name">Announcements</span></a>
             <a href="/travel-tips"><span class="pl-name">Travel Tips</span></a>
             <a href="/gallery"><span class="pl-name">Gallery</span></a>
             <a href="/blog"><span class="pl-name">Blog</span></a>
@@ -127,7 +126,6 @@
           {% elif link.mega == 'resources' %}
           <button class="mobile-nav-link" data-sub="" aria-expanded="false">{{ link.label }} <span class="arrow">+</span></button>
           <div class="mobile-nav-sub">
-            <a href="/announcements">Announcements</a>
             <a href="/travel-tips">Travel Tips</a>
             <a href="/gallery">Gallery</a>
             <a href="/blog">Blog</a>
@@ -220,6 +218,7 @@
                 <li><a href="/packages">Check Packages</a></li>
                 <li><a href="/picks">Our Picks</a></li>
                 <li><a href="/blog">Blog</a></li>
+                <li><a href="/legal?p=faq">FAQs</a></li>
               </ul>
             </div>
 
