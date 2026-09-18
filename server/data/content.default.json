@@ -43,15 +43,9 @@
       }
     ],
     "megaMenus": {
-      "destHeadLabel": "View all destinations",
-      "destHeadHref": "/destinations",
-      "destAllLabel": "View all categories",
-      "destAllHref": "/destinations",
-      "tripHeadLabel": "Start the 7-step planner",
-      "tripHeadHref": "/trip",
-      "tripAllLabel": "View All Categories",
-      "tripAllHref": "/destinations",
-      "picksHeadLabel": "View all picks",
+      "destAllLabel": "All Destination Categories",
+      "destAllHref": "/categories",
+      "picksHeadLabel": "View all",
       "picksHeadHref": "/picks"
     }
   },

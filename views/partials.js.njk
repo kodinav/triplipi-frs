@@ -63,7 +63,7 @@
             {% for cat in navCategories %}
             <a href="/destinations?cat={{ cat.slug }}"><span class="pl-name">{{ cat.label }}</span></a>
             {% endfor %}
-            <a href="/categories" class="mega-trip-all"><span class="pl-name">All Destination Categories</span></a>
+            <a href="{{ settings.megaMenus.destAllHref or '/categories' }}" class="mega-trip-all"><span class="pl-name">{{ settings.megaMenus.destAllLabel or 'All Destination Categories' }}</span></a>
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@
         <div class="mega-list-inner">
           <div class="mega-list-head">
             <span class="mega-list-title">Our most cherished places</span>
-            <a class="mega-list-all" href="{{ settings.megaMenus.picksHeadHref or '/picks' }}">View all <span class="arrow">→</span></a>
+            <a class="mega-list-all" href="{{ settings.megaMenus.picksHeadHref or '/picks' }}">{{ settings.megaMenus.picksHeadLabel or 'View all' }} <span class="arrow">→</span></a>
           </div>
           <div class="mega-picks-list mega-picks-simple">
             {% for l in pickLists %}
@@ -115,7 +115,7 @@
           <button class="mobile-nav-link" data-sub="" aria-expanded="false">{{ link.label }} <span class="arrow">+</span></button>
           <div class="mobile-nav-sub">
             {% for cat in navCategories %}<a href="/destinations?cat={{ cat.slug }}">{{ cat.label }}</a>
-            {% endfor %}<a href="{{ link.href }}">View All Categories →</a>
+            {% endfor %}<a href="{{ settings.megaMenus.destAllHref or '/categories' }}">{{ settings.megaMenus.destAllLabel or 'All Destination Categories' }} →</a>
           </div>
           {% elif link.mega == 'picks' %}
           <button class="mobile-nav-link" data-sub="" aria-expanded="false">{{ link.label }} <span class="arrow">+</span></button>
@@ -143,7 +143,7 @@
           {% endfor %}
         </div>
         <div class="mobile-nav-footer">
-          <span>Copyright &copy; 2026 Aan eSol, India. All rights reserved.</span>
+          <span>{{ settings.copyright or 'Copyright © 2026 Aan eSol, India. All rights reserved.' }}</span>
           <span>·</span>
           <a href="/legal">Privacy</a>
           <a href="/legal">Terms</a>
@@ -253,7 +253,7 @@
           </div>
 
           <div class="footer-bottom-bar">
-            <span>Copyright &copy; 2026 Aan eSol, India. All rights reserved.</span>
+            <span>{{ settings.copyright or 'Copyright © 2026 Aan eSol, India. All rights reserved.' }}</span>
             <span>This website is owned by Aan eSol.</span>
             <span>Designed and developed by <strong>Abhinav Saxena</strong></span>
           </div>

@@ -272,12 +272,10 @@ const SCHEMAS = [
     ] },
   { key: 'megaMenus', group: 'Navbar', label: 'Dropdown menu links (“View all …”)', type: 'object', path: 'settings.megaMenus',
     fields: [
-      { name: 'destHeadLabel', label: 'Destination Guide — top link label', ph: 'View all destinations' },
-      { name: 'destHeadHref', label: 'Destination Guide — top link', type: 'url', ph: '/destinations' },
-      { name: 'destAllLabel', label: 'Destination Guide — bottom “View all categories” label', ph: 'View all categories' },
-      { name: 'destAllHref', label: 'Destination Guide — bottom “View all categories” link', type: 'url', ph: '/destinations' },
-      { name: 'picksHeadLabel', label: 'Our Picks — top link label', ph: 'View all picks' },
-      { name: 'picksHeadHref', label: 'Our Picks — top link', type: 'url', ph: '/picks' },
+      { name: 'destAllLabel', label: 'Destination dropdown — last link label', ph: 'All Destination Categories' },
+      { name: 'destAllHref', label: 'Destination dropdown — last link', type: 'url', ph: '/categories' },
+      { name: 'picksHeadLabel', label: 'Our Picks dropdown — “View all” label', ph: 'View all' },
+      { name: 'picksHeadHref', label: 'Our Picks dropdown — “View all” link', type: 'url', ph: '/picks' },
     ] },
 
   /* ----- Homepage ----- */
@@ -286,10 +284,6 @@ const SCHEMAS = [
       { name: 'titleHtml', label: 'Headline (HTML, <em> = accent)', type: 'textarea', richInline: true, ph: 'e.g. The world, <em>slowly</em>.' },
       { name: 'lead', label: 'Lead paragraph', type: 'textarea', richInline: true, ph: 'One or two sentences shown under the headline.' },
       { name: 'bgImage', label: 'Background image', type: 'image' },
-      { name: 'ctaPrimaryLabel', label: 'Primary button label', ph: 'e.g. Browse destinations' },
-      { name: 'ctaPrimaryHref', label: 'Primary button link', type: 'url', ph: 'e.g. destinations.html' },
-      { name: 'ctaSecondaryLabel', label: 'Secondary button label', ph: 'e.g. Plan a trip' },
-      { name: 'ctaSecondaryHref', label: 'Secondary button link', type: 'url', ph: 'e.g. trip.html' },
     ] },
   { key: 'featuredHead', group: 'Homepage', label: 'Section heading — Featured Destinations', type: 'object', path: 'home.featuredHead',
     fields: [
@@ -356,11 +350,6 @@ const SCHEMAS = [
       { name: 'titleHtml', label: 'Heading (HTML)', type: 'textarea', richInline: true, ph: 'e.g. Stories from the <em>field</em>.' },
     ] },
   { key: 'blogHead', group: 'Homepage', label: 'Section heading — Blog strip', type: 'object', path: 'home.blogHead',
-    fields: [
-      { name: 'overline', label: 'Overline' , ph: 'Small label above the heading, e.g. Travel Highlights' },
-      { name: 'titleHtml', label: 'Heading (HTML)', type: 'textarea', richInline: true, ph: 'e.g. Stories from the <em>field</em>.' },
-    ] },
-  { key: 'packagesHead', group: 'Homepage', label: 'Section heading — Packages', type: 'object', path: 'home.packagesHead',
     fields: [
       { name: 'overline', label: 'Overline' , ph: 'Small label above the heading, e.g. Travel Highlights' },
       { name: 'titleHtml', label: 'Heading (HTML)', type: 'textarea', richInline: true, ph: 'e.g. Stories from the <em>field</em>.' },
@@ -606,7 +595,7 @@ const SCHEMAS = [
       { name: 'enabled', label: 'Serve live Google ads', type: 'bool' },
       { name: 'publisherId', label: 'AdSense publisher ID', ph: 'ca-pub-0000000000000000' },
       { name: 'showPlaceholders', label: 'Show a marked placeholder where each ad will sit (while waiting for Google approval)', type: 'bool' },
-      { name: 'note', label: 'Note to yourself', type: 'textarea', ph: 'e.g. applied to AdSense on 3 May — waiting for review' },
+      { name: 'note', label: 'Note to yourself (never shown on the site)', type: 'textarea', ph: 'e.g. applied to AdSense on 3 May — waiting for review' },
     ] },
   { key: 'adUnits', group: 'Money', label: 'AdSense — ad slots', type: 'list', path: 'adUnits',
     itemTitle: 'label',
@@ -726,8 +715,6 @@ const SCHEMAS = [
     path: 'announcements', itemTitle: 'title', max: 20 /* FR-HOME-012 */ },
   { key: 'pick-blogPosts', label: 'Pick blog posts for the homepage', type: 'picker',
     path: 'blog.posts', itemTitle: 'title' },
-  { key: 'pick-packages', label: 'Pick packages for the homepage', type: 'picker',
-    path: 'packages', itemTitle: 'title' },
   { key: 'pick-gallery', label: 'Pick media for the homepage wall', type: 'picker',
     path: 'galleryItems', itemTitle: 'label', max: 100 /* FR-HOME-023: 50 films + 50 photographs */ },
 
@@ -763,8 +750,6 @@ const ADMIN_PAGES = [
       { key: 'pick-announcements', hint: 'Tick which announcements appear on the homepage.' },
       { key: 'blogHead', hint: 'Heading row of the blog strip.' },
       { key: 'pick-blogPosts', hint: 'Tick which blog posts appear on the homepage.' },
-      { key: 'packagesHead', hint: 'Heading row of the packages strip.' },
-      { key: 'pick-packages', hint: 'Tick which packages appear on the homepage.' },
       { key: 'mediaHead', hint: 'Heading row of the media wall (photos & films).' },
       { key: 'pick-gallery', hint: 'Tick which gallery items appear on the homepage media wall — up to 50 videos and 50 images. Films auto-play on hover; images enlarge.' },
       { key: 'ask', hint: 'The cream contact block near the bottom.' },
@@ -1306,7 +1291,6 @@ const PAGES = {
       // FR-HOME-012: the twenty latest, drawn from the master list
       announcements: resolveAnnouncements(capped(pub(c().announcements).filter((a) => a.featured), LIMITS.homeAnnouncements)),
       blogPosts: pub(c().blog.posts).filter((p) => p.featured),
-      packages: pub(c().packages).filter((p) => p.featured),
       seo: {
         ...defaultSeo(req),
         title: brand + ' — A Travel Discovery Platform',

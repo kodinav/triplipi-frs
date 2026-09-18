@@ -127,6 +127,23 @@ const MIGRATIONS = [
       if (faq) faq.inFooter = false;   // it is listed under Explore now
     },
   },
+  {
+    // These three labels were editable in Site settings but the menus ignored
+    // them and printed their own text. The menus read them now, so the stored
+    // values are set to what the site has been showing all along.
+    id: 'menu-link-labels',
+    run(content) {
+      const s = content.settings || (content.settings = {});
+      const m = s.megaMenus || (s.megaMenus = {});
+      if (!m.destAllLabel || m.destAllLabel === 'View all categories') m.destAllLabel = 'All Destination Categories';
+      if (!m.destAllHref || m.destAllHref === '/destinations') m.destAllHref = '/categories';
+      if (!m.picksHeadLabel || m.picksHeadLabel === 'View all picks') m.picksHeadLabel = 'View all';
+      // Leftovers from menus that no longer exist — no field edits them and no
+      // template reads them.
+      ['destHeadLabel', 'destHeadHref', 'tripHeadLabel', 'tripHeadHref', 'tripAllLabel', 'tripAllHref']
+        .forEach((k) => { delete m[k]; });
+    },
+  },
 ];
 
 function runMigrations(content) {
