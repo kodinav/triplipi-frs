@@ -1,4 +1,4 @@
-{% import "_sponsor.njk" as sp %}{% import "_crumbs.njk" as bc %}<!doctype html>
+{% import "_ads.njk" as ad %}{% import "_sponsor.njk" as sp %}{% import "_crumbs.njk" as bc %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -27,7 +27,7 @@
   <main>
     <section class="page-hero has-image">
       <div class="page-hero-bg" data-parallax="-0.06">
-        <img loading="lazy" src="{{ dest.heroImage or dest.image }}" alt="{{ dest.name }} landscape">
+        <img src="{{ dest.heroImage or dest.image }}" alt="{{ dest.name }} landscape" srcset="{{ dest.heroImage or dest.image | srcset }}" sizes="100vw" decoding="async" fetchpriority="high">
       </div>
       <div class="page-hero-inner">
         {{ bc.bar(crumbs) }}
@@ -56,7 +56,11 @@
             </div>
             {% endif %}
 
-            {% if sponsors and sponsors | length %}
+            {% if pageAds and pageAds | length %}
+        <div class="ad-strip">{% for u in pageAds %}{{ ad.unit(u, ads, "") }}{% endfor %}</div>
+        {% endif %}
+
+{% if sponsors and sponsors | length %}
             {# FR-DEST-019 — sponsored packages, ads and affiliate links for this destination #}
             <div class="dest-sponsors" data-reveal>
               <p class="kicker">Sponsored</p>
@@ -75,7 +79,7 @@
                 <div class="play-icon">▶</div>
               </a>
               {% else %}
-              <a data-lightbox data-src="{{ g }}" class="gallery-tile"><img loading="lazy" src="{{ g }}" alt=""></a>
+              <a data-lightbox data-src="{{ g }}" class="gallery-tile"><img loading="lazy" src="{{ g }}" alt="" srcset="{{ g | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async"></a>
               {% endif %}
               {% endfor %}
             </div>

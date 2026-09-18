@@ -1,4 +1,4 @@
-<!doctype html>
+{% import "_ads.njk" as ad %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -28,7 +28,7 @@
     <section class="article-hero">
       {% if post.heroImage or post.image %}
       <div class="article-hero-img" data-parallax="-0.06">
-        <img src="{{ post.heroImage or post.image }}" alt="" loading="eager">
+        <img src="{{ post.heroImage or post.image }}" alt="" loading="eager" srcset="{{ post.heroImage or post.image | srcset }}" sizes="100vw" decoding="async" fetchpriority="high">
       </div>
       {% endif %}
       <div class="article-hero-inner">
@@ -73,10 +73,14 @@
             <div class="play-icon">▶</div>
           </a>
           {% else %}
-          <a data-lightbox data-src="{{ g }}" class="gallery-tile"><img loading="lazy" src="{{ g }}" alt=""></a>
+          <a data-lightbox data-src="{{ g }}" class="gallery-tile"><img loading="lazy" src="{{ g }}" alt="" srcset="{{ g | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async"></a>
           {% endif %}
           {% endfor %}
         </div>
+        {% endif %}
+
+{% if pageAds and pageAds | length %}
+        <div class="ad-strip">{% for u in pageAds %}{{ ad.unit(u, ads, "") }}{% endfor %}</div>
         {% endif %}
 
         <div class="article-cta" data-reveal>
@@ -104,7 +108,7 @@
         <div class="blog-strip" data-stagger>
           {% for r in related %}
           <a class="blog-card" href="/blog-post?b={{ r.key }}">
-            <div class="thumb"><img loading="lazy" src="{{ r.p.image }}" alt=""></div>
+            <div class="thumb"><img loading="lazy" src="{{ r.p.image }}" alt="" srcset="{{ r.p.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async"></div>
             <div class="category">{{ r.p.category }}</div>
             <h3>{{ r.p.title | safe }}</h3>
             <p class="excerpt">{{ r.p.excerpt | safe }}</p>

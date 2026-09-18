@@ -57,7 +57,7 @@
           </a>
           {% for cat in categories %}
           <a class="pkg-cat{% if cat.slug == activeCat %} is-active{% endif %}" href="/packages?{% if dParam %}d={{ dParam | urlencode }}&{% endif %}cat={{ cat.slug }}#packages"{% if cat.slug == activeCat %} aria-current="page"{% endif %}>
-            <span class="pkg-cat-img"><img loading="lazy" src="{{ cat.image }}" alt=""></span>
+            <span class="pkg-cat-img"><img loading="lazy" src="{{ cat.image }}" alt="" srcset="{{ cat.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async"></span>
             <span class="pkg-cat-label">{{ cat.label }}</span>
             <span class="pkg-cat-count">{{ cat.count }}</span>
           </a>
@@ -80,7 +80,7 @@
 {% for k in packages %}
           <article class="pkg-list-card pkg-type-{{ (k.badgeLabel or 'sponsored') | lower }}">
             <a class="pkg-list-media" href="/package-detail?p={{ k.title | slug }}" aria-label="{{ k.title | striptags }} — package details">
-              <img loading="lazy" src="{{ k.image }}" alt="{{ k.title | striptags }}">
+              <img loading="lazy" src="{{ k.image }}" alt="{{ k.title | striptags }}" srcset="{{ k.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async">
               {% if k.badgeLabel %}<span class="pkg-type-badge">{{ k.badgeLabel | upper }}</span>{% endif %}
             </a>
             <div class="pkg-list-body">

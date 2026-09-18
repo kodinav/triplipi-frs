@@ -48,7 +48,7 @@
         <article class="tip" id="{{ t.anchor }}" data-reveal>
           <h2 class="tip-title">{{ t.title }}</h2>
           <div class="tip-grid{% if not t.image %} no-media{% endif %}">
-            {% if t.image %}<figure class="tip-media"><img loading="lazy" src="{{ t.image }}" alt="{{ t.imageAlt or t.title }}"></figure>{% endif %}
+            {% if t.image %}<figure class="tip-media"><img loading="lazy" src="{{ t.image }}" alt="{{ t.imageAlt or t.title }}" srcset="{{ t.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async"></figure>{% endif %}
             <div class="tip-content">
               <div class="tip-body rich-body legal-content">{{ t.body | safe }}</div>
               {% if (t.link1Label and t.link1Url) or (t.link2Label and t.link2Url) %}

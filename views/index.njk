@@ -1,4 +1,4 @@
-{% import "_sponsor.njk" as sp %}{% import "_banner.njk" as bn %}<!doctype html>
+{% import "_ads.njk" as ad %}{% import "_sponsor.njk" as sp %}{% import "_banner.njk" as bn %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -35,7 +35,7 @@
          ============================================================ -->
     <section class="hero" aria-label="Hero">
       <div class="hero-bg" data-parallax="-0.08">
-        <img src="{{ home.hero.bgImage }}" alt="" loading="eager" fetchpriority="high">
+        <img src="{{ home.hero.bgImage }}" alt="" loading="eager" fetchpriority="high" srcset="{{ home.hero.bgImage | srcset }}" sizes="100vw" decoding="async">
       </div>
 
       <div class="hero-inner hero-centered">
@@ -79,7 +79,7 @@
 {% for d in destinations %}
           <article class="feat-card">
             <a class="feat-media" href="/destination-detail?d={{ d.slug }}" aria-label="{{ d.name | striptags }} — view details">
-              <img loading="lazy" src="{{ d.image }}" alt="{{ d.name | striptags }}">
+              <img loading="lazy" src="{{ d.image }}" alt="{{ d.name | striptags }}" srcset="{{ d.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async">
             </a>
             <div class="feat-info">
               <div class="region">{{ d.region }}</div>
@@ -94,6 +94,7 @@
             </div>
           </article>
           {{ sp.banner(sponsorSlots[loop.index0], "sp-span-all") }}
+          {{ ad.unit(adSlots[loop.index0], ads, "ad-span-all") }}
 {% endfor %}
         </div>
       </div>
@@ -116,7 +117,7 @@
         <div class="float-grid" data-reveal>
 {% for h in highlights %}
           <a href="{{ h.href or '/destinations' }}" class="float-card">
-            <img loading="lazy" src="{{ h.image }}" alt="{{ h.title }}, {{ h.place }}">
+            <img loading="lazy" src="{{ h.image }}" alt="{{ h.title }}, {{ h.place }}" srcset="{{ h.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async">
             <div class="float-card-label">
               <span class="day">{{ h.kicker }}</span>
               <h3>{{ h.title }}</h3>
@@ -177,7 +178,7 @@
         <div class="blog-strip" data-stagger>
 {% for p in blogPosts %}
           <a class="blog-card" href="/blog-post?b={{ p.title | slug }}">
-            <div class="thumb"><img loading="lazy" src="{{ p.image }}" alt=""></div>
+            <div class="thumb"><img loading="lazy" src="{{ p.image }}" alt="" srcset="{{ p.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async"></div>
             <div class="category">{{ p.category }}</div>
             <h3>{{ p.title | safe }}</h3>
             <p class="excerpt">{{ p.excerpt | safe }}</p>
@@ -233,7 +234,7 @@
             {% if g.type == 'video' and g.src %}
             <video src="{{ g.src }}" poster="{{ g.image }}" muted loop playsinline preload="metadata"></video>
             {% else %}
-            <img loading="lazy" src="{{ g.image }}" alt="{{ g.alt }}">
+            <img loading="lazy" src="{{ g.image }}" alt="{{ g.alt }}" srcset="{{ g.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async">
             {% endif %}
             {% if g.type == 'video' %}<div class="play-icon">▶</div>{% endif %}
             {% if g.label %}<div class="overlay"><span class="tag tag-plain">{{ g.label }}</span></div>{% endif %}

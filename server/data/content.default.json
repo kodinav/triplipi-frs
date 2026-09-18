@@ -2182,5 +2182,61 @@
       "linkLabel": "Read the blog",
       "linkHref": "/blog"
     }
+  ],
+  "ads": {
+    "enabled": false,
+    "publisherId": "",
+    "showPlaceholders": false,
+    "note": "Switch on once Google approves the site (assumption A3)."
+  },
+  "adUnits": [
+    {
+      "label": "Home — mid grid",
+      "page": "home",
+      "slotId": "",
+      "format": "auto"
+    },
+    {
+      "label": "Destination listing — mid grid",
+      "page": "destinations",
+      "slotId": "",
+      "format": "auto"
+    },
+    {
+      "label": "Inside a destination page",
+      "page": "destination",
+      "slotId": "",
+      "format": "rectangle"
+    },
+    {
+      "label": "Find Trip Deals",
+      "page": "trip",
+      "slotId": "",
+      "format": "auto"
+    },
+    {
+      "label": "Blog listing",
+      "page": "blog",
+      "slotId": "",
+      "format": "auto"
+    },
+    {
+      "label": "Inside a blog post",
+      "page": "blogpost",
+      "slotId": "",
+      "format": "auto"
+    },
+    {
+      "label": "Gallery",
+      "page": "gallery",
+      "slotId": "",
+      "format": "horizontal"
+    },
+    {
+      "label": "Our Picks",
+      "page": "picks",
+      "slotId": "",
+      "format": "auto"
+    }
   ]
 }

@@ -1,4 +1,4 @@
-{% import "_digest.njk" as dg %}{% import "_crumbs.njk" as bc %}{% import "_pagination.njk" as pg %}{% import "_sponsor.njk" as sp %}<!doctype html>
+{% import "_ads.njk" as ad %}{% import "_digest.njk" as dg %}{% import "_crumbs.njk" as bc %}{% import "_pagination.njk" as pg %}{% import "_sponsor.njk" as sp %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -44,7 +44,7 @@
 {% for d in cards %}
           <article class="feat-card">
             <a class="feat-media" href="/destination-detail?d={{ d.slug }}{{ trail }}" aria-label="{{ d.name | striptags }} — view details">
-              <img loading="lazy" src="{{ d.image }}" alt="{{ d.name | striptags }}">
+              <img loading="lazy" src="{{ d.image }}" alt="{{ d.name | striptags }}" srcset="{{ d.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async">
             </a>
             <div class="feat-info">
               <div class="region">{{ d.region }}</div>
@@ -58,6 +58,7 @@
             </div>
           </article>
           {{ sp.banner(sponsorSlots[loop.index0], "sp-span-all") }}
+          {{ ad.unit(adSlots[loop.index0], ads, "ad-span-all") }}
 {% endfor %}
         </div>
 

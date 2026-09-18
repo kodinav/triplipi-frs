@@ -41,7 +41,7 @@
 
         <div class="about-intro" data-reveal>
           <div class="about-portrait">
-            <img loading="lazy" src="{{ about.storyImage or 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1200&q=85' }}" alt="Editor portrait">
+            <img loading="lazy" src="{{ about.storyImage or 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1200&q=85' }}" alt="Editor portrait" srcset="{{ about.storyImage or 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1200&q=85' | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async">
           </div>
           <div>
             <p class="overline">{{ about.storyOverline or 'The story' }}</p>

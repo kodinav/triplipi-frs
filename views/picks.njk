@@ -1,4 +1,4 @@
-{% import "_sponsor.njk" as sp %}{% import "_pagination.njk" as pg %}<!doctype html>
+{% import "_ads.njk" as ad %}{% import "_sponsor.njk" as sp %}{% import "_pagination.njk" as pg %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -73,8 +73,9 @@
 {% for p in picks %}
           <article class="feat-card">
             <a class="feat-media" href="{% if p.dest %}/destination-detail?d={{ p.dest.slug }}&amp;from=picks          {{ sp.banner(sponsorSlots[loop.index0], "sp-span-all") }}
+          {{ ad.unit(adSlots[loop.index0], ads, "ad-span-all") }}
 {% else %}{{ p.href or '/destinations' }}{% endif %}" aria-label="{{ p.name | striptags }}">
-              <img loading="lazy" src="{{ p.image }}" alt="{{ p.name | striptags }}">
+              <img loading="lazy" src="{{ p.image }}" alt="{{ p.name | striptags }}" srcset="{{ p.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async">
             </a>
             <div class="feat-info">
               <div class="region">{{ p.region }}</div>

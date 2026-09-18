@@ -44,7 +44,7 @@
 
           <article>
             {% if pkg.image %}
-            <div class="pkg-hero-img" data-reveal="scale"><img loading="lazy" src="{{ pkg.image }}" alt=""></div>
+            <div class="pkg-hero-img" data-reveal="scale"><img loading="lazy" src="{{ pkg.image }}" alt="" srcset="{{ pkg.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async"></div>
             {% endif %}
 
             <div class="pkg-tabs" data-reveal>

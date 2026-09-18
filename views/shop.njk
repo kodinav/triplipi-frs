@@ -64,7 +64,7 @@
               <article class="shop-tile" data-serial="{{ it.serial or ('AET-' + (loop.index)) }}" data-media-type="{{ (it.badge or 'Media') ~ (' · ' + it.spec if it.spec else '') }}">
                 <div class="serial">{{ ((pagination.offset if pagination else 0) + loop.index) | pad3 }}</div>
                 <span class="type-badge">{{ it.badge or ('Video · 4K' if it.type == 'video' else 'Photograph') }}</span>
-                <img loading="lazy" src="{{ it.image }}" alt="{{ it.title | striptags }}">
+                <img loading="lazy" src="{{ it.image }}" alt="{{ it.title | striptags }}" srcset="{{ it.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async">
                 <div class="info">
                   <h4>{{ it.title }}</h4>
                   <p>{{ it.spec }}</p>
@@ -127,8 +127,8 @@
             <a href="{{ shop.ssUrl or '#' }}" class="btn btn-brand" data-external data-provider="Shutterstock" data-url="{{ shop.ssUrl or '' }}">Visit Shutterstock Portfolio <span class="arrow">→</span></a>
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3);">
-            <img loading="lazy" src="{{ shop.ctaImage1 or 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&q=80' }}" alt="" style="aspect-ratio: 3/4; object-fit: cover; border-radius: var(--r-md);">
-            <img loading="lazy" src="{{ shop.ctaImage2 or 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80' }}" alt="" style="aspect-ratio: 3/4; object-fit: cover; border-radius: var(--r-md); margin-top: var(--s-7);">
+            <img loading="lazy" src="{{ shop.ctaImage1 or 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&q=80' }}" alt="" style="aspect-ratio: 3/4; object-fit: cover; border-radius: var(--r-md);" srcset="{{ shop.ctaImage1 or 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&q=80' | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async">
+            <img loading="lazy" src="{{ shop.ctaImage2 or 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80' }}" alt="" style="aspect-ratio: 3/4; object-fit: cover; border-radius: var(--r-md); margin-top: var(--s-7);" srcset="{{ shop.ctaImage2 or 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80' | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async">
           </div>
         </div>
       </div>

@@ -34,6 +34,17 @@ const slugify = (s) => String(s || '')
   .replace(/&[a-z]+;/gi, ' ').replace(/<[^>]+>/g, '')
   .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 env.addFilter('slug', slugify);
+/* FR-OTHER-011 — image optimisation. The photography is served from Unsplash's
+   CDN, which resizes on the fly, so every card can ask for the width it
+   actually paints instead of a full-size file. Anything else is left alone. */
+env.addFilter('srcset', (url) => {
+  const u = String(url || '');
+  if (!/^https?:\/\/images\.unsplash\.com\//.test(u)) return '';
+  const base = u.split('?')[0];
+  return [400, 800, 1200, 1600]
+    .map((w) => `${base}?q=75&auto=format&fit=crop&w=${w} ${w}w`)
+    .join(', ');
+});
 env.addFilter('pad3', (n) => String(n == null ? '' : n).padStart(3, '0'));
 
 app.use(express.urlencoded({ extended: true }));
@@ -47,6 +58,8 @@ function readAnalytics() {
 let _analytics = readAnalytics();
 let _analyticsDirty = false;
 setInterval(() => { if (_analyticsDirty) { fs.writeFileSync(ANALYTICS_FILE, JSON.stringify(_analytics)); _analyticsDirty = false; } }, 10000);
+/* the ad switch and publisher ID reach every page template */
+app.use((req, res, next) => { res.locals.ads = adsConfig(); next(); });
 app.use((req, res, next) => {
   if (req.method === 'GET' && !req.path.startsWith('/admin') && !req.path.startsWith('/assets')
       && !req.path.includes('.') && (req.headers.accept || '').includes('text/html')) {
@@ -217,6 +230,18 @@ const SCHEMAS = [
       { name: 'siteUrl', label: 'Public website address (for SEO)', type: 'url', ph: 'e.g. https://triplipi.com' },
       { name: 'metaDescription', label: 'Default search-engine description', type: 'textarea', ph: 'One or two sentences describing the site, used when a page has none.' },
       { name: 'ogImage', label: 'Default social-share image', type: 'image', ph: 'A wide image shown when the site is shared on social media.' },
+      // FR-HOME-022 — the footer's social row. Blank ones are simply not shown.
+      // FR-OTHER-008 — copy and download protection (see assumption A7: a
+      // deterrent, not a guarantee). Off switches are here so the owner can
+      // relax it if it gets in the way.
+      { name: 'protectContent', label: 'Protect content (blocks right-click, copy/save shortcuts and image dragging)', type: 'bool' },
+      { name: 'protectSelection', label: 'Also block selecting text on the site', type: 'bool' },
+      { name: 'watermarkText', label: 'Watermark over photos (optional)', ph: 'e.g. © Triplipi' },
+      { name: 'socialInstagram', label: 'Instagram page', type: 'url', ph: 'https://instagram.com/yourhandle' },
+      { name: 'socialYoutube', label: 'YouTube channel', type: 'url', ph: 'https://youtube.com/@yourchannel' },
+      { name: 'socialFacebook', label: 'Facebook page', type: 'url', ph: 'https://facebook.com/yourpage' },
+      { name: 'socialPinterest', label: 'Pinterest profile', type: 'url', ph: 'https://pinterest.com/yourhandle' },
+      { name: 'socialX', label: 'X / Twitter profile', type: 'url', ph: 'https://x.com/yourhandle' },
     ] },
   { key: 'nav', group: 'Navbar', label: 'Header navigation links', type: 'list', path: 'settings.navLinks',
     itemTitle: 'label',
@@ -287,6 +312,8 @@ const SCHEMAS = [
       { name: 'extItinerary', label: 'Read more — Suggested itinerary', type: 'textarea', rich: true },
       { name: 'extFood', label: 'Read more — Food & cuisine', type: 'textarea', rich: true },
       { name: 'extCulture', label: 'Read more — Culture & festivals', type: 'textarea', rich: true },
+      { name: 'metaTitle', label: 'Search-engine title (optional)', ph: 'Leave blank to use the name above' },
+      { name: 'metaDescription', label: 'Search-engine description (optional)', type: 'textarea', ph: 'One or two sentences shown in Google results.' },
       { name: 'extBudget', label: 'Read more — Costs & budget', type: 'textarea', rich: true },
       { name: 'extFaq', label: 'Read more — Traveller FAQ', type: 'textarea', rich: true },
       { name: 'gallery', label: 'Detail gallery image URLs (comma-separated)', type: 'csv', ph: 'https://… , https://…' },
@@ -382,6 +409,8 @@ const SCHEMAS = [
       { name: 'ctaLabel', label: 'Button label', ph: 'e.g. Details, Book now' },
       { name: 'ctaHref', label: 'Button link', type: 'url', ph: 'e.g. package-detail.html' },
       { name: 'ctaExternal', label: 'External partner link?', type: 'bool' },
+      { name: 'metaTitle', label: 'Search-engine title (optional)', ph: 'Leave blank to use the name above' },
+      { name: 'metaDescription', label: 'Search-engine description (optional)', type: 'textarea', ph: 'One or two sentences shown in Google results.' },
       { name: 'ctaProvider', label: 'Provider / partner name', ph: 'e.g. KeralaLuxe' },
       { name: 'ctaUrl', label: 'Provider website (leave blank → opens the quote form instead)', type: 'url', ph: 'https://partner-website.com' },
       { name: 'providerEmail', label: 'Provider email (quote form is routed here when there is no website)', ph: 'e.g. bookings@partner.com' },
@@ -428,6 +457,8 @@ const SCHEMAS = [
       { name: 'heroImage', label: 'Hero image (optional — falls back to thumbnail)', type: 'image' },
       { name: 'deck', label: 'Deck / standfirst', type: 'textarea', richInline: true, ph: 'The italic intro under the headline.' },
       { name: 'body', label: 'Article body', type: 'textarea', rich: true },
+      { name: 'metaTitle', label: 'Search-engine title (optional)', ph: 'Leave blank to use the name above' },
+      { name: 'metaDescription', label: 'Search-engine description (optional)', type: 'textarea', ph: 'One or two sentences shown in Google results.' },
       { name: 'gallery', label: 'Photos & films in this post (comma-separated URLs — .mp4/.webm play as video)', type: 'csv', ph: 'https://… , https://….mp4' },
     ] },
   { key: 'galleryItems', group: 'Content', label: 'Gallery tiles', type: 'list', path: 'galleryItems',
@@ -548,6 +579,39 @@ const SCHEMAS = [
         { value: 'blog', label: 'Blog' },
         { value: 'gallery', label: 'Gallery' },
         { value: 'shop', label: 'Shop' },
+      ] },
+    ] },
+
+  /* ----- Google AdSense (FR-HOME-014, FR-DEST-012, FR-TRIP-012,
+     FR-BLOG-006, FR-GAL-004, FR-PICKS-005). Each section is configured on its
+     own — they are not linked — and Check Packages carries no ads at all
+     (client direction, v1.4). ----- */
+  { key: 'ads', group: 'Money', label: 'AdSense — account & switch', type: 'object', path: 'ads',
+    fields: [
+      { name: 'enabled', label: 'Serve live Google ads', type: 'bool' },
+      { name: 'publisherId', label: 'AdSense publisher ID', ph: 'ca-pub-0000000000000000' },
+      { name: 'showPlaceholders', label: 'Show a marked placeholder where each ad will sit (while waiting for Google approval)', type: 'bool' },
+      { name: 'note', label: 'Note to yourself', type: 'textarea', ph: 'e.g. applied to AdSense on 3 May — waiting for review' },
+    ] },
+  { key: 'adUnits', group: 'Money', label: 'AdSense — ad slots', type: 'list', path: 'adUnits',
+    itemTitle: 'label',
+    fields: [
+      { name: 'label', label: 'Name it for yourself', ph: 'e.g. Home — after the third card' },
+      { name: 'page', label: 'Which section', type: 'select', options: [
+        { value: 'home', label: 'Home (up to 10)' },
+        { value: 'destinations', label: 'Destination listing (up to 20)' },
+        { value: 'destination', label: 'Inside a destination page (up to 20)' },
+        { value: 'trip', label: 'Go For A Trip pages (up to 20)' },
+        { value: 'blog', label: 'Blog listing (up to 4)' },
+        { value: 'blogpost', label: 'Inside a blog post (up to 4)' },
+        { value: 'gallery', label: 'Gallery (up to 4)' },
+        { value: 'picks', label: 'Our Picks (up to 4)' },
+      ] },
+      { name: 'slotId', label: 'Ad slot ID from AdSense', ph: 'e.g. 1234567890' },
+      { name: 'format', label: 'Shape', type: 'select', options: [
+        { value: 'auto', label: 'Responsive (recommended)' },
+        { value: 'rectangle', label: 'Rectangle' },
+        { value: 'horizontal', label: 'Wide strip' },
       ] },
     ] },
 
@@ -761,6 +825,12 @@ const ADMIN_PAGES = [
     ] },
   /* FR-HOME-015..017, FR-DEST-019 — the paid placements. The schema existed but
      had no page in the panel, so nobody could manage them. */
+  { key: 'ads', group: 'money', label: 'Advertising (AdSense)', view: '/',
+    intro: 'Google ads, section by section. Ads stay off until you switch them on with your publisher ID — until then each slot shows a marked placeholder so you can see where they will sit. Check Packages carries no ads.',
+    sections: [
+      { key: 'ads', hint: 'Your AdSense account and the master switch. Google must approve the site before live ads appear.' },
+      { key: 'adUnits', hint: 'One row per ad slot. Pick the section it belongs to and paste the slot ID from AdSense. Limits per the spec: Home 10, Destination 20 each, Go For A Trip 20, Blog 4, blog post 4, Gallery 4, Our Picks 4.' },
+    ] },
   { key: 'sponsored', group: 'money', label: 'Sponsored & affiliate', view: '/',
     intro: 'Paid placements: sponsored packages, partner cards and affiliate links, and the pages each one appears on. Every outbound link shows the consent notice before it leaves your site.',
     sections: [
@@ -791,6 +861,7 @@ const ADMIN_PAGES = [
 /* FRS §6 System Capacity Summary — shown beside each list so the admin knows
    the agreed ceiling. Not enforced as a hard block; the panel warns instead. */
 const CAPACITY = {
+  adUnits: 46,             // 10 + 20 + 4 + 4 + 4 + 4 across the sections (FRS §6)
   destinations: 450,
   destCategories: 100,
   packages: null,          // unlimited (FR-PKG-006)
@@ -839,6 +910,7 @@ app.get('/assets/js/partials.js', (req, res) => {
     siteTopBanners: siteTop,
     siteBottomBanners: siteBottom,
     navCategories,
+    ads: adsConfig(),
     // Our Picks dropdown: up to 10 lists, then "View all" (FR: 10 + 1 rows)
     pickLists: (store.get('pickLists') || []).slice(0, 10),
   });
@@ -875,6 +947,37 @@ function sponsorSlots(pageKey, count) {
     let pos = Math.floor(((j + 1) * count) / (list.length + 1));
     while (slots[pos] !== undefined) pos += 1;   // avoid collisions on tiny grids
     slots[pos] = sp;
+  });
+  return slots;
+}
+
+/* Google AdSense. Ad units are spread through a page's grid the same way
+   sponsored cards are, and each section keeps its own set — FRS §6 caps them:
+   Home 10, Destination Guide 20, Go For A Trip 20, Blog 4, Gallery 4,
+   Our Picks 4, and none on Check Packages. */
+const AD_LIMITS = { home: 10, destinations: 20, destination: 20, trip: 20, blog: 4, blogpost: 4, gallery: 4, picks: 4 };
+function adsConfig() {
+  const a = c().ads || {};
+  return {
+    enabled: !!a.enabled && !!(a.publisherId || '').trim(),
+    publisherId: (a.publisherId || '').trim(),
+    showPlaceholders: a.showPlaceholders !== false,
+  };
+}
+function adUnits(pageKey) {
+  const limit = AD_LIMITS[pageKey] || 0;
+  return (c().adUnits || [])
+    .filter((u) => isVisible(u) && u.page === pageKey)
+    .slice(0, limit);
+}
+/* position in the grid -> ad unit, like sponsorSlots */
+function adSlots(pageKey, count) {
+  const list = adUnits(pageKey);
+  const slots = {};
+  list.forEach((u, j) => {
+    let pos = Math.floor(((j + 1) * count) / (list.length + 1));
+    while (slots[pos] !== undefined) pos += 1;
+    slots[pos] = u;
   });
   return slots;
 }
@@ -1138,6 +1241,7 @@ const PAGES = {
       settings: s,
       home: c().home,
       destinations: pub(c().destinations).filter((d) => d.featured),
+      adSlots: adSlots('home', pub(c().destinations).filter((d) => d.featured).length),
       // FR-HOME-023..027 — the media wall: up to 50 videos + 50 images
       mediaItems: pub(c().galleryItems).filter((g) => g.featured).slice(0, 100),
       // FR-HOME-015..017 — sponsored packages, ads and affiliate links on Home
@@ -1178,10 +1282,10 @@ const PAGES = {
     // Each card: Know More (→ the destination) + Check Packages (→ its packages)
     const cards = items;
     const q = (req && req.query) || {};
-    return { page: c().pages.destinations, cards, categories, activeCat, activeCatLabel: catObj ? catObj.label : '', totalAll: all.length, pagination, baseUrl, sponsorSlots: sponsorSlots('destinations', items.length),
+    return { page: c().pages.destinations, cards, categories, activeCat, adSlots: adSlots('destinations', items.length), activeCatLabel: catObj ? catObj.label : '', totalAll: all.length, pagination, baseUrl, sponsorSlots: sponsorSlots('destinations', items.length),
       crumbs: endTrail(crumbTrail(q)), trail: trailQS(q) };
   },
-  categories: () => {
+  categories: (req) => {
     // Circular category grid (8-up). The universal taxonomy (destCategories) —
     // each links into the destinations index filtered by that category slug.
     const cats = (c().destCategories || []).filter(isVisible);
@@ -1191,6 +1295,8 @@ const PAGES = {
         lead: 'Pick a kind of trip — mountains for solitude, beaches for slowness, heritage for the stories etched into stone. Every category opens its own curated index.',
       },
       categories: cats,
+      // FR-TRIP-012 — the trip funnel's own ad configuration
+      adSlots: adSlots('trip', cats.length),
     };
   },
   packages: (req) => {
@@ -1257,7 +1363,7 @@ const PAGES = {
     const feature = { ...(c().blog.feature || {}) };
     feature.href = postHref(feature.postTitle);
     const side = (c().blog.side || []).map((x) => ({ ...x, href: postHref(x.postTitle) }));
-    return { page: c().pages.blog, blog: { ...c().blog, posts, feature, side }, pagination, baseUrl: '/blog', sponsorSlots: sponsorSlots('blog', items.length) };
+    return { page: c().pages.blog, blog: { ...c().blog, posts, feature, side }, adSlots: adSlots('blog', items.length), pagination, baseUrl: '/blog', sponsorSlots: sponsorSlots('blog', items.length) };
   },
   announcements: (req) => {
     const { items, pagination } = paginate(resolveAnnouncements(pub(c().announcements)), req);
@@ -1271,7 +1377,7 @@ const PAGES = {
     }));
     const { items, pagination } = paginate(all, req);
     return {
-      page: c().pages.gallery, items, categories, pagination, baseUrl: '/gallery', sponsorSlots: sponsorSlots('gallery', items.length),
+      page: c().pages.gallery, items, categories, pagination, baseUrl: '/gallery', adSlots: adSlots('gallery', items.length), sponsorSlots: sponsorSlots('gallery', items.length),
       typeCounts: {
         image: all.filter((g) => g.type === 'image').length,
         video: all.filter((g) => g.type === 'video').length,
@@ -1304,7 +1410,8 @@ const PAGES = {
       return { ...p, dest: dest ? { slug: dest.slug, name: dest.name, season: dest.season, tagline: dest.tagline } : null };
     });
     return { page: c().pages.picks, picks, lists, active, totalAll: allPicks.length, pagination, baseUrl,
-      sponsorSlots: sponsorSlots('picks', items.length) };   // FR-PICKS-005
+      sponsorSlots: sponsorSlots('picks', items.length),     // FR-PICKS-005
+      adSlots: adSlots('picks', items.length) };
   },
   about: () => ({ page: c().pages.about, about: c().about || {}, aboutStats: c().aboutStats || [], aboutOffers: c().aboutOffers || [] }),
   contact: () => ({ page: c().pages.contact, settings: c().settings }),
@@ -1340,8 +1447,8 @@ const PAGES = {
     const desc = clip(dest.lead || dest.tagline || dest.overview, 300);
     const seo = {
       brand,
-      title: (dest.name || 'Destination') + ' — ' + brand,
-      description: desc,
+      title: plain(dest.metaTitle) || (dest.name || 'Destination') + ' — ' + brand,
+      description: plain(dest.metaDescription) || desc,
       canonical: absUrl(req, '/destination-detail?d=' + (dest.slug || '')),
       image: img,
       type: 'article',
@@ -1353,9 +1460,10 @@ const PAGES = {
         ...(dest.region ? { touristType: dest.region } : {}),
       },
     };
+    const pageAds = adUnits('destination');   // FR-DEST-012: up to 20 per page
     // FR-DEST-019 — unlimited sponsored/affiliate placements inside a destination
     const sponsors = (c().sponsored || []).filter((sp) => (sp.pages || []).includes('destination') && (sp.title || '').trim());
-    return { dest, sponsors, related: all.filter((d) => d.slug !== dest.slug).slice(0, 4), seo,
+    return { dest, sponsors, pageAds, related: all.filter((d) => d.slug !== dest.slug).slice(0, 4), seo,
       crumbs: endTrail(crumbTrail((req && req.query) || {}), dest.name) };
   },
   'package-detail': (req) => {
@@ -1367,8 +1475,8 @@ const PAGES = {
     const desc = clip(pkg.description || pkg.overview, 300);
     const seo = {
       brand,
-      title: (plain(pkg.title) || 'Package') + ' — ' + brand,
-      description: desc,
+      title: plain(pkg.metaTitle) || (plain(pkg.title) || 'Package') + ' — ' + brand,
+      description: plain(pkg.metaDescription) || desc,
       canonical: absUrl(req, '/package-detail?p=' + slugify(pkg.title || '')),
       image: img,
       type: 'product',
@@ -1423,8 +1531,8 @@ const PAGES = {
     const desc = clip(post.deck || post.excerpt || post.body, 300);
     const seo = {
       brand,
-      title: (plain(post.title) || 'Story') + ' — ' + brand,
-      description: desc,
+      title: plain(post.metaTitle) || (plain(post.title) || 'Story') + ' — ' + brand,
+      description: plain(post.metaDescription) || desc,
       canonical: absUrl(req, '/blog-post?b=' + slugify(post.title || '')),
       image: img,
       type: 'article',
@@ -1440,7 +1548,11 @@ const PAGES = {
     };
     // The closing "Check Packages" button opens the post's destination packages
     const dest = (c().destinations || []).find((d) => d.slug === post.destinationSlug) || null;
-    return { post, related, seo, dest: dest ? { slug: dest.slug, name: dest.name } : null };
+    return {
+      post, related, seo,
+      pageAds: adUnits('blogpost'),   // FR-BLOG-006: up to 4 ad slots per post
+      dest: dest ? { slug: dest.slug, name: dest.name } : null,
+    };
   },
   search: (req) => {
     const q = (req && req.query && req.query.q) || '';
@@ -1483,9 +1595,19 @@ app.get('/sitemap.xml', (req, res) => {
 });
 
 app.get('/', (req, res) => res.render('index.njk', PAGES.index(req)));
-// The old /trip planner is retired and "Go For A Trip" is now "Check Packages":
-// send legacy links to the packages list, keeping a destination filter if given.
-app.get('/trip', (req, res) => res.redirect(302, '/packages' + (req.query.d ? '?d=' + encodeURIComponent(req.query.d) : '')));
+/* FR-TRIP-001..007 — the Go For A Trip funnel, as the site is wired today:
+   step 1 categories (/categories) → step 2 destination digests for that
+   category (/destinations?cat=) → step 3 the destination page → step 4 its
+   packages (/packages?d=) → step 5 package highlights (/package-detail) →
+   step 6 the consent modal → step 7 redirect or stay. /trip is kept as the
+   funnel's entry so old links and the FRS's own URL still work. */
+app.get('/trip', (req, res) => res.redirect(302, req.query.d
+  ? '/packages?d=' + encodeURIComponent(req.query.d)
+  : '/categories'));
+/* FR-BLOG-001 — "Destination Guide Blog" and "Our Experience Blog" are one
+   section: either tab lands on the same page. */
+app.get('/our-experience-blog', (req, res) => res.redirect(301, '/blog'));
+app.get('/destination-guide-blog', (req, res) => res.redirect(301, '/blog'));
 for (const [name, data] of Object.entries(PAGES)) {
   if (name === 'trip') continue;
   app.get('/' + name, (req, res) => res.render(name + '.njk', data(req)));

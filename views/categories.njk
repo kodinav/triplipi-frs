@@ -1,4 +1,4 @@
-<!doctype html>
+{% import "_ads.njk" as ad %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -41,10 +41,11 @@
 {% for cat in categories %}
           <a class="cat-circle" href="/destinations?cat={{ cat.slug }}&amp;from=categories" aria-label="{{ cat.label }}">
             <span class="cat-circle-img">
-              <img loading="lazy" src="{{ cat.image }}" alt="{{ cat.label }}">
+              <img loading="lazy" src="{{ cat.image }}" alt="{{ cat.label }}" srcset="{{ cat.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async">
             </span>
             <span class="cat-circle-label">{{ cat.label }}</span>
           </a>
+          {{ ad.unit(adSlots[loop.index0], ads, "ad-span-all") }}
 {% else %}
           <p>No categories yet.</p>
 {% endfor %}

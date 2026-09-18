@@ -202,11 +202,14 @@
                 <span>{{ settings.brandName }}</span>
               </a>
               <p>A travel discovery platform for the discerning explorer. Curated destinations, verified packages, original photography.</p>
+              {# FR-HOME-022 — social links come from Site settings; an empty one is left out,
+                 and each is consent-gated like every other outbound link (FR-LINK-003). #}
               <div class="footer-social">
-                <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg></a>
-                <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="3"/><path d="m10 9 5 3-5 3z" fill="currentColor"/></svg></a>
-                <a href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M11 7v10M9 14l3-7 3 7"/></svg></a>
-                <a href="#" aria-label="X / Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4 4 16 16M20 4 4 20"/></svg></a>
+                {% if settings.socialInstagram %}<a href="{{ settings.socialInstagram }}" aria-label="Instagram" data-external data-provider="Instagram" data-url="{{ settings.socialInstagram }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg></a>{% endif %}
+                {% if settings.socialYoutube %}<a href="{{ settings.socialYoutube }}" aria-label="YouTube" data-external data-provider="YouTube" data-url="{{ settings.socialYoutube }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="3"/><path d="m10 9 5 3-5 3z" fill="currentColor"/></svg></a>{% endif %}
+                {% if settings.socialFacebook %}<a href="{{ settings.socialFacebook }}" aria-label="Facebook" data-external data-provider="Facebook" data-url="{{ settings.socialFacebook }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h-3a4 4 0 0 0-4 4v3H5v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>{% endif %}
+                {% if settings.socialPinterest %}<a href="{{ settings.socialPinterest }}" aria-label="Pinterest" data-external data-provider="Pinterest" data-url="{{ settings.socialPinterest }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M11 7v10M9 14l3-7 3 7"/></svg></a>{% endif %}
+                {% if settings.socialX %}<a href="{{ settings.socialX }}" aria-label="X / Twitter" data-external data-provider="X" data-url="{{ settings.socialX }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4 4 16 16M20 4 4 20"/></svg></a>{% endif %}
               </div>
             </div>
 
@@ -226,7 +229,6 @@
                 <li><a href="/travel-tips">Travel Tips</a></li>
                 <li><a href="/gallery">Gallery</a></li>
                 <li><a href="/shop#shutterstock">Shutterstock Portfolio</a></li>
-                <li><a href="/announcements">Announcements</a></li>
               </ul>
             </div>
 
@@ -423,5 +425,52 @@
     mount('[data-partial="lightbox"]', partials.lightbox);
     mount('[data-partial="loader"]', partials.loader);
   }, { once: true });
+
+  /* ---------- Google AdSense loader (FR-HOME-014 and friends) ----------
+     A <script> tag written into an injected partial never executes, so the
+     library is attached here, once, and only when ads are switched on. */
+  {% if ads and ads.enabled %}
+  (function () {
+    if (document.querySelector('script[data-adsense]')) return;
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ ads.publisherId }}';
+    s.crossOrigin = 'anonymous';
+    s.setAttribute('data-adsense', '1');
+    document.head.appendChild(s);
+  })();
+  {% endif %}
+
+  /* ---------- copy & download protection (FR-OTHER-008) ----------
+     Assumption A7: a deterrent against casual copying, not a guarantee —
+     developer tools and screenshots are out of reach. Every layer is
+     switched from Site settings. */
+  {% if settings.protectContent %}
+  (function () {
+    const selectionOff = {{ 'true' if settings.protectSelection else 'false' }};
+    const watermark = {{ ('"' + settings.watermarkText + '"') | safe if settings.watermarkText else 'null' }};
+    const inField = (el) => el && el.closest && el.closest('input, textarea, select, [contenteditable="true"]');
+
+    document.addEventListener('contextmenu', (e) => { if (!inField(e.target)) e.preventDefault(); });
+    document.addEventListener('dragstart', (e) => {
+      if (e.target && /^(IMG|VIDEO|PICTURE)$/.test(e.target.tagName)) e.preventDefault();
+    });
+    document.addEventListener('copy', (e) => { if (!inField(e.target)) e.preventDefault(); });
+    document.addEventListener('keydown', (e) => {
+      if (inField(e.target)) return;                    // forms keep working
+      const k = (e.key || '').toLowerCase();
+      const mod = e.ctrlKey || e.metaKey;
+      if (mod && ['c', 'x', 's', 'p', 'u', 'a'].includes(k)) { e.preventDefault(); return; }
+      if (k === 'f12' || (mod && e.shiftKey && ['i', 'j', 'c'].includes(k))) e.preventDefault();
+    });
+
+    const root = document.documentElement;
+    if (selectionOff) root.classList.add('no-select');
+    if (watermark) {
+      root.style.setProperty('--wm-text', '"' + String(watermark).replace(/"/g, '') + '"');
+      root.classList.add('has-watermark');
+    }
+  })();
+  {% endif %}
 
 })();

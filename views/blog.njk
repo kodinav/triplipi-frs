@@ -1,4 +1,4 @@
-{% import "_pagination.njk" as pg %}{% import "_sponsor.njk" as sp %}<!doctype html>
+{% import "_ads.njk" as ad %}{% import "_pagination.njk" as pg %}{% import "_sponsor.njk" as sp %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -43,7 +43,7 @@
         <!-- Featured story + side strip -->
         <div class="blog-landing-head" data-reveal>
           <a class="blog-feature-main" href="{{ blog.feature.href or '/blog' }}">
-            <img loading="lazy" src="{{ blog.feature.image }}" alt="">
+            <img loading="lazy" src="{{ blog.feature.image }}" alt="" srcset="{{ blog.feature.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async">
             <div class="content">
               <div class="category">{{ blog.feature.category }}</div>
               <h2>{{ blog.feature.title | safe }}</h2>
@@ -54,7 +54,7 @@
           <div class="blog-feature-side">
 {% for s in blog.side %}
             <a href="{{ s.href or '/blog' }}" class="blog-feature-item">
-              <div class="thumb"><img loading="lazy" src="{{ s.image }}" alt=""></div>
+              <div class="thumb"><img loading="lazy" src="{{ s.image }}" alt="" srcset="{{ s.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async"></div>
               <div>
                 <div class="category">{{ s.category }}</div>
                 <h4>{{ s.title | safe }}</h4>
@@ -80,14 +80,15 @@
 {% for p in blog.posts %}
           <article class="blog-card">
             <a class="blog-card-link" href="/blog-post?b={{ p.title | slug }}">
-              <div class="thumb"><img loading="lazy" src="{{ p.image }}" alt=""></div>
+              <div class="thumb"><img loading="lazy" src="{{ p.image }}" alt="" srcset="{{ p.image | srcset }}" sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" decoding="async"></div>
               <div class="category">{{ p.category }}</div>
               <h3>{{ p.title | safe }}</h3>
               <p class="excerpt">{{ p.excerpt | safe }}</p>
               <div class="byline">{% for b in p.bylineSpans %}{% if not loop.first %}<span class="sep"></span>{% endif %}<span>{{ b }}</span>{% endfor %}</div>
             </a>
             <div class="blog-card-actions">
-              <a class="act-details" href="{% if p.dest %}/destination-detail?d={{ p.dest.slug }}&amp;from=blog{% else %}/blog-post?b={{ p.title | slug }}{% endif %}">Know More <span>→</span></a>
+              <a class="act-details" href="{% if p.dest %}/destination-detail?d={{ p.dest.slug }}&amp;from=blog          {{ ad.unit(adSlots[loop.index0], ads, "ad-span-all") }}
+{% else %}/blog-post?b={{ p.title | slug }}{% endif %}">Know More <span>→</span></a>
               <a class="act-pkg" href="/packages{% if p.dest %}?d={{ p.dest.slug }}{% endif %}">Check Packages <span>→</span></a>
             </div>
           </article>

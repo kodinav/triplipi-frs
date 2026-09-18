@@ -279,3 +279,23 @@ a, button { -webkit-tap-highlight-color: transparent; }
 
 /* Print-shy: hide print stuff offscreen */
 @media print { .no-print { display: none !important; } }
+
+
+/* ---------- COPY PROTECTION (FR-OTHER-008) ----------
+   Switched on from Site settings; form fields always stay usable. */
+.no-select, .no-select * { -webkit-user-select: none; user-select: none; }
+.no-select input, .no-select textarea, .no-select select, .no-select [contenteditable="true"] {
+  -webkit-user-select: text; user-select: text;
+}
+img, video { -webkit-user-drag: none; }
+.has-watermark .gallery-tile, .has-watermark .shop-tile, .has-watermark .media-tile { position: relative; }
+.has-watermark .gallery-tile::after,
+.has-watermark .shop-tile::after,
+.has-watermark .media-tile::after {
+  content: var(--wm-text, "");
+  position: absolute; inset: auto 8px 8px auto;
+  font-family: var(--ff-text); font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: rgba(255,255,255,0.75); text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  pointer-events: none;
+}

@@ -1,0 +1,26 @@
+{# Google AdSense unit (FR-HOME-014 and the per-section requirements).
+   Live ads render only once the publisher ID is set and the switch is on —
+   until Google approves the site, a marked placeholder holds the space so the
+   owner can see exactly where each ad will appear (assumption A3). #}
+{% macro unit(u, ads, span) %}
+  {% if u %}
+    {% if ads.enabled %}
+      <aside class="ad-unit {{ span }}" aria-label="Advertisement">
+        <span class="ad-label">Advertisement</span>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="{{ ads.publisherId }}"
+             data-ad-slot="{{ u.slotId }}"
+             data-ad-format="{{ u.format or 'auto' }}"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </aside>
+    {% elif ads.showPlaceholders %}
+      <aside class="ad-unit is-placeholder {{ span }}" aria-label="Advertisement slot">
+        <span class="ad-label">Ad slot</span>
+        <span class="ad-ph-name">{{ u.label or u.page }}</span>
+        <span class="ad-ph-note">Live ads appear here once your AdSense account is approved and switched on.</span>
+      </aside>
+    {% endif %}
+  {% endif %}
+{% endmacro %}
