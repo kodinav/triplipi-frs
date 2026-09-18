@@ -1,0 +1,18 @@
+{# FR-DEST-003 / FR-TRIP-002 — every destination digest carries the seven
+   sub-categories, clipped to a line each so a listing card stays a card. #}
+{% macro digest(d) %}
+  {% if d.secSeason or d.secReach or d.secStay or d.secTravel or d.secActivities or d.secLandmarks or d.secNotes %}
+  <details class="dest-digest">
+    <summary><span>What to expect</span><span class="chev" aria-hidden="true">▾</span></summary>
+    <dl>
+      {% if d.secSeason %}<div><dt>Season</dt><dd>{{ d.secSeason | striptags | truncate(120) }}</dd></div>{% endif %}
+      {% if d.secReach %}<div><dt>Getting there</dt><dd>{{ d.secReach | striptags | truncate(120) }}</dd></div>{% endif %}
+      {% if d.secStay %}<div><dt>Where to stay</dt><dd>{{ d.secStay | striptags | truncate(120) }}</dd></div>{% endif %}
+      {% if d.secTravel %}<div><dt>Getting around</dt><dd>{{ d.secTravel | striptags | truncate(120) }}</dd></div>{% endif %}
+      {% if d.secActivities %}<div><dt>What to do</dt><dd>{{ d.secActivities | striptags | truncate(120) }}</dd></div>{% endif %}
+      {% if d.secLandmarks %}<div><dt>Places of note</dt><dd>{{ d.secLandmarks | striptags | truncate(120) }}</dd></div>{% endif %}
+      {% if d.secNotes %}<div><dt>Good to know</dt><dd>{{ d.secNotes | striptags | truncate(120) }}</dd></div>{% endif %}
+    </dl>
+  </details>
+  {% endif %}
+{% endmacro %}

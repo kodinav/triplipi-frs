@@ -65,6 +65,7 @@
             {% if g.type == 'video' %}<div class="play-icon">▶</div>{% endif %}
             <div class="overlay"><span class="tag tag-plain">{{ g.label }}</span></div>
           </a>
+          {{ sp.banner(sponsorSlots[loop.index0], "sp-span-all") }}
 {% endfor %}
         </div>
 

@@ -52,10 +52,30 @@
       <div class="container-reading">
         {% if post.body %}
         <div class="article-body rich-body" data-reveal>{{ post.body | safe }}</div>
+
         {% else %}
         <div class="article-body" data-reveal>
           <p class="dropcap">{{ post.excerpt | safe if post.excerpt else 'This story is being written.' }}</p>
           <p>The full article for this post hasn't been added yet — add it in Admin → Blog → Post grid → this post → “Article body”.</p>
+        </div>
+        {% endif %}
+
+        {% if post.gallery and post.gallery | length %}
+        {# FR-BLOG-005 / FR-DEST-018 — photos and films inside the story: a film
+           auto-plays on hover, an image enlarges, and either opens full-size. #}
+        <div class="article-gallery" data-reveal>
+          {% for g in post.gallery %}
+          {% set gl = g | lower %}
+          {% set isVid = ('.mp4' in gl) or ('.webm' in gl) or ('.mov' in gl) or ('.ogg' in gl) %}
+          {% if isVid %}
+          <a data-lightbox data-type="video" data-src="{{ g }}" data-hover-video class="gallery-tile is-video">
+            <video src="{{ g }}" muted loop playsinline preload="metadata"></video>
+            <div class="play-icon">▶</div>
+          </a>
+          {% else %}
+          <a data-lightbox data-src="{{ g }}" class="gallery-tile"><img loading="lazy" src="{{ g }}" alt=""></a>
+          {% endif %}
+          {% endfor %}
         </div>
         {% endif %}
 

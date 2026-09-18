@@ -42,7 +42,7 @@
 
         <!-- Featured story + side strip -->
         <div class="blog-landing-head" data-reveal>
-          <a class="blog-feature-main" href="/blog-post">
+          <a class="blog-feature-main" href="{{ blog.feature.href or '/blog' }}">
             <img loading="lazy" src="{{ blog.feature.image }}" alt="">
             <div class="content">
               <div class="category">{{ blog.feature.category }}</div>
@@ -53,7 +53,7 @@
 
           <div class="blog-feature-side">
 {% for s in blog.side %}
-            <a href="/blog-post" class="blog-feature-item">
+            <a href="{{ s.href or '/blog' }}" class="blog-feature-item">
               <div class="thumb"><img loading="lazy" src="{{ s.image }}" alt=""></div>
               <div>
                 <div class="category">{{ s.category }}</div>
@@ -91,6 +91,7 @@
               <a class="act-pkg" href="/packages{% if p.dest %}?d={{ p.dest.slug }}{% endif %}">Check Packages <span>→</span></a>
             </div>
           </article>
+          {{ sp.banner(sponsorSlots[loop.index0], "sp-span-all") }}
 {% endfor %}
         </div>
 

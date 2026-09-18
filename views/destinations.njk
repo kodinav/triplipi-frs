@@ -1,4 +1,4 @@
-{% import "_crumbs.njk" as bc %}{% import "_pagination.njk" as pg %}{% import "_sponsor.njk" as sp %}<!doctype html>
+{% import "_digest.njk" as dg %}{% import "_crumbs.njk" as bc %}{% import "_pagination.njk" as pg %}{% import "_sponsor.njk" as sp %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -50,12 +50,14 @@
               <div class="region">{{ d.region }}</div>
               <h3 class="name">{{ d.name | safe }}</h3>
               <div class="meta"><span>{{ d.season }}</span>{% if d.tagline %}<span class="dot"></span><span>{{ d.tagline }}</span>{% endif %}</div>
+              {{ dg.digest(d) }}
               <div class="feat-actions">
                 <a class="act-details" href="/destination-detail?d={{ d.slug }}{{ trail }}">Know More <span>→</span></a>
                 <a class="act-pkg" href="/packages?d={{ d.slug }}">Check Packages <span>→</span></a>
               </div>
             </div>
           </article>
+          {{ sp.banner(sponsorSlots[loop.index0], "sp-span-all") }}
 {% endfor %}
         </div>
 

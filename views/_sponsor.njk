@@ -18,8 +18,12 @@
             {{ s.callLabel or 'Call now' }}
           </a>
         {% endif %}
-        {% if s.linkLabel and s.linkUrl %}
-          <a class="btn btn-ghost" href="{{ s.linkUrl }}">{{ s.linkLabel }}</a>
+        {# FR-LINK-003 / FR-CONSENT-001: no outbound link without the consent notice #}
+        {% if s.linkUrl %}
+          <a class="btn btn-ghost" href="{{ s.linkUrl }}" data-external data-provider="{{ s.partner or s.title }}" data-url="{{ s.linkUrl }}">{{ s.linkLabel or 'Visit partner' }}</a>
+        {% elif s.providerEmail %}
+          {# FR-HOME-016 — a partner with no website gets a consent-gated enquiry form #}
+          <a class="btn btn-ghost" href="/package-quote?sp={{ s._idx }}" data-external data-provider="{{ s.partner or s.title }}" data-url="/package-quote?sp={{ s._idx }}" data-display="Secure enquiry form">{{ s.linkLabel or 'Enquire' }}</a>
         {% endif %}
       </div>
     </aside>

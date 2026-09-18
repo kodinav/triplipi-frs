@@ -1165,6 +1165,16 @@
 .pkg-cat.is-active .pkg-cat-img { box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--c-terracotta); }
 .pkg-cat.is-active .pkg-cat-label { color: var(--c-terracotta); }
 
+/* FR-PKG-003 — the package name and thumbnail open the highlights page */
+.pkg-name-link { color: inherit; }
+.pkg-name-link:hover { color: var(--c-terracotta); }
+.pkg-details-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: var(--fs-small); font-weight: var(--fw-semi);
+  color: var(--c-blue); margin-right: var(--s-4);
+}
+.pkg-details-link:hover { color: var(--c-terracotta); }
+
 .pkg-empty-all {
   display: inline-flex;
   gap: var(--s-2);
@@ -2248,6 +2258,16 @@
 }
 .article-byline .name { font-family: var(--ff-display); font-style: italic; font-size: 1.05rem; color: var(--c-ink); }
 .article-byline .meta { font-size: var(--fs-micro); color: var(--c-text-muted); text-transform: uppercase; letter-spacing: var(--ls-wider); }
+
+/* Photos and films inside a story (FR-BLOG-005) */
+.article-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--s-3);
+  margin-block: var(--s-8);
+}
+.article-gallery .gallery-tile { aspect-ratio: 4/3; border-radius: var(--r-md); }
+@media (max-width: 600px) { .article-gallery { grid-template-columns: repeat(2, 1fr); } }
 
 /* Article figure bleed and grid */
 .article-figure {

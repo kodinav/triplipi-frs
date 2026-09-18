@@ -1,4 +1,4 @@
-{% import "_crumbs.njk" as bc %}<!doctype html>
+{% import "_sponsor.njk" as sp %}{% import "_crumbs.njk" as bc %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -53,6 +53,14 @@
               <p class="kicker">Overview</p>
               <h2>An overview of <em>where you're going</em>.</h2>
               <div class="rich-body">{{ dest.overview | safe }}</div>
+            </div>
+            {% endif %}
+
+            {% if sponsors and sponsors | length %}
+            {# FR-DEST-019 — sponsored packages, ads and affiliate links for this destination #}
+            <div class="dest-sponsors" data-reveal>
+              <p class="kicker">Sponsored</p>
+              {% for s in sponsors %}{{ sp.banner(s, "sp-span-all") }}{% endfor %}
             </div>
             {% endif %}
 

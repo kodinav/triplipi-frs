@@ -1,4 +1,4 @@
-{% import "_pagination.njk" as pg %}<!doctype html>
+{% import "_sponsor.njk" as sp %}{% import "_pagination.njk" as pg %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -72,6 +72,7 @@
                 {# the + / ✓ glyph is drawn by .select-btn::before; a literal one here rendered twice #}
                 <button class="select-btn" type="button" aria-label="Add to selection"></button>
               </article>
+          {{ sp.banner(sponsorSlots[loop.index0], "sp-span-all") }}
 {% else %}
               <p class="adm-empty" style="grid-column:1/-1;">No media has been added to the shop yet.</p>
 {% endfor %}

@@ -79,23 +79,27 @@
         <div class="pkg-list" data-stagger>
 {% for k in packages %}
           <article class="pkg-list-card pkg-type-{{ (k.badgeLabel or 'sponsored') | lower }}">
-            <div class="pkg-list-media">
+            <a class="pkg-list-media" href="/package-detail?p={{ k.title | slug }}" aria-label="{{ k.title | striptags }} — package details">
               <img loading="lazy" src="{{ k.image }}" alt="{{ k.title | striptags }}">
               {% if k.badgeLabel %}<span class="pkg-type-badge">{{ k.badgeLabel | upper }}</span>{% endif %}
-            </div>
+            </a>
             <div class="pkg-list-body">
-              <h3>{{ k.title | safe }}</h3>
+              {# FR-PKG-003: the name itself opens the package's highlights page #}
+              <h3><a class="pkg-name-link" href="/package-detail?p={{ k.title | slug }}">{{ k.title | safe }}</a></h3>
               {% if k.duration %}<div class="pkg-list-dur"><span class="tick">✓</span> {{ k.duration }}</div>{% endif %}
               <div class="pkg-list-price">
                 {% if k.priceUnit %}Starting from <strong>{{ k.price }}</strong> <small>{{ k.priceUnit }}</small>{% else %}<strong>{{ k.price }}</strong>{% endif %}
               </div>
               {% if k.ctaExternal and k.ctaUrl %}
+              <a class="pkg-details-link" href="/package-detail?p={{ k.title | slug }}">See package details <span class="arrow">→</span></a>
               <a class="btn btn-brand pkg-explore" href="{{ k.ctaUrl }}" data-external data-provider="{{ k.ctaProvider }}" data-url="{{ k.ctaUrl }}">Explore Package <span class="arrow">→</span></a>
               {% else %}
+              <a class="pkg-details-link" href="/package-detail?p={{ k.title | slug }}">See package details <span class="arrow">→</span></a>
               <a class="btn btn-brand pkg-explore" href="/package-quote?p={{ k.title | slug }}" data-external data-provider="{{ k.ctaProvider or (k.title | striptags) }}" data-url="/package-quote?p={{ k.title | slug }}" data-display="Secure quote request">Explore Package <span class="arrow">→</span></a>
               {% endif %}
             </div>
           </article>
+          {{ sp.banner(sponsorSlots[loop.index0], "sp-span-all") }}
 {% endfor %}
         </div>
 

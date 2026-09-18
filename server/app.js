@@ -303,6 +303,10 @@ const SCHEMAS = [
       { name: 'place', label: 'Place', ph: 'e.g. Himachal' },
       { name: 'kicker', label: 'Kicker (small label)', ph: 'e.g. Experience' },
       { name: 'image', label: 'Image', type: 'image' },
+      // FR-HOME-009 + Flow 7.5: a highlight lands either on a destination page
+      // or on a page of its own — the admin picks which.
+      { name: 'destinationSlug', label: 'Opens this destination (optional)', type: 'select', optionsFrom: 'destinations', optionValue: 'slug', optionLabel: 'name' },
+      { name: 'href', label: 'Or open this page instead (optional)', type: 'url', ph: 'e.g. /p/press or https://…' },
     ] },
   { key: 'announceHead', group: 'Homepage', label: 'Section heading — Announcements', type: 'object', path: 'home.announceHead',
     fields: [
@@ -394,7 +398,8 @@ const SCHEMAS = [
       { name: 'category', label: 'Category line', ph: 'e.g. Essay · Ladakh' },
       { name: 'byline', label: 'Byline', ph: 'e.g. By Editor · 14 min read · 8 May 2026' },
       { name: 'image', label: 'Image', type: 'image' },
-    ] },
+          { name: 'postTitle', label: 'Which post does it open?', type: 'select', optionsFrom: 'blog.posts', optionValue: 'title', optionLabel: 'title' },
+] },
   { key: 'blogSide', group: 'Content', label: 'Side stories', type: 'list', path: 'blog.side',
     itemTitle: 'title',
     fields: [
@@ -402,7 +407,8 @@ const SCHEMAS = [
       { name: 'category', label: 'Category line', ph: 'e.g. Essay · Ladakh' },
       { name: 'meta', label: 'Meta', ph: 'e.g. 9 min read · 6 days ago' },
       { name: 'image', label: 'Thumbnail', type: 'image' },
-    ] },
+          { name: 'postTitle', label: 'Which post does it open?', type: 'select', optionsFrom: 'blog.posts', optionValue: 'title', optionLabel: 'title' },
+] },
   { key: 'blogPosts', group: 'Content', label: 'Post grid', type: 'list', path: 'blog.posts',
     itemTitle: 'title',
     fields: [
@@ -422,6 +428,7 @@ const SCHEMAS = [
       { name: 'heroImage', label: 'Hero image (optional — falls back to thumbnail)', type: 'image' },
       { name: 'deck', label: 'Deck / standfirst', type: 'textarea', richInline: true, ph: 'The italic intro under the headline.' },
       { name: 'body', label: 'Article body', type: 'textarea', rich: true },
+      { name: 'gallery', label: 'Photos & films in this post (comma-separated URLs — .mp4/.webm play as video)', type: 'csv', ph: 'https://… , https://….mp4' },
     ] },
   { key: 'galleryItems', group: 'Content', label: 'Gallery tiles', type: 'list', path: 'galleryItems',
     itemTitle: 'label',
@@ -531,11 +538,16 @@ const SCHEMAS = [
       { name: 'callLabel', label: 'Call button label', ph: 'e.g. Call now' },
       { name: 'linkLabel', label: 'Secondary button label (optional)', ph: 'e.g. View packages — leave blank for none' },
       { name: 'linkUrl', label: 'Secondary button link (optional)', type: 'url', ph: 'e.g. packages.html' },
+      { name: 'providerEmail', label: 'Provider email (used when there is no website — a consent-gated enquiry form is shown instead)', ph: 'e.g. sales@partner.com' },
       { name: 'pages', label: 'Show on pages', type: 'multiselect', options: [
-        { value: 'gallery', label: 'Gallery' },
-        { value: 'packages', label: 'Packages' },
+        { value: 'home', label: 'Home (FR-HOME-015: up to 20)' },
+        { value: 'destinations', label: 'Destinations listing' },
+        { value: 'destination', label: 'Inside each destination page' },
+        { value: 'packages', label: 'Check Packages' },
+        { value: 'picks', label: 'Our Picks' },
         { value: 'blog', label: 'Blog' },
-        { value: 'destinations', label: 'Destinations' },
+        { value: 'gallery', label: 'Gallery' },
+        { value: 'shop', label: 'Shop' },
       ] },
     ] },
 
@@ -637,6 +649,8 @@ const SCHEMAS = [
     path: 'blog.posts', itemTitle: 'title' },
   { key: 'pick-packages', label: 'Pick packages for the homepage', type: 'picker',
     path: 'packages', itemTitle: 'title' },
+  { key: 'pick-gallery', label: 'Pick media for the homepage wall', type: 'picker',
+    path: 'galleryItems', itemTitle: 'label' },
 
   /* ----- Page heroes ----- */
   ...['destinations', 'packages', 'blog', 'announcements', 'travel-tips', 'gallery', 'picks', 'about', 'contact'].map((p) => ({
@@ -672,6 +686,8 @@ const ADMIN_PAGES = [
       { key: 'pick-blogPosts', hint: 'Tick which blog posts appear on the homepage.' },
       { key: 'packagesHead', hint: 'Heading row of the packages strip.' },
       { key: 'pick-packages', hint: 'Tick which packages appear on the homepage.' },
+      { key: 'mediaHead', hint: 'Heading row of the media wall (photos & films).' },
+      { key: 'pick-gallery', hint: 'Tick which gallery items appear on the homepage media wall — up to 50 videos and 50 images. Films auto-play on hover; images enlarge.' },
       { key: 'ask', hint: 'The cream contact block near the bottom.' },
     ] },
   { key: 'destinations', group: 'content', label: 'Destinations', view: '/destinations',
@@ -849,11 +865,14 @@ function paginate(all, req) {
    the grid: { itemIndexInGrid: sponsoredItem }. Items without a title are
    treated as drafts and skipped. */
 function sponsorSlots(pageKey, count) {
-  const matching = (c().sponsored || [])
-    .filter((sp) => (sp.pages || []).includes(pageKey) && (sp.title || '').trim());
   const slots = {};
-  matching.forEach((sp, j) => {
-    let pos = Math.floor(((j + 1) * count) / (matching.length + 1));
+  // the index travels with the sponsor so one without a website can point its
+  // enquiry form back at itself (/package-quote?sp=…)
+  const list = (c().sponsored || [])
+    .map((sp, i) => ({ ...sp, _idx: i }))
+    .filter((sp) => isVisible(sp) && (sp.pages || []).includes(pageKey) && (sp.title || '').trim());
+  list.forEach((sp, j) => {
+    let pos = Math.floor(((j + 1) * count) / (list.length + 1));
     while (slots[pos] !== undefined) pos += 1;   // avoid collisions on tiny grids
     slots[pos] = sp;
   });
@@ -1119,7 +1138,15 @@ const PAGES = {
       settings: s,
       home: c().home,
       destinations: pub(c().destinations).filter((d) => d.featured),
-      highlights: pub(c().highlights),
+      // FR-HOME-023..027 — the media wall: up to 50 videos + 50 images
+      mediaItems: pub(c().galleryItems).filter((g) => g.featured).slice(0, 100),
+      // FR-HOME-015..017 — sponsored packages, ads and affiliate links on Home
+      sponsorSlots: sponsorSlots('home', pub(c().destinations).filter((d) => d.featured).length),
+      highlights: pub(c().highlights).map((h) => ({
+        ...h,
+        href: h.destinationSlug ? '/destination-detail?d=' + encodeURIComponent(h.destinationSlug)
+          : (h.href || '/destinations'),
+      })),
       announcements: resolveAnnouncements(pub(c().announcements).filter((a) => a.featured)),
       blogPosts: pub(c().blog.posts).filter((p) => p.featured),
       packages: pub(c().packages).filter((p) => p.featured),
@@ -1213,13 +1240,24 @@ const PAGES = {
   blog: (req) => {
     const { items, pagination } = paginate(pub(c().blog.posts), req);
     const dests = c().destinations || [];
+    // the featured story and the side strip each open their own post
+    const postHref = (title) => {
+      const all = pub(c().blog.posts || []);
+      const t = plain(title || '');
+      // the chosen post, or the newest one, so the card never leads nowhere
+      const hit = all.find((x) => plain(x.title) === t) || all[0];
+      return hit ? '/blog-post?b=' + encodeURIComponent(slugify(plain(hit.title))) : '/blog';
+    };
     // Each blog card gets "Know More" (→ its destination) + "Check Packages"
     // (→ that destination's packages).
     const posts = items.map((p) => {
       const dest = dests.find((d) => d.slug === p.destinationSlug) || null;
       return { ...p, dest: dest ? { slug: dest.slug, name: dest.name } : null };
     });
-    return { page: c().pages.blog, blog: { ...c().blog, posts }, pagination, baseUrl: '/blog', sponsorSlots: sponsorSlots('blog', items.length) };
+    const feature = { ...(c().blog.feature || {}) };
+    feature.href = postHref(feature.postTitle);
+    const side = (c().blog.side || []).map((x) => ({ ...x, href: postHref(x.postTitle) }));
+    return { page: c().pages.blog, blog: { ...c().blog, posts, feature, side }, pagination, baseUrl: '/blog', sponsorSlots: sponsorSlots('blog', items.length) };
   },
   announcements: (req) => {
     const { items, pagination } = paginate(resolveAnnouncements(pub(c().announcements)), req);
@@ -1265,7 +1303,8 @@ const PAGES = {
       const dest = dests.find((d) => d.slug === p.destinationSlug) || null;
       return { ...p, dest: dest ? { slug: dest.slug, name: dest.name, season: dest.season, tagline: dest.tagline } : null };
     });
-    return { page: c().pages.picks, picks, lists, active, totalAll: allPicks.length, pagination, baseUrl };
+    return { page: c().pages.picks, picks, lists, active, totalAll: allPicks.length, pagination, baseUrl,
+      sponsorSlots: sponsorSlots('picks', items.length) };   // FR-PICKS-005
   },
   about: () => ({ page: c().pages.about, about: c().about || {}, aboutStats: c().aboutStats || [], aboutOffers: c().aboutOffers || [] }),
   contact: () => ({ page: c().pages.contact, settings: c().settings }),
@@ -1314,7 +1353,9 @@ const PAGES = {
         ...(dest.region ? { touristType: dest.region } : {}),
       },
     };
-    return { dest, related: all.filter((d) => d.slug !== dest.slug).slice(0, 4), seo,
+    // FR-DEST-019 — unlimited sponsored/affiliate placements inside a destination
+    const sponsors = (c().sponsored || []).filter((sp) => (sp.pages || []).includes('destination') && (sp.title || '').trim());
+    return { dest, sponsors, related: all.filter((d) => d.slug !== dest.slug).slice(0, 4), seo,
       crumbs: endTrail(crumbTrail((req && req.query) || {}), dest.name) };
   },
   'package-detail': (req) => {
@@ -1347,12 +1388,24 @@ const PAGES = {
   'package-quote': (req) => {
     // "Seek your quote" contact form for a package with no provider website —
     // routed to the package provider's email (Check Packages Tab doc, pp.7-9).
+    // A sponsored placement with no website sends its enquiry here too (?sp=).
+    const brand = (c().settings || {}).brandName || 'Triplipi';
+    const siteEmail = (c().settings || {}).contactEmail || '';
+    const spIdx = (req && req.query && req.query.sp) || '';
+    if (spIdx !== '') {
+      const sp = (c().sponsored || [])[parseInt(spIdx, 10)] || {};
+      return {
+        pkg: { title: sp.title || 'Enquiry' },
+        provider: sp.partner || sp.title || 'our partner',
+        toEmail: sp.providerEmail || siteEmail,
+        seo: { ...defaultSeo(req), title: 'Enquiry — ' + brand, robots: 'noindex, nofollow' },
+      };
+    }
     const all = c().packages || [];
     const key = (req && req.query && req.query.p) || '';
     const pkg = all.find((x) => slugify(x.title) === key) || all[parseInt(key, 10)] || {};
-    const brand = (c().settings || {}).brandName || 'Triplipi';
     const provider = pkg.ctaProvider || pkg.title || 'our partner';
-    const toEmail = pkg.providerEmail || (c().settings || {}).contactEmail || '';
+    const toEmail = pkg.providerEmail || siteEmail;
     return {
       pkg, provider, toEmail,
       seo: { ...defaultSeo(req), title: 'Request a quote — ' + brand, robots: 'noindex, nofollow' },
