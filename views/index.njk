@@ -154,7 +154,15 @@
             </div>
             <h3 class="h4-like">{{ a.title | safe }}</h3>
             <p class="ann-excerpt">{{ a.excerpt | safe }}</p>
-            <a class="ann-link" href="{{ a.href }}">{{ a.linkLabel }} <span class="arrow">→</span></a>
+            {# FR-HOME-013: Read More goes back to the Announcements page for the
+               full item; FR-HOME-013B: its own CTA opens whatever section the
+               announcement isconfigured to point at. #}
+            <div class="ann-actions">
+              <a class="ann-link" href="/announcements#a{{ loop.index0 }}">Read more <span class="arrow">→</span></a>
+              {% if a.href and a.href != '/announcements' %}
+              <a class="ann-link ann-link-cta" href="{{ a.href }}"{% if a.external %} data-external data-provider="{{ a.extProvider }}" data-url="{{ a.extUrl }}"{% endif %}>{{ a.linkLabel or 'Open' }} <span class="arrow">→</span></a>
+              {% endif %}
+            </div>
           </article>
 {% endfor %}
         </div>

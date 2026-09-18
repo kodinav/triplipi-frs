@@ -122,6 +122,21 @@ function externalLinks() {
   });
   (d.banners || []).forEach((b) => add(b.extUrl || b.href, 'Banner · ' + (plain(b.text) || 'untitled')));
   add((d.shop || {}).shutterstockUrl, 'Shop · Shutterstock portfolio');
+  const st = d.settings || {};
+  [['socialInstagram', 'Instagram'], ['socialYoutube', 'YouTube'], ['socialFacebook', 'Facebook'],
+   ['socialPinterest', 'Pinterest'], ['socialX', 'X / Twitter']]
+    .forEach(([k, label]) => add(st[k], 'Footer · ' + label));
+  /* Anything typed into a rich-text body counts as well — FR-LINK-003 wants no
+     unchecked external link anywhere on the site. */
+  const scanHtml = (html, where) => {
+    String(html || '').replace(/href=["'](https?:\/\/[^"']+)["']/gi, (_, u) => { add(u, where); return ''; });
+  };
+  (d.destinations || []).forEach((x) => ['overview', 'secNotes', 'extItinerary', 'extCulture']
+    .forEach((f) => scanHtml(x[f], 'Destination · ' + (x.name || 'untitled'))));
+  ((d.blog || {}).posts || []).forEach((x) => scanHtml(x.body, 'Blog post · ' + (plain(x.title) || 'untitled')));
+  (d.travelTips || []).forEach((x) => scanHtml(x.body, 'Travel tip · ' + (x.title || 'untitled')));
+  (d.legalDocs || []).forEach((x) => scanHtml(x.body, 'Legal · ' + (x.crumb || x.slug)));
+  (d.customPages || []).forEach((x) => scanHtml(x.body, 'Page · ' + (x.navLabel || x.slug)));
   return urls;
 }
 async function checkLinks() {
@@ -706,15 +721,15 @@ const SCHEMAS = [
 
   /* ----- Homepage pickers — choose which master items are featured ----- */
   { key: 'pick-destinations', label: 'Pick destinations for the homepage', type: 'picker',
-    path: 'destinations', itemTitle: 'name' },
+    path: 'destinations', itemTitle: 'name', max: 12 /* FR-HOME-005 */ },
   { key: 'pick-announcements', label: 'Pick announcements for the homepage', type: 'picker',
-    path: 'announcements', itemTitle: 'title' },
+    path: 'announcements', itemTitle: 'title', max: 20 /* FR-HOME-012 */ },
   { key: 'pick-blogPosts', label: 'Pick blog posts for the homepage', type: 'picker',
     path: 'blog.posts', itemTitle: 'title' },
   { key: 'pick-packages', label: 'Pick packages for the homepage', type: 'picker',
     path: 'packages', itemTitle: 'title' },
   { key: 'pick-gallery', label: 'Pick media for the homepage wall', type: 'picker',
-    path: 'galleryItems', itemTitle: 'label' },
+    path: 'galleryItems', itemTitle: 'label', max: 100 /* FR-HOME-023: 50 films + 50 photographs */ },
 
   /* ----- Page heroes ----- */
   ...['destinations', 'packages', 'blog', 'announcements', 'travel-tips', 'gallery', 'picks', 'about', 'contact'].map((p) => ({
@@ -862,6 +877,7 @@ const ADMIN_PAGES = [
    the agreed ceiling. Not enforced as a hard block; the panel warns instead. */
 const CAPACITY = {
   adUnits: 46,             // 10 + 20 + 4 + 4 + 4 + 4 across the sections (FRS §6)
+  highlights: 12,          // FR-HOME-008
   destinations: 450,
   destCategories: 100,
   packages: null,          // unlimited (FR-PKG-006)
@@ -936,19 +952,48 @@ function paginate(all, req) {
 /* Every sponsored item targeting the page gets a slot, spread evenly through
    the grid: { itemIndexInGrid: sponsoredItem }. Items without a title are
    treated as drafts and skipped. */
-function sponsorSlots(pageKey, count) {
+function sponsorSlots(pageKey, count, max) {
   const slots = {};
   // the index travels with the sponsor so one without a website can point its
   // enquiry form back at itself (/package-quote?sp=…)
   const list = (c().sponsored || [])
     .map((sp, i) => ({ ...sp, _idx: i }))
-    .filter((sp) => isVisible(sp) && (sp.pages || []).includes(pageKey) && (sp.title || '').trim());
+    .filter((sp) => isVisible(sp) && (sp.pages || []).includes(pageKey) && (sp.title || '').trim())
+    .slice(0, max || Infinity);
   list.forEach((sp, j) => {
     let pos = Math.floor(((j + 1) * count) / (list.length + 1));
     while (slots[pos] !== undefined) pos += 1;   // avoid collisions on tiny grids
     slots[pos] = sp;
   });
   return slots;
+}
+
+/* FRS §6 System Capacity Summary — the published limits, applied when content
+   is served so the site never exceeds what was agreed, and shown next to each
+   list in the admin. `capped` keeps the first N; `cappedMedia` keeps the first
+   N videos AND the first N images, because the FRS counts those separately. */
+const LIMITS = {
+  homeFeatured: 12,        // FR-HOME-005
+  homeHighlights: 12,      // FR-HOME-008
+  homeAnnouncements: 20,   // FR-HOME-012
+  homeSponsored: 20,       // FR-HOME-015
+  picksSponsored: 4,       // FR-PICKS-005
+  picksPerList: 20,        // FR-PICKS-002
+  sectionVideos: 50,       // FR-HOME-023, FR-GAL-001, FR-SHOP-001
+  sectionImages: 50,
+  destVideos: 20,          // FR-DEST-011
+  destImages: 20,
+  postVideos: 5,           // FR-BLOG-005
+  postImages: 20,
+};
+const capped = (arr, n) => (arr || []).slice(0, n);
+const isVideoUrl = (u) => /\.(mp4|webm|mov|ogg)(\?|$)/i.test(String(u || ''));
+function cappedMedia(list, maxVideos, maxImages, isVideo) {
+  let v = 0, i = 0;
+  return (list || []).filter((item) => {
+    if (isVideo(item)) return v++ < maxVideos;
+    return i++ < maxImages;
+  });
 }
 
 /* Google AdSense. Ad units are spread through a page's grid the same way
@@ -1246,18 +1291,20 @@ const PAGES = {
     return {
       settings: s,
       home: c().home,
-      destinations: pub(c().destinations).filter((d) => d.featured),
-      adSlots: adSlots('home', pub(c().destinations).filter((d) => d.featured).length),
+      destinations: capped(pub(c().destinations).filter((d) => d.featured), LIMITS.homeFeatured),
+      adSlots: adSlots('home', capped(pub(c().destinations).filter((d) => d.featured), LIMITS.homeFeatured).length),
       // FR-HOME-023..027 — the media wall: up to 50 videos + 50 images
-      mediaItems: pub(c().galleryItems).filter((g) => g.featured).slice(0, 100),
+      mediaItems: cappedMedia(pub(c().galleryItems).filter((g) => g.featured),
+        LIMITS.sectionVideos, LIMITS.sectionImages, (g) => g.type === 'video'),
       // FR-HOME-015..017 — sponsored packages, ads and affiliate links on Home
-      sponsorSlots: sponsorSlots('home', pub(c().destinations).filter((d) => d.featured).length),
-      highlights: pub(c().highlights).map((h) => ({
+      sponsorSlots: sponsorSlots('home', capped(pub(c().destinations).filter((d) => d.featured), LIMITS.homeFeatured).length, LIMITS.homeSponsored),
+      highlights: capped(pub(c().highlights), LIMITS.homeHighlights).map((h) => ({
         ...h,
         href: h.destinationSlug ? '/destination-detail?d=' + encodeURIComponent(h.destinationSlug)
           : (h.href || '/destinations'),
       })),
-      announcements: resolveAnnouncements(pub(c().announcements).filter((a) => a.featured)),
+      // FR-HOME-012: the twenty latest, drawn from the master list
+      announcements: resolveAnnouncements(capped(pub(c().announcements).filter((a) => a.featured), LIMITS.homeAnnouncements)),
       blogPosts: pub(c().blog.posts).filter((p) => p.featured),
       packages: pub(c().packages).filter((p) => p.featured),
       seo: {
@@ -1376,7 +1423,7 @@ const PAGES = {
     return { page: c().pages.announcements, announcements: items, pagination, baseUrl: '/announcements' };
   },
   gallery: (req) => {
-    const all = pub(c().galleryItems);
+    const all = cappedMedia(pub(c().galleryItems), LIMITS.sectionVideos, LIMITS.sectionImages, (g) => g.type === 'video');
     const categories = (c().galleryCategories || []).map((cat) => ({
       ...cat,
       count: all.filter((g) => g.category === cat.slug).length,
@@ -1405,7 +1452,9 @@ const PAGES = {
     // ?list=all, a stale key — is the All tab, every pick in one grid.
     const reqList = (req && req.query && req.query.list) || '';
     const active = reqList && reqList !== 'all' ? lists.find((l) => l.key === reqList) || null : null;
-    const inList = active ? allPicks.filter((p) => p.list === active.key) : allPicks;
+    const inList = active
+      ? capped(allPicks.filter((p) => p.list === active.key), LIMITS.picksPerList)
+      : allPicks;   // the All view shows every list's picks together
     const { items, pagination } = paginate(inList, req);
     const baseUrl = active ? '/picks?list=' + encodeURIComponent(active.key) : '/picks?list=all';
     // Each pick renders as a destination card with Know More + Check Packages
@@ -1416,7 +1465,7 @@ const PAGES = {
       return { ...p, dest: dest ? { slug: dest.slug, name: dest.name, season: dest.season, tagline: dest.tagline } : null };
     });
     return { page: c().pages.picks, picks, lists, active, totalAll: allPicks.length, pagination, baseUrl,
-      sponsorSlots: sponsorSlots('picks', items.length),     // FR-PICKS-005
+      sponsorSlots: sponsorSlots('picks', items.length, LIMITS.picksSponsored),   // FR-PICKS-005
       adSlots: adSlots('picks', items.length) };
   },
   about: () => ({ page: c().pages.about, about: c().about || {}, aboutStats: c().aboutStats || [], aboutOffers: c().aboutOffers || [] }),
@@ -1441,13 +1490,14 @@ const PAGES = {
   },
   '404': () => ({}),
   shop: (req) => {
-    const { items, pagination } = paginate(pub(c().shopItems), req);
+    const { items, pagination } = paginate(
+      cappedMedia(pub(c().shopItems), LIMITS.sectionVideos, LIMITS.sectionImages, (it) => it.type === 'video'), req);
     return { shop: c().shop || {}, items, pagination, baseUrl: '/shop', settings: c().settings, sponsorSlots: sponsorSlots('shop', items.length) };
   },
   'destination-detail': (req) => {
     const all = c().destinations || [];
     const slug = (req && req.query && req.query.d) || '';
-    const dest = all.find((d) => d.slug === slug) || all[0] || {};
+    let dest = all.find((d) => d.slug === slug) || all[0] || {};
     const brand = (c().settings || {}).brandName || 'Triplipi';
     const img = absUrl(req, dest.heroImage || dest.image || '');
     const desc = clip(dest.lead || dest.tagline || dest.overview, 300);
@@ -1467,6 +1517,10 @@ const PAGES = {
       },
     };
     const pageAds = adUnits('destination');   // FR-DEST-012: up to 20 per page
+    // FR-DEST-011 — the gallery on a destination page holds 20 films + 20 photos
+    if (Array.isArray(dest.gallery)) {
+      dest = { ...dest, gallery: cappedMedia(dest.gallery, LIMITS.destVideos, LIMITS.destImages, isVideoUrl) };
+    }
     // FR-DEST-019 — unlimited sponsored/affiliate placements inside a destination
     const sponsors = (c().sponsored || []).filter((sp) => (sp.pages || []).includes('destination') && (sp.title || '').trim());
     return { dest, sponsors, pageAds, related: all.filter((d) => d.slug !== dest.slug).slice(0, 4), seo,
@@ -1554,8 +1608,12 @@ const PAGES = {
     };
     // The closing "Check Packages" button opens the post's destination packages
     const dest = (c().destinations || []).find((d) => d.slug === post.destinationSlug) || null;
+    // FR-BLOG-005 — a post carries up to 5 films and 20 photographs
+    const postOut = Array.isArray(post.gallery)
+      ? { ...post, gallery: cappedMedia(post.gallery, LIMITS.postVideos, LIMITS.postImages, isVideoUrl) }
+      : post;
     return {
-      post, related, seo,
+      post: postOut, related, seo,
       pageAds: adUnits('blogpost'),   // FR-BLOG-006: up to 4 ad slots per post
       dest: dest ? { slug: dest.slug, name: dest.name } : null,
     };
@@ -1583,7 +1641,7 @@ app.get('/sitemap.xml', (req, res) => {
   const urls = [];
   const add = (loc, priority) => urls.push({ loc: origin + loc, priority });
   // Static / listing pages
-  ['/', '/destinations', '/packages', '/blog', '/announcements', '/travel-tips', '/gallery', '/picks', '/about', '/contact', '/shop']
+  ['/', '/destinations', '/categories', '/packages', '/blog', '/announcements', '/travel-tips', '/gallery', '/picks', '/about', '/contact', '/shop']
     .forEach((p) => add(p, p === '/' ? '1.0' : '0.8'));
   // Legal docs
   (c().legalDocs || []).forEach((d) => d.slug && add('/legal?p=' + encodeURIComponent(d.slug), '0.3'));
@@ -1790,6 +1848,8 @@ app.get('/admin/page/:pkey', requireAuth, (req, res) => {
       value,
       // the hub shows a short preview; the full list lives at /admin/collection
       preview: arr.slice(0, 6),
+      picked: arr.filter((x) => x && x.featured).length,
+      max: schema.max || null,
       live: arr.filter((x) => statusOf(x) === 'live' || statusOf(x) === 'scheduled').length,
       limit: CAPACITY[schema.key] || null,
     };

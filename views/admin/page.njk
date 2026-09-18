@@ -35,7 +35,13 @@
 
         {% if sec.schema.type == 'picker' %}
           <form class="adm-picker" method="post" action="/admin/section/{{ sec.schema.key }}">
-            <p class="adm-note">Tick the ones to show on the homepage.</p>
+            <p class="adm-note">
+              Tick the ones to show on the homepage.
+              {% if sec.max %}
+                The homepage shows up to <strong>{{ sec.max }}</strong>{% if sec.picked > sec.max %} —
+                you have ticked {{ sec.picked }}, so only the first {{ sec.max }} appear{% endif %}.
+              {% endif %}
+            </p>
             {% for item in sec.value %}
               <label class="pick-row">
                 <input type="checkbox" name="pick_{{ loop.index0 }}" {% if item.featured %}checked{% endif %}>

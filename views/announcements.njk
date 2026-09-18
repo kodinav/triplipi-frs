@@ -59,7 +59,7 @@
         <div class="announce-grid ann-grid-list" data-stagger>
 <h2 class="visually-hidden">Announcements</h2>
 {% for a in announcements %}
-          <a href="{{ a.href }}" class="ann-card" data-cat="{{ a.category }}"{% if a.external %} data-external data-provider="{{ a.extProvider }}" data-url="{{ a.extUrl }}"{% endif %}>
+          <a id="a{{ loop.index0 }}" href="{{ a.href }}" class="ann-card" data-cat="{{ a.category }}"{% if a.external %} data-external data-provider="{{ a.extProvider }}" data-url="{{ a.extUrl }}"{% endif %}>
             <div class="ann-head">
               <span class="tag{% if a.tagClass %} {{ a.tagClass }}{% endif %}">{{ a.tagLabel }}</span>
               <span class="ann-date">{{ a.date }}</span>
