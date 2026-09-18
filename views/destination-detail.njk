@@ -127,9 +127,6 @@
                 <span class="rm-label">Read More About Destination</span>
               </button>
               {% endif %}
-              {# FR-DEST-007 — Go For A Trip from the bottom of the page: this
-                 destination's own category listing, or the categories page #}
-              <a href="{% if dest.categories and dest.categories | length %}/destinations?cat={{ dest.categories[0] }}&amp;from=categories{% else %}/categories{% endif %}" class="btn btn-outline btn-lg">Find Trip Deals</a>
               {# Opens this destination's packages directly — no partner redirect or consent card #}
               <a href="/packages?d={{ dest.slug }}" class="btn btn-brand btn-lg">Check Packages <span class="arrow">→</span></a>
             </div>
