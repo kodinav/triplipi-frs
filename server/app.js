@@ -18,6 +18,7 @@ app.disable('x-powered-by');
 const PORT = process.env.PORT || 3000;
 const PROD = process.env.NODE_ENV === 'production';
 const ROOT = path.join(__dirname, '..');
+const { DATA_DIR, UPLOAD_DIR, storage } = require('./paths');
 
 /* ---------- view engine ---------- */
 const env = nunjucks.configure(path.join(ROOT, 'views'), {
@@ -52,7 +53,7 @@ env.addFilter('pad3', (n) => String(n == null ? '' : n).padStart(3, '0'));
 app.use(express.urlencoded({ extended: true }));
 
 /* ---------- analytics: count public page views (FR-OTHER-010) ---------- */
-const ANALYTICS_FILE = path.join(__dirname, 'data', 'analytics.json');
+const ANALYTICS_FILE = path.join(DATA_DIR, 'analytics.json');
 function readAnalytics() {
   try { return JSON.parse(fs.readFileSync(ANALYTICS_FILE, 'utf8')); }
   catch (e) { return { total: 0, pages: {}, days: {} }; }
@@ -187,8 +188,6 @@ setTimeout(scanLinks, 20000);
 const brokenLinks = () => _linkReport.results.filter((r) => !r.ok);
 
 /* ---------- uploads (admin images) ---------- */
-const UPLOAD_DIR = path.join(ROOT, 'assets', 'uploads');
-fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 const upload = multer({
   storage: multer.diskStorage({
     destination: UPLOAD_DIR,
@@ -238,7 +237,7 @@ function applyUploads(schema, req, values) {
 /* ============================================================
    AUTH — single admin user, signed in-memory sessions
    ============================================================ */
-const ADMIN_FILE = path.join(__dirname, 'data', 'admin.json');
+const ADMIN_FILE = path.join(DATA_DIR, 'admin.json');
 function sha256(s) { return crypto.createHash('sha256').update(s).digest('hex'); }
 let firstRun = false;
 if (!fs.existsSync(ADMIN_FILE)) {
@@ -1753,7 +1752,7 @@ app.get('/p/:slug', (req, res) => {
    FORM SUBMISSIONS — store every submission + email (if SMTP set)
    Used by: Contact, Ask for Guidance, Shop quote, provider fallback
    ============================================================ */
-const SUBM_FILE = path.join(__dirname, 'data', 'submissions.json');
+const SUBM_FILE = path.join(DATA_DIR, 'submissions.json');
 function readSubmissions() {
   try { return JSON.parse(fs.readFileSync(SUBM_FILE, 'utf8')); } catch (e) { return []; }
 }
@@ -1861,6 +1860,7 @@ app.get('/admin', requireAuth, (req, res) => {
     inboxCount: readSubmissions().filter((s) => !s.read).length,
     broken, linkScanAt: _linkReport.at, expiringSoon: soon.slice(0, 6),
     mailConfigured: !!mailer,
+    storage,
     capacity: CAPACITY, schemas: SCHEMAS.filter((x) => x.type === 'list'),
   });
 });

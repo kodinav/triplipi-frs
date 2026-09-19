@@ -1,17 +1,19 @@
 /* ============================================================
    STORE — tiny JSON content store with atomic writes.
-   Single source of truth: server/data/content.json
+   Single source of truth: content.json in the data folder (see paths.js)
    ============================================================ */
 const fs = require('fs');
 const path = require('path');
+const { DATA_DIR } = require('./paths');
 
-const FILE = path.join(__dirname, 'data', 'content.json');
+const FILE = path.join(DATA_DIR, 'content.json');
 const DEFAULT_FILE = path.join(__dirname, 'data', 'content.default.json');
 
 let cache = null;
 
 /* First run on a fresh server: seed the live file from the committed default.
-   The live content.json is git-ignored, so code deploys never overwrite it. */
+   The live content.json lives outside the app folder on a server, so a code
+   deploy never replaces it. */
 function ensureFile() {
   if (!fs.existsSync(FILE) && fs.existsSync(DEFAULT_FILE)) {
     fs.copyFileSync(DEFAULT_FILE, FILE);

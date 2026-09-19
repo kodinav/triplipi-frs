@@ -95,6 +95,22 @@ anything hidden.
 
 Default sign-in is `admin` / `triplipi2026` — the panel nags until it is changed.
 
+## Where data lives
+
+Everything that changes while the site runs — content, the admin login, form
+messages, page views and uploaded files — is kept in one data folder:
+
+- **On a server** (Linux or `NODE_ENV=production`): `~/triplipi-frs-data` in the
+  hosting account's home folder. Hostinger replaces the app folder on every
+  deploy, so data kept inside it (`server/data`, `assets/uploads`) was lost on
+  each push; outside it, it survives.
+- **Locally:** `server/data` and `assets/uploads`, as before.
+- **Anywhere else:** set `DATA_DIR`.
+
+The dashboard footer shows the folder in use, and warns if it would be reset
+by a deploy. On first boot in a new folder, any existing files are copied
+across. Back this folder up — it is the site.
+
 ## Email delivery
 
 Every form (Contact, Ask for Guidance, Shop quote, package enquiry) is saved to

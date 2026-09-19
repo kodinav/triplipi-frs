@@ -24,6 +24,13 @@
         <span class="l">Broken partner link{{ '' if broken | length == 1 else 's' }}</span>
         <span class="go">{% if linkScanAt %}Checked automatically{% else %}Run the first check{% endif %} →</span>
       </a>
+      {% if not storage.survivesDeploys %}
+      <div class="attn is-bad">
+        <span class="n">!</span>
+        <span class="l">Edits are reset on every deploy</span>
+        <span class="go">Content is stored inside the app folder. Set DATA_DIR — see README → Where data lives</span>
+      </div>
+      {% endif %}
       {% if not mailConfigured %}
       <a class="attn is-warn" href="/admin/inbox">
         <span class="n">!</span>
@@ -155,4 +162,5 @@
       <span class="go">Open →</span>
     </a>
   </div>
+  <p class="adm-note adm-foot-note">Content, messages, page views and uploads are stored in <code>{{ storage.dir }}</code>{% if storage.onServer %}{% if storage.survivesDeploys %}, outside the app folder, so they are kept when new code is deployed{% else %} — inside the app folder, so a deploy resets them{% endif %}{% endif %}.</p>
 {% endblock %}
