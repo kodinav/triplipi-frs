@@ -59,7 +59,14 @@ function readAnalytics() {
 }
 let _analytics = readAnalytics();
 let _analyticsDirty = false;
-setInterval(() => { if (_analyticsDirty) { fs.writeFileSync(ANALYTICS_FILE, JSON.stringify(_analytics)); _analyticsDirty = false; } }, 10000);
+function flushAnalytics() {
+  if (!_analyticsDirty) return;
+  try { fs.writeFileSync(ANALYTICS_FILE, JSON.stringify(_analytics)); _analyticsDirty = false; }
+  catch (e) { console.error('analytics write failed:', e.message); }
+}
+setInterval(flushAnalytics, 10000);
+// a deploy or restart stops the process — keep the last few seconds of views
+['SIGTERM', 'SIGINT'].forEach((sig) => process.once(sig, () => { flushAnalytics(); process.exit(0); }));
 /* the ad switch and publisher ID reach every page template */
 app.use((req, res, next) => { res.locals.ads = adsConfig(); next(); });
 app.use((req, res, next) => {
