@@ -50,23 +50,30 @@
 
   {# ---------- traffic ---------- #}
   <div class="adm-two">
-    <section class="adm-panel">
+    {# FR-OTHER-010 — traffic and popular content #}
+    <section class="adm-panel adm-traffic">
       <h2 class="adm-panel-title">Traffic</h2>
       <div class="adm-figs">
-        <div class="fig"><span class="n">{{ stats.total }}</span><span class="l">Views all time</span></div>
         <div class="fig"><span class="n">{{ stats.today }}</span><span class="l">Views today</span></div>
-        <div class="fig"><span class="n">{{ content.totals.live }}</span><span class="l">Live items</span></div>
+        <div class="fig"><span class="n">{{ stats.week }}</span><span class="l">Last 7 days</span></div>
+        <div class="fig"><span class="n">{{ stats.total }}</span><span class="l">All time</span></div>
       </div>
-      {% if stats.days | length %}
-        <div class="adm-spark" aria-hidden="true">
+      <div class="adm-chart" role="img" aria-label="Page views per day for the last 14 days">
+        <div class="adm-chart-cols">
           {% for d in stats.days %}
-            <span class="bar" style="height: {{ (d.views / stats.peak * 100) | round }}%" title="{{ d.day }}: {{ d.views }}"></span>
+            <div class="col{% if d.isToday %} is-today{% endif %}" title="{{ d.label }}: {{ d.views }} view{{ '' if d.views == 1 else 's' }}">
+              <span class="bar" style="height: {{ (d.views / stats.peak * 100) | round }}%">{% if d.views %}<b>{{ d.views }}</b>{% endif %}</span>
+            </div>
           {% endfor %}
         </div>
-        <p class="adm-note">Last {{ stats.days | length }} day{{ '' if stats.days | length == 1 else 's' }} of visits.</p>
-      {% else %}
-        <p class="adm-note">No visits recorded yet.</p>
-      {% endif %}
+        <div class="adm-chart-axis" aria-hidden="true">
+          {% for d in stats.days %}<span{% if d.isToday %} class="is-today"{% endif %}>{{ 'Today' if d.isToday else d.dom }}</span>{% endfor %}
+        </div>
+      </div>
+      <p class="adm-note">
+        Page views per day, last 14 days.
+        {% if stats.since %}Counting since {{ stats.since }}.{% else %}No visits recorded yet.{% endif %}
+      </p>
     </section>
 
     <section class="adm-panel">
@@ -94,15 +101,15 @@
     </h2>
     <div class="adm-table-wrap">
       <table class="adm-table">
-        <thead><tr><th>Collection</th><th>Live</th><th>Hidden</th><th>Archived</th><th>Total</th></tr></thead>
+        <thead><tr><th>Collection</th><th class="num">Live</th><th class="num">Hidden</th><th class="num">Archived</th><th class="num col-total">Total</th></tr></thead>
         <tbody>
           {% for r in content.rows %}
             <tr>
               <td class="co-label">{{ r.label }}</td>
-              <td><span class="chip chip-live">{{ r.live }}</span></td>
-              <td>{{ r.hidden if r.hidden else '—' }}</td>
-              <td>{{ r.archived if r.archived else '—' }}</td>
-              <td>{{ r.total }}</td>
+              <td class="num"><span class="chip chip-live">{{ r.live }}</span></td>
+              <td class="num">{{ r.hidden if r.hidden else '—' }}</td>
+              <td class="num">{{ r.archived if r.archived else '—' }}</td>
+              <td class="num col-total">{{ r.total }}</td>
             </tr>
           {% endfor %}
         </tbody>

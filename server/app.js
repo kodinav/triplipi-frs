@@ -101,10 +101,23 @@ function analyticsSummary() {
   const top = Object.entries(a.pages).sort((x, y) => y[1] - x[1]).slice(0, 10)
     .map(([url, views]) => ({ url, views, ...prettyPage(url) }));
   const today = new Date().toISOString().slice(0, 10);
-  const days = Object.entries(a.days).sort((x, y) => (x[0] < y[0] ? -1 : 1)).slice(-14)
-    .map(([day, views]) => ({ day, views }));
+  // Always the same 14-day window ending today, empty days included, so the
+  // chart keeps its shape on a new site instead of one bar filling the card.
+  const days = [];
+  for (let i = 13; i >= 0; i -= 1) {
+    const d = new Date(Date.now() - i * 864e5);
+    const day = d.toISOString().slice(0, 10);
+    days.push({
+      day, views: a.days[day] || 0, isToday: i === 0,
+      dom: d.getUTCDate(),
+      label: d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' }),
+    });
+  }
   const peak = days.reduce((m, x) => Math.max(m, x.views), 0) || 1;
-  return { total: a.total, top, today: a.days[today] || 0, days, peak };
+  const week = days.slice(-7).reduce((n, x) => n + x.views, 0);
+  const first = Object.keys(a.days).sort()[0];
+  const since = first ? new Date(first + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }) : null;
+  return { total: a.total, top, today: a.days[today] || 0, week, days, peak, since };
 }
 
 /* ---------- external link health checker (D7 / FR-OTHER) ---------- */
